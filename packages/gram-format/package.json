@@ -1,0 +1,87 @@
+{
+  "name": "@-gram/gram-format",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "author": "Andreas Kollegger",
+  "main": "dist/index.js",
+  "module": "dist/gram-format.esm.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=0.12"
+  },
+  "bin": {
+    "gram-lint": "./bin/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "shx rm -rf dist features/support/js .rts2_cache*",
+    "build": "run-s clean near lint-fix build-node",
+    "build-node": "tsdx build --target node --entry src/index.ts",
+    "build-web": "tsdx build --target web",
+    "build-cucumber": "tsc --project tsconfig-cucumber.json",
+    "lint": "tsdx lint src",
+    "lint-fix": "eslint --ext .ts --fix src",
+    "docs": "run-s typedoc railroad",
+    "typedoc": "typedoc --out docs src",
+    "railroad": "nearley-railroad ./src/gram.ne -o docs/railroad.html",
+    "test-lib": "tsdx test --watch",
+    "near": "nearleyc src/gram.ne -o src/gram-parse.ts",
+    "test-features": "run-s build-cucumber test-cucumber",
+    "test-cucumber": "cucumber-js features"
+  },
+  "peerDependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint src"
+    }
+  },
+  "prettier": {
+    "printWidth": 120,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.7.5",
+    "@types/chai": "^4.2.7",
+    "@types/cucumber": "^6.0.0",
+    "@types/jest": "^24.0.23",
+    "@types/lodash": "^4.14.149",
+    "@types/mathjs": "^6.0.2",
+    "@types/nearley": "^2.11.1",
+    "@types/node": "^13.1.2",
+    "@types/shortid": "^0.0.29",
+    "@types/unist": "^2.0.3",
+    "@typescript-eslint/parser": "^2.30.0",
+    "chai": "^4.2.0",
+    "cucumber": "^6.0.5",
+    "husky": "^3.1.0",
+    "npm-run-all": "^4.1.5",
+    "shx": "^0.3.2",
+    "tsdx": "^0.13.1",
+    "tslib": "^1.10.0",
+    "typedoc": "^0.15.5",
+    "typescript": "^3.7.3",
+    "unist-util-find": "^1.0.1",
+    "unist-util-size": "^1.1.1"
+  },
+  "dependencies": {
+    "base-x": "^3.0.8",
+    "chalk": "^3.0.0",
+    "commander": "^4.0.1",
+    "fp-ts": "^2.4.4",
+    "lodash": "^4.17.15",
+    "lodash-es": "^4.17.15",
+    "mathjs": "^6.3.0",
+    "monocle-ts": "^2.1.0",
+    "nearley": "^2.19.0",
+    "shortid": "^2.2.15",
+    "unified": "^8.4.2",
+    "unist-builder": "^2.0.2",
+    "unist-util-inspect": "^5.0.0",
+    "unist-util-visit": "^2.0.1",
+    "unist-util-visit-children": "^1.1.3"
+  }
+}

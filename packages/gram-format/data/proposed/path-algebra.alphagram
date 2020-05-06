@@ -1,0 +1,42 @@
+// an empty node is a path expression, of length 0
+()
+
+// two nodes with a `,` pair operator , path length 1
+(),()
+
+// two nodes with a `-->` right relationship operator, path length 1
+()-->()
+
+// an empty, named node
+(a)
+
+// a named node pair
+(a),(b)
+
+// a named relationship
+()-[r]->()
+
+// how to name a pair of nodes? envelope them in a path
+[p (),()]
+
+// a path "envelope" around an edge
+[p ()-[r]->()]
+
+// a path "envelope" around a single node
+[p ()]
+
+// path envelopes are useful for annotating nodes with extra data
+(n:Person {name:'abk'})
+[:D3 {x:20, y:38} (n)]
+
+// an empty path with properties
+[ {k:'text', n:42}]
+
+// empty paths could, by convention, provide a mechanism for annotating the graph since they aren't attached to a path expression
+[ {graphName:'Amazing Graph', owner:"Neo4j, Inc' }]
+
+// what about combinging paths?
+[p1 (a)-->(b)]
+[p2 (c)-->(d)]
+[p1]-->[p2] =~ (a)-->(b)-->(c)-->(d)
+

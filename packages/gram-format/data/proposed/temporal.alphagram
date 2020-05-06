@@ -1,0 +1,35 @@
+// Date, Time, Interval
+// ISO 8601 compatible https://en.wikipedia.org/wiki/ISO_8601
+
+
+// year
+({party:date`1999`})                 // Date Year, always four digits
+
+// calendar date: year month day
+({yearMonthDay:date`2020-01-01`})   // YYYY-MM-DD
+{{yearMonthDay:date`20200101`}}     // YYYYMMDD drop hyphens
+
+// year month
+({yearMonth:date`2020-01`})         // YYYY-MM without day
+({illegal:date:`202001`})           // YYYMM is illegal.
+
+// month day
+({monthDay:date`--12-30`})          // --MM-DD without year
+({monthDay:date`--1230`})           // --MMDD without year is also ok
+
+// week dates in the gregorian calendar
+// week days are numbered 1-7
+({weekDate:date`2020-W10`})         // YYYY-Www
+({weekDate:date`2020W10`})          // YYYYWww drop hyphens but keep explicit 'W'
+({weekDate:date`2020-W10-3`})       // YYYY-Www-D
+({weekDate:date`2020W103`})         // YYYYWwwD drop hyphens
+
+// ordinal dates
+// days are numbered 1-366 (to accept leap years)
+({ordinalDate:date`2020-001`})      // YYYY-DDD
+({ordinalDate:date`2020001`})       // YYYYDDD
+
+// Time
+
+({t:time`13:35:20.487})             // hh:mm:ss.sss
+

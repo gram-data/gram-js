@@ -1,0 +1,12 @@
+// co-resident relationship (no explicit relationship, but living in same graph)
+(),()
+
+// pure relationships
+()--()
+()-->()
+()<--()
+
+// relationships with (empty) inner record
+()-[]-()
+()-[]->()
+()<-[]-()

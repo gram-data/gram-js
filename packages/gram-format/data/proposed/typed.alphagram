@@ -1,0 +1,105 @@
+// Graph Type
+CREATE GRAPH TYPE SocialNetwork (
+    (Person :Person    {name::STRING, dob::DATE}),
+    (City   :City&Town {name:STRING}),
+    (Person)-[:LIVES_IN]->(City)
+    (Person)-[:KNOWS {year::INT}]->(Person)
+)
+
+// optionality for labels and properties
+(Person :Person&Born? {name::STRING, dob::DATE?})
+
+// type unions of property data types
+(Person :Person {name::STRING, dob::DATE:INT})
+
+// type unions of element types
+(Person   :Person {name::STRING, dob::DATE}
+        | :Person {name::STRING, age::INT} 
+)
+
+  (:Person {name::STRING, dob::DATE})
+| (:Person {name::STRING, age::INT} ) AS Person
+
+// angle-bracket
+
+// graph type definition
+<SocialNetwork
+  // define graph element content
+    Person   ::  (:Person    {name::STRING, dob::DATE}   ),
+    Topic    ::  (:Topic     {title::STRING}             ),
+    City     ::  (:City&Town {name::STRING}              ),
+    Comment  ::  (:Comment   {body::STRING}              ),
+    LIVES_IN :: -[:LIVES_IN  {since::DATE, until::DATE?} ]-,
+    KNOWS    :: -[:KNOWS     {since::DATE?}              ]-,
+    POSTED   :: -[:POSTED    {createdAt::TIMESTAMP}      ]-,
+    ABOUT    :: -[:ABOUT                                 ]-,
+
+  // define structure (names must be defined content types)
+    TOPIC_COMMENT :: [(Person)-[POSTED]->(Comment)-[ABOUT]->(Topic)],
+    [(Person)-[LIVES_IN]->(City)],
+    [(Person)-[KNOWS]->(Person)],
+    [(Person)-[KNOWS]->(Topic)]
+/>
+
+// import, then use with data
+import SocialNetwork from 'neo4j/graph-types';
+
+// use the graph type
+<SocialNetwork>
+  [abkpath (abk:Person {name:"ABK", dob:date'1969-01-07'})]
+  (ee:Person  {name:"Emil", dob:date'1969-01-07'})
+
+  (abk)-[:KNOWS]->(ee)
+</SocialNetwork>
+
+
+
+// graph type definition for minimal UML :)
+
+<neo4j/graph-types/UML
+
+  // define some tagged string regexes
+  tags=[
+    attr        :: /.*/,
+    op          :: /.*/
+    cardinality :: /1|0..1|\*|1..\*/,
+  ]
+
+  // define graph element content
+  elements=[
+    Class       :: (:Class      {name::STRING, attributes::ARRAY<attr>?, operations::ARRAY<op>?}   ),
+    Interface   :: (::Class                                                                              ), 
+    ASSOCIATION :: [:ASSOCIATION {fromM::cardinality, toM::cardinality} ],
+    INHERITANCE :: [:INHERITANCE                                        ], 
+    DEPENDENCY  :: [:DEPENDENCY                                         ],  
+    REALIZATION :: [:REALIZATION                                        ],
+    AGGREGATION :: [:AGGREGATION {role::STRING}                         ],
+    COMPOSITION :: [:COMPOSITION                                        ]
+  ]
+
+  // define structure (names must be defined content types)
+  paths=[
+    (Class)-[:ASSOCIATION|INHERITANCE|AGGREGATION|DEPENDENCY|AGGREGRATION|COMPOSITION]->(Class)
+    (Class)-[:REALIZATION]->(Interface)
+
+  ]
+/>
+
+<UML>
+  (Shape:Class {name:"Shape", operations:op['area','draw','move']})
+  (Polygon:Class)
+  (Ellipse:Class)
+
+  (Polygon)-[:INHERITANCE]->(Shape)
+  (Ellipse)-[:INHERITANCE]->(Shape)
+</UML>
+
+// how do graphs relate to each other?
+// can we describe both the internal node-to-node
+// but also the graph-to-graph relatinoship?
+
+<SocialNetwork usa>
+<SocialNetwork eu>
+
+<(usa::Person)-[:KNOWS]->(eu::Person)>
+
