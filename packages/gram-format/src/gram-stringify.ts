@@ -63,14 +63,21 @@ const edgeToString = (ast: Edge): string => {
 };
 
 const pathToString = (ast: Path): string => {
+  const pathContent = elementContentToString(ast);
   const pathChild = ast.children[0];
-  return `\n${pathChild.type === 'node' ? nodeToString(pathChild) : edgeToString(pathChild)}`;
+  const pathExpression = (pathChild) ? `${pathChild.type === 'node' ? nodeToString(pathChild) : edgeToString(pathChild)}` : '';
+  if (pathContent.length > 0) {
+    return `[${pathContent} ${pathExpression}]`;
+  } else {
+    return pathExpression;
+  }
 };
+
 const stringify = (ast: GramAstStructure): string => {
   const tokens: Array<string> = [];
   switch (ast.type) {
     case 'gram':
-      return ast.children.map(stringify).join('');
+      return ast.children.map(stringify).join('\n');
       break;
     case 'path':
       return pathToString(ast);
