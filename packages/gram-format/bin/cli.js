@@ -18,7 +18,7 @@ program
 
 program.parse(process.argv);
 
-const parser = gram.parser();
+const parser = gram.makeParser();
 let gramSource = "";
 
 if (program.args.length > 0) {

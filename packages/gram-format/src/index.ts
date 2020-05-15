@@ -11,18 +11,18 @@ import tokens from './gram-tokens';
 
 import * as ast from './gram-ast';
 
-const parser = () => {
+const makeParser = () => {
   return new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
 };
 
-export { ast, tokens, builder, find, identity };
+export { ast, tokens, builder, find, identity, makeParser, reporter };
 
 export default {
   ast,
   builder,
   tokens,
   find,
-  parser,
+  makeParser,
   stringify,
   profile,
   reporter,
