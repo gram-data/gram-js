@@ -174,7 +174,7 @@ function separateTagFromString(taggedStringValue:string) {
 
 function separateNumberFromUnit(unitNumberValue:string) {
 
-  let valueParts = unitNumberValue.match(/(-?[0-9\.]+)([a-zA-Z]+)/);
+  let valueParts = unitNumberValue.match(/(-?[0-9.]+)([a-zA-Z]+)/);
   if (valueParts === null || valueParts === undefined) throw Error(`Malformed unit number: ${unitNumberValue}`) 
   return {
     value: valueParts![1],

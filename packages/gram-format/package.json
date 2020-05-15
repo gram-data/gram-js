@@ -25,7 +25,7 @@
     "build-web": "tsdx build --target web",
     "build-cucumber": "tsc --project tsconfig-cucumber.json",
     "lint": "tsdx lint src",
-    "lint-fix": "eslint --ext .ts --fix src",
+    "lint-fix": "tsdx lint src --fix",
     "docs": "run-s typedoc railroad",
     "typedoc": "typedoc --out docs src",
     "railroad": "nearley-railroad ./src/gram.ne -o docs/railroad.html",
