@@ -14,13 +14,10 @@ const toStringLiteral = (l: Literal): string => {
   switch (l.type) {
     case 'integer':
       return l.value;
-      break;
     case 'string':
       return `\`${l.value}\``;
-      break;
     case 'tagged':
       return `${l.tag}\`${l.value}\``;
-      break;
     default:
       return `<ERROR, can't stringify literals of type ${l.type}>`;
   }
@@ -65,7 +62,9 @@ const edgeToString = (ast: Edge): string => {
 const pathToString = (ast: Path): string => {
   const pathContent = elementContentToString(ast);
   const pathChild = ast.children[0];
-  const pathExpression = (pathChild) ? `${pathChild.type === 'node' ? nodeToString(pathChild) : edgeToString(pathChild)}` : '';
+  const pathExpression = pathChild
+    ? `${pathChild.type === 'node' ? nodeToString(pathChild) : edgeToString(pathChild)}`
+    : '';
   if (pathContent.length > 0) {
     return `[${pathContent} ${pathExpression}]`;
   } else {
@@ -78,16 +77,12 @@ const stringify = (ast: GramAstStructure): string => {
   switch (ast.type) {
     case 'gram':
       return ast.children.map(stringify).join('\n');
-      break;
     case 'path':
       return pathToString(ast);
-      break;
     case 'node':
       return nodeToString(ast);
-      break;
     case 'edge':
       return edgeToString(ast);
-      break;
     default:
       console.error(`Impossible:`, typeof ast);
   }

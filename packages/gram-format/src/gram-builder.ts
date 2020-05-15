@@ -52,7 +52,7 @@ export const path = (child?: NodeOrEdge, id?: string, labels?: string[], record?
   ...(id && { id }),
   labels,
   ...(record && { record }),
-  children: child? [child] : [],
+  children: child ? [child] : [],
 });
 
 // export const EMPTY = {
@@ -70,7 +70,7 @@ export const record = (properties: Property[]): Record => {
   return properties.reduce((acc: Record, p: Property) => {
     acc[p.name] = p.value;
     return acc;
-  }, <Record>{});
+  }, {} as Record);
 };
 
 /**

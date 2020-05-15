@@ -63,7 +63,7 @@ export interface Path extends GramParent, GramContentElement {
   /**
    * Either a single child that is the root of a path expression,
    * or an empty list.
-   * 
+   *
    */
   children: [Node | Edge] | [];
 }
@@ -99,7 +99,7 @@ export const isNode = (o: any): o is Node => !!o.type && o.type === 'node';
 /**
  * EdgeDirection describes the orientation between pair within a sequential path expression.
  * A path is always traversed left-to-right, with the left-most node as the head and the
- * rightmost node as the tail. 
+ * rightmost node as the tail.
  *
  * One of:
  *

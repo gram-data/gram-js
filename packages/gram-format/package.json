@@ -1,6 +1,9 @@
 {
   "name": "@gram-data/gram-format",
-  "version": "0.1.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "version": "0.1.2",
   "license": "Apache-2.0",
   "author": "Andreas Kollegger",
   "main": "dist/index.js",

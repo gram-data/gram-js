@@ -30,7 +30,7 @@ function reportError(this: any, parser: any, parseError: any) {
   var lines = [];
   var tokenDisplay =
     (token.type ? token.type + ' token: ' : '') + JSON.stringify(token.value !== undefined ? token.value : token);
-  lines.push(parser.lexer.formatError(token, "Syntax error"));
+  lines.push(parser.lexer.formatError(token, 'Syntax error'));
   // lines.push(this.formatError(parser.lexer, token, 'Syntax error'));
   lines.push('Unexpected ' + tokenDisplay + '. Instead, I was expecting to see one of the following:\n');
   var lastColumnIndex = parser.table.length - 2;
