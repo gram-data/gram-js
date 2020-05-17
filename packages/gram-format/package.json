@@ -29,7 +29,7 @@
     "docs": "run-s typedoc railroad",
     "typedoc": "typedoc --out docs src",
     "railroad": "nearley-railroad ./src/gram.ne -o docs/railroad.html",
-    "test-lib": "tsdx test --watch",
+    "test": "tsdx test --watch",
     "near": "nearleyc src/gram.ne -o src/gram-parse.ts",
     "test-features": "run-s build-cucumber test-cucumber",
     "test-cucumber": "cucumber-js features",
