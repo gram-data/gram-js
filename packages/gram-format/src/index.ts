@@ -15,7 +15,7 @@ const makeParser = () => {
   return new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
 };
 
-export { ast, tokens, builder, find, identity, makeParser, reporter };
+export { ast, tokens, builder, find, identity, makeParser, reporter, stringify, profile, transform };
 
 export default {
   ast,
