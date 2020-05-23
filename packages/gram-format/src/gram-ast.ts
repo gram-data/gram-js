@@ -69,7 +69,7 @@ export interface Path extends GramParent, GramContentElement {
 }
 
 /**
- * Checks whether the object looks like a Path.
+ * Checks whether the ast object looks like a Path.
  *
  * @param o any object
  */
@@ -90,7 +90,7 @@ export interface Node extends GramChild, GramContentElement {
 }
 
 /**
- * Checks whether the object looks like an Node.
+ * Checks whether the ast object looks like an Node.
  *
  * @param o any object
  */
@@ -132,7 +132,7 @@ export interface Edge extends GramParent, GramContentElement {
 }
 
 /**
- * Checks whether the object looks like an Edge.
+ * Checks whether the ast object looks like an Edge.
  *
  * @param o any object
  */

@@ -27,13 +27,13 @@ export const alphabets = {
 
 shortid.characters(alphabets.base64);
 
-const identifierRegex = tokens.RE.identifier;
+const checkIdentifierRegex = new RegExp('^' + tokens.RE.identifier.source + '$');
 
 /**
  * Checks whether the given string is a valid identifier.
  *
  */
-export const isValidIdentifier = identifierRegex.test.bind(identifierRegex);
+export const isValidIdentifier = checkIdentifierRegex.test.bind(checkIdentifierRegex);
 
 /**
  *
@@ -53,8 +53,14 @@ export const integerToBaseID = (alphabet: string, n: number) => {
   return '_' + baseX(alphabet).encode(decodeInteger(n));
 };
 
-export const integerLiteralToBase = (alphabet: string, n: string) => {
-  return baseX(alphabet).encode(baseX(alphabets.base10).decode(n));
+/**
+ * Convert an arbitrary length base-10 integer literal into valid identifier in another base representation.
+ *
+ * @param alphabet alphabet for base-x output
+ * @param n base-10 numeric string input
+ */
+export const integerLiteralToBaseID = (alphabet: string, n: string) => {
+  return '_' + baseX(alphabet).encode(baseX(alphabets.base10).decode(n));
 };
 
 /**
@@ -113,8 +119,11 @@ export const idEncoder = (idToEncode?: string): string => {
 // }
 
 export default {
+  alphabets,
   isValidIdentifier,
   shortID,
   base36ID,
   idFunctionNamed,
+  idEncoder,
+  integerLiteralToBaseID,
 };

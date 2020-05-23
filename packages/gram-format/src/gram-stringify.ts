@@ -10,7 +10,7 @@ import {
   isLiteral,
 } from './gram-ast';
 
-const isEmpty = (o:any) => (Object.keys(o).length === 0);
+const isEmpty = (o: any) => Object.keys(o).length === 0;
 
 const toStringLiteral = (l: Literal): string => {
   switch (l.type) {
@@ -42,8 +42,8 @@ const recordToString = (record: Record): string => {
 
 const elementContentToString = (ast: GramContentElement): string => {
   const idString = ast.id || '';
-  const labelsString = (ast.labels && ast.labels.length>0) ? ':' + ast.labels.join(':') : '';
-  const recordString = (ast.record && !isEmpty(ast.record)) ? recordToString(ast.record) : '';
+  const labelsString = ast.labels && ast.labels.length > 0 ? ':' + ast.labels.join(':') : '';
+  const recordString = ast.record && !isEmpty(ast.record) ? recordToString(ast.record) : '';
   return `${idString}${labelsString}${recordString.length > 0 ? ' ' : ''}${recordString}`;
 };
 
