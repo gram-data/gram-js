@@ -6,6 +6,9 @@
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist",
     "src"
@@ -19,12 +22,16 @@
     "test": "tsdx test",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
-    "demo": "parcel public/index.html"
+    "demo": "parcel public/index.html",
+    "release": "np"
   },
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
     }
+  },
+  "np": {
+    "yarn": true
   },
   "prettier": {
     "printWidth": 80,
@@ -37,6 +44,7 @@
     "d3": "^5.16.0",
     "d3-force": "^2.0.1",
     "husky": "^4.2.5",
+    "np": "^6.2.3",
     "tsdx": "^0.13.2",
     "tslib": "^2.0.0",
     "typescript": "^3.9.3"
