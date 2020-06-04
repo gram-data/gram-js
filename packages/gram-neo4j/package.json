@@ -3,9 +3,11 @@
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "bin": {
+    "gram-neo4j": "./bin/cli.js"
+  },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "engines": {
     "node": ">=10"
@@ -29,11 +31,11 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "gram-neo4j",
+  "name": "@gram-data/gram-neo4j",
   "author": "Andreas Kollegger",
   "module": "dist/gram-neo4j.esm.js",
   "dependencies": {
-    "@gram-data/gram-format": "^0.1.5",
+    "@gram-data/gram-format": "*",
     "chalk": "^4.0.0",
     "commander": "^5.1.0",
     "is-reachable": "^4.0.0",

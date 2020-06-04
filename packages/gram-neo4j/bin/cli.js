@@ -7,7 +7,7 @@ const chalk = require("chalk");
 
 const gram    = require('@gram-data/gram-format').default;
 
-const {fetch, boltRecordToAst}  = require('../dist');
+const {fetch, boltRecordToAstPath}  = require('../dist');
 const package = require('../package.json');
 const {map,tap} = require('rxjs/operators');
 
@@ -25,7 +25,7 @@ fetch('neo4j://localhost:7687/neo4j', program.export)
     records
     .pipe(
       tap(record => program.debug ? console.log(JSON.stringify(record)) : null),
-      map(boltRecordToAst)
+      map(boltRecordToAstPath)
     ).subscribe({
     next: ast => console.log(gram.stringify(ast)),
     complete: () => { 
