@@ -74,7 +74,7 @@ export const record = (properties: Property[]): Record => {
 };
 
 /**
- * Construct a Node.
+ * Build a Node.
  *
  * @param id identifier
  * @param labels
@@ -87,6 +87,15 @@ export const node = (id?: string, labels?: string[], record?: Record): Node => (
   ...(record && { record }),
 });
 
+/**
+ * Build an Edge.
+ *
+ * @param children
+ * @param direction
+ * @param id
+ * @param labels
+ * @param record
+ */
 export const edge = (
   children: [Node, NodeOrEdge],
   direction: EdgeDirection = 'right',
