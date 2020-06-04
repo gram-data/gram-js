@@ -23,7 +23,7 @@
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "demo": "parcel public/index.html",
-    "release": "np"
+    "release": "np --no-tests"
   },
   "husky": {
     "hooks": {
@@ -31,7 +31,8 @@
     }
   },
   "np": {
-    "yarn": true
+    "yarn": false,
+    "releaseDraft": true
   },
   "prettier": {
     "printWidth": 80,

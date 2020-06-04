@@ -33,7 +33,7 @@
     "near": "nearleyc src/gram.ne -o src/gram-parse.ts",
     "test-features": "run-s build-cucumber test-cucumber",
     "test-cucumber": "cucumber-js features",
-    "release": "np"
+    "release": "np --no-tests"
   },
   "peerDependencies": {},
   "husky": {
@@ -42,7 +42,8 @@
     }
   },
   "np": {
-    "yarn": true
+    "yarn": false,
+    "releaseDraft": true
   },
   "prettier": {
     "printWidth": 120,
