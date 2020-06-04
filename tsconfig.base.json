@@ -20,7 +20,7 @@
     "moduleResolution": "node",
     "baseUrl": "packages",
     "paths": {
-      "@-gram/*": ["*/src/"]
+      "@gram-data/*": ["*/src/"]
     },
     "esModuleInterop": true
   }
