@@ -47,6 +47,13 @@ export interface Gram extends GramParent, GramContentElement {
 }
 
 /**
+ * Checks whether the ast object looks like Gram.
+ *
+ * @param o any object
+ */
+export const isGram = (o: any): o is Gram => !!o.type && o.type === 'gram';
+
+/**
  * Path is a tree of Nodes and Edges.
  * The direction of a Path is always left to right
  * regardless of the internal directions of any

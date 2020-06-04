@@ -2,7 +2,7 @@ import { Node, Edge, Record, RecordValue, isNode } from './gram-ast';
 import { Option, none, some } from 'fp-ts/lib/Option';
 
 /**
- * Returns left node of an edge.
+ * Finds left node of an edge.
  *
  * @param edge
  */
@@ -11,7 +11,7 @@ export const leftNodeOf = (edge: Edge): Node => {
 };
 
 /**
- * Returns right node of an edge.
+ * Finds right node of an edge.
  *
  * @param edge
  */

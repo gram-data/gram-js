@@ -19,7 +19,9 @@
     "lint": "tsdx lint --fix",
     "prepare": "tsdx build"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "@gram-data/gram-format":"^0.1.5"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
