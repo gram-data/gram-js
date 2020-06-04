@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "0.1.5",
+  "version": "0.1.6",
   "license": "Apache-2.0",
   "author": "Andreas Kollegger",
   "main": "dist/index.js",
@@ -33,7 +33,7 @@
     "near": "nearleyc src/gram.ne -o src/gram-parse.ts",
     "test-features": "run-s build-cucumber test-cucumber",
     "test-cucumber": "cucumber-js features",
-    "release": "np --no-tests"
+    "release": "np --no-tests --no-release-draft"
   },
   "peerDependencies": {},
   "husky": {
@@ -42,8 +42,7 @@
     }
   },
   "np": {
-    "yarn": false,
-    "releaseDraft": true
+    "yarn": false
   },
   "prettier": {
     "printWidth": 120,
