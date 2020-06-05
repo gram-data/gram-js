@@ -23,16 +23,12 @@
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "demo": "parcel public/index.html",
-    "release": "np --no-tests"
+    "release": "np --no-tests --no-release-draft --no-yarn"
   },
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
     }
-  },
-  "np": {
-    "yarn": false,
-    "releaseDraft": true
   },
   "prettier": {
     "printWidth": 80,
