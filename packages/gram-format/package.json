@@ -33,16 +33,13 @@
     "near": "nearleyc src/gram.ne -o src/gram-parse.ts",
     "test-features": "run-s build-cucumber test-cucumber",
     "test-cucumber": "cucumber-js features",
-    "release": "np --no-tests --no-release-draft"
+    "release": "np --no-tests --no-release-draft --no-yarn"
   },
   "peerDependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint src"
     }
-  },
-  "np": {
-    "yarn": true
   },
   "prettier": {
     "printWidth": 120,
