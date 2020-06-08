@@ -1,6 +1,6 @@
 {
   "name": "@gram-data/gram-d3",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "Andreas Kollegger",
   "module": "dist/gram-d3.esm.js",
   "license": "MIT",
