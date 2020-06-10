@@ -47,9 +47,6 @@
     "tslib": "^2.0.0",
     "typescript": "^3.9.3"
   },
-  "peerDependencies": {
-    "@gram-data/gram-format": "^0.1.5"
-  },
   "dependencies": {
     "@gram-data/gram-format": "*",
     "d3": "^5.16.0"

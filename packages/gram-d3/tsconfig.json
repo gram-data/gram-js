@@ -2,7 +2,6 @@
   "extends": "../../tsconfig.base.json",
   "include": ["src", "types"],
   "compilerOptions": {
-    "rootDir": "./src",
     "outDir": "./dist",
     "module": "esnext",
     "lib": ["dom", "esnext"],
@@ -17,6 +16,7 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
+      "@gram-data/*": ["../*/src/"],
       "*": ["src/*", "node_modules/*"]
     },
     "jsx": "react",

@@ -64,8 +64,8 @@ export const edgeToD3 = (edge: ast.Edge): GramLinkDatum => {
 export const gramParse = (src: string): D3Gram => {
   const parsed = parse(src);
   const d3Gram = {
-    nodes: transform.foldNodes(parsed).map(nodeToD3),
-    links: transform.foldEdges(parsed).map(edgeToD3),
+    nodes: transform.mergeNodes(parsed).map(nodeToD3),
+    links: transform.mergeEdges(parsed).map(edgeToD3),
     paths: [],
   };
 

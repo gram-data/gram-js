@@ -351,7 +351,6 @@ describe('gramParse', () => {
     const expectedGroup = 1;
     const d3Graph = gramParse(src);
     const d3Node = d3Graph.nodes[0];
-    console.dir(d3Node);
     expect(d3Node.record).toHaveProperty('name');
     expect(d3Node.record.name).toStrictEqual(expectedName);
     expect(d3Node.record).toHaveProperty('group');
