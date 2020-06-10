@@ -3,13 +3,13 @@
   "homepage": "https://github.com/gram-data/gram-js/tree/master/packages/gram-format",
   "bugs": "https://github.com/gram-data/gram-js/issues",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/gram-data/gram-js.git"
+    "type": "git",
+    "url": "https://github.com/gram-data/gram-js.git"
   },
   "publishConfig": {
     "access": "public"
   },
-  "version": "0.1.9",
+  "version": "0.1.10",
   "license": "Apache-2.0",
   "author": "Andreas Kollegger",
   "main": "dist/index.js",
