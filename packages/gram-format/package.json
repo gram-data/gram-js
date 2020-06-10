@@ -1,5 +1,11 @@
 {
   "name": "@gram-data/gram-format",
+  "homepage": "https://github.com/gram-data/gram-js/tree/master/packages/gram-format",
+  "bugs": "https://github.com/gram-data/gram-js/issues",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/gram-data/gram-js.git"
+  },
   "publishConfig": {
     "access": "public"
   },
