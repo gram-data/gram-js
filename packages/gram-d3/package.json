@@ -1,5 +1,11 @@
 {
   "name": "@gram-data/gram-d3",
+  "homepage": "https://github.com/gram-data/gram-js/tree/master/packages/gram-d3",
+  "bugs": "https://github.com/gram-data/gram-js/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gram-data/gram-js.git"
+  },
   "version": "0.1.1",
   "author": "Andreas Kollegger",
   "module": "dist/gram-d3.esm.js",
