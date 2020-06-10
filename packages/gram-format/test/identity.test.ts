@@ -254,8 +254,8 @@ describe('base62 identifiers', () => {
     ${8}   | ${'_8'}
     ${9}   | ${'_9'}
     ${10}  | ${'_a'}
-  `('${base10} in base-10 becomes $base62 in base-62', ({ base10, base62 }) => {
-    expect(integerToBaseID(alphabets.base62, base10)).toBe(base62)
+  `('$base10 in base-10 becomes $base62 in base-62', ({ base10, base62 }) => {
+    expect(integerToBaseID(alphabets.base62, base10)).toBe(base62);
   });
 });
 

@@ -6,15 +6,15 @@ import stringify from '../src/gram-stringify';
 describe('gram stringify for defined paths', () => {
   it('ignores undefined paths', () => {
     const path = builder.path();
-    expect(stringify(path)).toBe("");
+    expect(stringify(path)).toBe('');
   });
   it('ignores empty labels', () => {
-    const path = builder.path(undefined,undefined,[]);
-    expect(stringify(path)).toBe("");
+    const path = builder.path(undefined, undefined, []);
+    expect(stringify(path)).toBe('');
   });
   it('ignores empty records', () => {
-    const path = builder.path(undefined,undefined,undefined,{});
-    expect(stringify(path)).toBe("");
+    const path = builder.path(undefined, undefined, undefined, {});
+    expect(stringify(path)).toBe('');
   });
 });
 

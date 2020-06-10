@@ -1,18 +1,38 @@
 import { Option, getOrElse } from 'fp-ts/lib/Option';
 
-import { GramParent, Node, GramAstStructure, Edge } from './gram-ast';
+import { GramParent, Node, GramAstStructure, Edge, GramChild, isNode, Literal } from './gram-ast';
 import { idEncoder, shortID } from './gram-identity';
+import { node } from './gram-builder';
+
 const visit = require('unist-util-visit');
 
+export const merge = <T extends GramChild>(target: T, source: T) => {
+  if (isNode(target) && isNode(source)) {
+    return node(
+      source.id || target.id,
+      [...(source.labels || []), ...(target.labels || [])],
+      Object.assign(target.record || {}, source.record || {})
+    );
+  }
+
+  return target;
+};
+
+export const values = (from: Literal[]) => from.map(literal => literal.value);
+
 /**
- * Extracts node-type ast elements from a gram ast.
+ * Folds over node-type ast elements with an identity-based merge.
+ * The result is a set of all nodes, each with the most recent labels
+ * and record values.
  *
- * @param ast the root of the ast from which nodes will be extracted
+ * @param ast the root of the ast in which to find nodes
  */
-export const foldNodes = (ast: GramParent): Node[] => {
+export const mergeNodes = (ast: GramParent): Node[] => {
   const nodeMap = new Map<string, Node>();
   visit(ast, 'node', (n: Node) => {
-    nodeMap.set(identify(n, shortID), n);
+    const nodeId = identify(n, shortID);
+    const existingNode = nodeMap.get(nodeId) || node();
+    nodeMap.set(nodeId, merge(existingNode, n));
   });
   return Array.from(nodeMap.values());
 };
@@ -49,7 +69,7 @@ export const identify = (e: GramAstStructure, idGenerator: (e: GramAstStructure)
 };
 
 export default {
-  foldNodes,
+  foldNodes: mergeNodes,
   foldEdges,
   identify,
   reidentify,

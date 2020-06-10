@@ -271,7 +271,7 @@ export interface DecimalLiteral extends Literal {
 export const isDecimalLiteral = (o: any): o is DecimalLiteral => !!o.type && !!o.value && o.type === 'decimal';
 
 /**
- * Represents a number expressed in hexadecimal, like 0xc0d3.
+ * Represents an integer expressed in hexadecimal, like 0xc0d3.
  *
  * The prefix `0x` signifies a hexadecimal value to follow.
  */
@@ -288,7 +288,7 @@ export const isHexadecimalLiteral = (o: any): o is HexadecimalLiteral =>
   !!o.type && !!o.value && o.type === 'hexadecimal';
 
 /**
- * Represents a number expressed in octal, like 01372.
+ * Represents an integer expressed in octal, like 01372.
  *
  * The prefix `0` signifies octal notation value to follow.
  * Without the leading 0, the number would represent an integer.
