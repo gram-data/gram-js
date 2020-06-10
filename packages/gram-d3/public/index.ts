@@ -1,8 +1,9 @@
 import * as d3 from "d3";
 
-import {gramParse, GramNodeDatum, GramLinkDatum, isGramNodeDatum} from '../dist';
+import {gramParse, GramNodeDatum, GramLinkDatum, isGramNodeDatum} from '../src';
 
-const miserables = require('./miserables.gram');
+// a trick enabled by parcel. `miserables` will  be a URL
+const miserables = require('./miserables.gram'); 
 
 const shapeSize = 1200;
 
@@ -91,14 +92,12 @@ const drawNodes = (nodes:any) => {
 window.onload = () => {
 
   d3.text(miserables).then( gramSource => {
-    // const gramSource = "(a:Person {born:date`1969-01-01`})-->(b:Event)<--(c:Movie)"
+    const altGramSource = "(a:Person {born:date`1969-01-01`})-->(b:Event)<--(c:Movie)"
 
-    console.log(gramSource);
     let graph = gramParse(gramSource);
 
     console.log("D3 Graph Loaded:");
     console.dir(graph);
-  
     
     simulation.nodes(graph.nodes);
     simulation.force("link", d3.forceLink(graph.links).id((d:any) => d.id))

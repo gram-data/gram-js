@@ -1,6 +1,6 @@
 import * as ast from '../src/gram-ast';
 import { parse } from '../src/';
-import { mergeNodes, foldEdges, values } from '../src/gram-transform';
+import { mergeNodes, mergeEdges, values } from '../src/gram-transform';
 // import stringify from '../src/gram-stringify';
 
 const validateNodes = (nodes: ast.Node[]) => {
@@ -97,15 +97,6 @@ describe('merging nodes', () => {
   });
 });
 
-describe('extracting edges', () => {
-  it('works fine with a single edge', () => {
-    const src = '()--()';
-    const result = parse(src);
-    const edges = foldEdges(result);
-    expect(edges).toHaveLength(1);
-    validateEdges(edges);
-  });
-});
 
 describe('merging nodes during fold', () => {
   it('works fine empty nodes', () => {
@@ -160,5 +151,16 @@ describe('merging nodes during fold', () => {
     } else {
       fail(`Expected 'Literal Array' but received ${recordValueN}`);
     }
+  });
+
+
+  describe('extracting edges', () => {
+    it('works fine with a single edge', () => {
+      const src = '()--()';
+      const result = parse(src);
+      const edges = mergeEdges(result);
+      expect(edges).toHaveLength(1);
+      validateEdges(edges);
+    });
   });
 });

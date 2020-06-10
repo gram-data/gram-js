@@ -37,7 +37,7 @@ export const mergeNodes = (ast: GramParent): Node[] => {
   return Array.from(nodeMap.values());
 };
 
-export const foldEdges = (ast: GramParent): Edge[] => {
+export const mergeEdges = (ast: GramParent): Edge[] => {
   const edgeMap = new Map<string, Edge>();
   visit(ast, 'edge', (n: Edge) => {
     edgeMap.set(identify(n, shortID), n);
@@ -69,8 +69,8 @@ export const identify = (e: GramAstStructure, idGenerator: (e: GramAstStructure)
 };
 
 export default {
-  foldNodes: mergeNodes,
-  foldEdges,
+  mergeNodes,
+  mergeEdges,
   identify,
   reidentify,
 };
