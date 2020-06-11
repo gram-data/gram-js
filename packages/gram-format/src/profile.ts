@@ -1,7 +1,6 @@
 import { GramParent, Record, GramAstStructure } from './gram-ast';
 
 const visit = require('unist-util-visit');
-const _ = require('lodash');
 
 export interface GramProfile {
   path: {
@@ -65,16 +64,14 @@ const profile = (ast: GramParent): GramProfile => {
         break;
       case 'node':
         profiled.node.count++;
-        if (_.isString(element.id)) profiled.node.identifiers.add(element.id!);
-        if (element.labels && _.isArray(element.labels))
-          element.labels.forEach(label => profiled.node.labels.add(label));
+        if (element.id) profiled.node.identifiers.add(element.id!);
+        if (element.labels) element.labels.forEach(label => profiled.node.labels.add(label));
         if (element.record) profileRecord(element.record);
         break;
       case 'edge':
         profiled.relationship.count++;
-        if (_.isString(element.id)) profiled.relationship.identifiers.add(element.id!);
-        if (element.labels && _.isArray(element.labels))
-          element.labels.forEach(label => profiled.relationship.labels.add(label));
+        if (element.id) profiled.relationship.identifiers.add(element.id!);
+        if (element.labels) element.labels.forEach(label => profiled.relationship.labels.add(label));
         if (element.record) profileRecord(element.record);
         break;
     }
