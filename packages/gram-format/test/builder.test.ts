@@ -168,3 +168,11 @@ describe('gram builder for edges', () => {
     expect((edge.record?.c as ast.IntegerLiteral).type).toBe('integer');
   });
 });
+
+describe('gram builder flatten()', () => {
+  it('flattens an already flat array', () => {
+    const unflat = [1,2,3];
+    const flattened = g.flatten(unflat);
+    expect(flattened).toEqual(expect.arrayContaining([1,2,3]))
+  })
+})

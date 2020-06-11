@@ -21,7 +21,6 @@ declare var unit: any;
 declare var whitespace: any;
 declare var lineComment: any;
 
-const _ = require('lodash');
 const moo = require('moo');
 
 let lexer = moo.compile({
@@ -124,7 +123,7 @@ const grammar: Grammar = {
   ParserRules: [
     { name: 'Gram$ebnf$1', symbols: ['Block'] },
     { name: 'Gram$ebnf$1', symbols: ['Gram$ebnf$1', 'Block'], postprocess: d => d[0].concat([d[1]]) },
-    { name: 'Gram', symbols: ['Gram$ebnf$1'], postprocess: data => g.gram(_.reject(_.flattenDeep(data), _.isNil)) },
+    { name: 'Gram', symbols: ['Gram$ebnf$1'], postprocess: data => g.gram(g.flatten(data)) },
     { name: 'Block', symbols: ['PathPattern', '_'], postprocess: ([pp]) => pp },
     { name: 'Block', symbols: ['Comment'], postprocess: empty },
     { name: 'PathPattern$ebnf$1', symbols: ['EdgePattern'], postprocess: id },

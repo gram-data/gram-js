@@ -1,7 +1,6 @@
 @preprocessor typescript
 
 @{% 
-const _ = require('lodash')
 const moo = require('moo')
 import g from './gram-builder' 
 import {RE} from './gram-tokens';
@@ -47,7 +46,7 @@ let lexer = moo.compile({
 @lexer lexer
 
 Gram -> Block:+
-  {% (data) => g.gram( _.reject(_.flattenDeep(data), _.isNil)) %}
+  {% (data) => g.gram( g.flatten(data) ) %}
 
 Block ->
     PathPattern _  {% ([pp]) => pp %}

@@ -14,6 +14,7 @@
   "author": "Andreas Kollegger",
   "main": "dist/index.js",
   "module": "dist/gram-format.esm.js",
+  "unpkg": "dist/gram-format.umd.production.min.js",
   "types": "dist/index.d.ts",
   "engines": {
     "node": ">=0.12"
@@ -26,9 +27,8 @@
   ],
   "scripts": {
     "clean": "shx rm -rf dist features/support/js .rts2_cache*",
-    "build": "run-s clean near lint-fix build-node",
-    "build-node": "tsdx build --target node --entry src/index.ts",
-    "build-web": "tsdx build --target web",
+    "build": "run-s clean near lint-fix build-dist",
+    "build-dist": "tsdx build --format umd,cjs,esm",
     "build-cucumber": "tsc --project tsconfig-cucumber.json",
     "lint": "tsdx lint src",
     "lint-fix": "tsdx lint src --fix",
@@ -38,8 +38,8 @@
     "test": "tsdx test",
     "test:watch": "tsdx test --watch",
     "near": "nearleyc src/gram.ne -o src/gram-parse.ts",
-    "test-features": "run-s build-cucumber test-cucumber",
-    "test-cucumber": "cucumber-js features",
+    "test:features": "run-s build-cucumber test:cucumber",
+    "test:cucumber": "cucumber-js features",
     "release": "np --no-tests --no-release-draft --no-yarn"
   },
   "peerDependencies": {},
@@ -84,9 +84,6 @@
     "chalk": "^4.0.0",
     "commander": "^5.1.0",
     "fp-ts": "^2.6.2",
-    "lodash": "^4.17.15",
-    "lodash-es": "^4.17.15",
-    "monocle-ts": "^2.2.0",
     "nearley": "^2.19.3",
     "shortid": "^2.2.15",
     "unified": "^9.0.0",

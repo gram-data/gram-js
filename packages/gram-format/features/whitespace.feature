@@ -14,8 +14,8 @@ Feature: Nodes and relationships form paths.
   Scenario: nodes with arbitrary whitespace
     Given a gram written as
       """
-      (1:Person  { name: 'Lukas Legros', email: 'Hester18@gmail.com'})
-      (2:Person  { name: "Lukas Legros", email: "Hester18@gmail.com"})
+      (_1:Person  { name: 'Lukas Legros', email: 'Hester18@gmail.com'})
+      (_2:Person  { name: "Lukas Legros", email: "Hester18@gmail.com"})
       """
     Then the stream should contain 2 paths
     And the paths should contain 2 nodes

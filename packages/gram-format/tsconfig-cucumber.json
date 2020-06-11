@@ -6,6 +6,7 @@
     "outDir": "./features/support/js",        /* Redirect output structure to the directory. */
     "moduleResolution": "node",            /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
     "skipLibCheck": true,
+    "esModuleInterop": true
   },
   "include": [
       "features/support/*.ts"

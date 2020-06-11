@@ -152,6 +152,8 @@ export const dayOfMonth = (value: string | Date): TaggedLiteral =>
 export const time = (value: string | Date): TaggedLiteral =>
   tagged(value instanceof Date ? dateToYMD(value) : value, 'time');
 
+export const flatten = (xs: any[], depth = 1) => xs.flat(depth);
+
 export default {
   gram,
   path,
@@ -169,4 +171,5 @@ export default {
   unit,
   date,
   time,
+  flatten,
 };

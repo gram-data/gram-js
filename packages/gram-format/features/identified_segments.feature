@@ -13,7 +13,7 @@ Feature: Identified nodes and relationships.
       """
       ()
       (a)
-      (1)
+      (_1)
       (a1)  (b2)
       (`spaces & punctuation ^.! isolated by backticks`)
       (`'single quotes' "double quotes"`)
@@ -28,9 +28,9 @@ Feature: Identified nodes and relationships.
       (a)--()
       ()--(b)
       (a)--(b)
-      (1)-->()
-      ()-->(2)
-      (1)-->(2)
+      (_1)-->()
+      ()-->(_2)
+      (_1)-->(_2)
       (a1)<--()
       ()<--(b2)
       (a1)<--(b2)
@@ -45,7 +45,7 @@ Feature: Identified nodes and relationships.
       """
       ()-[]-()
       ()-[a]-()
-      ()-[1]->()
+      ()-[_1]->()
       ()<-[a1]-()
       """
     Then the stream should contain 4 paths 
@@ -57,9 +57,9 @@ Feature: Identified nodes and relationships.
     Given a gram written as
       """
       ()-[]-()
-      (a)-[1]-(b)
-      (c)-[2]->(d)
-      (e)<-[3]-(f)
+      (a)-[_1]-(b)
+      (c)-[_2]->(d)
+      (e)<-[_3]-(f)
       """
     Then the stream should contain 4 paths 
     And the paths should contain 8 nodes

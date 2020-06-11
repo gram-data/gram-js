@@ -5,7 +5,7 @@ const find = require('unist-util-find')
 import gram from '../../src';
 
 Before(function() {
-  this.parser = gram.parser()
+  this.parser = gram.makeParser()
 })
 
 After(function() {
