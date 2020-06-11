@@ -171,8 +171,8 @@ describe('gram builder for edges', () => {
 
 describe('gram builder flatten()', () => {
   it('flattens an already flat array', () => {
-    const unflat = [1,2,3];
+    const unflat = [1, 2, 3];
     const flattened = g.flatten(unflat);
-    expect(flattened).toEqual(expect.arrayContaining([1,2,3]))
-  })
-})
+    expect(flattened).toEqual(expect.arrayContaining([1, 2, 3]));
+  });
+});

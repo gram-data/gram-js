@@ -97,7 +97,6 @@ describe('merging nodes', () => {
   });
 });
 
-
 describe('merging nodes during fold', () => {
   it('works fine empty nodes', () => {
     const src = '(),()';
@@ -152,7 +151,6 @@ describe('merging nodes during fold', () => {
       fail(`Expected 'Literal Array' but received ${recordValueN}`);
     }
   });
-
 
   describe('extracting edges', () => {
     it('works fine with a single edge', () => {
