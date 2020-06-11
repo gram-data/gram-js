@@ -9,7 +9,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "0.1.13",
+  "version": "0.1.14",
   "license": "Apache-2.0",
   "author": "Andreas Kollegger",
   "main": "dist/index.js",
@@ -82,6 +82,7 @@
     "base-x": "^3.0.8",
     "commander": "^5.1.0",
     "fp-ts": "^2.6.2",
+    "moo": "^0.5.1",
     "nearley": "^2.19.3",
     "shortid": "^2.2.15",
     "unified": "^9.0.0",
