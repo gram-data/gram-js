@@ -9,24 +9,24 @@ describe('Gram', () => {
   it('extracts nodes from the ast', () => {
     const src = '(a)-->(b)';
     const parsed = gram.parse(src);
-    const nodes = gram.transform.foldNodes(parsed);
+    const nodes = gram.transform.mergeNodes(parsed);
     expect(nodes).toHaveLength(2);
   });
   it('extracts links from the ast', () => {
     const src = '(a)-->(b)';
     const parsed = gram.parse(src);
-    const links = gram.transform.foldEdges(parsed);
+    const links = gram.transform.mergeEdges(parsed);
     expect(links).toHaveLength(1);
   });
 
   it('extracts links that point to nodes', () => {
     const src = '(a)-->(b)';
     const parsed = gram.parse(src);
-    const nodes = gram.transform.foldNodes(parsed);
-    const links = gram.transform.foldEdges(parsed);
+    const nodes = gram.transform.mergeNodes(parsed);
+    const links = gram.transform.mergeEdges(parsed);
     expect(gram.ast.isNode(links[0].children[0])).toBeTruthy();
     expect(gram.ast.isNode(links[0].children[1])).toBeTruthy();
-    expect(links[0].children[0]).toBe(nodes[0]);
-    expect(links[0].children[1]).toBe(nodes[1]);
+    expect(links[0].children[0].id).toBe(nodes[0].id);
+    expect(links[0].children[1].id).toBe(nodes[1].id);
   });
 });
