@@ -81,7 +81,6 @@
   "dependencies": {
     "base-x": "^3.0.8",
     "commander": "^5.1.0",
-    "fp-ts": "^2.6.2",
     "moo": "^0.5.1",
     "nearley": "^2.19.3",
     "shortid": "^2.2.15",

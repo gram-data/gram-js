@@ -1,5 +1,4 @@
-import { Node, Edge, Record, RecordValue, isNode } from './gram-ast';
-import { Option, none, some } from 'fp-ts/lib/Option';
+import { Node, Edge, isNode } from './gram-ast';
 
 /**
  * Finds left node of an edge.
@@ -20,12 +19,11 @@ export const rightNodeOf = (edge: Edge): Node => {
   return isNode(rightHandPathExpression) ? rightHandPathExpression : leftNodeOf(rightHandPathExpression);
 };
 
-export const propertyOf = (name: string, ast: Record): Option<RecordValue> => {
-  return ast[name] === undefined ? none : some(ast[name]);
-};
+// export const propertyOf = (name: string, ast: Record): Option<RecordValue> => {
+//   return ast[name] === undefined ? none : some(ast[name]);
+// };
 
 export default {
   leftNodeOf,
   rightNodeOf,
-  propertyOf,
 };

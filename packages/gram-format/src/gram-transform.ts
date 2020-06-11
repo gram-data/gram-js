@@ -1,7 +1,5 @@
-import { Option, getOrElse } from 'fp-ts/lib/Option';
-
 import { GramParent, Node, GramAstStructure, Edge, GramChild, isNode, Literal } from './gram-ast';
-import { idEncoder, shortID } from './gram-identity';
+import { shortID } from './gram-identity';
 import { node } from './gram-builder';
 
 const visit = require('unist-util-visit');
@@ -50,18 +48,18 @@ export const mergeEdges = (ast: GramParent): Edge[] => {
  * @param root
  * @param idTransformer
  */
-export const reidentify = (root: GramParent, idTransformer: (n: Node) => Option<string>): GramParent => {
-  const mappedId = new Map<string, string>();
-  visit(root, 'node', (n: Node) => {
-    const nodeId = n.id;
-    if (nodeId) {
-      const transformedId = idEncoder(mappedId.get(nodeId) || getOrElse(() => nodeId)(idTransformer(n)));
-      mappedId.set(nodeId, transformedId);
-      Object.assign(n, { id: transformedId });
-    }
-  });
-  return root;
-};
+// export const reidentify = (root: GramParent, idTransformer: (n: Node) => Option<string>): GramParent => {
+//   const mappedId = new Map<string, string>();
+//   visit(root, 'node', (n: Node) => {
+//     const nodeId = n.id;
+//     if (nodeId) {
+//       const transformedId = idEncoder(mappedId.get(nodeId) || getOrElse(() => nodeId)(idTransformer(n)));
+//       mappedId.set(nodeId, transformedId);
+//       Object.assign(n, { id: transformedId });
+//     }
+//   });
+//   return root;
+// };
 
 export const identify = (e: GramAstStructure, idGenerator: (e: GramAstStructure) => string): string => {
   e.id = e.id || idGenerator(e);
@@ -72,5 +70,4 @@ export default {
   mergeNodes,
   mergeEdges,
   identify,
-  reidentify,
 };
