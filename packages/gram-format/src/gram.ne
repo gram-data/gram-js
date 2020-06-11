@@ -1,8 +1,8 @@
 @preprocessor typescript
 
 @{% 
-const moo = require('moo')
-import g from './gram-builder' 
+import moo from 'moo';
+import g from './gram-builder';
 import {RE} from './gram-tokens';
 
 let lexer = moo.compile({

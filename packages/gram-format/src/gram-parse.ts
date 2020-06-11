@@ -2,8 +2,10 @@
 // http://github.com/Hardmath123/nearley
 // Bypasses TS6133. Allow declared but unused functions.
 // @ts-ignore
+import moo from 'moo';
 import g from './gram-builder';
 import { RE } from './gram-tokens';
+
 function id(d: any[]): any {
   return d[0];
 }
@@ -20,8 +22,6 @@ declare var octal: any;
 declare var unit: any;
 declare var whitespace: any;
 declare var lineComment: any;
-
-const moo = require('moo');
 
 let lexer = moo.compile({
   whitespace: { match: /\s+/, lineBreaks: true },
