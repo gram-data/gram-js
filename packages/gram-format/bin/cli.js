@@ -3,7 +3,6 @@
 const program = require('commander');
 const fs = require("fs");
 const inspect = require('unist-util-inspect')
-const chalk = require("chalk");
 
 const gram    = require('../dist').default;
 
@@ -32,7 +31,7 @@ try {
 
 
   if (result === undefined) {
-    console.error(`${chalk.red("[Error]")} Incomplete parse.`);
+    console.error("[Error] Incomplete parse.");
     process.exit(1)
   }
   // apply post-parse transforms
