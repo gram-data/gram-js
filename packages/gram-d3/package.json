@@ -8,9 +8,10 @@
   },
   "version": "0.1.2",
   "author": "Andreas Kollegger",
-  "module": "dist/gram-d3.esm.js",
   "license": "MIT",
   "main": "dist/index.js",
+  "module": "dist/gram-d3.esm.js",
+  "unpkg": "dist/gram-d3.umd.production.min.js",
   "types": "dist/index.d.ts",
   "publishConfig": {
     "access": "public"
