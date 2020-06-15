@@ -1,6 +1,62 @@
-# gram-format
+# gram-ast
 
-Reference implementation of the gram graph exchange format.
+Graph model abstract syntax tree.
+
+```
+////////
+// unit: an empty path expression
+[]
+[] . [] = []
+identityof [] = undefined
+
+////////
+// node: an identified path expression with no children
+[n] =~ (n)
+
+// identity
+identityof [n] =~ n
+identityof (n) =~ n
+identityof ()  =~ <auto>
+
+// composition
+(n) . (n)  =~ (n)
+(n) . (n2) =~ [e]
+
+////////
+// edge: an identified path expression composed of two nodes
+[n] . [n] =~ [e [n] . [n]]
+[e (n1) . (n2)]
+[e1] . [e2] =~ [p] 
+
+////////
+// path: an identified path expression composed of path expressions 
+
+// unary path operations
+[p [u]] =~ [p]
+[p [e]]
+[p (n)]
+[p [p2]]
+[p [p]] =~ [p]
+
+// binary path operations with unit produce the non-unit operand
+(n) =~ (n) . []
+(n) =~ []  . (n)
+[e] =~ [e] . []
+[e] =~ []  . [e]
+[p] =~ [p] . []
+[p] =~ []  . [p]
+
+// binary path operations with non-unit
+[p [e]  . [p2]]  =~ [e]  . [p2]
+[p [e]  . [e] ]  =~ [e]  . [e]
+[p [e]  . (n) ]  =~ [e]  . (n)
+[p (n)  . [p2]]  =~ (n)  . [p2]
+[p (n)  . [e] ]  =~ (n)  . [e]
+[p (n)  . (n) ]  =~ (n)  . (n)   // aka an edge!
+[p [p1] . [p2]]  =~ [p1] . [p2]
+[p [p1] . [e]]   =~ [p1] . [e]
+[p [p1] . (n)    =~ [p1] . (n)
+```
 
 ## Library Components
 

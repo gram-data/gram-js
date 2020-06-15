@@ -1,11 +1,11 @@
-import { GramParent, Node, GramAstStructure, Edge, GramChild, isNode, Literal } from './gram-ast';
+import { GramPathlikeElement, GramNode, GramEdge, GramLeaf, isGramNode, GramLiteral, GramPathlike } from './gram-types';
 import { shortID } from './gram-identity';
 import { node } from './gram-builder';
 
 const visit = require('unist-util-visit');
 
-export const merge = <T extends GramChild>(target: T, source: T) => {
-  if (isNode(target) && isNode(source)) {
+export const merge = <T extends GramLeaf>(target: T, source: T) => {
+  if (isGramNode(target) && isGramNode(source)) {
     return node(
       source.id || target.id,
       [...(source.labels || []), ...(target.labels || [])],
@@ -16,7 +16,7 @@ export const merge = <T extends GramChild>(target: T, source: T) => {
   return target;
 };
 
-export const values = (from: Literal[]) => from.map(literal => literal.value);
+export const values = (from: GramLiteral[]) => from.map(literal => literal.value);
 
 /**
  * Folds over node-type ast elements with an identity-based merge.
@@ -25,9 +25,9 @@ export const values = (from: Literal[]) => from.map(literal => literal.value);
  *
  * @param ast the root of the ast in which to find nodes
  */
-export const mergeNodes = (ast: GramParent): Node[] => {
-  const nodeMap = new Map<string, Node>();
-  visit(ast, 'node', (n: Node) => {
+export const mergeNodes = (ast: GramPathlikeElement): GramNode[] => {
+  const nodeMap = new Map<string, GramNode>();
+  visit(ast, 'node', (n: GramNode) => {
     const nodeId = identify(n, shortID);
     const existingNode = nodeMap.get(nodeId) || node();
     nodeMap.set(nodeId, merge(existingNode, n));
@@ -35,9 +35,9 @@ export const mergeNodes = (ast: GramParent): Node[] => {
   return Array.from(nodeMap.values());
 };
 
-export const mergeEdges = (ast: GramParent): Edge[] => {
-  const edgeMap = new Map<string, Edge>();
-  visit(ast, 'edge', (n: Edge) => {
+export const mergeEdges = (ast: GramPathlikeElement): GramEdge[] => {
+  const edgeMap = new Map<string, GramEdge>();
+  visit(ast, 'edge', (n: GramEdge) => {
     edgeMap.set(identify(n, shortID), n);
   });
   return Array.from(edgeMap.values());
@@ -61,7 +61,7 @@ export const mergeEdges = (ast: GramParent): Edge[] => {
 //   return root;
 // };
 
-export const identify = (e: GramAstStructure, idGenerator: (e: GramAstStructure) => string): string => {
+export const identify = (e: GramPathlike, idGenerator: (e: GramPathlike) => string): string => {
   e.id = e.id || idGenerator(e);
   return e.id;
 };

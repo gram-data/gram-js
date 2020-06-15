@@ -1,4 +1,4 @@
-import { GramParent, Record, GramAstStructure } from './gram-ast';
+import { GramPathlikeElement, GramRecord, GramPathlike } from './gram-types';
 
 const visit = require('unist-util-visit');
 
@@ -21,7 +21,7 @@ export interface GramProfile {
   properties: { [key: string]: string };
 }
 
-const profile = (ast: GramParent): GramProfile => {
+const profile = (ast: GramPathlikeElement): GramProfile => {
   const profiled: GramProfile = {
     path: {
       count: 0,
@@ -41,7 +41,7 @@ const profile = (ast: GramParent): GramProfile => {
     properties: {} as { [key: string]: string },
   };
 
-  const profileRecord = (record: Record) => {
+  const profileRecord = (record: GramRecord) => {
     for (let prop of Object.entries(record)) {
       const key = prop[0];
       const value = prop[1];
@@ -55,10 +55,8 @@ const profile = (ast: GramParent): GramProfile => {
     }
   };
 
-  visit(ast, (element: GramAstStructure) => {
+  visit(ast, (element: GramPathlike) => {
     switch (element.type) {
-      case 'gram':
-        break;
       case 'path':
         profiled.path.count++;
         break;

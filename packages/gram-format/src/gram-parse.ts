@@ -131,9 +131,9 @@ const grammar: Grammar = {
     {
       name: 'PathPattern',
       symbols: [{ literal: '[' }, '_', 'ContentSpecification', '_', 'PathPattern$ebnf$1', { literal: ']' }],
-      postprocess: ([, , content, , ep]) => g.path(ep || [], content.id, content.labels, content.record),
+      postprocess: ([, , content, , ep]) => g.path([ep] || [], content.id, content.labels, content.record),
     },
-    { name: 'PathPattern', symbols: ['EdgePattern'], postprocess: ([ep]) => g.path(ep) },
+    { name: 'PathPattern', symbols: ['EdgePattern'], postprocess: ([ep]) => g.path([ep]) },
     {
       name: 'NodePattern',
       symbols: [{ literal: '(' }, '_', 'ContentSpecification', { literal: ')' }],

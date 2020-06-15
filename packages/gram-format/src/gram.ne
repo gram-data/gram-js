@@ -57,9 +57,9 @@ Block ->
 # 
 PathPattern ->
   "[" _ ContentSpecification _ EdgePattern:? "]"
-      {% ([,,content,,ep]) => g.path(ep||[], content.id, content.labels, content.record) %}
+      {% ([,,content,,ep]) => g.path([ep]||[], content.id, content.labels, content.record) %}
   |   EdgePattern
-      {% ([ep]) => g.path(ep) %}
+      {% ([ep]) => g.path([ep]) %}
   
 NodePattern ->
   "(" _ ContentSpecification ")" 

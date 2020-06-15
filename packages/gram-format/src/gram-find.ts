@@ -1,12 +1,12 @@
-import { Node, Edge, isNode } from './gram-ast';
+import { GramNode, GramEdge, isGramNode } from './gram-types';
 
 /**
  * Finds left node of an edge.
  *
  * @param edge
  */
-export const leftNodeOf = (edge: Edge): Node => {
-  return edge.children[0] as Node;
+export const leftNodeOf = (edge: GramEdge): GramNode => {
+  return edge.children[0] as GramNode;
 };
 
 /**
@@ -14,9 +14,9 @@ export const leftNodeOf = (edge: Edge): Node => {
  *
  * @param edge
  */
-export const rightNodeOf = (edge: Edge): Node => {
+export const rightNodeOf = (edge: GramEdge): GramNode => {
   const rightHandPathExpression = edge.children[1];
-  return isNode(rightHandPathExpression) ? rightHandPathExpression : leftNodeOf(rightHandPathExpression);
+  return isGramNode(rightHandPathExpression) ? rightHandPathExpression : leftNodeOf(rightHandPathExpression);
 };
 
 // export const propertyOf = (name: string, ast: Record): Option<RecordValue> => {
