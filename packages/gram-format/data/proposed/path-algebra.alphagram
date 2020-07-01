@@ -28,6 +28,8 @@
 // path envelopes are useful for annotating nodes with extra data
 (n:Person {name:'abk'})
 [:D3 {x:20, y:38} (n)]
+[:D3 {x:20, y:38} (n:Person {name:'abk'})]
+
 
 // an empty path with properties
 [ {k:'text', n:42}]

@@ -7,10 +7,10 @@ import {RE} from './gram-tokens';
 
 let lexer = moo.compile({
     whitespace: {match: /\s+/, lineBreaks: true},
-    lineComment: {match:/\/\/.*?$/},
+    lineComment: {match:/\/\/.*?\n?$/},
     hexadecimal: RE.hexadecimal,
     octal: RE.octal,
-    unit: RE.unit,
+    measurement: RE.measurement,
     decimal: RE.decimal,
     integer: RE.integer,
     taggedString: {match: RE.taggedString},
@@ -39,52 +39,54 @@ let lexer = moo.compile({
     ':': ':',
     '`': '`',
     '\'': '\''
-})
+}) as unknown as NearleyLexer
 
 %}
 
 @lexer lexer
 
-Gram -> Block:+
-  {% (data) => g.gram( g.flatten(data) ) %}
-
-Block ->
-    PathPattern _  {% ([pp]) => pp %}
-  | Comment       {% empty %}
+Gram -> (PathlikePattern _ {% ([pp]) => pp %}):+ {% ([pp]) => g.seq( g.flatten(pp) ) %}
 
 #  
-# Graph structure: paths, nodes, relationships
+# Pathlike patterns
 # 
-PathPattern ->
-  "[" _ ContentSpecification _ EdgePattern:? "]"
-      {% ([,,content,,ep]) => g.path(ep||[], content.id, content.labels, content.record) %}
-  |   EdgePattern
-      {% ([ep]) => g.path(ep) %}
+PathlikePattern ->
+    UnitPattern {% id %}
+  | NodePattern {% id %}
+  | EdgePattern {% id %}
+  | PathPattern {% id %}
+  | Comment     {% id %}
   
+UnitPattern -> "[" _ "]" {% () => g.unit() %}
+
 NodePattern ->
   "(" _ ContentSpecification ")" 
     {% ([,,content]) => g.node(content.id, content.labels, content.record) %}
-
+  
 EdgePattern ->
     NodePattern EdgeSpecification EdgePattern 
-      {% ([np,es,ep]) => g.edge([np,ep], es.direction, es.id, es.labels, es.record ) %}
+      {% ([np,es,ep]) => g.cons({operands:[np,ep], operator:es.direction, id:es.id, labels:es.labels, record:es.record} ) %}
   | NodePattern {% id %}
 
 EdgeSpecification ->
     "-[" _ ContentSpecification "]->"   
               {% ([,,content]) => ({direction:'right', ...content}) %}
   | "-[" _ ContentSpecification "]-"    
-              {% ([,,content]) => ({direction:'none', ...content}) %}
+              {% ([,,content]) => ({direction:'either', ...content}) %}
   | "<-[" _ ContentSpecification "]-"   
               {% ([,,content]) => ({direction:'left', ...content}) %}
   | "-[]->"   {% () => ({direction:'right'}) %}
-  | "-[]-"    {% () => ({direction:'none'}) %}
+  | "-[]-"    {% () => ({direction:'either'}) %}
   | "<-[]-"   {% () => ({direction:'left'}) %}
   | "-->"     {% () => ({direction:'right'}) %}
-  | "--"      {% () => ({direction:'none'}) %}
+  | "--"      {% () => ({direction:'either'}) %}
   | "<--"     {% () => ({direction:'left'}) %}
-  | ","       {% () => ({direction:'pair'}) %}
+  # | ","       {% () => ({direction:'pair'}) %}
 
+PathPattern -> 
+  "[" _ ContentSpecification _ PathlikePattern:? _ PathlikePattern:? _ "]"
+  {% ([,,content,,lhs,,rhs]) => g.cons({operands:[lhs,rhs], id:content.id, labels:content.labels, record:content.record}) %}
+  
 ContentSpecification ->
   SymbolicName:? _ LabelList:? _ Record:? {% ([id,,labels,,record]) =>  ( {id, labels, record} )  %}
 
@@ -130,9 +132,9 @@ NumericLiteral ->
   | %decimal      {% (d) => g.decimal(d[0].value) %}
   | %hexadecimal  {% (d) => g.hexadecimal(d[0].value) %}
   | %octal        {% (d) => g.octal(d[0].value) %}
-  | %unit         {% (d) => {
-      const parts = separateNumberFromUnit(d[0].value);
-    return g.unit(parts.unit, parts.value) 
+  | %measurement  {% (d) => {
+      const parts = separateNumberFromUnits(d[0].value);
+    return g.measurement(parts.unit, parts.value) 
   }%}
 
 
@@ -141,9 +143,8 @@ NumericLiteral ->
 #
 _ -> null | %whitespace {% empty %}
 
-EOL -> _ (%lineComment [\n]):? {% empty %}
-
-Comment -> %lineComment [\n]:? {% empty %}
+# Comment -> %lineComment [\n]:? {% empty %}
+Comment -> %lineComment {% empty %}
 
 @{%
 
@@ -171,10 +172,10 @@ function separateTagFromString(taggedStringValue:string) {
 }
 
 
-function separateNumberFromUnit(unitNumberValue:string) {
+function separateNumberFromUnits(measurementValue:string) {
 
-  let valueParts = unitNumberValue.match(/(-?[0-9.]+)([a-zA-Z]+)/);
-  if (valueParts === null || valueParts === undefined) throw Error(`Malformed unit number: ${unitNumberValue}`) 
+  let valueParts = measurementValue.match(/(-?[0-9.]+)([a-zA-Z]+)/);
+  if (valueParts === null || valueParts === undefined) throw Error(`Malformed measurement : ${measurementValue}`) 
   return {
     value: valueParts![1],
     unit: valueParts![2],

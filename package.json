@@ -2,5 +2,13 @@
   "private": true,
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "scripts": {
+    "docs": "typedoc"
+  },
+  "devDependencies": {
+    "@strictsoftware/typedoc-plugin-monorepo": "^0.3.1",
+    "typedoc": "^0.17.8",
+    "typescript": "^3.9.5"
+  }
 }

@@ -1,19 +1,19 @@
 import * as builder from '../src/gram-builder';
-import * as ast from '../src/gram-ast';
+import * as gramTypes from '../src/gram-types';
 import { leftNodeOf, rightNodeOf } from '../src/gram-find';
 import stringify from '../src/gram-stringify';
 
 describe('gram stringify for defined paths', () => {
   it('ignores undefined paths', () => {
-    const path = builder.path();
+    const path = builder.path([]);
     expect(stringify(path)).toBe('');
   });
   it('ignores empty labels', () => {
-    const path = builder.path(undefined, undefined, []);
+    const path = builder.path([], undefined, []);
     expect(stringify(path)).toBe('');
   });
   it('ignores empty records', () => {
-    const path = builder.path(undefined, undefined, undefined, {});
+    const path = builder.path([], undefined, undefined, {});
     expect(stringify(path)).toBe('');
   });
 });
@@ -23,91 +23,91 @@ describe('gram builder for records', () => {
     const value = true;
     const record = { k: builder.boolean(value) };
 
-    expect((record.k as ast.BooleanLiteral).type).toBe('boolean');
-    expect(ast.isBooleanLiteral(record.k)).toBeTruthy();
-    expect((record.k as ast.Literal).value).toBe(String(value));
+    expect((record.k as gramTypes.BooleanLiteral).type).toBe('boolean');
+    expect(gramTypes.isBooleanLiteral(record.k)).toBeTruthy();
+    expect((record.k as gramTypes.GramLiteral).value).toBe(String(value));
   });
   it('with string values', () => {
     const value = 'some text';
     const record = { k: builder.string(value) };
 
-    expect((record.k as ast.StringLiteral).type).toBe('string');
-    expect(ast.isStringLiteral(record.k)).toBeTruthy();
-    expect((record.k as ast.Literal).value).toBe(String(value));
+    expect((record.k as gramTypes.StringLiteral).type).toBe('string');
+    expect(gramTypes.isStringLiteral(record.k)).toBeTruthy();
+    expect((record.k as gramTypes.GramLiteral).value).toBe(String(value));
   });
   it('with integer values', () => {
     const value = 42;
     const record = { k: builder.integer(value) };
 
-    expect((record.k as ast.IntegerLiteral).type).toBe('integer');
-    expect(ast.isIntegerLiteral(record.k)).toBeTruthy();
-    expect((record.k as ast.Literal).value).toBe(String(value));
+    expect((record.k as gramTypes.IntegerLiteral).type).toBe('integer');
+    expect(gramTypes.isIntegerLiteral(record.k)).toBeTruthy();
+    expect((record.k as gramTypes.GramLiteral).value).toBe(String(value));
   });
   it('with tagged values', () => {
     const value = 'some text';
     const tag = 'test';
     const record = { k: builder.tagged(tag, value) };
 
-    expect((record.k as ast.TaggedLiteral).type).toBe('tagged');
-    expect(ast.isTaggedLiteral(record.k)).toBeTruthy();
-    expect((record.k as ast.Literal).value).toBe(String(value));
-    expect((record.k as ast.TaggedLiteral).tag).toBe(String(tag));
+    expect((record.k as gramTypes.TaggedLiteral).type).toBe('tagged');
+    expect(gramTypes.isTaggedLiteral(record.k)).toBeTruthy();
+    expect((record.k as gramTypes.GramLiteral).value).toBe(String(value));
+    expect((record.k as gramTypes.TaggedLiteral).tag).toBe(String(tag));
   });
   it('with unit values', () => {
     const value = 1280;
     const unit = 'px';
     const record = { k: builder.unit(unit, value) };
 
-    expect((record.k as ast.UnitLiteral).type).toBe('unit');
-    expect(ast.isUnitLiteral(record.k)).toBeTruthy();
-    expect((record.k as ast.Literal).value).toBe(String(value));
-    expect((record.k as ast.UnitLiteral).unit).toBe(String(unit));
+    expect((record.k as gramTypes.UnitLiteral).type).toBe('unit');
+    expect(gramTypes.isUnitLiteral(record.k)).toBeTruthy();
+    expect((record.k as gramTypes.GramLiteral).value).toBe(String(value));
+    expect((record.k as gramTypes.UnitLiteral).unit).toBe(String(unit));
   });
   it('with decimal values', () => {
     const value = 3.1495;
     const record = { k: builder.decimal(value) };
 
-    expect((record.k as ast.DecimalLiteral).type).toBe('decimal');
-    expect(ast.isDecimalLiteral(record.k)).toBeTruthy();
-    expect((record.k as ast.Literal).value).toBe(String(value));
+    expect((record.k as gramTypes.DecimalLiteral).type).toBe('decimal');
+    expect(gramTypes.isDecimalLiteral(record.k)).toBeTruthy();
+    expect((record.k as gramTypes.GramLiteral).value).toBe(String(value));
   });
 
   it('with hexadecimal values', () => {
     const value = '0xCAFE1234';
     const record = { k: builder.hexadecimal(value) };
 
-    expect((record.k as ast.HexadecimalLiteral).type).toBe('hexadecimal');
-    expect(ast.isHexadecimalLiteral(record.k)).toBeTruthy();
-    expect((record.k as ast.Literal).value).toBe(String(value));
+    expect((record.k as gramTypes.HexadecimalLiteral).type).toBe('hexadecimal');
+    expect(gramTypes.isHexadecimalLiteral(record.k)).toBeTruthy();
+    expect((record.k as gramTypes.GramLiteral).value).toBe(String(value));
   });
 
   it('with octal values', () => {
     const value = '01234';
     const record = { k: builder.octal(value) };
 
-    expect((record.k as ast.OctalLiteral).type).toBe('octal');
-    expect(ast.isOctalLiteral(record.k)).toBeTruthy();
-    expect((record.k as ast.Literal).value).toBe(String(value));
+    expect((record.k as gramTypes.OctalLiteral).type).toBe('octal');
+    expect(gramTypes.isOctalLiteral(record.k)).toBeTruthy();
+    expect((record.k as gramTypes.GramLiteral).value).toBe(String(value));
   });
   it('with tagged date values', () => {
     const value = new Date().toISOString();
     const tag = 'date';
     const record = { k: builder.tagged(tag, value) };
 
-    expect((record.k as ast.DateLiteral).type).toBe('tagged');
-    expect(ast.isDateLiteral(record.k)).toBeTruthy();
-    expect((record.k as ast.Literal).value).toBe(String(value));
-    expect((record.k as ast.DateLiteral).tag).toBe(String(tag));
+    expect((record.k as gramTypes.DateLiteral).type).toBe('tagged');
+    expect(gramTypes.isDateLiteral(record.k)).toBeTruthy();
+    expect((record.k as gramTypes.GramLiteral).value).toBe(String(value));
+    expect((record.k as gramTypes.DateLiteral).tag).toBe(String(tag));
   });
   it('with tagged geo values', () => {
     const value = 'POINT(-83.123 42.123)';
     const tag = 'geo';
     const record = { k: builder.tagged(tag, value) };
 
-    expect((record.k as ast.GeospatialLiteral).type).toBe('tagged');
-    expect(ast.isGeospatialLiteral(record.k)).toBeTruthy();
-    expect((record.k as ast.Literal).value).toBe(String(value));
-    expect((record.k as ast.GeospatialLiteral).tag).toBe(String(tag));
+    expect((record.k as gramTypes.GeospatialLiteral).type).toBe('tagged');
+    expect(gramTypes.isGeospatialLiteral(record.k)).toBeTruthy();
+    expect((record.k as gramTypes.GramLiteral).value).toBe(String(value));
+    expect((record.k as gramTypes.GeospatialLiteral).tag).toBe(String(tag));
   });
 });
 
@@ -131,9 +131,9 @@ describe('gram builder for nodes', () => {
     const singleNode = builder.node(undefined, undefined, record);
 
     expect(singleNode.record).toBeDefined();
-    expect((singleNode.record?.a as ast.BooleanLiteral).type).toBe('boolean');
-    expect((singleNode.record?.b as ast.StringLiteral).type).toBe('string');
-    expect((singleNode.record?.c as ast.IntegerLiteral).type).toBe('integer');
+    expect((singleNode.record?.a as gramTypes.BooleanLiteral).type).toBe('boolean');
+    expect((singleNode.record?.b as gramTypes.StringLiteral).type).toBe('string');
+    expect((singleNode.record?.c as gramTypes.IntegerLiteral).type).toBe('integer');
   });
 });
 
@@ -179,8 +179,8 @@ describe('gram builder for edges', () => {
     const edge = builder.edge([builder.node(), builder.node()], undefined, undefined, undefined, record);
 
     expect(edge.record).toBeDefined();
-    expect((edge.record?.a as ast.BooleanLiteral).type).toBe('boolean');
-    expect((edge.record?.b as ast.StringLiteral).type).toBe('string');
-    expect((edge.record?.c as ast.IntegerLiteral).type).toBe('integer');
+    expect((edge.record?.a as gramTypes.BooleanLiteral).type).toBe('boolean');
+    expect((edge.record?.b as gramTypes.StringLiteral).type).toBe('string');
+    expect((edge.record?.c as gramTypes.IntegerLiteral).type).toBe('integer');
   });
 });

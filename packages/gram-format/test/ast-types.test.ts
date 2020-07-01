@@ -1,73 +1,102 @@
-import * as ast from '../src/gram-ast';
+import * as gramTypes from '../src/gram-types';
+
+describe('gram unit', () => {
+  it('is entirely empty', () => {
+    const unit = { type: 'unit'}
+    expect(gramTypes.isGramUnit(unit)).toBeTruthy();
+    if (gramTypes.isGramUnit(unit)) {
+      expect(unit.id).toBeUndefined();
+      expect(unit.labels).toBeUndefined();
+      expect(unit.record).toBeUndefined();
+      expect(unit.children).toBeUndefined();
+    }
+  });
+});
+
+describe('gram nodes', () => {
+  it('have identity, labels and a record, but no children', () => {
+    const node = { type: 'node'}
+    expect(gramTypes.isGramNode(node)).toBeTruthy();
+    if (gramTypes.isGramNode(node)) {
+      node.id = 'a';
+      expect(node.id).toEqual('a');
+      node.labels = ["A", "B"]
+      expect(node.labels).toEqual(expect.arrayContaining(["A", "B"]));
+      node.record = { k:{type:"string", value:"v"}};
+      expect(gramTypes.isStringLiteral(node.record.k)).toBeTruthy();
+      expect(node.children).toBeUndefined();
+    }
+  });
+});
 
 describe('gram ast boolean literals', () => {
   it('are a type with value', () => {
     const literal = { type: 'boolean', value: 'true' };
-    expect(ast.isBooleanLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isBooleanLiteral(literal)).toBeTruthy();
   });
   it('must have a type of "boolean"', () => {
     const literal = { type: 'balloon', value: 'false' };
-    expect(ast.isBooleanLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isBooleanLiteral(literal)).toBeFalsy();
   });
   it('must have a value', () => {
     const literal = { type: 'boolean' };
-    expect(ast.isBooleanLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isBooleanLiteral(literal)).toBeFalsy();
   });
   it('do not validate the value', () => {
     const literal = { type: 'boolean', value: 'banana' };
-    expect(ast.isBooleanLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isBooleanLiteral(literal)).toBeTruthy();
   });
   it('has a type guard', () => {
     const literal: any = { type: 'boolean', value: 'false' };
-    if (ast.isBooleanLiteral(literal)) expect(literal.type === 'boolean').toBeTruthy();
-    else fail();
+    if (gramTypes.isBooleanLiteral(literal)) expect(literal.type === 'boolean').toBeTruthy();
+    else fail('Denied by typeguard');
   });
 });
 
 describe('gram ast string literals', () => {
   it('are a type with value', () => {
     const literal = { type: 'string', value: 'textual information' };
-    expect(ast.isStringLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isStringLiteral(literal)).toBeTruthy();
   });
   it('must have a type of "string"', () => {
     const literal = { type: 'strange', value: 'textual information' };
-    expect(ast.isStringLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isStringLiteral(literal)).toBeFalsy();
   });
   it('must have a value', () => {
     const literal = { type: 'string' };
-    expect(ast.isStringLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isStringLiteral(literal)).toBeFalsy();
   });
   it('are lucky because the value is always a string so it is always valid', () => {
     const literal = { type: 'string', value: 'what string is not a string?' };
-    expect(ast.isStringLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isStringLiteral(literal)).toBeTruthy();
   });
   it('has a type guard', () => {
     const literal: any = { type: 'string', value: 'false' };
-    if (ast.isStringLiteral(literal)) expect(literal.type === 'string').toBeTruthy();
-    else fail();
+    if (gramTypes.isStringLiteral(literal)) expect(literal.type === 'string').toBeTruthy();
+    else fail('Denied by typeguard');
   });
 });
 
 describe('gram ast tagged literals', () => {
   it('are a type with value and a tag', () => {
     const literal = { type: 'tagged', tag: 'test', value: 'textual information' };
-    expect(ast.isTaggedLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isTaggedLiteral(literal)).toBeTruthy();
   });
   it('must be of type "tagged"', () => {
     const literal = { type: 'strange', tag: 'test', value: 'textual information' };
-    expect(ast.isTaggedLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isTaggedLiteral(literal)).toBeFalsy();
   });
   it('must have a value', () => {
     const literal = { type: 'tagged', tag: 'test' };
-    expect(ast.isTaggedLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isTaggedLiteral(literal)).toBeFalsy();
   });
   it('are lucky because the value is always a string so it is always valid', () => {
     const literal = { type: 'tagged', tag: 'test', value: 'what string is not a string?' };
-    expect(ast.isTaggedLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isTaggedLiteral(literal)).toBeTruthy();
   });
   it('must have a tag', () => {
     const literal = { type: 'tagged', value: 'some text' };
-    expect(ast.isTaggedLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isTaggedLiteral(literal)).toBeFalsy();
   });
   it('accept any string as a valid tag', () => {
     const literal = {
@@ -75,207 +104,207 @@ describe('gram ast tagged literals', () => {
       tag: 'tags should follow something like identifier rules but the ast does not enforce that',
       value: 'what string is not a string?',
     };
-    expect(ast.isTaggedLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isTaggedLiteral(literal)).toBeTruthy();
   });
   it('has a type guard', () => {
     const literal: any = { type: 'tagged', tag: 'test', value: 'false' };
-    if (ast.isTaggedLiteral(literal)) expect(literal.type === 'tagged').toBeTruthy();
-    else fail();
+    if (gramTypes.isTaggedLiteral(literal)) expect(literal.type === 'tagged').toBeTruthy();
+    else fail('Denied by typeguard');
   });
 });
 
 describe('gram ast integer literals', () => {
   it('are a type with value', () => {
     const literal = { type: 'integer', value: '1123581321345589' };
-    expect(ast.isIntegerLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isIntegerLiteral(literal)).toBeTruthy();
   });
   it('must have a type of "integer"', () => {
     const literal = { type: 'interval', value: '1123581321345589' };
-    expect(ast.isIntegerLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isIntegerLiteral(literal)).toBeFalsy();
   });
   it('must have a value', () => {
     const literal = { type: 'integer' };
-    expect(ast.isIntegerLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isIntegerLiteral(literal)).toBeFalsy();
   });
   it('do not validate the value', () => {
     const literal = { type: 'integer', value: 'this is not a number' };
-    expect(ast.isIntegerLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isIntegerLiteral(literal)).toBeTruthy();
   });
   it('has a type guard', () => {
     const literal: any = { type: 'integer', value: 'false' };
-    if (ast.isIntegerLiteral(literal)) expect(literal.type === 'integer').toBeTruthy();
-    else fail();
+    if (gramTypes.isIntegerLiteral(literal)) expect(literal.type === 'integer').toBeTruthy();
+    else fail("Denied by typeguard");
   });
 });
 
-describe('gram ast unit literals', () => {
+describe('gram ast measurement literals', () => {
   it('are a type with value and a unit', () => {
-    const literal = { type: 'unit', unit: 'test', value: 'textual information' };
-    expect(ast.isUnitLiteral(literal)).toBeTruthy();
+    const literal = { type: 'measurement', unit: 'test', value: 'textual information' };
+    expect(gramTypes.isMeasurementLiteral(literal)).toBeTruthy();
   });
   it('must be of type "unit"', () => {
-    const literal = { type: 'unity', unit: 'test', value: 'textual information' };
-    expect(ast.isUnitLiteral(literal)).toBeFalsy();
+    const literal = { type: 'measure', unit: 'test', value: 'textual information' };
+    expect(gramTypes.isMeasurementLiteral(literal)).toBeFalsy();
   });
   it('must have a value', () => {
-    const literal = { type: 'unit', unit: 'test' };
-    expect(ast.isUnitLiteral(literal)).toBeFalsy();
+    const literal = { type: 'measurement', unit: 'test' };
+    expect(gramTypes.isMeasurementLiteral(literal)).toBeFalsy();
   });
   it('do not validate the value', () => {
-    const literal = { type: 'unit', unit: 'test', value: 'what string is not a string?' };
-    expect(ast.isUnitLiteral(literal)).toBeTruthy();
+    const literal = { type: 'measurement', unit: 'test', value: 'what string is not a string?' };
+    expect(gramTypes.isMeasurementLiteral(literal)).toBeTruthy();
   });
   it('must have a unit', () => {
-    const literal = { type: 'unit', value: 'some text' };
-    expect(ast.isUnitLiteral(literal)).toBeFalsy();
+    const literal = { type: 'measurement', value: 'some text' };
+    expect(gramTypes.isMeasurementLiteral(literal)).toBeFalsy();
   });
   it('accept any string as a valid tag', () => {
     const literal = {
-      type: 'unit',
+      type: 'measurement',
       unit: 'units should follow something like identifier rules but the ast does not enforce that',
       value: 'what string is not a string?',
     };
-    expect(ast.isUnitLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isMeasurementLiteral(literal)).toBeTruthy();
   });
   it('has a type guard', () => {
-    const literal: any = { type: 'unit', unit: 'test', value: 'false' };
-    if (ast.isUnitLiteral(literal)) expect(literal.type === 'unit').toBeTruthy();
-    else fail();
+    const literal: any = { type: 'measurement', unit: 'test', value: 'false' };
+    if (gramTypes.isMeasurementLiteral(literal)) expect(literal.type === 'measurement').toBeTruthy();
+    else fail("Denied by typeguard");
   });
 });
 
 describe('gram ast decimal literals', () => {
   it('are a type with value', () => {
     const literal = { type: 'decimal', value: '1.123581321345589' };
-    expect(ast.isDecimalLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isDecimalLiteral(literal)).toBeTruthy();
   });
   it('must have a type of "decimal"', () => {
     const literal = { type: 'decimark', value: '1.123581321345589' };
-    expect(ast.isDecimalLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isDecimalLiteral(literal)).toBeFalsy();
   });
   it('must have a value', () => {
     const literal = { type: 'decimal' };
-    expect(ast.isDecimalLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isDecimalLiteral(literal)).toBeFalsy();
   });
   it('do not validate the value', () => {
     const literal = { type: 'decimal', value: 'this is not a number' };
-    expect(ast.isDecimalLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isDecimalLiteral(literal)).toBeTruthy();
   });
   it('has a type guard', () => {
     const literal: any = { type: 'decimal', value: 'false' };
-    if (ast.isDecimalLiteral(literal)) expect(literal.type === 'decimal').toBeTruthy();
-    else fail();
+    if (gramTypes.isDecimalLiteral(literal)) expect(literal.type === 'decimal').toBeTruthy();
+    else fail('Denied by typeguard');
   });
 });
 
 describe('gram ast hexadecimal literals', () => {
   it('are a type with value', () => {
     const literal = { type: 'hexadecimal', value: '0xCAFE1337' };
-    expect(ast.isHexadecimalLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isHexadecimalLiteral(literal)).toBeTruthy();
   });
   it('must have a type of "hexadecimal"', () => {
     const literal = { type: 'hexagon', value: '1.0xCAFE1337' };
-    expect(ast.isHexadecimalLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isHexadecimalLiteral(literal)).toBeFalsy();
   });
   it('must have a value', () => {
     const literal = { type: 'hexadecimal' };
-    expect(ast.isHexadecimalLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isHexadecimalLiteral(literal)).toBeFalsy();
   });
   it('do not validate the value', () => {
     const literal = { type: 'hexadecimal', value: 'this is not a number' };
-    expect(ast.isHexadecimalLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isHexadecimalLiteral(literal)).toBeTruthy();
   });
   it('has a type guard', () => {
     const literal: any = { type: 'hexadecimal', value: 'false' };
-    if (ast.isHexadecimalLiteral(literal)) expect(literal.type === 'hexadecimal').toBeTruthy();
-    else fail();
+    if (gramTypes.isHexadecimalLiteral(literal)) expect(literal.type === 'hexadecimal').toBeTruthy();
+    else fail('Denied by typeguard');
   });
 });
 
 describe('gram ast octal literals', () => {
   it('are a type with value', () => {
     const literal = { type: 'octal', value: '01372' };
-    expect(ast.isOctalLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isOctalLiteral(literal)).toBeTruthy();
   });
   it('must have a type of "octal"', () => {
     const literal = { type: 'octopus', value: '1.01372' };
-    expect(ast.isOctalLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isOctalLiteral(literal)).toBeFalsy();
   });
   it('must have a value', () => {
     const literal = { type: 'octal' };
-    expect(ast.isOctalLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isOctalLiteral(literal)).toBeFalsy();
   });
   it('do not validate the value', () => {
     const literal = { type: 'octal', value: 'this is not a number' };
-    expect(ast.isOctalLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isOctalLiteral(literal)).toBeTruthy();
   });
   it('has a type guard', () => {
     const literal: any = { type: 'octal', value: 'false' };
-    if (ast.isOctalLiteral(literal)) expect(literal.type === 'octal').toBeTruthy();
-    else fail();
+    if (gramTypes.isOctalLiteral(literal)) expect(literal.type === 'octal').toBeTruthy();
+    else fail('Denied by typeguard');
   });
 });
 
 describe('gram ast tagged date literals', () => {
   it('are a type with value and a tag', () => {
     const literal = { type: 'tagged', tag: 'date', value: 'textual information' };
-    expect(ast.isDateLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isDateLiteral(literal)).toBeTruthy();
   });
   it('must be of type "tagged"', () => {
     const literal = { type: 'strange', tag: 'date', value: 'textual information' };
-    expect(ast.isDateLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isDateLiteral(literal)).toBeFalsy();
   });
   it('must have a value', () => {
     const literal = { type: 'tagged', tag: 'date' };
-    expect(ast.isDateLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isDateLiteral(literal)).toBeFalsy();
   });
   it('do not validate the value', () => {
     const literal = { type: 'tagged', tag: 'date', value: 'what string is not a string?' };
-    expect(ast.isDateLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isDateLiteral(literal)).toBeTruthy();
   });
   it('must have a tag', () => {
     const literal = { type: 'tagged', value: 'some text' };
-    expect(ast.isDateLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isDateLiteral(literal)).toBeFalsy();
   });
   it('must be tagged as "date"', () => {
     const literal = { type: 'tagged', tag: 'this is not a date', value: 'this is not a date' };
-    expect(ast.isDateLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isDateLiteral(literal)).toBeFalsy();
   });
   it('has a type guard', () => {
     const literal: any = { type: 'tagged', tag: 'date', value: 'false' };
-    if (ast.isDateLiteral(literal)) expect(literal.tag === 'date').toBeTruthy();
-    else fail();
+    if (gramTypes.isDateLiteral(literal)) expect(literal.tag === 'date').toBeTruthy();
+    else fail('Denied by typeguard');
   });
 });
 
 describe('gram ast tagged geospatial literals', () => {
   it('are a type with value and a tag', () => {
     const literal = { type: 'tagged', tag: 'geo', value: 'textual information' };
-    expect(ast.isGeospatialLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isGeospatialLiteral(literal)).toBeTruthy();
   });
   it('must be of type "tagged"', () => {
     const literal = { type: 'strange', tag: 'geo', value: 'textual information' };
-    expect(ast.isGeospatialLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isGeospatialLiteral(literal)).toBeFalsy();
   });
   it('must have a value', () => {
     const literal = { type: 'tagged', tag: 'geo' };
-    expect(ast.isGeospatialLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isGeospatialLiteral(literal)).toBeFalsy();
   });
   it('do not validate the value', () => {
     const literal = { type: 'tagged', tag: 'geo', value: 'what string is not a string?' };
-    expect(ast.isGeospatialLiteral(literal)).toBeTruthy();
+    expect(gramTypes.isGeospatialLiteral(literal)).toBeTruthy();
   });
   it('must have a tag', () => {
     const literal = { type: 'tagged', value: 'some text' };
-    expect(ast.isGeospatialLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isGeospatialLiteral(literal)).toBeFalsy();
   });
   it('must be tagged as "date"', () => {
     const literal = { type: 'tagged', tag: 'this is not a date', value: 'this is not a date' };
-    expect(ast.isGeospatialLiteral(literal)).toBeFalsy();
+    expect(gramTypes.isGeospatialLiteral(literal)).toBeFalsy();
   });
   it('has a type guard', () => {
     const literal: any = { type: 'tagged', tag: 'geo', value: 'false' };
-    if (ast.isGeospatialLiteral(literal)) expect(literal.tag === 'geo').toBeTruthy();
-    else fail();
+    if (gramTypes.isGeospatialLiteral(literal)) expect(literal.tag === 'geo').toBeTruthy();
+    else fail('Denied by typeguard');
   });
 });

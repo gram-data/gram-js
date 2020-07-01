@@ -21,5 +21,10 @@
     },
     "jsx": "react",
     "esModuleInterop": true
+  },
+  "typedocOptions": {
+    "mode":"modules",
+    "inputFiles": ["./src"],
+    "out":"docs"
   }
 }
