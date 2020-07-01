@@ -1,4 +1,4 @@
-import { GramPathlikeElement, GramNode, GramEdge, GramLeaf, isGramNode, GramLiteral, GramPathlike } from './gram-types';
+import { GramPathlikeBase, GramNode, GramEdge, GramLeaf, isGramNode, GramLiteral, GramPathlike } from './gram-types';
 import { shortID } from './gram-identity';
 import { node } from './gram-builder';
 
@@ -25,7 +25,7 @@ export const values = (from: GramLiteral[]) => from.map(literal => literal.value
  *
  * @param ast the root of the ast in which to find nodes
  */
-export const mergeNodes = (ast: GramPathlikeElement): GramNode[] => {
+export const mergeNodes = (ast: GramPathlikeBase): GramNode[] => {
   const nodeMap = new Map<string, GramNode>();
   visit(ast, 'node', (n: GramNode) => {
     const nodeId = identify(n, shortID);
@@ -35,7 +35,7 @@ export const mergeNodes = (ast: GramPathlikeElement): GramNode[] => {
   return Array.from(nodeMap.values());
 };
 
-export const mergeEdges = (ast: GramPathlikeElement): GramEdge[] => {
+export const mergeEdges = (ast: GramPathlikeBase): GramEdge[] => {
   const edgeMap = new Map<string, GramEdge>();
   visit(ast, 'edge', (n: GramEdge) => {
     edgeMap.set(identify(n, shortID), n);

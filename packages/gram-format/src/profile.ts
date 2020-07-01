@@ -1,4 +1,4 @@
-import { GramPathlikeElement, GramRecord, GramPathlike } from './gram-types';
+import { GramPathlike, GramRecord } from './gram-types';
 
 const visit = require('unist-util-visit');
 
@@ -21,7 +21,7 @@ export interface GramProfile {
   properties: { [key: string]: string };
 }
 
-const profile = (ast: GramPathlikeElement): GramProfile => {
+const profile = (ast: GramPathlike): GramProfile => {
   const profiled: GramProfile = {
     path: {
       count: 0,

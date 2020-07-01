@@ -7,8 +7,10 @@ import {
   GramRecordValue,
   isLiteral,
   isGramNode,
-  GramPathlikeElement,
-  isGramEdge
+  isGramEdge,
+  GramPathlike,
+  GramPathSeq,
+  isGramUnit,
 } from './gram-types';
 
 const isEmpty = (o: any) => Object.keys(o).length === 0;
@@ -41,7 +43,7 @@ const recordToString = (record: GramRecord): string => {
   return `{${fields.join('')}}`;
 };
 
-const elementContentToString = (ast: GramPathlikeElement): string => {
+const elementContentToString = (ast: GramPathlike): string => {
   const idString = ast.id || '';
   const labelsString = ast.labels && ast.labels.length > 0 ? ':' + ast.labels.join(':') : '';
   const recordString = ast.record && !isEmpty(ast.record) ? recordToString(ast.record) : '';
@@ -71,6 +73,8 @@ const pathToString = (ast: GramPath): string => {
           ? nodeToString(pathChild)
           : isGramEdge(pathChild)
           ? edgeToString(pathChild)
+          : isGramUnit(pathChild)
+          ? ''
           : pathToString(pathChild)
       }`
     : '';
@@ -81,12 +85,12 @@ const pathToString = (ast: GramPath): string => {
   }
 };
 
-const stringify = (ast: GramPathlikeElement): string => {
+const stringify = (ast: GramPathlike | GramPathSeq): string => {
   const tokens: Array<string> = [];
   switch (ast.type) {
     case 'seq':
       const paths = ast.children as GramPath[];
-      return paths.map( (path:GramPath) => stringify(path)).join('\n');
+      return paths.map((path: GramPath) => stringify(path)).join('\n');
     case 'path':
       return pathToString(ast as GramPath);
     case 'node':

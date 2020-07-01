@@ -1,10 +1,21 @@
-import { Parent as UnistParent, Literal as UnistLiteral, Node as UnistNode } from 'unist';
+/**
+ * # Gram AST Types
+ *
+ * These AST elements
+ *
+ * References:
+ *
+ * - [unist](https://github.com/syntax-tree/unist) - Universal Synax Tree
+ * - [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
+ * @packageDocumentation
+ */
 
+import { Parent as UnistParent, Literal as UnistLiteral, Node as UnistNode } from 'unist';
 
 /**
  * A union type of interfaces which are path-like.
  */
-export type GramPathlike = GramUnit | GramNode | GramEdge | GramPath;
+// export type GramPathlike = GramUnit | GramNode | GramEdge | GramPath;
 
 /**
  * Path expressions are compositions of nodes and edges.
@@ -16,7 +27,7 @@ export type GramPathlike = GramUnit | GramNode | GramEdge | GramPath;
  * The leftmost syntactic Node is the head, which
  * will be the topmost Node in the descendent tree.
  */
-export type GramPathExpression = GramNode | GramEdge | GramPath;
+export type GramPathlike = GramUnit | GramNode | GramEdge | GramPath;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Base ast types...
@@ -28,10 +39,8 @@ export interface GramLeaf extends UnistNode {}
 
 /**
  * The base type for all path-like elements.
- * These all have children.
  */
-export interface GramPathlikeElement extends UnistParent {
-
+export interface GramPathlikeBase extends UnistParent {
   /**
    * A type-scoped unique identifier.
    *
@@ -52,12 +61,16 @@ export interface GramPathlikeElement extends UnistParent {
    */
   record?: GramRecord;
 
-  children: Array<GramPathlikeElement> | [];
+  children: GramPathlike[] | [];
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Pathlike types...
+
+/**
+ * Identity of all units.
+ */
+export const UNIT_ID = '0';
 
 /**
  * A GramUnit is an empty path expression which contains no sub-paths and has no identity.
@@ -72,14 +85,13 @@ export interface GramPathlikeElement extends UnistParent {
  * - path cardinality: 0
  * - information role: emptiness
  */
-export interface GramUnit extends GramPathlikeElement {
-
+export interface GramUnit extends GramPathlikeBase {
   /**
    * Type discriminator for this AST element, always 'unit'.
    */
   type: 'unit';
 
-  id: undefined;
+  id: '0';
 
   labels: undefined;
 
@@ -95,7 +107,6 @@ export interface GramUnit extends GramPathlikeElement {
  */
 export const isGramUnit = (o: any): o is GramUnit => !!o.type && o.type === 'unit';
 
-
 /**
  * A GramNode is the foundation for attached data structures.
  *
@@ -109,7 +120,7 @@ export const isGramUnit = (o: any): o is GramUnit => !!o.type && o.type === 'uni
  * - path cardinality: 1
  * - information role: an entity or a noun
  */
-export interface GramNode extends GramPathlikeElement {
+export interface GramNode extends GramPathlikeBase {
   /**
    * Type discriminator for this AST element, always 'node'.
    */
@@ -130,13 +141,13 @@ export const isGramNode = (o: any): o is GramNode => !!o.type && o.type === 'nod
 
 /**
  * RelationshipOperator composes path expressions.
- * 
+ *
  * One of:
  *
- * - left   `(a)<--(b)` 
- * - right  `(a)-->(b)` 
- * - either `(a)--(b)`  
- * - self   `(a) =~ (a)--(a)` 
+ * - left   `(a)<--(b)`
+ * - right  `(a)-->(b)`
+ * - either `(a)--(b)`
+ * - self   `(a) =~ (a)--(a)`
  */
 export type RelationshipOperator = 'left' | 'right' | 'either' | 'pair';
 
@@ -149,7 +160,7 @@ export type RelationshipOperator = 'left' | 'right' | 'either' | 'pair';
  * - the operand in path expressions
  * - usually a noun concept
  */
-export interface GramEdge extends GramPathlikeElement {
+export interface GramEdge extends GramPathlikeBase {
   /**
    * Type discriminator for this AST element, always 'edge'.
    */
@@ -173,8 +184,7 @@ export interface GramEdge extends GramPathlikeElement {
  *
  * @param o any object
  */
-export const isGramEdge = (o: any): o is GramEdge => ("type" in o) && ("direction" in o) && o.type === 'edge';
-
+export const isGramEdge = (o: any): o is GramEdge => 'type' in o && 'direction' in o && o.type === 'edge';
 
 /**
  * GramPath contains nodes, edges and other paths that have been composed
@@ -190,7 +200,7 @@ export const isGramEdge = (o: any): o is GramEdge => ("type" in o) && ("directio
  * - path cardinality: nodes().length
  * - information role: data annotation
  */
-export interface GramPath extends GramPathlikeElement {
+export interface GramPath extends GramPathlikeBase {
   /**
    * Type discriminator for this AST element, always 'path'.
    */
@@ -207,7 +217,7 @@ export interface GramPath extends GramPathlikeElement {
    * or two children which are composed into a path.
    *
    */
-  children: [GramPathExpression] | [GramPathExpression, GramPathExpression];
+  children: [GramPathlike] | [GramPathlike, GramPathlike];
 }
 
 /**
@@ -217,21 +227,17 @@ export interface GramPath extends GramPathlikeElement {
  */
 export const isGramPath = (o: any): o is GramPath => !!o.type && o.type === 'path';
 
-
 /**
- * A GramPathSequence is a whitespace delimited sequence of paths.
- * This is the complete unit of work that is a 'gram'.
+ * A GramPathHistory is a whitespace delimited sequence of paths.
  *
- * `(a) (b)` is a path list containing two paths.
- * `(a),(b)` is an anonymous path (a path expression with id, labels or data record) containing two sub-paths.
  */
-export interface GramPathSequence extends GramPathlikeElement {
+export interface GramPathSeq extends GramPathlikeBase {
   /**
-   * Type discriminator for this AST element, aways 'paths' (plural).
+   * Type discriminator for this AST element, aways 'seq'.
    */
   type: 'seq';
 
-  children: GramPath[];
+  children: GramPathlike[];
 }
 
 /**
@@ -239,7 +245,7 @@ export interface GramPathSequence extends GramPathlikeElement {
  *
  * @param o any object
  */
-export const isGramPathSequence = (o: any): o is GramPathSequence => !!o.type && o.type === 'paths';
+export const isGramPathSequence = (o: any): o is GramPathSeq => !!o.type && o.type === 'seq';
 
 ///////////////////////////////////////////////////////////////////////////////
 // Records...
@@ -382,7 +388,8 @@ export interface MeasurementLiteral extends GramLiteral {
  *
  * @param o any object
  */
-export const isMeasurementLiteral = (o: any): o is MeasurementLiteral => !!o.type && !!o.value && !!o.unit && o.type === 'measurement';
+export const isMeasurementLiteral = (o: any): o is MeasurementLiteral =>
+  !!o.type && !!o.value && !!o.unit && o.type === 'measurement';
 
 /**
  * Represents an decimal number, like 3.1495.

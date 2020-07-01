@@ -134,8 +134,8 @@ describe('integer literals', () => {
 describe('unit literals', () => {
   it('include a trailing identifier-compatible unit like "cm" or "px"', () => {
     const literal = '1240px';
-    expect(tokens.RE.unit.test(literal)).toBeTruthy();
-    expect(literal.match(tokens.RE.unit)).toContain('1240px');
+    expect(tokens.RE.measurement.test(literal)).toBeTruthy();
+    expect(literal.match(tokens.RE.measurement)).toContain('1240px');
   });
 });
 

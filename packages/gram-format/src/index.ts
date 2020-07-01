@@ -15,7 +15,7 @@ const makeParser = () => {
   return new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
 };
 
-const parse = (src: string): ast.GramPathSequence => {
+const parse = (src: string): ast.GramPathSeq => {
   const parser = makeParser();
   const parsed = parser.feed(src);
   return parsed.results[0];

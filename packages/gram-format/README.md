@@ -7,25 +7,30 @@ Graph model abstract syntax tree.
 // unit: an empty path expression
 []
 [] . [] = []
-identityof [] = undefined
+
+// identity
+identityof [] = undefined || all the same?
+identityof [n] =~ n
+
 
 ////////
 // node: an identified path expression with no children
-[n] =~ (n)
-
-// identity
-identityof [n] =~ n
+(n) =~ [n]
 identityof (n) =~ n
 identityof ()  =~ <auto>
 
-// composition
-(n) . (n)  =~ (n)
-(n) . (n2) =~ [e]
+// composition of nodes and units
+(n) . []   =~ [ . n _ ]  =~ [n] =~ (n)
+[]  . (n)  =~ [ . _ n ]  =~ [n] =~ (n)
+(n) . (n)  =~ [ . n n ]
+(n) . (n2) =~ [ . n n2]
+identityof [ . n n ]  =~ <auto>
+identityof [e . n n2] =~ e
 
 ////////
 // edge: an identified path expression composed of two nodes
-[n] . [n] =~ [e [n] . [n]]
-[e (n1) . (n2)]
+[n] . [n] =~ [e . [n] [n]]
+[e . (n1) (n2)]
 [e1] . [e2] =~ [p] 
 
 ////////

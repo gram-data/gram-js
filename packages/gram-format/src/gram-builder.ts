@@ -1,5 +1,10 @@
+/**
+ * This is the doc comment for gram-builder.
+ *
+ * @packageDocumentation
+ */
 import {
-  GramPathSequence,
+  GramPathSeq,
   GramPath,
   GramNode,
   GramEdge,
@@ -15,14 +20,13 @@ import {
   OctalLiteral,
   MeasurementLiteral,
   GramRecord,
-  GramPathExpression,
-  GramUnit,
-  GramPathlikeElement,
-  isGramNode,
   GramPathlike,
+  GramUnit,
+  isGramNode,
   isGramUnit,
   isGramEdge,
   isGramPath,
+  UNIT_ID,
 } from './gram-types';
 import { Node as UnistNode } from 'unist';
 import { shortID } from './gram-identity';
@@ -47,84 +51,111 @@ const dateToYMD = (d: Date) => d.toISOString().slice(0, 10);
 const dateToDayOfMonth = (d: Date) => '--' + d.toISOString().slice(5, 10);
 
 /**
- * Build a gram representation of a graph.
+ * Build a path sequence that represents a graph
+ * accumulating structure over time.
  *
- * @param paths sequence of paths which merge into a graph
+ * @param paths sequence of paths through history
  * @param id optional reference identifier. The "name" of this graph instance.
  * @param labels optional labels
  * @param record optional graph-level data
  */
-export const gram = (paths: Children<GramPath>, id?: string, labels = [], record?: GramRecord): GramPathSequence => ({
+export const seq = (paths: Children<GramPath>, id?: string, labels?: string[], record?: GramRecord): GramPathSeq => ({
   type: 'seq',
   ...(id && { id }),
-  labels,
+  ...(labels && { labels }),
   ...(record && { record }),
   children: normalizeChildren<GramPath>(paths),
 });
 
+export interface PathDescription {
+  operands: [] | [GramPathlike] | [GramPathlike, GramPathlike];
+  operator?: RelationshipOperator;
+  id?: string;
+  labels?: string[];
+  record?: GramRecord;
+}
+
 /**
  * Build any path-like element
- * 
- * @param children 
- * @param id 
- * @param labels 
- * @param record 
+ *
+ * @param description
+ * @param id
+ * @param labels
+ * @param record
+ * @param direction
  */
 export const cons = (
-  children: [] | [GramPathlikeElement] | [GramPathlikeElement, GramPathlikeElement],
-  id?: string,
-  labels?: string[],
-  record?: GramRecord,
-  direction?: RelationshipOperator
+  description: PathDescription
+  // children: [] | [GramPathlike] | [GramPathlike, GramPathlike],
+  // id?: string,
+  // labels?: string[],
+  // record?: GramRecord,
+  // direction?: RelationshipOperator
 ): GramPathlike => {
-  const element:GramPathlikeElement = {
+  const element: any = {
     type: 'path',
-    id,
-    labels,
-    record,
-    children: children.filter( child => !isGramUnit(child))
-  }
-  if (element.children.length == 0) {
-    if (id) {
-      element.type = 'node'
-      return element as GramNode
+    id: description.id,
+    ...(description.labels && { labels: description.labels }),
+    ...(description.record && { description: description.record }),
+    children: description.operands.filter(child => child && !isGramUnit(child)),
+    // children: children.filter(child => (child)),
+  };
+  if (element.children.length === 0) {
+    if (element.id) {
+      element.type = 'node';
+      return element as GramNode;
     } else {
-      element.type = 'unit'
-      return element as GramUnit;
+      return UNIT;
     }
-  } else if (element.children.length == 1) {
-    if (id) {
+  } else if (element.children.length === 1) {
+    const inner = element.children[0];
+    if (element.id) {
+      if (isGramUnit(inner)) {
+        element.type = 'node';
+        element.children = [];
+        return element as GramNode;
+      }
       return element as GramPath;
     } else {
-      const inner = element.children[0];
-      if (isGramNode(inner)) return inner as GramNode
-      if (isGramEdge(inner)) return inner as GramEdge
-      if (isGramPath(inner)) return inner as GramPath
+      if (isGramUnit(inner)) return inner as GramUnit;
+      element.id = shortID();
+      if (isGramNode(inner)) return inner as GramNode;
+      if (isGramEdge(inner)) return inner as GramEdge;
+      if (isGramPath(inner)) return inner as GramPath;
     }
-  } else if ((element.children.length == 2) && isGramNode(element.children[0]) && isGramNode(element.children[1])) {
-    element.type = 'edge'
-    element.direction = direction || 'either';
-    return element as GramEdge;
-  } 
-  element.direction = direction || 'pair'
+  } else if (element.children.length === 2) {
+    if (
+      description.operator &&
+      description.operator !== 'pair' &&
+      isGramNode(element.children[0]) &&
+      isGramNode(element.children[1])
+    ) {
+      element.type = 'edge';
+      element.id = element.id || shortID();
+      element.direction = description.operator;
+      return element as GramEdge;
+    }
+  }
+  element.id = element.id || shortID();
+  element.direction = description.operator || 'pair';
   return element as GramPath;
 };
 
 /**
  * Singleton instance of GramUnit
  */
-export const UNIT:GramUnit = {
-  type: "unit",
-  id: undefined,
+export const UNIT: GramUnit = {
+  type: 'unit',
+  id: UNIT_ID,
   labels: undefined,
   record: undefined,
-  children: []
-}
+  children: [],
+};
 
 /**
  * Convenience function for retrieving the singleton GramUnit.
  */
-export const unit = ():GramUnit => UNIT
+export const unit = (): GramUnit => UNIT;
 
 /**
  * Build a GramNode.
@@ -168,25 +199,24 @@ export const edge = (
 
 /**
  * Build a path
- * 
- * @param children 
- * @param id 
- * @param labels 
- * @param record 
+ *
+ * @param children
+ * @param id
+ * @param labels
+ * @param record
  */
 export const path = (
-  children: [GramPathExpression] | [GramPathExpression, GramPathExpression],
+  children: [GramPathlike] | [GramPathlike, GramPathlike],
   id?: string,
   labels?: string[],
   record?: GramRecord
 ): GramPath => ({
   type: 'path',
   ...(id && { id }),
-  labels,
+  ...(labels && { labels }),
   ...(record && { record }),
   children: children,
 });
-
 
 export const record = (properties: GramProperty[]): GramRecord => {
   return properties.reduce((acc: GramRecord, p: GramProperty) => {
@@ -194,7 +224,6 @@ export const record = (properties: GramProperty[]): GramRecord => {
     return acc;
   }, {} as GramRecord);
 };
-
 
 export const property = (name: string, value: GramLiteral | GramLiteral[]): GramProperty => {
   const Node: GramProperty = {
@@ -237,10 +266,12 @@ export const dayOfMonth = (value: string | Date): TaggedLiteral =>
 export const time = (value: string | Date): TaggedLiteral =>
   tagged(value instanceof Date ? dateToYMD(value) : value, 'time');
 
-export const flatten = (xs: any[], depth = 1) => xs.flat(depth);
+export const flatten = (xs: any[], depth = 1) => xs.flat(depth).filter(x => x !== null);
 
 export default {
-  gram,
+  seq,
+  unit,
+  cons,
   path,
   node,
   edge,
@@ -253,7 +284,7 @@ export default {
   decimal,
   hexadecimal,
   octal,
-  unit: measurement,
+  measurement,
   date,
   time,
   flatten,

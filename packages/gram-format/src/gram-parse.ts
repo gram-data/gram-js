@@ -19,16 +19,16 @@ declare var integer: any;
 declare var decimal: any;
 declare var hexadecimal: any;
 declare var octal: any;
-declare var unit: any;
+declare var measurement: any;
 declare var whitespace: any;
 declare var lineComment: any;
 
-let lexer = moo.compile({
+let lexer = (moo.compile({
   whitespace: { match: /\s+/, lineBreaks: true },
   lineComment: { match: /\/\/.*?$/ },
   hexadecimal: RE.hexadecimal,
   octal: RE.octal,
-  unit: RE.unit,
+  measurement: RE.measurement,
   decimal: RE.decimal,
   integer: RE.integer,
   taggedString: { match: RE.taggedString },
@@ -57,7 +57,7 @@ let lexer = moo.compile({
   ':': ':',
   '`': '`',
   "'": "'",
-});
+}) as unknown) as NearleyLexer;
 
 const empty = () => null;
 
@@ -82,9 +82,9 @@ function separateTagFromString(taggedStringValue: string) {
   };
 }
 
-function separateNumberFromUnit(unitNumberValue: string) {
-  let valueParts = unitNumberValue.match(/(-?[0-9.]+)([a-zA-Z]+)/);
-  if (valueParts === null || valueParts === undefined) throw Error(`Malformed unit number: ${unitNumberValue}`);
+function separateNumberFromUnits(measurementValue: string) {
+  let valueParts = measurementValue.match(/(-?[0-9.]+)([a-zA-Z]+)/);
+  if (valueParts === null || valueParts === undefined) throw Error(`Malformed measurement : ${measurementValue}`);
   return {
     value: valueParts![1],
     unit: valueParts![2],
@@ -123,17 +123,32 @@ const grammar: Grammar = {
   ParserRules: [
     { name: 'Gram$ebnf$1', symbols: ['Block'] },
     { name: 'Gram$ebnf$1', symbols: ['Gram$ebnf$1', 'Block'], postprocess: d => d[0].concat([d[1]]) },
-    { name: 'Gram', symbols: ['Gram$ebnf$1'], postprocess: data => g.gram(g.flatten(data)) },
+    { name: 'Gram', symbols: ['Gram$ebnf$1'], postprocess: data => g.seq(g.flatten(data)) },
     { name: 'Block', symbols: ['PathPattern', '_'], postprocess: ([pp]) => pp },
     { name: 'Block', symbols: ['Comment'], postprocess: empty },
-    { name: 'PathPattern$ebnf$1', symbols: ['EdgePattern'], postprocess: id },
+    { name: 'PathPattern', symbols: [{ literal: '[' }, '_', { literal: ']' }], postprocess: () => g.unit() },
+    { name: 'PathPattern', symbols: ['NodePattern'], postprocess: id },
+    { name: 'PathPattern', symbols: ['EdgePattern'], postprocess: id },
+    { name: 'PathPattern$ebnf$1', symbols: ['PathPattern'], postprocess: id },
     { name: 'PathPattern$ebnf$1', symbols: [], postprocess: () => null },
+    { name: 'PathPattern$ebnf$2', symbols: ['PathPattern'], postprocess: id },
+    { name: 'PathPattern$ebnf$2', symbols: [], postprocess: () => null },
     {
       name: 'PathPattern',
-      symbols: [{ literal: '[' }, '_', 'ContentSpecification', '_', 'PathPattern$ebnf$1', { literal: ']' }],
-      postprocess: ([, , content, , ep]) => g.path([ep] || [], content.id, content.labels, content.record),
+      symbols: [
+        { literal: '[' },
+        '_',
+        'ContentSpecification',
+        '_',
+        'PathPattern$ebnf$1',
+        '_',
+        'PathPattern$ebnf$2',
+        '_',
+        { literal: ']' },
+      ],
+      postprocess: ([, , content, , lhs, , rhs]) =>
+        g.cons({ operands: [lhs, rhs], id: content.id, labels: content.labels, record: content.record }),
     },
-    { name: 'PathPattern', symbols: ['EdgePattern'], postprocess: ([ep]) => g.path([ep]) },
     {
       name: 'NodePattern',
       symbols: [{ literal: '(' }, '_', 'ContentSpecification', { literal: ')' }],
@@ -142,7 +157,8 @@ const grammar: Grammar = {
     {
       name: 'EdgePattern',
       symbols: ['NodePattern', 'EdgeSpecification', 'EdgePattern'],
-      postprocess: ([np, es, ep]) => g.edge([np, ep], es.direction, es.id, es.labels, es.record),
+      postprocess: ([np, es, ep]) =>
+        g.cons({ operands: [np, ep], operator: es.direction, id: es.id, labels: es.labels, record: es.record }),
     },
     { name: 'EdgePattern', symbols: ['NodePattern'], postprocess: id },
     {
@@ -153,7 +169,7 @@ const grammar: Grammar = {
     {
       name: 'EdgeSpecification',
       symbols: [{ literal: '-[' }, '_', 'ContentSpecification', { literal: ']-' }],
-      postprocess: ([, , content]) => ({ direction: 'none', ...content }),
+      postprocess: ([, , content]) => ({ direction: 'either', ...content }),
     },
     {
       name: 'EdgeSpecification',
@@ -161,12 +177,11 @@ const grammar: Grammar = {
       postprocess: ([, , content]) => ({ direction: 'left', ...content }),
     },
     { name: 'EdgeSpecification', symbols: [{ literal: '-[]->' }], postprocess: () => ({ direction: 'right' }) },
-    { name: 'EdgeSpecification', symbols: [{ literal: '-[]-' }], postprocess: () => ({ direction: 'none' }) },
+    { name: 'EdgeSpecification', symbols: [{ literal: '-[]-' }], postprocess: () => ({ direction: 'either' }) },
     { name: 'EdgeSpecification', symbols: [{ literal: '<-[]-' }], postprocess: () => ({ direction: 'left' }) },
     { name: 'EdgeSpecification', symbols: [{ literal: '-->' }], postprocess: () => ({ direction: 'right' }) },
-    { name: 'EdgeSpecification', symbols: [{ literal: '--' }], postprocess: () => ({ direction: 'none' }) },
+    { name: 'EdgeSpecification', symbols: [{ literal: '--' }], postprocess: () => ({ direction: 'either' }) },
     { name: 'EdgeSpecification', symbols: [{ literal: '<--' }], postprocess: () => ({ direction: 'left' }) },
-    { name: 'EdgeSpecification', symbols: [{ literal: ',' }], postprocess: () => ({ direction: 'pair' }) },
     { name: 'ContentSpecification$ebnf$1', symbols: ['SymbolicName'], postprocess: id },
     { name: 'ContentSpecification$ebnf$1', symbols: [], postprocess: () => null },
     { name: 'ContentSpecification$ebnf$2', symbols: ['LabelList'], postprocess: id },
@@ -275,21 +290,14 @@ const grammar: Grammar = {
     },
     {
       name: 'NumericLiteral',
-      symbols: [lexer.has('unit') ? { type: 'unit' } : unit],
+      symbols: [lexer.has('measurement') ? { type: 'measurement' } : measurement],
       postprocess: d => {
-        const parts = separateNumberFromUnit(d[0].value);
-        return g.unit(parts.unit, parts.value);
+        const parts = separateNumberFromUnits(d[0].value);
+        return g.measurement(parts.unit, parts.value);
       },
     },
     { name: '_', symbols: [] },
     { name: '_', symbols: [lexer.has('whitespace') ? { type: 'whitespace' } : whitespace], postprocess: empty },
-    {
-      name: 'EOL$ebnf$1$subexpression$1',
-      symbols: [lexer.has('lineComment') ? { type: 'lineComment' } : lineComment, /[\n]/],
-    },
-    { name: 'EOL$ebnf$1', symbols: ['EOL$ebnf$1$subexpression$1'], postprocess: id },
-    { name: 'EOL$ebnf$1', symbols: [], postprocess: () => null },
-    { name: 'EOL', symbols: ['_', 'EOL$ebnf$1'], postprocess: empty },
     { name: 'Comment$ebnf$1', symbols: [/[\n]/], postprocess: id },
     { name: 'Comment$ebnf$1', symbols: [], postprocess: () => null },
     {
