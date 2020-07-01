@@ -1,0 +1,18 @@
+{
+  "name": "gram.js",
+  "readme": "./readme.md",
+  "mode": "modules",
+  "inputFiles": [
+    "./readme.md",
+    "./packages/gram-format/src",
+    "./packages/gram-d3/src",
+    "./packages/gram-neo4j/src"
+  ],
+  "out": "docs",
+  "theme": "default",
+  "ignoreCompilerErrors": "false",
+  "preserveConstEnums": "true",
+  "exclude": "*.spec.ts",
+  "external-modulemap": ".*packages\/([^\/]+)\/src/.*",
+  "stripInternal": "false"
+}
