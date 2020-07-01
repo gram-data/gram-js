@@ -7,7 +7,7 @@ import {RE} from './gram-tokens';
 
 let lexer = moo.compile({
     whitespace: {match: /\s+/, lineBreaks: true},
-    lineComment: {match:/\/\/.*?$/},
+    lineComment: {match:/\/\/.*?\n?$/},
     hexadecimal: RE.hexadecimal,
     octal: RE.octal,
     measurement: RE.measurement,
@@ -45,22 +45,20 @@ let lexer = moo.compile({
 
 @lexer lexer
 
-Gram -> Block:+ {% (data) => g.seq( g.flatten(data) ) %}
-  
-Block ->
-    PathPattern _  {% ([pp]) => pp %}
-  | Comment        {% empty %}
+Gram -> (PathlikePattern _ {% ([pp]) => pp %}):+ {% ([pp]) => g.seq( g.flatten(pp) ) %}
 
 #  
-# Graph structure: nodes, edges, paths
+# Pathlike patterns
 # 
-PathPattern ->
-    "[" _ "]" {% () => g.unit() %}
+PathlikePattern ->
+    UnitPattern {% id %}
   | NodePattern {% id %}
   | EdgePattern {% id %}
-  | "[" _ ContentSpecification _ PathPattern:? _ PathPattern:? _ "]"
-      {% ([,,content,,lhs,,rhs]) => g.cons({operands:[lhs,rhs], id:content.id, labels:content.labels, record:content.record}) %}
+  | PathPattern {% id %}
+  | Comment     {% id %}
   
+UnitPattern -> "[" _ "]" {% () => g.unit() %}
+
 NodePattern ->
   "(" _ ContentSpecification ")" 
     {% ([,,content]) => g.node(content.id, content.labels, content.record) %}
@@ -85,6 +83,10 @@ EdgeSpecification ->
   | "<--"     {% () => ({direction:'left'}) %}
   # | ","       {% () => ({direction:'pair'}) %}
 
+PathPattern -> 
+  "[" _ ContentSpecification _ PathlikePattern:? _ PathlikePattern:? _ "]"
+  {% ([,,content,,lhs,,rhs]) => g.cons({operands:[lhs,rhs], id:content.id, labels:content.labels, record:content.record}) %}
+  
 ContentSpecification ->
   SymbolicName:? _ LabelList:? _ Record:? {% ([id,,labels,,record]) =>  ( {id, labels, record} )  %}
 
@@ -141,7 +143,8 @@ NumericLiteral ->
 #
 _ -> null | %whitespace {% empty %}
 
-Comment -> %lineComment [\n]:? {% empty %}
+# Comment -> %lineComment [\n]:? {% empty %}
+Comment -> %lineComment {% empty %}
 
 @{%
 
