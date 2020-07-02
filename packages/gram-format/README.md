@@ -122,8 +122,18 @@ identityof [  + n n ] =~ <auto>
 
 ### Sequence, a list or stream of paths
 
+Really just a convenience for a path of paths, optimized
+for processing.
+
+Process how? Reduce a sequence to a node list or an edge list. 
+Together, those two lists become a graph.
+
+For fun take different windows of the sequence to see a 
+graph at different points in time.
 
 ### Graphs, a merged view of all paths
+
+A graph is a view of all the paths. Mhmm. 
 
 ### Records, type-safe nested data values
 
@@ -141,9 +151,7 @@ JSON-like nested structures:
 
 ## Exploration...
 
-////////
-// path: an identified path expression composed of path expressions 
-
+```
 // unary path operations
 [p [u]] =~ [p]
 [p [e]]
