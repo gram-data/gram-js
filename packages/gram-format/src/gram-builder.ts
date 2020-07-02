@@ -96,7 +96,7 @@ export const cons = (
     type: 'path',
     id: description.id,
     ...(description.labels && { labels: description.labels }),
-    ...(description.record && { description: description.record }),
+    ...(description.record && { record: description.record }),
     children: description.operands.filter(child => child && !isGramUnit(child)),
     // children: children.filter(child => (child)),
   };
