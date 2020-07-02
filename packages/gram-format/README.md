@@ -96,22 +96,24 @@ e =~ ()-->() =~ ()-[e]->() =~ [e --> () ()]
 
 ### Paths, general composition
 
-Paths generalize edges, allowing composition of any path-like
-structure into larger nested structures.
+Paths generalize nodes and edges, allowing composition of any path-like
+structure into larger structures. By using binary composition, this
+forms a tree-like nesting of paths within paths.
 
 Path construction:
 ```
-p = ()-->()<--() = [p --> [e <-- () ()] () ]
-p = [p [p1] [p2]] =~ [p , [p1] [p2] ]
-
+p =~ (1)-->(2)<--(3) =~ [p -->  (1) [e <-- (2) (3)] ] =~ [p <-- [e --> (1) (2)] (3) ] ]
 ```
 
 Paths can use any of the navigability operators used by edges,
 and also a special 'pair' operator which associates two
 path-like elements without explicitly connecting them.
 
-Path operator:
-- `,` pair association
+Path composition without an explicit operator implies the `,` pair operator:
+
+```
+p =~ [p [p1] [p2]] =~ [p , [p1] [p2] ]
+```
 
 
 Identitity:
