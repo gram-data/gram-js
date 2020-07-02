@@ -1,37 +1,145 @@
-# gram-ast
+# gram-format
 
-Graph model abstract syntax tree.
+This is the Gram data interchange format. Gram is a lightweight data graph.
+This textual representation is easy to read and write. 
+
+## Data Graphs in Gram
+
+Gram data comes in two parts:
+
+1. Records which contain data values
+2. Paths which compose records into structures
+
+A gram file is a sequence of paths, making it ideal for streaming.
+
+Let's create some data...
+
+### Unit Path, an empty path
+
+The smallest amount of data is no data, put in a container so we know
+it is there. An empty path is infinite nothingness. 
+
+Empty path constructions:
 
 ```
-////////
-// unit: an empty path expression
 []
-[] . [] = []
+[] + [] = []
+[ [] [] ] = []
+```
 
-// identity
+As a special case, a single nest path implies composition with an empty path:
+```
+[ [] ] = [ [] [] ] = []
+```
+
+Identity:
+```
 identityof [] = undefined || all the same?
-identityof [n] =~ n
+```
 
+### Nodes, a named path of length 0
 
-////////
-// node: an identified path expression with no children
+When given a name, a path can be identified and described and discussed. 
+The smallest named path has a special name in graphs. It is called a Node. 
+
+To help identify Nodes they can use special notation using parenthesis. 
+
+Node constructions:
+```
+[n]
 (n) =~ [n]
+() != []
+```
+
+The empty parenthesis expression is _not_ an empty path. Nodes always
+have identity. The identity is simply unknown. Implementations may
+invent an identity, but must guarantee that it is unique across all paths.
+
+Node compositions with units:
+```
+(n) + []   =~ [ + n _ ]  =~ [n] =~ (n)
+[]  + (n)  =~ [ + _ n ]  =~ [n] =~ (n)
+```
+
+Identity:
+```
 identityof (n) =~ n
 identityof ()  =~ <auto>
+```
 
-// composition of nodes and units
-(n) . []   =~ [ . n _ ]  =~ [n] =~ (n)
-[]  . (n)  =~ [ . _ n ]  =~ [n] =~ (n)
-(n) . (n)  =~ [ . n n ]
-(n) . (n2) =~ [ . n n2]
-identityof [ . n n ]  =~ <auto>
-identityof [e . n n2] =~ e
+### Edges, named paths of length 1
 
-////////
-// edge: an identified path expression composed of two nodes
-[n] . [n] =~ [e . [n] [n]]
-[e . (n1) (n2)]
-[e1] . [e2] =~ [p] 
+Nodes can be composed together to create a new path called an Edge.
+
+Edge construction:
+```
+e = (n) + (n)  =~ [e + n n ]
+e = (n1) + (n2) =~ [e + n1 n2]
+```
+
+That `+` is a placeholder for any path composition operator. 
+Edges use operators that define the navigability of the path.
+
+Edge operators:
+- `-->` right association
+- `<--` left association
+-  `--` either direction
+
+The edge operators can include the name of the edge.
+
+Identity:
+```
+e =~ ()-->() =~ ()-[e]->() =~ [e --> () ()]
+
+```
+
+
+### Paths, general composition
+
+Paths generalize edges, allowing composition of any path-like
+structure into larger nested structures.
+
+Path construction:
+```
+p = ()-->()<--() = [p --> [e <-- () ()] () ]
+p = [p [p1] [p2]] =~ [p , [p1] [p2] ]
+
+```
+
+Paths can use any of the navigability operators used by edges,
+and also a special 'pair' operator which associates two
+path-like elements without explicitly connecting them.
+
+Path operator:
+- `,` pair association
+
+
+Identitity:
+```
+identityof [p + n n2] =~ p
+identityof [  + n n ] =~ <auto>
+```
+
+### Sequence, a list or stream of paths
+
+
+### Graphs, a merged view of all paths
+
+### Records, type-safe nested data values
+
+JSON-like nested structures:
+
+```
+{
+  name: 'Andreas',
+  birthDay: date'1969-01-07',
+  height: 184cm
+  nicknames: ['abk']
+}
+```
+
+
+## Exploration...
 
 ////////
 // path: an identified path expression composed of path expressions 
