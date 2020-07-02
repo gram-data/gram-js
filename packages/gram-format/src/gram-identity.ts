@@ -67,14 +67,14 @@ export const integerLiteralToBaseID = (alphabet: string, n: string) => {
  * Identifier function which produces a pseudo-random, short identifier.
  *
  */
-export const shortID = shortid.generate;
+export const shortID = () => `_${shortid.generate()}`
 
 /**
  * Identifier function
  *
  * @param i
  */
-export const base36ID = (i: number) => `${i.toString(36)}`;
+export const base36ID = (i: number) => `_${i.toString(36)}`;
 
 export const idFunctionNamed = (idType: string) => {
   return idType === 'number'

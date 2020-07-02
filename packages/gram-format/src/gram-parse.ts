@@ -129,10 +129,11 @@ const grammar: Grammar = {
       symbols: ['Gram$ebnf$1', 'Gram$ebnf$1$subexpression$2'],
       postprocess: d => d[0].concat([d[1]]),
     },
-    { name: 'Gram', symbols: ['Gram$ebnf$1'], postprocess: ([pp]) => g.seq(g.flatten(pp)) },
+    { name: 'Gram$ebnf$2', symbols: ['EOL'], postprocess: id },
+    { name: 'Gram$ebnf$2', symbols: [], postprocess: () => null },
+    { name: 'Gram', symbols: ['Gram$ebnf$1', 'Gram$ebnf$2'], postprocess: ([pp]) => g.seq(g.flatten(pp)) },
     { name: 'PathlikePattern', symbols: ['UnitPattern'], postprocess: id },
-    { name: 'PathlikePattern', symbols: ['NodePattern'], postprocess: id },
-    { name: 'PathlikePattern', symbols: ['EdgePattern'], postprocess: id },
+    { name: 'PathlikePattern', symbols: ['NodeExpression'], postprocess: id },
     { name: 'PathlikePattern', symbols: ['PathPattern'], postprocess: id },
     { name: 'PathlikePattern', symbols: ['Comment'], postprocess: id },
     { name: 'UnitPattern', symbols: [{ literal: '[' }, '_', { literal: ']' }], postprocess: () => g.unit() },
@@ -142,12 +143,12 @@ const grammar: Grammar = {
       postprocess: ([, , content]) => g.node(content.id, content.labels, content.record),
     },
     {
-      name: 'EdgePattern',
-      symbols: ['NodePattern', 'EdgeSpecification', 'EdgePattern'],
+      name: 'NodeExpression',
+      symbols: ['NodePattern', 'EdgeSpecification', 'NodeExpression'],
       postprocess: ([np, es, ep]) =>
         g.cons({ operands: [np, ep], operator: es.direction, id: es.id, labels: es.labels, record: es.record }),
     },
-    { name: 'EdgePattern', symbols: ['NodePattern'], postprocess: id },
+    { name: 'NodeExpression', symbols: ['NodePattern'], postprocess: id },
     {
       name: 'EdgeSpecification',
       symbols: [{ literal: '-[' }, '_', 'ContentSpecification', { literal: ']->' }],
@@ -310,6 +311,7 @@ const grammar: Grammar = {
       symbols: [lexer.has('lineComment') ? { type: 'lineComment' } : lineComment],
       postprocess: empty,
     },
+    { name: 'EOL', symbols: [{ literal: '\n' }], postprocess: empty },
   ],
   ParserStart: 'Gram',
 };

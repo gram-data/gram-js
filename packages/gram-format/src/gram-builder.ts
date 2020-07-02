@@ -33,6 +33,7 @@ import { shortID } from './gram-identity';
 
 export type Children<T> = T | T[] | (() => T | T[]);
 
+
 function normalizeChildren<T extends UnistNode>(children?: Children<T>): T[] {
   if (Array.isArray(children)) {
     return children;
@@ -59,12 +60,17 @@ const dateToDayOfMonth = (d: Date) => '--' + d.toISOString().slice(5, 10);
  * @param labels optional labels
  * @param record optional graph-level data
  */
-export const seq = (paths: Children<GramPath>, id?: string, labels?: string[], record?: GramRecord): GramPathSeq => ({
+export const seq = (
+  paths: Children<GramPathlike>,
+  id?: string,
+  labels?: string[],
+  record?: GramRecord
+): GramPathSeq => ({
   type: 'seq',
   ...(id && { id }),
   ...(labels && { labels }),
   ...(record && { record }),
-  children: normalizeChildren<GramPath>(paths),
+  children: normalizeChildren<GramPathlike>(paths),
 });
 
 export interface PathDescription {

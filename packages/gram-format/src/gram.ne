@@ -45,15 +45,14 @@ let lexer = moo.compile({
 
 @lexer lexer
 
-Gram -> (PathlikePattern _ {% ([pp]) => pp %}):+ {% ([pp]) => g.seq( g.flatten(pp) ) %}
+Gram -> (PathlikePattern _ {% ([pp]) => pp %}):+ EOL:? {% ([pp]) => g.seq( g.flatten(pp) ) %}
 
 #  
 # Pathlike patterns
 # 
 PathlikePattern ->
     UnitPattern {% id %}
-  | NodePattern {% id %}
-  | EdgePattern {% id %}
+  | NodeExpression {% id %}
   | PathPattern {% id %}
   | Comment     {% id %}
   
@@ -63,8 +62,8 @@ NodePattern ->
   "(" _ ContentSpecification ")" 
     {% ([,,content]) => g.node(content.id, content.labels, content.record) %}
   
-EdgePattern ->
-    NodePattern EdgeSpecification EdgePattern 
+NodeExpression ->
+    NodePattern EdgeSpecification NodeExpression
       {% ([np,es,ep]) => g.cons({operands:[np,ep], operator:es.direction, id:es.id, labels:es.labels, record:es.record} ) %}
   | NodePattern {% id %}
 
@@ -81,7 +80,6 @@ EdgeSpecification ->
   | "-->"     {% () => ({direction:'right'}) %}
   | "--"      {% () => ({direction:'either'}) %}
   | "<--"     {% () => ({direction:'left'}) %}
-  # | ","       {% () => ({direction:'pair'}) %}
 
 PathPattern -> 
   "[" _ ContentSpecification _ PathlikePattern:? _ PathlikePattern:? _ "]"
@@ -145,6 +143,8 @@ _ -> null | %whitespace {% empty %}
 
 # Comment -> %lineComment [\n]:? {% empty %}
 Comment -> %lineComment {% empty %}
+
+EOL -> "\n" {% empty %}
 
 @{%
 

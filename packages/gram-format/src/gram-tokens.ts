@@ -9,7 +9,7 @@ export const RE = {
   doubleQuotedString: /"(?:\\["bfnrt/\\]|\\u[a-fA-F0-9]{4}|[^"\\])*"/,
   singleQuotedString: /'(?:\\['bfnrt/\\]|\\u[a-fA-F0-9]{4}|[^'\\])*'/,
   tickedString: /`(?:\\[`bfnrt/\\]|\\u[a-fA-F0-9]{4}|[^`\\])*`/,
-  identifier: /[a-zA-Z_][0-9a-zA-Z_]*/,
+  identifier: /[a-zA-Z_][0-9a-zA-Z_@]*/,
 };
 
 export default {
