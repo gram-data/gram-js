@@ -25,8 +25,25 @@ export const isGramNodeDatum = (o: any): o is GramNodeDatum => {
   return (o as GramNodeDatum).id !== undefined;
 };
 
+export const gramLinkDatum = (
+  source: string,
+  target: string,
+  id?: string,
+  labels?: string[],
+  record?: { [key: string]: any }
+) => {
+  return {
+    id: id || MISSING_ID,
+    labels: labels || [],
+    record: record ? recordToValue(record) : {},
+    source,
+    target
+  };
+}
+
 export interface GramLinkDatum extends SimulationLinkDatum<GramNodeDatum> {
   id: string;
+  record: { [key: string]: any };
 }
 
 export interface GramPathDatum {
@@ -39,26 +56,22 @@ export interface D3Gram {
   paths: GramPathDatum[];
 }
 
-export const nodeToD3 = (node: ast.Node): GramNodeDatum => {
+export const nodeToD3 = (node: ast.GramNode): GramNodeDatum => {
   return gramNodeDatum(node.id, node.labels, node.record);
 };
 
-const source = (edge: ast.Edge): string => {
+const source = (edge: ast.GramEdge): string => {
   if (edge.direction === 'left') return find.rightNodeOf(edge).id || MISSING_ID;
   return find.leftNodeOf(edge).id || MISSING_ID;
 };
 
-const target = (edge: ast.Edge): string => {
+const target = (edge: ast.GramEdge): string => {
   if (edge.direction === 'left') return find.leftNodeOf(edge).id || MISSING_ID;
   return find.rightNodeOf(edge).id || MISSING_ID;
 };
 
-export const edgeToD3 = (edge: ast.Edge): GramLinkDatum => {
-  return {
-    id: edge.id || MISSING_ID,
-    source: source(edge),
-    target: target(edge),
-  };
+export const edgeToD3 = (edge: ast.GramEdge): GramLinkDatum => {
+  return gramLinkDatum(source(edge), target(edge), edge.id,edge.labels, edge.record)
 };
 
 export const gramParse = (src: string): D3Gram => {

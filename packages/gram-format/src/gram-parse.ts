@@ -10,16 +10,17 @@ function id(d: any[]): any {
   return d[0];
 }
 declare var identifier: any;
+declare var symbol: any;
+declare var integer: any;
+declare var octal: any;
+declare var hexadecimal: any;
+declare var measurement: any;
 declare var tickedString: any;
 declare var boolean: any;
 declare var singleQuotedString: any;
 declare var doubleQuotedString: any;
 declare var taggedString: any;
-declare var integer: any;
 declare var decimal: any;
-declare var hexadecimal: any;
-declare var octal: any;
-declare var measurement: any;
 declare var whitespace: any;
 declare var lineComment: any;
 
@@ -32,11 +33,12 @@ let lexer = (moo.compile({
   decimal: RE.decimal,
   integer: RE.integer,
   taggedString: { match: RE.taggedString },
+  boolean: ['true', 'TRUE', 'True', 'false', 'FALSE', 'False'],
+  symbol: RE.symbol,
+  identifier: RE.identifier,
   doubleQuotedString: { match: RE.doubleQuotedString, value: (s: string) => s.slice(1, -1) },
   singleQuotedString: { match: RE.singleQuotedString, value: (s: string) => s.slice(1, -1) },
   tickedString: { match: RE.tickedString, value: (s: string) => s.slice(1, -1) },
-  boolean: ['true', 'TRUE', 'True', 'false', 'FALSE', 'False'],
-  identifier: RE.identifier,
   '-->': '-->',
   '--': '--',
   '<--': '<--',
@@ -121,9 +123,9 @@ interface Grammar {
 const grammar: Grammar = {
   Lexer: lexer,
   ParserRules: [
-    { name: 'Gram$ebnf$1$subexpression$1', symbols: ['PathlikePattern', '_'], postprocess: ([pp]) => pp },
+    { name: 'Gram$ebnf$1$subexpression$1', symbols: ['Pathlike', '_'], postprocess: ([pp]) => pp },
     { name: 'Gram$ebnf$1', symbols: ['Gram$ebnf$1$subexpression$1'] },
-    { name: 'Gram$ebnf$1$subexpression$2', symbols: ['PathlikePattern', '_'], postprocess: ([pp]) => pp },
+    { name: 'Gram$ebnf$1$subexpression$2', symbols: ['Pathlike', '_'], postprocess: ([pp]) => pp },
     {
       name: 'Gram$ebnf$1',
       symbols: ['Gram$ebnf$1', 'Gram$ebnf$1$subexpression$2'],
@@ -132,86 +134,101 @@ const grammar: Grammar = {
     { name: 'Gram$ebnf$2', symbols: ['EOL'], postprocess: id },
     { name: 'Gram$ebnf$2', symbols: [], postprocess: () => null },
     { name: 'Gram', symbols: ['Gram$ebnf$1', 'Gram$ebnf$2'], postprocess: ([pp]) => g.seq(g.flatten(pp)) },
-    { name: 'PathlikePattern', symbols: ['UnitPattern'], postprocess: id },
-    { name: 'PathlikePattern', symbols: ['NodeExpression'], postprocess: id },
-    { name: 'PathlikePattern', symbols: ['PathPattern'], postprocess: id },
-    { name: 'PathlikePattern', symbols: ['Comment'], postprocess: id },
-    { name: 'UnitPattern', symbols: [{ literal: '[' }, '_', { literal: ']' }], postprocess: () => g.unit() },
+    { name: 'Pathlike', symbols: ['Unit'], postprocess: id },
+    { name: 'Pathlike', symbols: ['EdgeExpression'], postprocess: id },
+    { name: 'Pathlike', symbols: ['PathComposition'], postprocess: id },
+    { name: 'Pathlike', symbols: ['Comment'], postprocess: id },
+    { name: 'Unit', symbols: [{ literal: '[' }, '_', { literal: ']' }], postprocess: () => g.unit() },
     {
-      name: 'NodePattern',
-      symbols: [{ literal: '(' }, '_', 'ContentSpecification', { literal: ')' }],
-      postprocess: ([, , content]) => g.node(content.id, content.labels, content.record),
-    },
-    {
-      name: 'NodeExpression',
-      symbols: ['NodePattern', 'EdgeSpecification', 'NodeExpression'],
+      name: 'EdgeExpression',
+      symbols: ['Node', 'Edge', 'EdgeExpression'],
       postprocess: ([np, es, ep]) =>
         g.cons({ operands: [np, ep], operator: es.direction, id: es.id, labels: es.labels, record: es.record }),
     },
-    { name: 'NodeExpression', symbols: ['NodePattern'], postprocess: id },
+    { name: 'EdgeExpression', symbols: ['Node'], postprocess: id },
     {
-      name: 'EdgeSpecification',
-      symbols: [{ literal: '-[' }, '_', 'ContentSpecification', { literal: ']->' }],
+      name: 'Node',
+      symbols: [{ literal: '(' }, '_', 'Attributes', { literal: ')' }],
+      postprocess: ([, , content]) => g.node(content.id, content.labels, content.record),
+    },
+    {
+      name: 'Edge',
+      symbols: [{ literal: '-[' }, '_', 'Attributes', { literal: ']->' }],
       postprocess: ([, , content]) => ({ direction: 'right', ...content }),
     },
     {
-      name: 'EdgeSpecification',
-      symbols: [{ literal: '-[' }, '_', 'ContentSpecification', { literal: ']-' }],
+      name: 'Edge',
+      symbols: [{ literal: '-[' }, '_', 'Attributes', { literal: ']-' }],
       postprocess: ([, , content]) => ({ direction: 'either', ...content }),
     },
     {
-      name: 'EdgeSpecification',
-      symbols: [{ literal: '<-[' }, '_', 'ContentSpecification', { literal: ']-' }],
+      name: 'Edge',
+      symbols: [{ literal: '<-[' }, '_', 'Attributes', { literal: ']-' }],
       postprocess: ([, , content]) => ({ direction: 'left', ...content }),
     },
-    { name: 'EdgeSpecification', symbols: [{ literal: '-[]->' }], postprocess: () => ({ direction: 'right' }) },
-    { name: 'EdgeSpecification', symbols: [{ literal: '-[]-' }], postprocess: () => ({ direction: 'either' }) },
-    { name: 'EdgeSpecification', symbols: [{ literal: '<-[]-' }], postprocess: () => ({ direction: 'left' }) },
-    { name: 'EdgeSpecification', symbols: [{ literal: '-->' }], postprocess: () => ({ direction: 'right' }) },
-    { name: 'EdgeSpecification', symbols: [{ literal: '--' }], postprocess: () => ({ direction: 'either' }) },
-    { name: 'EdgeSpecification', symbols: [{ literal: '<--' }], postprocess: () => ({ direction: 'left' }) },
-    { name: 'PathPattern$ebnf$1', symbols: ['PathlikePattern'], postprocess: id },
-    { name: 'PathPattern$ebnf$1', symbols: [], postprocess: () => null },
-    { name: 'PathPattern$ebnf$2', symbols: ['PathlikePattern'], postprocess: id },
-    { name: 'PathPattern$ebnf$2', symbols: [], postprocess: () => null },
+    { name: 'Edge', symbols: [{ literal: '-[]->' }], postprocess: () => ({ direction: 'right' }) },
+    { name: 'Edge', symbols: [{ literal: '-[]-' }], postprocess: () => ({ direction: 'either' }) },
+    { name: 'Edge', symbols: [{ literal: '<-[]-' }], postprocess: () => ({ direction: 'left' }) },
+    { name: 'Edge', symbols: [{ literal: '-->' }], postprocess: () => ({ direction: 'right' }) },
+    { name: 'Edge', symbols: [{ literal: '--' }], postprocess: () => ({ direction: 'either' }) },
+    { name: 'Edge', symbols: [{ literal: '<--' }], postprocess: () => ({ direction: 'left' }) },
+    { name: 'PathComposition$ebnf$1', symbols: ['Pathlike'], postprocess: id },
+    { name: 'PathComposition$ebnf$1', symbols: [], postprocess: () => null },
+    { name: 'PathComposition$ebnf$2', symbols: ['Pathlike'], postprocess: id },
+    { name: 'PathComposition$ebnf$2', symbols: [], postprocess: () => null },
     {
-      name: 'PathPattern',
+      name: 'PathComposition',
       symbols: [
         { literal: '[' },
         '_',
-        'ContentSpecification',
+        'Attributes',
         '_',
-        'PathPattern$ebnf$1',
+        'PathComposition$ebnf$1',
         '_',
-        'PathPattern$ebnf$2',
+        'PathComposition$ebnf$2',
         '_',
         { literal: ']' },
       ],
       postprocess: ([, , content, , lhs, , rhs]) =>
         g.cons({ operands: [lhs, rhs], id: content.id, labels: content.labels, record: content.record }),
     },
-    { name: 'ContentSpecification$ebnf$1', symbols: ['SymbolicName'], postprocess: id },
-    { name: 'ContentSpecification$ebnf$1', symbols: [], postprocess: () => null },
-    { name: 'ContentSpecification$ebnf$2', symbols: ['LabelList'], postprocess: id },
-    { name: 'ContentSpecification$ebnf$2', symbols: [], postprocess: () => null },
-    { name: 'ContentSpecification$ebnf$3', symbols: ['Record'], postprocess: id },
-    { name: 'ContentSpecification$ebnf$3', symbols: [], postprocess: () => null },
+    { name: 'Attributes$ebnf$1', symbols: ['Identity'], postprocess: id },
+    { name: 'Attributes$ebnf$1', symbols: [], postprocess: () => null },
+    { name: 'Attributes$ebnf$2', symbols: ['LabelList'], postprocess: id },
+    { name: 'Attributes$ebnf$2', symbols: [], postprocess: () => null },
+    { name: 'Attributes$ebnf$3', symbols: ['Record'], postprocess: id },
+    { name: 'Attributes$ebnf$3', symbols: [], postprocess: () => null },
     {
-      name: 'ContentSpecification',
-      symbols: ['ContentSpecification$ebnf$1', '_', 'ContentSpecification$ebnf$2', '_', 'ContentSpecification$ebnf$3'],
+      name: 'Attributes',
+      symbols: ['Attributes$ebnf$1', '_', 'Attributes$ebnf$2', '_', 'Attributes$ebnf$3'],
       postprocess: ([id, , labels, , record]) => ({ id, labels, record }),
     },
     { name: 'LabelList$ebnf$1', symbols: ['Label'] },
     { name: 'LabelList$ebnf$1', symbols: ['LabelList$ebnf$1', 'Label'], postprocess: d => d[0].concat([d[1]]) },
     { name: 'LabelList', symbols: ['LabelList$ebnf$1'], postprocess: ([labels]) => labels },
-    { name: 'Label', symbols: [{ literal: ':' }, 'SymbolicName'], postprocess: ([, label]) => label },
+    { name: 'Label', symbols: [{ literal: ':' }, 'Symbol'], postprocess: ([, label]) => label },
+    { name: 'Identity', symbols: [lexer.has('identifier') ? { type: 'identifier' } : identifier], postprocess: text },
+    { name: 'Identity', symbols: [lexer.has('symbol') ? { type: 'symbol' } : symbol], postprocess: text },
+    { name: 'Identity', symbols: [lexer.has('integer') ? { type: 'integer' } : integer], postprocess: text },
+    { name: 'Identity', symbols: [lexer.has('octal') ? { type: 'octal' } : octal], postprocess: text },
     {
-      name: 'SymbolicName',
-      symbols: [lexer.has('identifier') ? { type: 'identifier' } : identifier],
+      name: 'Identity',
+      symbols: [lexer.has('hexadecimal') ? { type: 'hexadecimal' } : hexadecimal],
       postprocess: text,
     },
     {
-      name: 'SymbolicName',
+      name: 'Identity',
+      symbols: [lexer.has('measurement') ? { type: 'measurement' } : measurement],
+      postprocess: text,
+    },
+    {
+      name: 'Identity',
+      symbols: [lexer.has('tickedString') ? { type: 'tickedString' } : tickedString],
+      postprocess: ([t]) => t.text.slice(1, -1),
+    },
+    { name: 'Symbol', symbols: [lexer.has('symbol') ? { type: 'symbol' } : symbol], postprocess: text },
+    {
+      name: 'Symbol',
       symbols: [lexer.has('tickedString') ? { type: 'tickedString' } : tickedString],
       postprocess: ([t]) => t.text.slice(1, -1),
     },
@@ -230,10 +247,9 @@ const grammar: Grammar = {
     },
     {
       name: 'Property',
-      symbols: ['Key', '_', { literal: ':' }, '_', 'Value'],
+      symbols: ['Symbol', '_', { literal: ':' }, '_', 'Value'],
       postprocess: ([k, , , , v]) => g.property(k, v),
     },
-    { name: 'Key', symbols: ['SymbolicName'], postprocess: id },
     { name: 'Value', symbols: ['StringLiteral'], postprocess: id },
     { name: 'Value', symbols: ['NumericLiteral'], postprocess: id },
     {

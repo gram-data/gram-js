@@ -150,6 +150,27 @@ JSON-like nested structures:
 }
 ```
 
+## Identifiers and Symbols
+
+Identifier alphabet:
+```
+0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_@
+```
+
+Identifier regex: `/[0-9a-zA-Z_@]+\b@*/`
+
+Symbol alphabet:
+```
+0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+```
+
+Symbol regex: `/[a-zA-Z_][0-9a-zA-Z_]*\b(?!@)/`
+
+### Cypher and GQL compatibility
+
+For compatibility with Cypher and GQL statements, identifiers
+should be restricted to valid symbols.
+
 
 ## Exploration...
 

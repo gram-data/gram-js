@@ -92,6 +92,79 @@ describe('parsing nodes', () => {
     expect(firstPath?.id).toBe(pathId);
     expect(firstPath.children).toHaveLength(0);
   });
+
+  it.each`
+    identifier
+    ${'@akollegger'}
+    ${'@a'}
+    ${'_0n96pdf6@E'}
+    ${'Im0_pWk0g4@@'}
+    ${'42'}
+    ${'12px'}
+`('$identifier is a valid identifier', ({ identifier }) => {
+  const src = `(${identifier})`;
+  const result = parse(src);
+  expect(result).toBeDefined();
+  const firstPath = result.children[0];
+  expect(firstPath?.id).toBe(identifier);
+  })
+
+  it.each`
+    identifier
+    ${'napoleon'}
+    ${'Malmö'}
+    ${'😀'}
+    ${'ø™µ'}
+    ${'⚛︎♘'}
+`('$identifier is a valid identifier when inside backticks', ({ identifier }) => {
+  const src = `(\`${identifier}\`)`;
+  const result = parse(src);
+  expect(result).toBeDefined();
+  const firstPath = result.children[0];
+  expect(firstPath?.id).toBe(identifier);
+  })
+
+
+  it.each`
+    gram
+    ${'(n)'}
+    ${'(n:Emperor)'}
+    ${'(n{name:"Napoleon",group:1,height:168cm,born:date\`1769-08-15\`,wikifamous:true,wallet:0x1337})'}
+    ${'(n {name:"Napoleon"})'}
+    ${'(n:Emperor{name:"Napoleon"})'}
+    ${'(n:Emperor {name:"Napoleon"})'}
+`('$gram is a valid node', ({ gram }) => {
+  const result = parse(gram);
+  expect(result).toBeDefined();
+  })
+
+
+  it.each`
+    gram
+    ${'(1)'}
+    ${'(1:First)'}
+    ${'(1{kind:"ordinal"})'}
+    ${'(1 {kind:"ordinal"})'}
+    ${'(1:First{kind:"ordinal"})'}
+    ${'(1:First {kind:"ordinal"})'}
+`('$gram is a valid node', ({ gram }) => {
+  const result = parse(gram);
+  expect(result).toBeDefined();
+  })
+
+  it.each`
+    gram
+    ${'(\`⚛︎♘\`)'}
+    ${'(\`⚛︎♘\`:Atomic:Horse)'}
+    ${'(\`⚛︎♘\`{named:"Chair"})'}
+    ${'(\`⚛︎♘\` {named:"Chair"})'}
+    ${'(\`⚛︎♘\`:Atomic:Horse{named:"Chair"})'}
+    ${'(\`⚛︎♘\`:Atomic:Horse {named:\`🪑\`})'}
+`('$gram is a valid node', ({ gram }) => {
+  const result = parse(gram);
+  expect(result).toBeDefined();
+  })
+
 });
 
 describe('parsing nested nodes', () => {

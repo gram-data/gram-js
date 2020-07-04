@@ -67,7 +67,7 @@ export const integerLiteralToBaseID = (alphabet: string, n: string) => {
  * Identifier function which produces a pseudo-random, short identifier.
  *
  */
-export const shortID = () => `_${shortid.generate()}`
+export const shortID = shortid.generate;
 
 /**
  * Identifier function

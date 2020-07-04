@@ -14,11 +14,12 @@ let lexer = moo.compile({
     decimal: RE.decimal,
     integer: RE.integer,
     taggedString: {match: RE.taggedString},
+    boolean: [ 'true', 'TRUE', 'True', 'false', 'FALSE', 'False' ],
+    symbol: RE.symbol,
+    identifier: RE.identifier,
     doubleQuotedString: {match:RE.doubleQuotedString, value: (s:string) => s.slice(1,-1)},
     singleQuotedString: {match:RE.singleQuotedString, value: (s:string) => s.slice(1,-1)},
     tickedString:       {match:RE.tickedString,       value: (s:string) => s.slice(1,-1)},
-    boolean: [ 'true', 'TRUE', 'True', 'false', 'FALSE', 'False' ],
-    identifier: RE.identifier,
     '-->':'-->',
     '--':'--',
     '<--':'<--',
@@ -45,34 +46,31 @@ let lexer = moo.compile({
 
 @lexer lexer
 
-Gram -> (PathlikePattern _ {% ([pp]) => pp %}):+ EOL:? {% ([pp]) => g.seq( g.flatten(pp) ) %}
+Gram -> (Pathlike _ {% ([pp]) => pp %}):+ EOL:? {% ([pp]) => g.seq( g.flatten(pp) ) %}
 
-#  
-# Pathlike patterns
-# 
-PathlikePattern ->
-    UnitPattern {% id %}
-  | NodeExpression {% id %}
-  | PathPattern {% id %}
+Pathlike ->
+    Unit {% id %}
+  | EdgeExpression {% id %}
+  | PathComposition {% id %}
   | Comment     {% id %}
   
-UnitPattern -> "[" _ "]" {% () => g.unit() %}
+Unit -> "[" _ "]" {% () => g.unit() %}
 
-NodePattern ->
-  "(" _ ContentSpecification ")" 
-    {% ([,,content]) => g.node(content.id, content.labels, content.record) %}
-  
-NodeExpression ->
-    NodePattern EdgeSpecification NodeExpression
+EdgeExpression ->
+    Node Edge EdgeExpression
       {% ([np,es,ep]) => g.cons({operands:[np,ep], operator:es.direction, id:es.id, labels:es.labels, record:es.record} ) %}
-  | NodePattern {% id %}
+  | Node {% id %}
 
-EdgeSpecification ->
-    "-[" _ ContentSpecification "]->"   
+Node ->
+  "(" _ Attributes ")" 
+    {% ([,,content]) => g.node(content.id, content.labels, content.record) %}
+
+Edge ->
+    "-[" _ Attributes "]->"   
               {% ([,,content]) => ({direction:'right', ...content}) %}
-  | "-[" _ ContentSpecification "]-"    
+  | "-[" _ Attributes "]-"    
               {% ([,,content]) => ({direction:'either', ...content}) %}
-  | "<-[" _ ContentSpecification "]-"   
+  | "<-[" _ Attributes "]-"   
               {% ([,,content]) => ({direction:'left', ...content}) %}
   | "-[]->"   {% () => ({direction:'right'}) %}
   | "-[]-"    {% () => ({direction:'either'}) %}
@@ -81,34 +79,39 @@ EdgeSpecification ->
   | "--"      {% () => ({direction:'either'}) %}
   | "<--"     {% () => ({direction:'left'}) %}
 
-PathPattern -> 
-  "[" _ ContentSpecification _ PathlikePattern:? _ PathlikePattern:? _ "]"
+PathComposition -> 
+  "[" _ Attributes _ Pathlike:? _ Pathlike:? _ "]"
   {% ([,,content,,lhs,,rhs]) => g.cons({operands:[lhs,rhs], id:content.id, labels:content.labels, record:content.record}) %}
   
-ContentSpecification ->
-  SymbolicName:? _ LabelList:? _ Record:? {% ([id,,labels,,record]) =>  ( {id, labels, record} )  %}
+Attributes ->
+  Identity:? _ LabelList:? _ Record:? {% ([id,,labels,,record]) =>  ( {id, labels, record} )  %}
 
 LabelList -> 
   Label:+ {% ([labels]) => labels %}
 
-Label -> ":" SymbolicName {% ([,label]) => label %}
+Label -> ":" Symbol {% ([,label]) => label %}
 
-SymbolicName -> 
+Identity -> 
+
     %identifier   {% text %}
+  | %symbol       {% text %}
+  | %integer      {% text %}
+  | %octal        {% text %}
+  | %hexadecimal  {% text %}
+  | %measurement  {% text %}
   | %tickedString {% ([t]) => t.text.slice(1,-1) %}
 
-#
-# Graph content: Records with key/value pairs called Properties.
-#
+Symbol -> 
+    %symbol       {% text %}
+  | %tickedString {% ([t]) => t.text.slice(1,-1) %}
 
-# a Property[]
 Record -> 
     "{" _ "}" {% empty  %}
   | "{" _ Property (_ "," _ Property):* "}" {% ([,,p,ps]) =>  g.record([p, ...extractPairs(ps)]) %}
 
-Property -> Key _ ":" _ Value {% ([k,,,,v]) => g.property(k,v) %}
+Property -> Symbol _ ":" _ Value {% ([k,,,,v]) => g.property(k,v) %}
 
-Key -> SymbolicName {% id %}
+# Key -> Symbol {% id %}
 
 Value -> 
     StringLiteral  {% id %}

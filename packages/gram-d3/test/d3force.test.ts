@@ -1,4 +1,4 @@
-import { GramNodeDatum, GramLinkDatum, gramNodeDatum } from '../src';
+import { GramNodeDatum, GramLinkDatum, gramNodeDatum, gramLinkDatum } from '../src';
 import * as d3 from 'd3-force';
 
 describe('D3Force with D3Gram model', () => {
@@ -17,11 +17,7 @@ describe('D3Force with D3Gram model', () => {
     const nodeA = gramNodeDatum('a');
     const nodeB = gramNodeDatum('b');
     const nodes: GramNodeDatum[] = [nodeA, nodeB];
-    const linkR: GramLinkDatum = {
-      id: 'r',
-      source: nodeA,
-      target: nodeB,
-    };
+    const linkR = gramLinkDatum(nodeA.id, nodeB.id, 'r');
     const links: GramLinkDatum[] = [linkR];
     const simulation = d3
       .forceSimulation(nodes)

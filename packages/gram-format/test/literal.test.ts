@@ -5,14 +5,18 @@ describe('alphanumeric identifiers without backtick delimiters', () => {
     const identifier = 'aye';
     expect(tokens.RE.identifier.test(identifier)).toBeTruthy();
   });
-  it('may not begin with a number', () => {
+  it('may begin with a number', () => {
     let identifier = '123';
-    expect(tokens.RE.identifier.test(identifier)).toBeFalsy();
+    expect(tokens.RE.identifier.test(identifier)).toBeTruthy();
     identifier = '1280px';
-    expect(tokens.RE.identifier.exec(identifier)).not.toContain(identifier);
+    expect(tokens.RE.identifier.exec(identifier)).toContain(identifier);
   });
   it('can include "_" special character', () => {
     const identifier = 'abk_here_com';
+    expect(tokens.RE.identifier.exec(identifier)).toContain(identifier);
+  });
+  it('can include "@" special character', () => {
+    const identifier = 'abk@here_com';
     expect(tokens.RE.identifier.exec(identifier)).toContain(identifier);
   });
 });

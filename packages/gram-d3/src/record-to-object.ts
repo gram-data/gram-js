@@ -4,7 +4,7 @@ export const literalToDate = (literal: ast.DateLiteral) => {
   return new Date(literal.value);
 };
 
-export const literalToValue = (literal: ast.Literal) => {
+export const literalToValue = (literal: ast.GramLiteral) => {
   if (ast.isTaggedLiteral(literal)) {
     switch (literal.tag) {
       case 'date':
@@ -26,7 +26,7 @@ export const literalToValue = (literal: ast.Literal) => {
   }
 };
 
-export const recordToValue = (recordValue: ast.RecordValue): any => {
+export const recordToValue = (recordValue: ast.GramRecordValue): any => {
   if (Array.isArray(recordValue)) {
     return recordValue.map(v => recordToValue(v));
   } else if (ast.isLiteral(recordValue)) {

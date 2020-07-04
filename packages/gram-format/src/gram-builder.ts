@@ -33,7 +33,6 @@ import { shortID } from './gram-identity';
 
 export type Children<T> = T | T[] | (() => T | T[]);
 
-
 function normalizeChildren<T extends UnistNode>(children?: Children<T>): T[] {
   if (Array.isArray(children)) {
     return children;
