@@ -228,7 +228,7 @@ export interface GramPath extends GramPathlikeBase {
 export const isGramPath = (o: any): o is GramPath => !!o.type && o.type === 'path';
 
 /**
- * A GramPathHistory is a whitespace delimited sequence of paths.
+ * A GramPathSeq is a sequence of paths.
  *
  */
 export interface GramPathSeq extends GramPathlikeBase {
@@ -246,6 +246,14 @@ export interface GramPathSeq extends GramPathlikeBase {
  * @param o any object
  */
 export const isGramPathSequence = (o: any): o is GramPathSeq => !!o.type && o.type === 'seq';
+
+export const isGramPathlike = (o:any): o is GramPathlike => (
+     isGramUnit(o) 
+  || isGramNode(o)
+  || isGramEdge(o)
+  || isGramPath(o)
+  || isGramPathSequence(o)
+) 
 
 ///////////////////////////////////////////////////////////////////////////////
 // Records...
