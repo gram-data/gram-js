@@ -9,4 +9,7 @@ export const parse = (src:string) => {
   return processor.parse(src) as gramTypes.GramPathSeq;
 }
 
+
+module.exports = gramParserPlugin;
+
 export default gramParserPlugin

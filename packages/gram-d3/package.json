@@ -59,7 +59,8 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
-    "@gram-data/gram-format": "*",
+    "@gram-data/gram-ast": "^0.1.0",
+    "@gram-data/gram-parse": "^0.1.0",
     "d3": "^5.16.0"
   }
 }

@@ -1,2 +1,2 @@
-export * from './gram-parse';
+// export * from './gram-parse';
 export { recordToValue } from './record-to-object';

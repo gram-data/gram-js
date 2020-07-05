@@ -1,4 +1,4 @@
-import { ast } from '@gram-data/gram-format';
+import * as ast from '@gram-data/gram-ast';
 
 export const literalToDate = (literal: ast.DateLiteral) => {
   return new Date(literal.value);
