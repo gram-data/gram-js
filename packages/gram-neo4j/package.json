@@ -1,5 +1,5 @@
 {
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -39,7 +39,7 @@
   "author": "Andreas Kollegger",
   "module": "dist/gram-neo4j.esm.js",
   "dependencies": {
-    "@gram-data/gram-format": "^0.2.2",
+    "@gram-data/gram-format": "^0.2.3",
     "chalk": "^4.0.0",
     "commander": "^5.1.0",
     "is-reachable": "^4.0.0",
