@@ -9,7 +9,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "Apache-2.0",
   "author": "Andreas Kollegger",
   "main": "dist/index.js",
@@ -41,7 +41,6 @@
     "test:cucumber": "cucumber-js features",
     "release": "np --no-tests --no-release-draft --any-branch --no-yarn"
   },
-  "peerDependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint src"

@@ -1,6 +1,6 @@
 {
   "name": "@gram-data/gram-parse",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -48,8 +48,8 @@
     "typescript": "^3.9.6"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.1.0",
-    "@gram-data/gram-builder": "^0.1.0",
+    "@gram-data/gram-ast": "^0.1.1",
+    "@gram-data/gram-builder": "^0.1.1",
     "moo": "^0.5.1",
     "nearley": "^2.19.4",
     "unified": "^9.0.0",
