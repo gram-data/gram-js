@@ -24,7 +24,7 @@
   ],
   "scripts": {
     "clean": "shx rm -rf dist features/support/js .rts2_cache*",
-    "build": "run-s clean near lint-fix build-dist",
+    "build": "run-s clean near lint:fix build-dist",
     "build-dist": "tsdx build --format umd,cjs,esm",
     "build-cucumber": "tsc --project tsconfig-cucumber.json",
     "lint": "tsdx lint",

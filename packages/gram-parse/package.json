@@ -57,7 +57,7 @@
     "unified": "^9.0.0",
     "vfile": "^4.1.1"
   },
-  "gitHead": "1ed9c89f9f05e2c7af7e6a7dd59c662b8756b7da",
+  "gitHead": "a52a8f2677c33af0d80df26d348f7115b2a8d2cd",
   "publishConfig": {
     "access": "public"
   }
