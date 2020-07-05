@@ -1,6 +1,6 @@
 {
   "name": "@gram-data/gram-stringify",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -34,7 +34,7 @@
   "author": "Andreas Kollegger",
   "module": "dist/gram-stringify.esm.js",
   "devDependencies": {
-    "@gram-data/gram-builder": "^0.1.3",
+    "@gram-data/gram-builder": "^0.1.4",
     "@types/unist": "^2.0.3",
     "@typescript-eslint/parser": "^3.5.0",
     "husky": "^4.2.5",
@@ -45,7 +45,7 @@
     "typescript": "^3.9.6"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.1.3",
+    "@gram-data/gram-ast": "^0.1.4",
     "unified": "^9.0.0"
   },
   "gitHead": "1ed9c89f9f05e2c7af7e6a7dd59c662b8756b7da",
