@@ -30,7 +30,7 @@
     "test:watch": "tsdx test --watch",
     "lint": "tsdx lint",
     "lint:fix": "tsdx lint --fix",
-    "prepare": "tsdx build",
+    "prepare": "run-s build",
     "demo": "parcel public/index.html",
     "release": "np --no-tests --no-release-draft --no-yarn"
   },

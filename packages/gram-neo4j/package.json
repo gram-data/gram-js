@@ -19,7 +19,7 @@
     "test:watch": "tsdx test --watch",
     "lint": "tsdx lint",
     "lint:fix": "tsdx lint --fix",
-    "prepare": "tsdx build"
+    "prepare": "run-s build"
   },
   "peerDependencies": {
     "@gram-data/gram-format": "^0.1.5"

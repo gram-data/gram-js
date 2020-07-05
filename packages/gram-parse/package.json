@@ -22,7 +22,7 @@
     "test:watch": "tsdx test --watch",
     "lint": "tsdx lint",
     "lint:fix": "tsdx lint --fix",
-    "prepare": "tsdx build",
+    "prepare": "run-s build",
     "railroad": "nearley-railroad ./src/gram.ne -o docs/railroad.html"
   },
   "husky": {
