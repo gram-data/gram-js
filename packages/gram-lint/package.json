@@ -1,6 +1,6 @@
 {
   "name": "@gram-data/gram-lint",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -37,15 +37,15 @@
   "author": "Andreas Kollegger",
   "module": "dist/gram-lint.esm.js",
   "devDependencies": {
-    "@gram-data/gram-ast": "^0.1.4",
+    "@gram-data/gram-ast": "^0.1.5",
     "husky": "^4.2.5",
     "tsdx": "^0.13.2",
     "tslib": "^2.0.0",
     "typescript": "^3.9.6"
   },
   "dependencies": {
-    "@gram-data/gram-parse": "^0.1.4",
-    "@gram-data/gram-stringify": "^0.1.4",
+    "@gram-data/gram-parse": "^0.1.5",
+    "@gram-data/gram-stringify": "^0.1.5",
     "unified": "^9.0.0",
     "unified-args": "^8.1.0"
   },
