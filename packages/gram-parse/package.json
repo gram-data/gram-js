@@ -3,6 +3,8 @@
   "version": "0.1.3",
   "license": "MIT",
   "main": "dist/index.js",
+  "unpkg": "dist/gram-parse.umd.production.min.js",
+  "module": "dist/gram-parse.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
@@ -15,7 +17,7 @@
     "start": "tsdx watch",
     "build": "run-s build:near lint:fix build:dist",
     "build:near": "nearleyc src/gram.ne -o src/gram-grammar.ts",
-    "build:dist": "tsdx build",
+    "build:dist": "tsdx build --format umd,esm,cjs",
     "test": "tsdx test",
     "test:watch": "tsdx test --watch",
     "lint": "tsdx lint",
@@ -35,7 +37,6 @@
     "trailingComma": "es5"
   },
   "author": "Andreas Kollegger",
-  "module": "dist/gram-parse.esm.js",
   "devDependencies": {
     "@types/moo": "^0.5.3",
     "@types/nearley": "^2.11.1",
