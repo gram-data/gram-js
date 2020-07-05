@@ -1,6 +1,6 @@
 import builder from '@gram-data/gram-builder';
 // import * as gramTypes from '@gram-data/gram-ast';
-import {stringify} from '../src/';
+import { stringify } from '../src/';
 
 describe('gram stringify for defined paths', () => {
   it('ignores undefined paths', () => {

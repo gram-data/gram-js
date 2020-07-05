@@ -1,27 +1,13 @@
-import unified, { CompilerFunction, Plugin } from 'unified';
-import { Node as UnistNode } from 'unist';
-import { VFile } from 'vfile';
 
 import * as gramTypes from '@gram-data/gram-ast';
-import { errors as gramErrors } from '../src/';
-import gramParserPlugin from '../src/';
+import { errors as gramErrors } from '@gram-data/gram-parse';
 
-const mockCompiler: CompilerFunction = (element: UnistNode, file: VFile) => {
-  console.log(element, file);
-  return 'mock compiler for testing';
-};
-
-const testCompilerPlugin: Plugin = function() {
-  this.Compiler = mockCompiler;
-};
+import lint from '../src'
 
 describe('using gram as the Parser for unified()', () => {
   it('accepts an empty node "()" ', () => {
     const src = `()`;
-    const processor = unified()
-      .use(gramParserPlugin)
-      .freeze();
-    const result = processor.parse(src) as gramTypes.GramPathSeq;
+    const result = lint.parse(src) as gramTypes.GramPathSeq;
 
     expect(gramTypes.isGramPathSequence(result)).toBeTruthy();
     const firstPath = result.children[0];
@@ -30,11 +16,7 @@ describe('using gram as the Parser for unified()', () => {
 
   it('rejects a missing close parenthesis in "(" ', () => {
     const src = `(`;
-    const processor = unified()
-      .use(gramParserPlugin)
-      .use(testCompilerPlugin)
-      .freeze();
-    processor.process(src).then(
+    lint.process(src).then(
       value => {
         fail(`Unexpected process value: ${value}`);
       },
@@ -46,11 +28,7 @@ describe('using gram as the Parser for unified()', () => {
 
   it('rejects an unexpected square bracket in "(]" ', () => {
     const src = `(]`;
-    const processor = unified()
-      .use(gramParserPlugin)
-      .use(testCompilerPlugin)
-      .freeze();
-    processor.process(src).then(
+    lint.process(src).then(
       value => {
         console.log(value);
       },

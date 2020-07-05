@@ -171,7 +171,11 @@ export const unit = (): GramUnit => UNIT;
  * @param record
  * @param annotation
  */
-export const node = (id?: string, labels?: string[], record?: GramRecord): GramNode => ({
+export const node = (
+  id?: string,
+  labels?: string[],
+  record?: GramRecord
+): GramNode => ({
   type: 'node',
   id: id || identity.shortID(),
   ...(labels && { labels }),
@@ -231,7 +235,10 @@ export const record = (properties: GramProperty[]): GramRecord => {
   }, {} as GramRecord);
 };
 
-export const property = (name: string, value: GramLiteral | GramLiteral[]): GramProperty => {
+export const property = (
+  name: string,
+  value: GramLiteral | GramLiteral[]
+): GramProperty => {
   const Node: GramProperty = {
     type: 'property',
     name,
@@ -240,28 +247,56 @@ export const property = (name: string, value: GramLiteral | GramLiteral[]): Gram
   return Node;
 };
 
-export const boolean = (value: boolean): BooleanLiteral => ({ type: 'boolean', value: value ? 'true' : 'false' });
+export const boolean = (value: boolean): BooleanLiteral => ({
+  type: 'boolean',
+  value: value ? 'true' : 'false',
+});
 
-export const string = (value: string): StringLiteral => ({ type: 'string', value });
+export const string = (value: string): StringLiteral => ({
+  type: 'string',
+  value,
+});
 
-export const tagged = (tag: string, value: string): TaggedLiteral => ({ type: 'tagged', value, tag });
+export const tagged = (tag: string, value: string): TaggedLiteral => ({
+  type: 'tagged',
+  value,
+  tag,
+});
 
-export const integer = (value: string | number): IntegerLiteral => ({ type: 'integer', value: String(value) });
+export const integer = (value: string | number): IntegerLiteral => ({
+  type: 'integer',
+  value: String(value),
+});
 
-export const decimal = (value: string | number): DecimalLiteral => ({ type: 'decimal', value: String(value) });
+export const decimal = (value: string | number): DecimalLiteral => ({
+  type: 'decimal',
+  value: String(value),
+});
 
-export const hexadecimal = (value: string): HexadecimalLiteral => ({ type: 'hexadecimal', value });
+export const hexadecimal = (value: string): HexadecimalLiteral => ({
+  type: 'hexadecimal',
+  value,
+});
 
-export const octal = (value: string): OctalLiteral => ({ type: 'octal', value });
+export const octal = (value: string): OctalLiteral => ({
+  type: 'octal',
+  value,
+});
 
-export const measurement = (unit: string, value: string | number): MeasurementLiteral => ({
+export const measurement = (
+  unit: string,
+  value: string | number
+): MeasurementLiteral => ({
   type: 'measurement',
   value: String(value),
   unit,
 });
 
 export const year = (value: string | Date): TaggedLiteral =>
-  tagged(value instanceof Date ? value.getFullYear().toString() : value, 'date');
+  tagged(
+    value instanceof Date ? value.getFullYear().toString() : value,
+    'date'
+  );
 
 export const date = (value: string | Date): TaggedLiteral =>
   tagged(value instanceof Date ? dateToYMD(value) : value, 'date');
@@ -272,7 +307,8 @@ export const dayOfMonth = (value: string | Date): TaggedLiteral =>
 export const time = (value: string | Date): TaggedLiteral =>
   tagged(value instanceof Date ? dateToYMD(value) : value, 'time');
 
-export const flatten = (xs: any[], depth = 1) => xs.flat(depth).filter(x => x !== null);
+export const flatten = (xs: any[], depth = 1) =>
+  xs.flat(depth).filter(x => x !== null);
 
 export default {
   seq,

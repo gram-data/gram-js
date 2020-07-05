@@ -10,7 +10,11 @@
  * @packageDocumentation
  */
 
-import { Parent as UnistParent, Literal as UnistLiteral, Node as UnistNode } from 'unist';
+import {
+  Parent as UnistParent,
+  Literal as UnistLiteral,
+  Node as UnistNode,
+} from 'unist';
 
 /**
  * A union type of interfaces which are path-like.
@@ -105,7 +109,8 @@ export interface GramUnit extends GramPathlikeBase {
  *
  * @param o any object
  */
-export const isGramUnit = (o: any): o is GramUnit => !!o.type && o.type === 'unit';
+export const isGramUnit = (o: any): o is GramUnit =>
+  !!o.type && o.type === 'unit';
 
 /**
  * A GramNode is the foundation for attached data structures.
@@ -137,7 +142,8 @@ export interface GramNode extends GramPathlikeBase {
  *
  * @param o any object
  */
-export const isGramNode = (o: any): o is GramNode => !!o.type && o.type === 'node';
+export const isGramNode = (o: any): o is GramNode =>
+  !!o.type && o.type === 'node';
 
 /**
  * RelationshipOperator composes path expressions.
@@ -184,7 +190,8 @@ export interface GramEdge extends GramPathlikeBase {
  *
  * @param o any object
  */
-export const isGramEdge = (o: any): o is GramEdge => 'type' in o && 'direction' in o && o.type === 'edge';
+export const isGramEdge = (o: any): o is GramEdge =>
+  'type' in o && 'direction' in o && o.type === 'edge';
 
 /**
  * GramPath contains nodes, edges and other paths that have been composed
@@ -225,7 +232,8 @@ export interface GramPath extends GramPathlikeBase {
  *
  * @param o any object
  */
-export const isGramPath = (o: any): o is GramPath => !!o.type && o.type === 'path';
+export const isGramPath = (o: any): o is GramPath =>
+  !!o.type && o.type === 'path';
 
 /**
  * A GramPathSeq is a sequence of paths.
@@ -245,15 +253,15 @@ export interface GramPathSeq extends GramPathlikeBase {
  *
  * @param o any object
  */
-export const isGramPathSequence = (o: any): o is GramPathSeq => !!o.type && o.type === 'seq';
+export const isGramPathSequence = (o: any): o is GramPathSeq =>
+  !!o.type && o.type === 'seq';
 
-export const isGramPathlike = (o:any): o is GramPathlike => (
-     isGramUnit(o) 
-  || isGramNode(o)
-  || isGramEdge(o)
-  || isGramPath(o)
-  || isGramPathSequence(o)
-) 
+export const isGramPathlike = (o: any): o is GramPathlike =>
+  isGramUnit(o) ||
+  isGramNode(o) ||
+  isGramEdge(o) ||
+  isGramPath(o) ||
+  isGramPathSequence(o);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Records...
@@ -293,7 +301,8 @@ export interface GramProperty extends GramLeaf {
  *
  * @param o any object
  */
-export const isGramProperty = (o: any): o is GramProperty => !!o.type && o.type === 'property';
+export const isGramProperty = (o: any): o is GramProperty =>
+  !!o.type && o.type === 'property';
 
 /**
  * GramLiteral is a data value represented as plain text.
@@ -327,7 +336,8 @@ export interface BooleanLiteral extends GramLiteral {
  *
  * @param o any object
  */
-export const isBooleanLiteral = (o: any): o is BooleanLiteral => !!o.type && !!o.value && o.type === 'boolean';
+export const isBooleanLiteral = (o: any): o is BooleanLiteral =>
+  !!o.type && !!o.value && o.type === 'boolean';
 
 /**
  * Represents a string literal, like "hello".
@@ -344,7 +354,8 @@ export interface StringLiteral extends GramLiteral {
  *
  * @param o any object
  */
-export const isStringLiteral = (o: any): o is StringLiteral => !!o.type && !!o.value && o.type === 'string';
+export const isStringLiteral = (o: any): o is StringLiteral =>
+  !!o.type && !!o.value && o.type === 'string';
 
 /**
  * Represents a tagged string, like md`# Title`
@@ -363,7 +374,8 @@ export interface TaggedLiteral extends GramLiteral {
  *
  * @param o any object
  */
-export const isTaggedLiteral = (o: any): o is TaggedLiteral => !!o.type && !!o.value && !!o.tag && o.type === 'tagged';
+export const isTaggedLiteral = (o: any): o is TaggedLiteral =>
+  !!o.type && !!o.value && !!o.tag && o.type === 'tagged';
 
 /**
  * Represents an integer number, like 235276234.
@@ -377,7 +389,8 @@ export interface IntegerLiteral extends GramLiteral {
  *
  * @param o any object
  */
-export const isIntegerLiteral = (o: any): o is IntegerLiteral => !!o.type && !!o.value && o.type === 'integer';
+export const isIntegerLiteral = (o: any): o is IntegerLiteral =>
+  !!o.type && !!o.value && o.type === 'integer';
 
 /**
  * Represents a decimal with units, like 12.4px or 42.0mm
@@ -411,7 +424,8 @@ export interface DecimalLiteral extends GramLiteral {
  *
  * @param o any object
  */
-export const isDecimalLiteral = (o: any): o is DecimalLiteral => !!o.type && !!o.value && o.type === 'decimal';
+export const isDecimalLiteral = (o: any): o is DecimalLiteral =>
+  !!o.type && !!o.value && o.type === 'decimal';
 
 /**
  * Represents an integer expressed in hexadecimal, like 0xc0d3.
@@ -445,7 +459,8 @@ export interface OctalLiteral extends GramLiteral {
  *
  * @param o any object
  */
-export const isOctalLiteral = (o: any): o is OctalLiteral => !!o.type && !!o.value && o.type === 'octal';
+export const isOctalLiteral = (o: any): o is OctalLiteral =>
+  !!o.type && !!o.value && o.type === 'octal';
 
 /**
  * Represents a ISO8601 calendar date, like `2020-02-02`.

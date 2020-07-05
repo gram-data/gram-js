@@ -1,6 +1,6 @@
 {
   "name": "@gram-data/gram-parse",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -17,8 +17,9 @@
     "build:near": "nearleyc src/gram.ne -o src/gram-grammar.ts",
     "build:dist": "tsdx build",
     "test": "tsdx test",
+    "test:watch": "tsdx test --watch",
     "lint": "tsdx lint",
-    "lint:fix": "tsdx lint src --fix",
+    "lint:fix": "tsdx lint --fix",
     "prepare": "tsdx build",
     "railroad": "nearley-railroad ./src/gram.ne -o docs/railroad.html"
   },
@@ -48,11 +49,12 @@
     "typescript": "^3.9.6"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.1.1",
-    "@gram-data/gram-builder": "^0.1.1",
+    "@gram-data/gram-ast": "^0.1.2",
+    "@gram-data/gram-builder": "^0.1.2",
     "moo": "^0.5.1",
     "nearley": "^2.19.4",
     "unified": "^9.0.0",
     "vfile": "^4.1.1"
-  }
+  },
+  "gitHead": "1e9fdef40d5d5188e7114b30ea0caf2f8273b285"
 }

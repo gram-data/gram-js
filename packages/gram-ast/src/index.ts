@@ -1,4 +1,6 @@
+import * as tokens from './gram-tokens';
+import * as identity from './gram-identity';
+
 export * from './gram-types';
 
-export * as tokens from './gram-tokens';
-export * as identity from './gram-identity';
+export { tokens, identity };

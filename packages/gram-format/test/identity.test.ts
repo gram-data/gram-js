@@ -273,7 +273,6 @@ describe('unusual but valid identifiers', () => {
   });
 });
 
-
 describe('illegal identifiers', () => {
   it.each`
     identifier

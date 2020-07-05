@@ -9,7 +9,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "0.2.1",
+  "version": "0.2.2",
   "license": "Apache-2.0",
   "author": "Andreas Kollegger",
   "main": "dist/index.js",
@@ -30,8 +30,8 @@
     "build": "run-s clean near lint-fix build-dist",
     "build-dist": "tsdx build --format umd,cjs,esm",
     "build-cucumber": "tsc --project tsconfig-cucumber.json",
-    "lint": "tsdx lint src",
-    "lint-fix": "tsdx lint src --fix",
+    "lint": "tsdx lint",
+    "lint:fix": "tsdx lint --fix",
     "typedoc": "typedoc",
     "railroad": "nearley-railroad ./src/gram.ne -o docs/railroad.html",
     "test": "tsdx test",
@@ -91,5 +91,6 @@
     "unist-util-inspect": "^6.0.0",
     "unist-util-visit": "^2.0.2",
     "unist-util-visit-children": "^1.1.4"
-  }
+  },
+  "gitHead": "1e9fdef40d5d5188e7114b30ea0caf2f8273b285"
 }

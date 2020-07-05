@@ -4,7 +4,6 @@ import { parse } from '../src/';
 // const inspect = require('unist-util-inspect');
 
 describe('parsing empty paths', () => {
-
   it('[] as an empty path, a special path called unit', () => {
     const src = `[]`;
     const result = parse(src);
@@ -12,7 +11,7 @@ describe('parsing empty paths', () => {
     // console.log(inspect(result));
     const firstPath = result.children[0];
     expect(gramTypes.isGramUnit(firstPath)).toBeTruthy();
-    expect(firstPath.id).toBe(gramTypes.UNIT_ID)
+    expect(firstPath.id).toBe(gramTypes.UNIT_ID);
   });
 
   it('[[]] as a path equivalent to unit', () => {
@@ -22,7 +21,7 @@ describe('parsing empty paths', () => {
     // console.log(inspect(result));
     const firstPath = result.children[0];
     expect(gramTypes.isGramUnit(firstPath)).toBeTruthy();
-    expect(firstPath.id).toBe(gramTypes.UNIT_ID)
+    expect(firstPath.id).toBe(gramTypes.UNIT_ID);
   });
 
   it('[[[]]] as a path equivalent to unit', () => {
@@ -33,11 +32,9 @@ describe('parsing empty paths', () => {
     const firstPath = result.children[0];
     expect(gramTypes.isGramUnit(firstPath)).toBeTruthy();
   });
-
 });
 
 describe('parsing nodes', () => {
-
   it('[a] as path equivalent to (a), a special path called a node', () => {
     const nodeId = 'a';
     const src = `[${nodeId}]`;
@@ -101,13 +98,13 @@ describe('parsing nodes', () => {
     ${'Im0_pWk0g4@@'}
     ${'42'}
     ${'12px'}
-`('$identifier is a valid identifier', ({ identifier }) => {
-  const src = `(${identifier})`;
-  const result = parse(src);
-  expect(result).toBeDefined();
-  const firstPath = result.children[0];
-  expect(firstPath?.id).toBe(identifier);
-  })
+  `('$identifier is a valid identifier', ({ identifier }) => {
+    const src = `(${identifier})`;
+    const result = parse(src);
+    expect(result).toBeDefined();
+    const firstPath = result.children[0];
+    expect(firstPath?.id).toBe(identifier);
+  });
 
   it.each`
     identifier
@@ -116,28 +113,26 @@ describe('parsing nodes', () => {
     ${'😀'}
     ${'ø™µ'}
     ${'⚛︎♘'}
-`('$identifier is a valid identifier when inside backticks', ({ identifier }) => {
-  const src = `(\`${identifier}\`)`;
-  const result = parse(src);
-  expect(result).toBeDefined();
-  const firstPath = result.children[0];
-  expect(firstPath?.id).toBe(identifier);
-  })
-
+  `('$identifier is a valid identifier when inside backticks', ({ identifier }) => {
+    const src = `(\`${identifier}\`)`;
+    const result = parse(src);
+    expect(result).toBeDefined();
+    const firstPath = result.children[0];
+    expect(firstPath?.id).toBe(identifier);
+  });
 
   it.each`
     gram
     ${'(n)'}
     ${'(n:Emperor)'}
-    ${'(n{name:"Napoleon",group:1,height:168cm,born:date\`1769-08-15\`,wikifamous:true,wallet:0x1337})'}
+    ${'(n{name:"Napoleon",group:1,height:168cm,born:date`1769-08-15`,wikifamous:true,wallet:0x1337})'}
     ${'(n {name:"Napoleon"})'}
     ${'(n:Emperor{name:"Napoleon"})'}
     ${'(n:Emperor {name:"Napoleon"})'}
-`('$gram is a valid node', ({ gram }) => {
-  const result = parse(gram);
-  expect(result).toBeDefined();
-  })
-
+  `('$gram is a valid node', ({ gram }) => {
+    const result = parse(gram);
+    expect(result).toBeDefined();
+  });
 
   it.each`
     gram
@@ -147,28 +142,26 @@ describe('parsing nodes', () => {
     ${'(1 {kind:"ordinal"})'}
     ${'(1:First{kind:"ordinal"})'}
     ${'(1:First {kind:"ordinal"})'}
-`('$gram is a valid node', ({ gram }) => {
-  const result = parse(gram);
-  expect(result).toBeDefined();
-  })
+  `('$gram is a valid node', ({ gram }) => {
+    const result = parse(gram);
+    expect(result).toBeDefined();
+  });
 
   it.each`
     gram
-    ${'(\`⚛︎♘\`)'}
-    ${'(\`⚛︎♘\`:Atomic:Horse)'}
-    ${'(\`⚛︎♘\`{named:"Chair"})'}
-    ${'(\`⚛︎♘\` {named:"Chair"})'}
-    ${'(\`⚛︎♘\`:Atomic:Horse{named:"Chair"})'}
-    ${'(\`⚛︎♘\`:Atomic:Horse {named:\`🪑\`})'}
-`('$gram is a valid node', ({ gram }) => {
-  const result = parse(gram);
-  expect(result).toBeDefined();
-  })
-
+    ${'(`⚛︎♘`)'}
+    ${'(`⚛︎♘`:Atomic:Horse)'}
+    ${'(`⚛︎♘`{named:"Chair"})'}
+    ${'(`⚛︎♘` {named:"Chair"})'}
+    ${'(`⚛︎♘`:Atomic:Horse{named:"Chair"})'}
+    ${'(`⚛︎♘`:Atomic:Horse {named:`🪑`})'}
+  `('$gram is a valid node', ({ gram }) => {
+    const result = parse(gram);
+    expect(result).toBeDefined();
+  });
 });
 
 describe('parsing nested nodes', () => {
-
   it('[p (n)] as a defined path containing a single node', () => {
     const pathId = 'p';
     const nodeId = 'n';
@@ -216,7 +209,6 @@ describe('parsing nested nodes', () => {
 });
 
 describe('parsing edges', () => {
-
   it('()--() relates two nodes, traversable in either direction, with each element assigned a generated id', () => {
     const src = `()--()`;
     const result = parse(src);
@@ -330,7 +322,6 @@ describe('parsing edges', () => {
     expect(gramTypes.isGramNode(firstPath.children[1])).toBeTruthy();
   });
 });
-
 
 // describe('parsing path notation for edges', () => {
 

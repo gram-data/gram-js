@@ -33,7 +33,9 @@ const checkIdentifierRegex = new RegExp('^' + tokens.identifier.source + '$');
  * Checks whether the given string is a valid identifier.
  *
  */
-export const isValidIdentifier = checkIdentifierRegex.test.bind(checkIdentifierRegex);
+export const isValidIdentifier = checkIdentifierRegex.test.bind(
+  checkIdentifierRegex
+);
 
 /**
  *
@@ -41,7 +43,8 @@ export const isValidIdentifier = checkIdentifierRegex.test.bind(checkIdentifierR
  */
 export const decodeInteger = (n: number) => {
   const base10 = baseX(alphabets.base10);
-  if (n > Number.MAX_SAFE_INTEGER) throw Error('Value cannot exceed Number.MAX_SAFE_INTEGER.');
+  if (n > Number.MAX_SAFE_INTEGER)
+    throw Error('Value cannot exceed Number.MAX_SAFE_INTEGER.');
   return base10.decode(n.toFixed(0));
 };
 

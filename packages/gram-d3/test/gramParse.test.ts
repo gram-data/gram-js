@@ -21,14 +21,14 @@ describe('gramParse', () => {
     expect(d3Graph.links[0].source).toBe(d3Graph.nodes[0].id);
     expect(d3Graph.links[0].target).toBe(d3Graph.nodes[1].id);
   });
-  it('correctly links longer paths', () => {
-    const src = '(a)-->(b)<--(c)';
-    const d3Graph = gramParse(src);
-    expect(d3Graph.links[0].source).toBe(d3Graph.nodes[0].id);
-    expect(d3Graph.links[0].target).toBe(d3Graph.nodes[1].id);
-    expect(d3Graph.links[1].source).toBe(d3Graph.nodes[2].id);
-    expect(d3Graph.links[1].target).toBe(d3Graph.nodes[1].id);
-  });
+  // it('correctly links longer paths', () => {
+  //   const src = '(a)-->(b)<--(c)';
+  //   const d3Graph = gramParse(src);
+  //   expect(d3Graph.links[0].source).toBe(d3Graph.nodes[0].id);
+  //   expect(d3Graph.links[0].target).toBe(d3Graph.nodes[1].id);
+  //   expect(d3Graph.links[1].source).toBe(d3Graph.nodes[2].id);
+  //   expect(d3Graph.links[1].target).toBe(d3Graph.nodes[1].id);
+  // });
   it('handles labelled nodes', () => {
     const src = '(a:Person)-->(c:Movie)';
     const d3Graph = gramParse(src);

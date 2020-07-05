@@ -1,30 +1,9 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["src"],
+  "baseUrl": "./",
+  "sourceRoot": "./",
   "compilerOptions": {
-    "rootDir": "./src",
-    "outDir": "./dist",
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "baseUrl": "./",
-    "paths": {
-      "*": ["src/*", "node_modules/*"]
-    },
-    "jsx": "react",
-    "esModuleInterop": true
+      "outDir": "./dist",
   },
-  "typedocOptions": {
-    "mode":"modules",
-    "inputFiles": ["./src"],
-    "out":"docs"
-  }
+  "include": ["src"]
 }

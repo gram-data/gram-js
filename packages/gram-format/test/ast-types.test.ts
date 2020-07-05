@@ -2,7 +2,7 @@ import * as gramTypes from '../src/gram-types';
 
 describe('gram unit', () => {
   it('is entirely empty', () => {
-    const unit = { type: 'unit'}
+    const unit = { type: 'unit' };
     expect(gramTypes.isGramUnit(unit)).toBeTruthy();
     if (gramTypes.isGramUnit(unit)) {
       expect(unit.id).toBeUndefined();
@@ -15,14 +15,14 @@ describe('gram unit', () => {
 
 describe('gram nodes', () => {
   it('have identity, labels and a record, but no children', () => {
-    const node = { type: 'node'}
+    const node = { type: 'node' };
     expect(gramTypes.isGramNode(node)).toBeTruthy();
     if (gramTypes.isGramNode(node)) {
       node.id = 'a';
       expect(node.id).toEqual('a');
-      node.labels = ["A", "B"]
-      expect(node.labels).toEqual(expect.arrayContaining(["A", "B"]));
-      node.record = { k:{type:"string", value:"v"}};
+      node.labels = ['A', 'B'];
+      expect(node.labels).toEqual(expect.arrayContaining(['A', 'B']));
+      node.record = { k: { type: 'string', value: 'v' } };
       expect(gramTypes.isStringLiteral(node.record.k)).toBeTruthy();
       expect(node.children).toBeUndefined();
     }
@@ -133,7 +133,7 @@ describe('gram ast integer literals', () => {
   it('has a type guard', () => {
     const literal: any = { type: 'integer', value: 'false' };
     if (gramTypes.isIntegerLiteral(literal)) expect(literal.type === 'integer').toBeTruthy();
-    else fail("Denied by typeguard");
+    else fail('Denied by typeguard');
   });
 });
 
@@ -169,7 +169,7 @@ describe('gram ast measurement literals', () => {
   it('has a type guard', () => {
     const literal: any = { type: 'measurement', unit: 'test', value: 'false' };
     if (gramTypes.isMeasurementLiteral(literal)) expect(literal.type === 'measurement').toBeTruthy();
-    else fail("Denied by typeguard");
+    else fail('Denied by typeguard');
   });
 });
 

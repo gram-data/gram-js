@@ -1,4 +1,9 @@
-import { GramNodeDatum, GramLinkDatum, gramNodeDatum, gramLinkDatum } from '../src';
+import {
+  GramNodeDatum,
+  GramLinkDatum,
+  gramNodeDatum,
+  gramLinkDatum,
+} from '../src';
 import * as d3 from 'd3-force';
 
 describe('D3Force with D3Gram model', () => {

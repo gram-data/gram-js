@@ -247,13 +247,8 @@ export interface GramPathSeq extends GramPathlikeBase {
  */
 export const isGramPathSequence = (o: any): o is GramPathSeq => !!o.type && o.type === 'seq';
 
-export const isGramPathlike = (o:any): o is GramPathlike => (
-     isGramUnit(o) 
-  || isGramNode(o)
-  || isGramEdge(o)
-  || isGramPath(o)
-  || isGramPathSequence(o)
-) 
+export const isGramPathlike = (o: any): o is GramPathlike =>
+  isGramUnit(o) || isGramNode(o) || isGramEdge(o) || isGramPath(o) || isGramPathSequence(o);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Records...

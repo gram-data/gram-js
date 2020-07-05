@@ -1,6 +1,6 @@
 {
   "name": "@gram-data/gram-stringify",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -17,6 +17,7 @@
     "test": "tsdx test",
     "test:watch": "tsdx test --watch",
     "lint": "tsdx lint",
+    "lint:fix": "tsdx lint --fix",
     "prepare": "tsdx build"
   },
   "husky": {
@@ -33,7 +34,7 @@
   "author": "Andreas Kollegger",
   "module": "dist/gram-stringify.esm.js",
   "devDependencies": {
-    "@gram-data/gram-builder": "^0.1.1",
+    "@gram-data/gram-builder": "^0.1.2",
     "@types/unist": "^2.0.3",
     "@typescript-eslint/parser": "^3.5.0",
     "husky": "^4.2.5",
@@ -44,7 +45,8 @@
     "typescript": "^3.9.6"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.1.1",
+    "@gram-data/gram-ast": "^0.1.2",
     "unified": "^9.0.0"
-  }
+  },
+  "gitHead": "1e9fdef40d5d5188e7114b30ea0caf2f8273b285"
 }

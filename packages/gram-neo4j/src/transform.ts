@@ -45,8 +45,8 @@
 //       builder.node(boltIntegerToGramIdentifier(r.end))
 //     ],
 //     "right",
-//     boltIntegerToGramIdentifier(r.identity), 
-//     [r.type], 
+//     boltIntegerToGramIdentifier(r.identity),
+//     [r.type],
 //     objectToAstRecord(r.properties));
 // }
 
@@ -55,10 +55,10 @@
 //     if (ast.isNode(right)) {
 //       return builder.edge([left,right], "pair");
 //     } else {
-//       return builder. 
+//       return builder.
 //     }
 //   } else if (ast.isEdge(left)) {
-//     return 
+//     return
 //   }
 //   return right;
 // }
@@ -79,13 +79,13 @@
 
 // export const boltRecordToAstPath = (record: Record): ast.Path => {
 //   const recordAsObject = record.toObject();
-//   const {elements, properties} = Object.entries(recordAsObject).reduce( (acc, [k,v]) => { 
+//   const {elements, properties} = Object.entries(recordAsObject).reduce( (acc, [k,v]) => {
 //     if (isNode(v) || isRelationship(v) || isPath(v)) {
 //       acc.elements.push(v)
 //     } else {
 //       acc.properties.push([toValidIdentifier(k),v])
 //     }
-//     return acc }, 
+//     return acc },
 //     {elements:[], properties:[]} as { elements:any[], properties:[string,any][]}
 //   );
 //   const child = elementsToAstPath(elements).children[0];

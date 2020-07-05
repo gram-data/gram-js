@@ -1,10 +1,10 @@
-import {MockRecord} from '../src/index';
-import {Node as Neo4jNode} from 'neo4j-driver/lib/graph-types.js'
+import { MockRecord } from '../src/index';
+import { Node as Neo4jNode } from 'neo4j-driver/lib/graph-types.js';
 
 describe('Mock Neo4j result records', () => {
   it('can contain a string', () => {
     const literal = {
-      title: 'As Good As It Gets'
+      title: 'As Good As It Gets',
     };
     const record = new MockRecord(literal);
     expect(record.has('title')).toBeTruthy();
@@ -12,7 +12,7 @@ describe('Mock Neo4j result records', () => {
   });
   it('can contain a number', () => {
     const literal = {
-      rating: 9
+      rating: 9,
     };
     const record = new MockRecord(literal);
     expect(record.has('rating')).toBeTruthy();
@@ -20,9 +20,9 @@ describe('Mock Neo4j result records', () => {
   });
   it('can contain a node', () => {
     const literal = {
-      node: new Neo4jNode(0, [], {})
-    }
+      node: new Neo4jNode(0, [], {}),
+    };
     const record = new MockRecord(literal);
     expect(record.has('node')).toBeTruthy();
-  })
+  });
 });

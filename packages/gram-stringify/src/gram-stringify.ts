@@ -39,25 +39,36 @@ const toStringValue = (v: GramRecordValue) => {
 };
 
 const recordToString = (record: GramRecord): string => {
-  const fields = Object.entries(record).map(([key, value], i) => `${i > 0 ? ',' : ''}${key}:${toStringValue(value)}`);
+  const fields = Object.entries(record).map(
+    ([key, value], i) => `${i > 0 ? ',' : ''}${key}:${toStringValue(value)}`
+  );
   return `{${fields.join('')}}`;
 };
 
 const elementContentToString = (ast: GramPathlike): string => {
   const idString = ast.id || '';
-  const labelsString = ast.labels && ast.labels.length > 0 ? ':' + ast.labels.join(':') : '';
-  const recordString = ast.record && !isEmpty(ast.record) ? recordToString(ast.record) : '';
-  return `${idString}${labelsString}${recordString.length > 0 ? ' ' : ''}${recordString}`;
+  const labelsString =
+    ast.labels && ast.labels.length > 0 ? ':' + ast.labels.join(':') : '';
+  const recordString =
+    ast.record && !isEmpty(ast.record) ? recordToString(ast.record) : '';
+  return `${idString}${labelsString}${
+    recordString.length > 0 ? ' ' : ''
+  }${recordString}`;
 };
 
-const nodeToString = (ast: GramNode): string => `(${elementContentToString(ast)})`;
+const nodeToString = (ast: GramNode): string =>
+  `(${elementContentToString(ast)})`;
 
 const edgeToString = (ast: GramEdge): string => {
   const left = ast.direction === 'left' ? '<-' : '-';
   const right = ast.direction === 'right' ? '->' : '-';
 
-  const leftNode = isGramNode(ast.children[0]) ? nodeToString(ast.children[0]) : edgeToString(ast.children[0]);
-  const rightNode = isGramNode(ast.children[1]) ? nodeToString(ast.children[1]) : edgeToString(ast.children[1]);
+  const leftNode = isGramNode(ast.children[0])
+    ? nodeToString(ast.children[0])
+    : edgeToString(ast.children[0]);
+  const rightNode = isGramNode(ast.children[1])
+    ? nodeToString(ast.children[1])
+    : edgeToString(ast.children[1]);
   const content = elementContentToString(ast);
   const boxedContent = content.length > 0 ? `[${content}]` : '';
 
