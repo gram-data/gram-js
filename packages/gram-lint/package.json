@@ -46,5 +46,8 @@
     "unified": "^9.0.0",
     "unified-args": "^8.1.0"
   },
-  "gitHead": "1e9fdef40d5d5188e7114b30ea0caf2f8273b285"
+  "gitHead": "1ed9c89f9f05e2c7af7e6a7dd59c662b8756b7da",
+  "publishConfig": {
+    "access": "public"
+  }
 }
