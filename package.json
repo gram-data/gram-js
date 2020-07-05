@@ -1,13 +1,13 @@
 {
+  "name": "gram-js",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
     "docs": "typedoc"
   },
   "devDependencies": {
     "@strictsoftware/typedoc-plugin-monorepo": "^0.3.1",
+    "@typescript-eslint/parser": "^3.5.0",
+    "lerna": "^3.22.1",
     "typedoc": "^0.17.8",
     "typescript": "^3.9.6"
   }
