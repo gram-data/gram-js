@@ -1,6 +1,6 @@
 {
   "name": "@gram-data/gram-builder",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -44,7 +44,7 @@
     "typescript": "^3.9.6"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.1.6"
+    "@gram-data/gram-ast": "^0.1.7"
   },
   "gitHead": "beda5178ad8e13dbeb43eef83a96bcaa0173ac5f",
   "publishConfig": {
