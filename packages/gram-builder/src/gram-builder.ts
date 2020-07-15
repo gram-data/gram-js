@@ -12,7 +12,8 @@ import {
   GramEdge,
   GramProperty,
   GramLiteral,
-  RelationshipOperator,
+  Relation,
+  Navigation,
   BooleanLiteral,
   StringLiteral,
   TaggedLiteral,
@@ -73,42 +74,58 @@ export const seq = (
   children: normalizeChildren<GramPathlike>(paths),
 });
 
-export interface PathDescription {
-  operands: [] | [GramPathlike] | [GramPathlike, GramPathlike];
-  operator?: RelationshipOperator;
+
+export interface PathAttributes {
   id?: string;
   labels?: string[];
   record?: GramRecord;
+  relation?: Relation
+}
+
+/**
+ * Reduce paths into a single path composed using the given relation.
+ *
+ * @parm relation the relation to apply to all sub-paths
+ * @param paths sub-paths to be paired
+ */
+export const reduce = (
+  relation: Relation = 'pair',
+  paths: Children<GramPathlike>,
+): [GramPathlike] | [] => {
+  const pathlist = normalizeChildren(paths);
+  if (pathlist) {
+    if (pathlist.length > 1) {
+      return [
+        pathlist.reduceRight( (acc, curr) => { return cons([curr,acc], {relation}) }, UNIT)
+      ];
+    } else {
+      return [pathlist[0]];
+    }
+  }
+  return []; 
 }
 
 /**
  * Build any path-like element
  *
- * @param description
- * @param id
- * @param labels
- * @param record
- * @param direction
+ * @param members sub-paths to compose
+ * @param attributes attributes
  */
 export const cons = (
-  description: PathDescription
-  // children: [] | [GramPathlike] | [GramPathlike, GramPathlike],
-  // id?: string,
-  // labels?: string[],
-  // record?: GramRecord,
-  // direction?: RelationshipOperator
+  members: [] | [GramPathlike] | [GramPathlike, GramPathlike],
+  attributes: PathAttributes = {}
 ): GramPathlike => {
   const element: any = {
     type: 'path',
-    id: description.id,
-    ...(description.labels && { labels: description.labels }),
-    ...(description.record && { record: description.record }),
-    children: description.operands.filter(child => child && !isGramUnit(child)),
-    // children: children.filter(child => (child)),
+    id: attributes.id,
+    ...(attributes.labels && { labels: attributes.labels }),
+    ...(attributes.record && { record: attributes.record }),
+    children: members.filter(child => child && !isGramUnit(child))
   };
   if (element.children.length === 0) {
-    if (element.id) {
+    if (element.id || (element.labels && element.labels.length > 0) || element.record ) {
       element.type = 'node';
+      element.id = element.id || identity.shortID();
       return element as GramNode;
     } else {
       return UNIT;
@@ -131,19 +148,18 @@ export const cons = (
     }
   } else if (element.children.length === 2) {
     if (
-      description.operator &&
-      description.operator !== 'pair' &&
+      attributes.relation && attributes.relation !== 'pair' &&
       isGramNode(element.children[0]) &&
       isGramNode(element.children[1])
     ) {
       element.type = 'edge';
       element.id = element.id || identity.shortID();
-      element.direction = description.operator;
+      element.relation = attributes.relation;
       return element as GramEdge;
     }
   }
   element.id = element.id || identity.shortID();
-  element.direction = description.operator || 'pair';
+  element.relation = attributes.relation || 'pair';
   return element as GramPath;
 };
 
@@ -187,14 +203,14 @@ export const node = (
  * Build an Edge.
  *
  * @param children
- * @param direction
+ * @param relation
  * @param id
  * @param labels
  * @param record
  */
 export const edge = (
   children: [GramNode, GramNode],
-  direction: RelationshipOperator = 'right',
+  relation: Navigation = 'right',
   id?: string,
   labels?: string[],
   record?: GramRecord
@@ -203,7 +219,7 @@ export const edge = (
   id: id || identity.shortID(),
   ...(labels && { labels }),
   ...(record && { record }),
-  direction,
+  relation,
   children,
 });
 
@@ -216,7 +232,7 @@ export const edge = (
  * @param record
  */
 export const path = (
-  children: [GramPathlike] | [GramPathlike, GramPathlike],
+  members: [GramPathlike] | [GramPathlike, GramPathlike],
   id?: string,
   labels?: string[],
   record?: GramRecord
@@ -225,7 +241,7 @@ export const path = (
   ...(id && { id }),
   ...(labels && { labels }),
   ...(record && { record }),
-  children: children,
+  children: members,
 });
 
 export const record = (properties: GramProperty[]): GramRecord => {

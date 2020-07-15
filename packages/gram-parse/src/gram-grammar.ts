@@ -138,14 +138,34 @@ const grammar: Grammar = {
   Lexer: lexer,
   ParserRules: [
     {
+      name: 'Gram$ebnf$1$subexpression$1$ebnf$1',
+      symbols: [{ literal: ',' }],
+      postprocess: id,
+    },
+    {
+      name: 'Gram$ebnf$1$subexpression$1$ebnf$1',
+      symbols: [],
+      postprocess: () => null,
+    },
+    {
       name: 'Gram$ebnf$1$subexpression$1',
-      symbols: ['Pathlike', '_'],
+      symbols: ['Pathlike', 'Gram$ebnf$1$subexpression$1$ebnf$1', '_'],
       postprocess: ([pp]) => pp,
     },
     { name: 'Gram$ebnf$1', symbols: ['Gram$ebnf$1$subexpression$1'] },
     {
+      name: 'Gram$ebnf$1$subexpression$2$ebnf$1',
+      symbols: [{ literal: ',' }],
+      postprocess: id,
+    },
+    {
+      name: 'Gram$ebnf$1$subexpression$2$ebnf$1',
+      symbols: [],
+      postprocess: () => null,
+    },
+    {
       name: 'Gram$ebnf$1$subexpression$2',
-      symbols: ['Pathlike', '_'],
+      symbols: ['Pathlike', 'Gram$ebnf$1$subexpression$2$ebnf$1', '_'],
       postprocess: ([pp]) => pp,
     },
     {
@@ -160,22 +180,15 @@ const grammar: Grammar = {
       symbols: ['Gram$ebnf$1', 'Gram$ebnf$2'],
       postprocess: ([pp]) => g.seq(g.flatten(pp)),
     },
-    { name: 'Pathlike', symbols: ['Unit'], postprocess: id },
     { name: 'Pathlike', symbols: ['EdgeExpression'], postprocess: id },
     { name: 'Pathlike', symbols: ['PathComposition'], postprocess: id },
     { name: 'Pathlike', symbols: ['Comment'], postprocess: id },
     {
-      name: 'Unit',
-      symbols: [{ literal: '[' }, '_', { literal: ']' }],
-      postprocess: () => g.unit(),
-    },
-    {
       name: 'EdgeExpression',
       symbols: ['Node', 'Edge', 'EdgeExpression'],
       postprocess: ([np, es, ep]) =>
-        g.cons({
-          operands: [np, ep],
-          operator: es.direction,
+        g.cons([np, ep], {
+          relation: es.relation,
           id: es.id,
           labels: es.labels,
           record: es.record,
@@ -191,52 +204,50 @@ const grammar: Grammar = {
     {
       name: 'Edge',
       symbols: [{ literal: '-[' }, '_', 'Attributes', { literal: ']->' }],
-      postprocess: ([, , content]) => ({ direction: 'right', ...content }),
+      postprocess: ([, , content]) => ({ relation: 'right', ...content }),
     },
     {
       name: 'Edge',
       symbols: [{ literal: '-[' }, '_', 'Attributes', { literal: ']-' }],
-      postprocess: ([, , content]) => ({ direction: 'either', ...content }),
+      postprocess: ([, , content]) => ({ relation: 'either', ...content }),
     },
     {
       name: 'Edge',
       symbols: [{ literal: '<-[' }, '_', 'Attributes', { literal: ']-' }],
-      postprocess: ([, , content]) => ({ direction: 'left', ...content }),
+      postprocess: ([, , content]) => ({ relation: 'left', ...content }),
     },
     {
       name: 'Edge',
       symbols: [{ literal: '-[]->' }],
-      postprocess: () => ({ direction: 'right' }),
+      postprocess: () => ({ relation: 'right' }),
     },
     {
       name: 'Edge',
       symbols: [{ literal: '-[]-' }],
-      postprocess: () => ({ direction: 'either' }),
+      postprocess: () => ({ relation: 'either' }),
     },
     {
       name: 'Edge',
       symbols: [{ literal: '<-[]-' }],
-      postprocess: () => ({ direction: 'left' }),
+      postprocess: () => ({ relation: 'left' }),
     },
     {
       name: 'Edge',
       symbols: [{ literal: '-->' }],
-      postprocess: () => ({ direction: 'right' }),
+      postprocess: () => ({ relation: 'right' }),
     },
     {
       name: 'Edge',
       symbols: [{ literal: '--' }],
-      postprocess: () => ({ direction: 'either' }),
+      postprocess: () => ({ relation: 'either' }),
     },
     {
       name: 'Edge',
       symbols: [{ literal: '<--' }],
-      postprocess: () => ({ direction: 'left' }),
+      postprocess: () => ({ relation: 'left' }),
     },
     { name: 'PathComposition$ebnf$1', symbols: ['Pathlike'], postprocess: id },
     { name: 'PathComposition$ebnf$1', symbols: [], postprocess: () => null },
-    { name: 'PathComposition$ebnf$2', symbols: ['Pathlike'], postprocess: id },
-    { name: 'PathComposition$ebnf$2', symbols: [], postprocess: () => null },
     {
       name: 'PathComposition',
       symbols: [
@@ -246,17 +257,115 @@ const grammar: Grammar = {
         '_',
         'PathComposition$ebnf$1',
         '_',
-        'PathComposition$ebnf$2',
+        { literal: ']' },
+      ],
+      postprocess: ([, , attr, , sub]) => g.cons(sub ? [sub] : [], attr),
+    },
+    {
+      name: 'PathComposition',
+      symbols: [
+        { literal: '[' },
+        '_',
+        'Attributes',
+        '_',
+        'Relation',
+        '_',
+        'Pathlike',
+        '_',
+        'Pathlike',
         '_',
         { literal: ']' },
       ],
-      postprocess: ([, , content, , lhs, , rhs]) =>
-        g.cons({
-          operands: [lhs, rhs],
-          id: content.id,
-          labels: content.labels,
-          record: content.record,
+      postprocess: ([, , attr, , relation, , lhs, , rhs]) =>
+        g.cons([lhs, rhs], {
+          relation,
+          id: attr.id,
+          labels: attr.labels,
+          record: attr.record,
         }),
+    },
+    {
+      name: 'PathComposition$ebnf$2$subexpression$1$ebnf$1',
+      symbols: [{ literal: ',' }],
+      postprocess: id,
+    },
+    {
+      name: 'PathComposition$ebnf$2$subexpression$1$ebnf$1',
+      symbols: [],
+      postprocess: () => null,
+    },
+    {
+      name: 'PathComposition$ebnf$2$subexpression$1',
+      symbols: [
+        'Pathlike',
+        'PathComposition$ebnf$2$subexpression$1$ebnf$1',
+        '_',
+      ],
+      postprocess: ([pp]) => pp,
+    },
+    {
+      name: 'PathComposition$ebnf$2',
+      symbols: ['PathComposition$ebnf$2$subexpression$1'],
+    },
+    {
+      name: 'PathComposition$ebnf$2$subexpression$2$ebnf$1',
+      symbols: [{ literal: ',' }],
+      postprocess: id,
+    },
+    {
+      name: 'PathComposition$ebnf$2$subexpression$2$ebnf$1',
+      symbols: [],
+      postprocess: () => null,
+    },
+    {
+      name: 'PathComposition$ebnf$2$subexpression$2',
+      symbols: [
+        'Pathlike',
+        'PathComposition$ebnf$2$subexpression$2$ebnf$1',
+        '_',
+      ],
+      postprocess: ([pp]) => pp,
+    },
+    {
+      name: 'PathComposition$ebnf$2',
+      symbols: [
+        'PathComposition$ebnf$2',
+        'PathComposition$ebnf$2$subexpression$2',
+      ],
+      postprocess: d => d[0].concat([d[1]]),
+    },
+    {
+      name: 'PathComposition',
+      symbols: [
+        { literal: '[' },
+        '_',
+        'Attributes',
+        '_',
+        'PathComposition$ebnf$2',
+        { literal: ']' },
+      ],
+      postprocess: ([, , attr, , pp]) =>
+        g.cons(g.reduce('pair', g.flatten(pp)), attr),
+    },
+    {
+      name: 'Relation',
+      symbols: [{ literal: ',' }],
+      postprocess: () => 'pair',
+    },
+    {
+      name: 'Relation',
+      symbols: [{ literal: '-->' }],
+      postprocess: () => 'right',
+    },
+    {
+      name: 'Relation',
+      symbols: [{ literal: '--' }],
+      postprocess: () => 'either',
+    },
+    {
+      name: 'Relation',
+      symbols: [{ literal: '<--' }],
+      postprocess: () => 'left',
     },
     { name: 'Attributes$ebnf$1', symbols: ['Identity'], postprocess: id },
     { name: 'Attributes$ebnf$1', symbols: [], postprocess: () => null },

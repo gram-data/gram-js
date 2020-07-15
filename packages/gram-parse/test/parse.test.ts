@@ -1,6 +1,8 @@
 import * as gramTypes from '@gram-data/gram-ast';
 import { parse } from '../src/';
 
+// const inspect = require('unist-util-inspect');
+
 describe('parsing empty paths', () => {
   it('[] as an empty path, a special path called unit', () => {
     const src = `[]`;
@@ -217,7 +219,7 @@ describe('parsing edges', () => {
     // console.log(inspect(result));
     const firstPath = result.children[0];
     expect(gramTypes.isGramEdge(firstPath)).toBeTruthy();
-    expect(firstPath.direction).toBe('either');
+    expect(firstPath.relation).toBe('either');
     expect(firstPath.children.length).toBe(2);
     expect(gramTypes.isGramNode(firstPath.children[0])).toBeTruthy();
     expect(gramTypes.isGramNode(firstPath.children[1])).toBeTruthy();
@@ -230,7 +232,7 @@ describe('parsing edges', () => {
     // console.log(inspect(result));
     const firstPath = result.children[0];
     expect(gramTypes.isGramEdge(firstPath)).toBeTruthy();
-    expect(firstPath.direction).toBe('right');
+    expect(firstPath.relation).toBe('right');
     expect(firstPath.id).toBeDefined();
     expect(firstPath.children.length).toBe(2);
     expect(gramTypes.isGramNode(firstPath.children[0])).toBeTruthy();
@@ -244,7 +246,7 @@ describe('parsing edges', () => {
     // console.log(inspect(result));
     const firstPath = result.children[0];
     expect(gramTypes.isGramEdge(firstPath)).toBeTruthy();
-    expect(firstPath.direction).toBe('left');
+    expect(firstPath.relation).toBe('left');
     expect(firstPath.id).toBeDefined();
     expect(firstPath.children.length).toBe(2);
     expect(gramTypes.isGramNode(firstPath.children[0])).toBeTruthy();
@@ -301,7 +303,7 @@ describe('parsing edges', () => {
     // console.log(inspect(result));
     const firstPath = result.children[0];
     expect(gramTypes.isGramEdge(firstPath)).toBeTruthy();
-    expect(firstPath.direction).toBe('right');
+    expect(firstPath.relation).toBe('right');
     expect(firstPath.id).toBe(edgeId);
     expect(firstPath.children.length).toBe(2);
     expect(gramTypes.isGramNode(firstPath.children[0])).toBeTruthy();
@@ -316,7 +318,7 @@ describe('parsing edges', () => {
     // console.log(inspect(result));
     const firstPath = result.children[0];
     expect(gramTypes.isGramEdge(firstPath)).toBeTruthy();
-    expect(firstPath.direction).toBe('left');
+    expect(firstPath.relation).toBe('left');
     expect(firstPath.id).toBe(edgeId);
     expect(firstPath.children.length).toBe(2);
     expect(gramTypes.isGramNode(firstPath.children[0])).toBeTruthy();
@@ -324,20 +326,75 @@ describe('parsing edges', () => {
   });
 });
 
-// describe('parsing path notation for edges', () => {
+describe('parsing multiple sequential paths', () => {
+  it('() () () can be a sequence of nodes separated by whitespace', () => {
+    const src = `() () ()`;
+    const result = parse(src);
+    expect(result).toBeDefined();
+    // console.log(inspect(result));
+    const firstPath = result.children[0];
+    expect(gramTypes.isGramNode(firstPath)).toBeTruthy();
+    const secondPath = result.children[0];
+    expect(gramTypes.isGramNode(secondPath)).toBeTruthy();
+    const thirdPath = result.children[0];
+    expect(gramTypes.isGramNode(thirdPath)).toBeTruthy();
+  });
 
-//   it('[e ()--()] ≡ ()-[e]-(), an edge identified as "e"', () => {
-//     const edgeId = 'e';
-//     const src = `[${edgeId} ()--()]`;
-//     const result = parse(src);
-//     expect(result).toBeDefined();
-//     console.log(inspect(result));
-//     const firstPath = result.children[0];
-//     expect(gramTypes.isGramEdge(firstPath)).toBeTruthy();
-//     expect(firstPath.id).toBe(edgeId);
-//     expect(firstPath.children.length).toBe(2);
-//     expect(gramTypes.isGramNode(firstPath.children[0])).toBeTruthy();
-//     expect(gramTypes.isGramNode(firstPath.children[1])).toBeTruthy();
-//   });
+  it('(),(),() can be a sequence of nodes separated by commas', () => {
+    const src = `(),(),()`;
+    const result = parse(src);
+    expect(result).toBeDefined();
+    // console.log(inspect(result));
+    const firstPath = result.children[0];
+    expect(gramTypes.isGramNode(firstPath)).toBeTruthy();
+    const secondPath = result.children[0];
+    expect(gramTypes.isGramNode(secondPath)).toBeTruthy();
+    const thirdPath = result.children[0];
+    expect(gramTypes.isGramNode(thirdPath)).toBeTruthy();
+  });
 
-// });
+  it('(), (), () can be a sequence of nodes separated by commas with trailing whitespace', () => {
+    const src = `(), (), ()`;
+    const result = parse(src);
+    expect(result).toBeDefined();
+    // console.log(inspect(result));
+    const firstPath = result.children[0];
+    expect(gramTypes.isGramNode(firstPath)).toBeTruthy();
+    const secondPath = result.children[0];
+    expect(gramTypes.isGramNode(secondPath)).toBeTruthy();
+    const thirdPath = result.children[0];
+    expect(gramTypes.isGramNode(thirdPath)).toBeTruthy();
+  });
+});
+
+describe('parsing path notation for edges', () => {
+  it('[e -- () ()] ≅ ()-[e]-(), an edge identified as "e"', () => {
+    const edgeId = 'e';
+    const src = `[${edgeId} -- () ()]`;
+    const result = parse(src);
+    expect(result).toBeDefined();
+    // console.log(inspect(result));
+    const firstPath = result.children[0];
+    expect(gramTypes.isGramEdge(firstPath)).toBeTruthy();
+    expect(firstPath.relation).toBe('either');
+    expect(firstPath.id).toBe(edgeId);
+    expect(firstPath.children.length).toBe(2);
+    expect(gramTypes.isGramNode(firstPath.children[0])).toBeTruthy();
+    expect(gramTypes.isGramNode(firstPath.children[1])).toBeTruthy();
+  });
+
+  it('[e --> () ()] ≅ ()-[e]->(), an edge identified as "e"', () => {
+    const edgeId = 'e';
+    const src = `[${edgeId} --> () ()]`;
+    const result = parse(src);
+    expect(result).toBeDefined();
+    // console.log(inspect(result));
+    const firstPath = result.children[0];
+    expect(gramTypes.isGramEdge(firstPath)).toBeTruthy();
+    expect(firstPath.relation).toBe('right');
+    expect(firstPath.id).toBe(edgeId);
+    expect(firstPath.children.length).toBe(2);
+    expect(gramTypes.isGramNode(firstPath.children[0])).toBeTruthy();
+    expect(gramTypes.isGramNode(firstPath.children[1])).toBeTruthy();
+  });
+});

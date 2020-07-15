@@ -1,8 +1,7 @@
-
 import * as gramTypes from '@gram-data/gram-ast';
 import { errors as gramErrors } from '@gram-data/gram-parse';
 
-import lint from '../src'
+import lint from '../src';
 
 describe('using gram as the Parser for unified()', () => {
   it('accepts an empty node "()" ', () => {

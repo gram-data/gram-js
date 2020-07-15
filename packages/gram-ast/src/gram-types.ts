@@ -25,8 +25,8 @@ import {
  * Path expressions are compositions of nodes and edges.
  *
  * The ast is a tree of GramNodes and GramEdges.
- * The direction of a Path is always left to right
- * regardless of the internal directions of any
+ * The relation of a Path is always left to right
+ * regardless of the internal relations of any
  * contained Edges.
  * The leftmost syntactic Node is the head, which
  * will be the topmost Node in the descendent tree.
@@ -44,7 +44,7 @@ export interface GramLeaf extends UnistNode {}
 /**
  * The base type for all path-like elements.
  */
-export interface GramPathlikeBase extends UnistParent {
+export interface GramPathlikeAttributes extends UnistParent {
   /**
    * A type-scoped unique identifier.
    *
@@ -89,7 +89,7 @@ export const UNIT_ID = '0';
  * - path cardinality: 0
  * - information role: emptiness
  */
-export interface GramUnit extends GramPathlikeBase {
+export interface GramUnit extends GramPathlikeAttributes {
   /**
    * Type discriminator for this AST element, always 'unit'.
    */
@@ -125,7 +125,7 @@ export const isGramUnit = (o: any): o is GramUnit =>
  * - path cardinality: 1
  * - information role: an entity or a noun
  */
-export interface GramNode extends GramPathlikeBase {
+export interface GramNode extends GramPathlikeAttributes {
   /**
    * Type discriminator for this AST element, always 'node'.
    */
@@ -146,7 +146,10 @@ export const isGramNode = (o: any): o is GramNode =>
   !!o.type && o.type === 'node';
 
 /**
- * RelationshipOperator composes path expressions.
+ * Navigable relations to compose path expressions.
+ * Gram includes one extra relation that is not
+ * navigable, the ',' pair relation used only in
+ * path composition and not allowed in Edge definition.
  *
  * One of:
  *
@@ -155,7 +158,9 @@ export const isGramNode = (o: any): o is GramNode =>
  * - either `(a)--(b)`
  * - self   `(a) =~ (a)--(a)`
  */
-export type RelationshipOperator = 'left' | 'right' | 'either' | 'pair';
+export type Navigation = 'left' | 'right' | 'either';
+
+export type Relation = Navigation | 'pair';
 
 /**
  * GramEdge is:
@@ -166,19 +171,20 @@ export type RelationshipOperator = 'left' | 'right' | 'either' | 'pair';
  * - the operand in path expressions
  * - usually a noun concept
  */
-export interface GramEdge extends GramPathlikeBase {
+export interface GramEdge extends GramPathlikeAttributes {
   /**
    * Type discriminator for this AST element, always 'edge'.
    */
   type: 'edge';
 
   /**
-   * The direction within a path.
-   * A missing direction is assumed to be 'either'.
+   * The relationship between the nodes.
    */
-  direction?: RelationshipOperator;
+  relation?: Navigation;
 
   /**
+   * The operands of the Edge, known as "children" in the AST.
+   * 
    * children[0] is the 'left' child
    * children[1] is the 'right' child
    */
@@ -191,7 +197,7 @@ export interface GramEdge extends GramPathlikeBase {
  * @param o any object
  */
 export const isGramEdge = (o: any): o is GramEdge =>
-  'type' in o && 'direction' in o && o.type === 'edge';
+  'type' in o && 'relation' in o && o.type === 'edge';
 
 /**
  * GramPath contains nodes, edges and other paths that have been composed
@@ -207,7 +213,7 @@ export const isGramEdge = (o: any): o is GramEdge =>
  * - path cardinality: nodes().length
  * - information role: data annotation
  */
-export interface GramPath extends GramPathlikeBase {
+export interface GramPath extends GramPathlikeAttributes {
   /**
    * Type discriminator for this AST element, always 'path'.
    */
@@ -217,7 +223,7 @@ export interface GramPath extends GramPathlikeBase {
    * The relationship between the left and right children,
    * or a 'pair' that associates without being navigable.
    */
-  direction?: RelationshipOperator | 'pair';
+  relation?: Relation;
 
   /**
    * Either a single child that is nested within this path,
@@ -239,7 +245,7 @@ export const isGramPath = (o: any): o is GramPath =>
  * A GramPathSeq is a sequence of paths.
  *
  */
-export interface GramPathSeq extends GramPathlikeBase {
+export interface GramPathSeq extends GramPathlikeAttributes {
   /**
    * Type discriminator for this AST element, aways 'seq'.
    */

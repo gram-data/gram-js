@@ -46,19 +46,16 @@ let lexer = moo.compile({
 
 @lexer lexer
 
-Gram -> (Pathlike _ {% ([pp]) => pp %}):+ EOL:? {% ([pp]) => g.seq( g.flatten(pp) ) %}
+Gram -> (Pathlike ",":? _  {% ([pp]) => pp %}):+ EOL:? {% ([pp]) => g.seq( g.flatten(pp) ) %}
 
 Pathlike ->
-    Unit {% id %}
-  | EdgeExpression {% id %}
+    EdgeExpression {% id %}
   | PathComposition {% id %}
   | Comment     {% id %}
-  
-Unit -> "[" _ "]" {% () => g.unit() %}
 
 EdgeExpression ->
     Node Edge EdgeExpression
-      {% ([np,es,ep]) => g.cons({operands:[np,ep], operator:es.direction, id:es.id, labels:es.labels, record:es.record} ) %}
+      {% ([np,es,ep]) => g.cons([np,ep], {relation:es.relation, id:es.id, labels:es.labels, record:es.record} ) %}
   | Node {% id %}
 
 Node ->
@@ -67,22 +64,32 @@ Node ->
 
 Edge ->
     "-[" _ Attributes "]->"   
-              {% ([,,content]) => ({direction:'right', ...content}) %}
+              {% ([,,content]) => ({relation:'right', ...content}) %}
   | "-[" _ Attributes "]-"    
-              {% ([,,content]) => ({direction:'either', ...content}) %}
+              {% ([,,content]) => ({relation:'either', ...content}) %}
   | "<-[" _ Attributes "]-"   
-              {% ([,,content]) => ({direction:'left', ...content}) %}
-  | "-[]->"   {% () => ({direction:'right'}) %}
-  | "-[]-"    {% () => ({direction:'either'}) %}
-  | "<-[]-"   {% () => ({direction:'left'}) %}
-  | "-->"     {% () => ({direction:'right'}) %}
-  | "--"      {% () => ({direction:'either'}) %}
-  | "<--"     {% () => ({direction:'left'}) %}
+              {% ([,,content]) => ({relation:'left', ...content}) %}
+  | "-[]->"   {% () => ({relation:'right'}) %}
+  | "-[]-"    {% () => ({relation:'either'}) %}
+  | "<-[]-"   {% () => ({relation:'left'}) %}
+  | "-->"     {% () => ({relation:'right'}) %}
+  | "--"      {% () => ({relation:'either'}) %}
+  | "<--"     {% () => ({relation:'left'}) %}
 
 PathComposition -> 
-  "[" _ Attributes _ Pathlike:? _ Pathlike:? _ "]"
-  {% ([,,content,,lhs,,rhs]) => g.cons({operands:[lhs,rhs], id:content.id, labels:content.labels, record:content.record}) %}
-  
+    "[" _ Attributes _ Pathlike:? _ "]"
+      {% ([,,attr,,sub]) => g.cons(sub ? [sub] : [], attr) %}
+  | "[" _ Attributes _ Relation _ Pathlike _ Pathlike _ "]"
+      {% ([,,attr,,relation,,lhs,,rhs]) => g.cons([lhs,rhs], {relation, id:attr.id, labels:attr.labels, record:attr.record}) %}
+  | "[" _ Attributes _ (Pathlike ",":? _  
+      {% ([pp]) => pp %}):+ "]" {% ([,,attr,,pp]) => g.cons( g.reduce('pair', g.flatten(pp)), attr ) %}
+
+Relation ->
+    ","   {% () => ('pair') %}
+  | "-->" {% () => ('right') %}
+  | "--"  {% () => ('either') %}
+  | "<--" {% () => ('left') %}
+
 Attributes ->
   Identity:? _ LabelList:? _ Record:? {% ([id,,labels,,record]) =>  ( {id, labels, record} )  %}
 
