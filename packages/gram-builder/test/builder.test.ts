@@ -115,9 +115,30 @@ describe('gram cons can build edges', () => {
     expect(p.children).toHaveLength(0);
   });
 
-  it('with a single nested node', () => {
+  it('with a single nested node as in [p (n)]', () => {
     const inner = g.cons( [], { id: 'a' });
     const p = g.cons( [inner], { id: 'p' });
+    expect(gramTypes.isGramUnit(p)).toBeFalsy();
+    expect(gramTypes.isGramNode(p)).toBeFalsy();
+    expect(gramTypes.isGramEdge(p)).toBeFalsy();
+    expect(gramTypes.isGramPath(p)).toBeTruthy();
+    expect(gramTypes.isGramNode(p.children[0])).toBeTruthy();
+  });
+
+
+  it('with a single nested node, wrapped in a labeled path', () => {
+    const inner = g.cons( [], { id: 'a' });
+    const p = g.cons( [inner], { labels: [':OUTER'] });
+    expect(gramTypes.isGramUnit(p)).toBeFalsy();
+    expect(gramTypes.isGramNode(p)).toBeFalsy();
+    expect(gramTypes.isGramEdge(p)).toBeFalsy();
+    expect(gramTypes.isGramPath(p)).toBeTruthy();
+    expect(gramTypes.isGramNode(p.children[0])).toBeTruthy();
+  });
+
+  it('with a single nested node, wrapped in a path with its own record', () => {
+    const inner = g.cons( [], { id: 'a' });
+    const p = g.cons( [inner], { record: {k: g.string('v')} });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -280,7 +301,7 @@ describe('gram cons can build edges', () => {
     expect(gramTypes.isGramNode(p.children[1])).toBeTruthy();
   });
 
-  it('by composing a node with a node and a relational relation, which is a special path called an edge', () => {
+  it('by composing a node with a node and a navigational relation, which is a special path called an edge', () => {
     const nodeA = g.cons( [], { id: 'a' });
     const nodeB = g.cons( [], { id: 'b' });
     const p = g.cons( [nodeA, nodeB], { relation: 'right', id: 'p' });

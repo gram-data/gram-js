@@ -131,7 +131,7 @@ export const cons = (
     }
   } else if (element.children.length === 1) {
     const inner = element.children[0];
-    if (element.id) {
+    if (element.id || (element.labels && element.labels.length > 0) || element.record ) {
       if (isGramUnit(inner)) {
         element.type = 'node';
         element.children = [];
