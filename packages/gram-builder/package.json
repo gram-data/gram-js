@@ -52,7 +52,7 @@
   "dependencies": {
     "@gram-data/gram-ast": "^0.1.9"
   },
-  "gitHead": "beda5178ad8e13dbeb43eef83a96bcaa0173ac5f",
+  "gitHead": "a255da2f7cfa6bd16f637d1241d17e10510e60c0",
   "publishConfig": {
     "access": "public"
   }
