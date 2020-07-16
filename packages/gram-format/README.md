@@ -1,3 +1,7 @@
+# DEPRECATED
+
+This package has broken up into smaller, focused packages. 
+
 # gram-format
 
 This is the Gram data interchange format. Gram is a lightweight data graph.

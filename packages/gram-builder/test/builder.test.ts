@@ -631,7 +631,7 @@ describe('gram builder for nodes', () => {
   it('can create empty nodes', () => {
     const singleNode = g.node();
     expect(singleNode.record).toBeUndefined();
-    expect(singleNode.id).toBeDefined();
+    expect(singleNode.id).toBeUndefined();
   });
   it('can specify node identity', () => {
     const nodeId = 'a';
@@ -669,7 +669,7 @@ describe('gram builder for edges', () => {
   it('can create empty edges', () => {
     const edge = g.edge([g.node(), g.node()]);
 
-    expect(edge.id).toBeDefined();
+    expect(edge.id).toBeUndefined();
     expect(edge.children[0]).toBeDefined();
     expect(isGramNode(edge.children[0])).toBeTruthy();
     expect(edge.children[1]).toBeDefined();

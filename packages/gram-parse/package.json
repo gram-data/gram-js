@@ -23,7 +23,9 @@
     "lint": "tsdx lint",
     "lint:fix": "tsdx lint --fix",
     "prepare": "run-s build",
-    "railroad": "nearley-railroad ./src/gram.ne -o docs/railroad.html"
+    "railroad": "nearley-railroad ./src/gram.ne -o docs/railroad.html",
+    "build:demo": "shx cp dist/gram-parse.umd.development.* ./public",
+    "demo": "serve ./public/"
   },
   "husky": {
     "hooks": {
@@ -41,9 +43,12 @@
     "@types/moo": "^0.5.3",
     "@types/nearley": "^2.11.1",
     "@types/unist": "^2.0.3",
-    "@typescript-eslint/parser": "^3.5.0",
+    "@typescript-eslint/parser": "^3.6.1",
     "husky": "^4.2.5",
     "npm-run-all": "^4.1.5",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "serve": "^11.3.2",
     "shx": "^0.3.2",
     "tsdx": "^0.13.2",
     "tslib": "^2.0.0",
@@ -54,7 +59,7 @@
     "@gram-data/gram-ast": "^0.1.8",
     "@gram-data/gram-builder": "^0.1.8",
     "moo": "^0.5.1",
-    "nearley": "^2.19.4",
+    "nearley": "^2.19.5",
     "unified": "^9.0.0",
     "vfile": "^4.1.1"
   },

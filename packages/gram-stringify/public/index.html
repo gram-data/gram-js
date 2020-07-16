@@ -1,0 +1,32 @@
+<html>
+  <head>
+
+  </head>
+  <body>
+    <h1>gram-stringify</h1>
+
+    <p>From an AST:</p>
+    <pre id="ast">parsed AST should appear here</pre>
+
+    <p>To prettified gram:</p>
+    <pre id="target">(you)-[:GREET {message:"hello"}]->(world)</pre>
+
+
+    <script src="./gram-stringify.umd.development.js"></script>
+    <script>
+      window.onload = function () {
+        var ast = {"type":"seq",
+          "children":[
+            {"type":"edge","id":"g","labels":["GREET"],"record":{"message":{"type":"string","value":"hello"}},
+              "children":[
+                {"type":"node","id":"you","children":[]},
+                {"type":"node","id":"world","children":[]}
+              ],
+              "relation":"right"}]};
+        document.getElementById("ast").textContent = JSON.stringify(ast,null,2);
+        var target = gram.stringify.toString(ast);
+        document.getElementById('target').textContent = target;
+      }
+    </script>
+  </body>
+</html>

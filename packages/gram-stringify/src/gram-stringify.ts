@@ -60,8 +60,8 @@ const nodeToString = (ast: GramNode): string =>
   `(${elementContentToString(ast)})`;
 
 const edgeToString = (ast: GramEdge): string => {
-  const left = ast.direction === 'left' ? '<-' : '-';
-  const right = ast.direction === 'right' ? '->' : '-';
+  const left = ast.relation === 'left' ? '<-' : '-';
+  const right = ast.relation === 'right' ? '->' : '-';
 
   const leftNode = isGramNode(ast.children[0])
     ? nodeToString(ast.children[0])

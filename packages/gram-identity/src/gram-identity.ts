@@ -5,7 +5,6 @@
  */
 
 import baseX from 'base-x';
-import * as tokens from './gram-tokens';
 
 const shortid = require('shortid');
 
@@ -26,16 +25,6 @@ export const alphabets = {
 };
 
 shortid.characters(alphabets.base64);
-
-const checkIdentifierRegex = new RegExp('^' + tokens.identifier.source + '$');
-
-/**
- * Checks whether the given string is a valid identifier.
- *
- */
-export const isValidIdentifier = checkIdentifierRegex.test.bind(
-  checkIdentifierRegex
-);
 
 /**
  *
@@ -91,42 +80,10 @@ export const idFunctionNamed = (idType: string) => {
       (_i: number) => '';
 };
 
-/**
- * Encodes the id to be valid, mapping:
- *
- * - [whitespace, period, comma, single and double quotes] --> '_'
- * - [all remainining non-valid identifier characters] --> '@'
- */
-export const idEncoder = (idToEncode?: string): string => {
-  return idToEncode === undefined
-    ? ''
-    : isValidIdentifier(idToEncode)
-    ? idToEncode
-    : idToEncode.replace(/[\s.,'"]/gi, '_').replace(/[^_0-9a-zA-Z]/gi, '@');
-};
-
-// const nodeRecordLens = Lens.fromProp<Node>()('record').asOptional();
-
-// const isNonArrayLiteral = (l:Literal|Literal[]): l is Literal =>
-//     (l !== undefined) && (!Array.isArray(l))
-
-// const literalValueLens = new Optional<Literal|Literal[],string>(
-//     (l:Literal|Literal[]) => isNonArrayLiteral(l) ? some(l.value) : none,
-//     value => literal => ({...literal, value}))
-
-// export const optionalPropertyValueFromNode = (key:string) => {
-//     return nodeRecordLens
-//     .compose(Lens.fromProp<Record>()(key))
-//     .asOptional()
-//     .compose(literalValueLens).getOption
-// }
-
 export default {
   alphabets,
-  isValidIdentifier,
   shortID,
   base36ID,
   idFunctionNamed,
-  idEncoder,
   integerLiteralToBaseID,
 };

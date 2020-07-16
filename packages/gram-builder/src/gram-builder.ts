@@ -31,7 +31,6 @@ import {
   isGramPath,
   UNIT_ID,
 } from '@gram-data/gram-ast';
-import { identity } from '@gram-data/gram-ast';
 
 export type Children<T> = T | T[] | (() => T | T[]);
 
@@ -125,7 +124,7 @@ export const cons = (
   if (element.children.length === 0) {
     if (element.id || (element.labels && element.labels.length > 0) || element.record ) {
       element.type = 'node';
-      element.id = element.id || identity.shortID();
+      // element.id = element.id || identity.shortID();
       return element as GramNode;
     } else {
       return UNIT;
@@ -141,7 +140,7 @@ export const cons = (
       return element as GramPath;
     } else {
       if (isGramUnit(inner)) return inner as GramUnit;
-      element.id = identity.shortID();
+      // element.id = identity.shortID();
       if (isGramNode(inner)) return inner as GramNode;
       if (isGramEdge(inner)) return inner as GramEdge;
       if (isGramPath(inner)) return inner as GramPath;
@@ -153,12 +152,12 @@ export const cons = (
       isGramNode(element.children[1])
     ) {
       element.type = 'edge';
-      element.id = element.id || identity.shortID();
+      // element.id = element.id || identity.shortID();
       element.relation = attributes.relation;
       return element as GramEdge;
     }
   }
-  element.id = element.id || identity.shortID();
+  // element.id = element.id || identity.shortID();
   element.relation = attributes.relation || 'pair';
   return element as GramPath;
 };
@@ -193,7 +192,8 @@ export const node = (
   record?: GramRecord
 ): GramNode => ({
   type: 'node',
-  id: id || identity.shortID(),
+  // id: id || identity.shortID(),
+  id,
   ...(labels && { labels }),
   ...(record && { record }),
   children: [],
@@ -216,7 +216,8 @@ export const edge = (
   record?: GramRecord
 ): GramEdge => ({
   type: 'edge',
-  id: id || identity.shortID(),
+  // id: id || identity.shortID(),
+  id,
   ...(labels && { labels }),
   ...(record && { record }),
   relation,

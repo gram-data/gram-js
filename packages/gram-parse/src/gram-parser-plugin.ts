@@ -1,7 +1,7 @@
 import { ParserFunction, Plugin } from 'unified';
 // import {Node as UnistNode} from 'unist';
 import { VFile } from 'vfile';
-import * as nearley from 'nearley';
+import nearley from 'nearley';
 
 import grammar from './gram-grammar';
 import * as errors from './gram-errors';
