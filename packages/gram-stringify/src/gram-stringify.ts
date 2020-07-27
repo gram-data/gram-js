@@ -5,12 +5,14 @@ import {
   GramLiteral,
   GramPath,
   GramRecordValue,
+  GramProperty,
   isLiteral,
   isGramNode,
   isGramEdge,
   GramPathlike,
   GramPathSeq,
   isGramUnit,
+  isGramLiteralArray,
 } from '@gram-data/gram-ast';
 
 const isEmpty = (o: any) => Object.keys(o).length === 0;
@@ -29,8 +31,8 @@ const toStringLiteral = (l: GramLiteral): string => {
 };
 
 const toStringValue = (v: GramRecordValue) => {
-  if (Array.isArray(v)) {
-    return `[${v.map(l => toStringLiteral(l)).join(',')}]`;
+  if (isGramLiteralArray(v)) {
+    return `[${v.map((l: GramLiteral) => toStringLiteral(l)).join(',')}]`;
   } else if (isLiteral(v)) {
     return toStringLiteral(v);
   } else {
@@ -39,8 +41,9 @@ const toStringValue = (v: GramRecordValue) => {
 };
 
 const recordToString = (record: GramRecord): string => {
-  const fields = Object.entries(record).map(
-    ([key, value], i) => `${i > 0 ? ',' : ''}${key}:${toStringValue(value)}`
+  const fields = record.map(
+    (property: GramProperty, i: number) =>
+      `${i > 0 ? ',' : ''}${property.name}:${toStringValue(property.value)}`
   );
   return `{${fields.join('')}}`;
 };

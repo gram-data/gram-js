@@ -233,7 +233,7 @@ describe('parsing edges', () => {
     const firstPath = result.children[0];
     expect(gramTypes.isGramEdge(firstPath)).toBeTruthy();
     expect(firstPath.relation).toBe('right');
-    expect(firstPath.id).toBeDefined();
+    expect(firstPath.id).toBeUndefined();
     expect(firstPath.children.length).toBe(2);
     expect(gramTypes.isGramNode(firstPath.children[0])).toBeTruthy();
     expect(gramTypes.isGramNode(firstPath.children[1])).toBeTruthy();
@@ -247,7 +247,7 @@ describe('parsing edges', () => {
     const firstPath = result.children[0];
     expect(gramTypes.isGramEdge(firstPath)).toBeTruthy();
     expect(firstPath.relation).toBe('left');
-    expect(firstPath.id).toBeDefined();
+    expect(firstPath.id).toBeUndefined();
     expect(firstPath.children.length).toBe(2);
     expect(gramTypes.isGramNode(firstPath.children[0])).toBeTruthy();
     expect(gramTypes.isGramNode(firstPath.children[1])).toBeTruthy();

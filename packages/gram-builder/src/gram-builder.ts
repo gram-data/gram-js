@@ -11,7 +11,7 @@ import {
   GramNode,
   GramEdge,
   GramProperty,
-  GramLiteral,
+  GramRecordValue,
   Relation,
   Navigation,
   BooleanLiteral,
@@ -30,6 +30,10 @@ import {
   isGramEdge,
   isGramPath,
   UNIT_ID,
+  GramPropertyMap,
+  DateLiteral,
+  TimeLiteral,
+  DurationLiteral,
 } from '@gram-data/gram-ast';
 
 export type Children<T> = T | T[] | (() => T | T[]);
@@ -73,12 +77,11 @@ export const seq = (
   children: normalizeChildren<GramPathlike>(paths),
 });
 
-
 export interface PathAttributes {
   id?: string;
   labels?: string[];
   record?: GramRecord;
-  relation?: Relation
+  relation?: Relation;
 }
 
 /**
@@ -89,20 +92,22 @@ export interface PathAttributes {
  */
 export const reduce = (
   relation: Relation = 'pair',
-  paths: Children<GramPathlike>,
+  paths: Children<GramPathlike>
 ): [GramPathlike] | [] => {
   const pathlist = normalizeChildren(paths);
   if (pathlist) {
     if (pathlist.length > 1) {
       return [
-        pathlist.reduceRight( (acc, curr) => { return cons([curr,acc], {relation}) }, UNIT)
+        pathlist.reduceRight((acc, curr) => {
+          return cons([curr, acc], { relation });
+        }, UNIT),
       ];
     } else {
       return [pathlist[0]];
     }
   }
-  return []; 
-}
+  return [];
+};
 
 /**
  * Build any path-like element
@@ -119,10 +124,14 @@ export const cons = (
     id: attributes.id,
     ...(attributes.labels && { labels: attributes.labels }),
     ...(attributes.record && { record: attributes.record }),
-    children: members.filter(child => child && !isGramUnit(child))
+    children: members.filter(child => child && !isGramUnit(child)),
   };
   if (element.children.length === 0) {
-    if (element.id || (element.labels && element.labels.length > 0) || element.record ) {
+    if (
+      element.id ||
+      (element.labels && element.labels.length > 0) ||
+      element.record
+    ) {
       element.type = 'node';
       // element.id = element.id || identity.shortID();
       return element as GramNode;
@@ -131,7 +140,11 @@ export const cons = (
     }
   } else if (element.children.length === 1) {
     const inner = element.children[0];
-    if (element.id || (element.labels && element.labels.length > 0) || element.record ) {
+    if (
+      element.id ||
+      (element.labels && element.labels.length > 0) ||
+      element.record
+    ) {
       if (isGramUnit(inner)) {
         element.type = 'node';
         element.children = [];
@@ -147,7 +160,8 @@ export const cons = (
     }
   } else if (element.children.length === 2) {
     if (
-      attributes.relation && attributes.relation !== 'pair' &&
+      attributes.relation &&
+      attributes.relation !== 'pair' &&
       isGramNode(element.children[0]) &&
       isGramNode(element.children[1])
     ) {
@@ -245,16 +259,33 @@ export const path = (
   children: members,
 });
 
-export const record = (properties: GramProperty[]): GramRecord => {
-  return properties.reduce((acc: GramRecord, p: GramProperty) => {
+/**
+ * Reduces an array of GramProperties into a map.
+ *
+ * @param properties
+ */
+export const reduceRecord = (properties: GramRecord): GramPropertyMap => {
+  return properties.reduce((acc: GramPropertyMap, p: GramProperty) => {
     acc[p.name] = p.value;
     return acc;
-  }, {} as GramRecord);
+  }, {} as GramPropertyMap);
+};
+
+/**
+ * Unfolds a property map<string,GramRecordValue> into a property list[GramProperty].
+ *
+ * @param properties
+ */
+export const unfoldProperties = (properties: GramPropertyMap): GramRecord => {
+  return Object.entries(properties).reduce((acc: GramRecord, [k, v]) => {
+    acc.push(property(k, v));
+    return acc;
+  }, [] as GramRecord);
 };
 
 export const property = (
   name: string,
-  value: GramLiteral | GramLiteral[]
+  value: GramRecordValue
 ): GramProperty => {
   const Node: GramProperty = {
     type: 'property',
@@ -290,14 +321,14 @@ export const decimal = (value: string | number): DecimalLiteral => ({
   value: String(value),
 });
 
-export const hexadecimal = (value: string): HexadecimalLiteral => ({
+export const hexadecimal = (value: string | number): HexadecimalLiteral => ({
   type: 'hexadecimal',
-  value,
+  value: typeof value === 'number' ? value.toString(16) : value,
 });
 
-export const octal = (value: string): OctalLiteral => ({
+export const octal = (value: string | number): OctalLiteral => ({
   type: 'octal',
-  value,
+  value: typeof value === 'number' ? value.toString(8) : value,
 });
 
 export const measurement = (
@@ -309,20 +340,39 @@ export const measurement = (
   unit,
 });
 
-export const year = (value: string | Date): TaggedLiteral =>
+export const year = (value: string | Date): DateLiteral =>
   tagged(
-    value instanceof Date ? value.getFullYear().toString() : value,
-    'date'
-  );
+    'date',
+    value instanceof Date ? value.getFullYear().toString() : value
+  ) as DateLiteral;
 
-export const date = (value: string | Date): TaggedLiteral =>
-  tagged(value instanceof Date ? dateToYMD(value) : value, 'date');
+export const date = (value: string | Date): DateLiteral =>
+  tagged(
+    'date',
+    value instanceof Date ? dateToYMD(value) : value
+  ) as DateLiteral;
 
-export const dayOfMonth = (value: string | Date): TaggedLiteral =>
-  tagged(value instanceof Date ? dateToDayOfMonth(value) : value, 'date');
+export const dayOfMonth = (value: string | Date): DateLiteral =>
+  tagged(
+    'date',
+    value instanceof Date ? dateToDayOfMonth(value) : value
+  ) as DateLiteral;
 
-export const time = (value: string | Date): TaggedLiteral =>
-  tagged(value instanceof Date ? dateToYMD(value) : value, 'time');
+export const time = (value: string | Date): TimeLiteral =>
+  tagged(
+    'time',
+    value instanceof Date ? value.toTimeString() : value
+  ) as TimeLiteral;
+
+export const duration = (value: string | Date): DurationLiteral =>
+  tagged(
+    'duration',
+    value instanceof Date
+      ? `P${value.getUTCFullYear() -
+          1970}Y${value.getUTCMonth()}M${value.getUTCDate()}DT${value.getUTCHours()}H${value.getUTCMinutes()}M${value.getUTCMilliseconds() /
+          1000}S`
+      : value
+  ) as DurationLiteral;
 
 export const flatten = (xs: any[], depth = 1) =>
   xs.flat(depth).filter(x => x !== null);
@@ -334,7 +384,6 @@ export default {
   path,
   node,
   edge,
-  record,
   property,
   boolean,
   string,
@@ -346,5 +395,8 @@ export default {
   measurement,
   date,
   time,
+  duration,
   flatten,
+  reduceRecord,
+  unfoldProperties,
 };

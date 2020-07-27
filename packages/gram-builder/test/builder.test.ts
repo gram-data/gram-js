@@ -1,9 +1,10 @@
 import * as g from '../src/';
 import * as gramTypes from '@gram-data/gram-ast';
 import { isGramNode } from '@gram-data/gram-ast';
+import { unfoldProperties } from '../src/';
 
 // const inspect = require('unist-util-inspect');
-const treeSize = require('unist-util-size')
+const treeSize = require('unist-util-size');
 
 // console.log(inspect(p));
 
@@ -15,7 +16,7 @@ describe('gram cons can build units', () => {
   });
 
   it('[[]] as a unit (hoist through empty parent)', () => {
-    const p = g.cons( [g.UNIT] );
+    const p = g.cons([g.UNIT]);
     expect(gramTypes.isGramUnit(p)).toBeTruthy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(p.children).toHaveLength(0);
@@ -23,8 +24,8 @@ describe('gram cons can build units', () => {
 
   it('[[[]]] as a unit (hoist through all empty ancestors)', () => {
     const child = g.UNIT;
-    const parent = g.cons( [child] );
-    const p = g.cons( [parent] );
+    const parent = g.cons([child]);
+    const p = g.cons([parent]);
     expect(gramTypes.isGramUnit(p)).toBeTruthy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(p.children).toHaveLength(0);
@@ -33,8 +34,8 @@ describe('gram cons can build units', () => {
   it('[[],[]] as a unit (explicit form of [[]])', () => {
     const left = g.UNIT;
     const right = g.UNIT;
-    const parent = g.cons( [left, right] );
-    const p = g.cons( [parent] );
+    const parent = g.cons([left, right]);
+    const p = g.cons([parent]);
     expect(gramTypes.isGramUnit(p)).toBeTruthy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(p.children).toHaveLength(0);
@@ -43,35 +44,35 @@ describe('gram cons can build units', () => {
 
 describe('gram cons can build nodes', () => {
   it('[n] as a defined node ', () => {
-    const p = g.cons( [], { id: 'n' });
+    const p = g.cons([], { id: 'n' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeTruthy();
     expect(p.children).toHaveLength(0);
   });
 
   it('[:EXISTENTIAL] as labeled node', () => {
-    const p = g.cons( [], { labels:['EXISTENTIAL'] });
+    const p = g.cons([], { labels: ['EXISTENTIAL'] });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeTruthy();
     expect(p.children).toHaveLength(0);
   });
 
   it('[ {valuable:true}] as node with a record', () => {
-    const p = g.cons( [], { record: {valuable: g.boolean(true)} });
+    const p = g.cons([], { record: [g.property('valuable', g.boolean(true))] });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeTruthy();
     expect(p.children).toHaveLength(0);
   });
 
   it('[[n]] as a defined node (hoisted through empty parent)', () => {
-    const p = g.cons( [g.UNIT], { id: 'n' });
+    const p = g.cons([g.UNIT], { id: 'n' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeTruthy();
     expect(p.children).toHaveLength(0);
   });
 
   it('[n[]] as a defined node with no children (dropped unit child)', () => {
-    const p = g.cons( [g.UNIT], { id: 'n' });
+    const p = g.cons([g.UNIT], { id: 'n' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeTruthy();
     expect(p.children).toHaveLength(0);
@@ -80,9 +81,9 @@ describe('gram cons can build nodes', () => {
 
 describe('gram cons can build edges', () => {
   it('[e [n1][n2]] is not yet an edge, but a path with a pair of nodes', () => {
-    const left = g.cons( [], { id: 'n1' });
-    const right = g.cons( [], { id: 'n2' });
-    const p = g.cons( [left, right], { id: 'e' });
+    const left = g.cons([], { id: 'n1' });
+    const right = g.cons([], { id: 'n2' });
+    const p = g.cons([left, right], { id: 'e' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -93,9 +94,9 @@ describe('gram cons can build edges', () => {
   });
 
   it('[e --> [n1][n2]] is an edge in path composition form', () => {
-    const left = g.cons( [], { id: 'n1' });
-    const right = g.cons( [], { id: 'n2' });
-    const p = g.cons( [left, right], { id: 'e', relation:'right' });
+    const left = g.cons([], { id: 'n1' });
+    const right = g.cons([], { id: 'n2' });
+    const p = g.cons([left, right], { id: 'e', relation: 'right' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeTruthy();
@@ -106,8 +107,8 @@ describe('gram cons can build edges', () => {
   });
 
   it('with a single nested unit [p []], which gets dropped, producing a node', () => {
-    const inner = g.cons( [] );
-    const p = g.cons( [inner], { id: 'p' });
+    const inner = g.cons([]);
+    const p = g.cons([inner], { id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeTruthy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -116,8 +117,8 @@ describe('gram cons can build edges', () => {
   });
 
   it('with a single nested node as in [p (n)]', () => {
-    const inner = g.cons( [], { id: 'a' });
-    const p = g.cons( [inner], { id: 'p' });
+    const inner = g.cons([], { id: 'a' });
+    const p = g.cons([inner], { id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -125,10 +126,9 @@ describe('gram cons can build edges', () => {
     expect(gramTypes.isGramNode(p.children[0])).toBeTruthy();
   });
 
-
   it('with a single nested node, wrapped in a labeled path', () => {
-    const inner = g.cons( [], { id: 'a' });
-    const p = g.cons( [inner], { labels: [':OUTER'] });
+    const inner = g.cons([], { id: 'a' });
+    const p = g.cons([inner], { labels: [':OUTER'] });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -137,8 +137,8 @@ describe('gram cons can build edges', () => {
   });
 
   it('with a single nested node, wrapped in a path with its own record', () => {
-    const inner = g.cons( [], { id: 'a' });
-    const p = g.cons( [inner], { record: {k: g.string('v')} });
+    const inner = g.cons([], { id: 'a' });
+    const p = g.cons([inner], { record: [g.property('k', g.string('v'))] });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -147,15 +147,13 @@ describe('gram cons can build edges', () => {
   });
 
   it('with a single nested edge [p [e --> [a][b]] ]', () => {
-    const left = g.cons( [], { id: 'a' });
-    const right = g.cons( [], { id: 'b' });
-    const inner = g.cons(
-      [left, right],
-      {
-        id: 'e',
-        relation: 'right',
+    const left = g.cons([], { id: 'a' });
+    const right = g.cons([], { id: 'b' });
+    const inner = g.cons([left, right], {
+      id: 'e',
+      relation: 'right',
     });
-    const p = g.cons( [inner], { id: 'p' });
+    const p = g.cons([inner], { id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -164,9 +162,9 @@ describe('gram cons can build edges', () => {
   });
 
   it('with a single nested path', () => {
-    const node = g.cons( [], { id: 'a' });
-    const inner = g.cons( [node], { id: 'innerP' });
-    const p = g.cons( [inner], { id: 'p' });
+    const node = g.cons([], { id: 'a' });
+    const inner = g.cons([node], { id: 'innerP' });
+    const p = g.cons([inner], { id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -175,9 +173,9 @@ describe('gram cons can build edges', () => {
   });
 
   it('with a single nested path', () => {
-    const node = g.cons( [], { id: 'a' });
-    const inner = g.cons( [node], { id: 'innerP' });
-    const p = g.cons( [inner], { id: 'p' });
+    const node = g.cons([], { id: 'a' });
+    const inner = g.cons([node], { id: 'innerP' });
+    const p = g.cons([inner], { id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -186,23 +184,19 @@ describe('gram cons can build edges', () => {
   });
 
   it('from two edges', () => {
-    const nodeA = g.cons( [], { id: 'a' });
-    const nodeB = g.cons( [], { id: 'b' });
-    const innerLeft = g.cons(
-      [nodeA, nodeB],
-      {
+    const nodeA = g.cons([], { id: 'a' });
+    const nodeB = g.cons([], { id: 'b' });
+    const innerLeft = g.cons([nodeA, nodeB], {
       relation: 'right',
       id: 'e1',
     });
-    const nodeC = g.cons( [], { id: 'c' });
-    const nodeD = g.cons( [], { id: 'd' });
-    const innerRight = g.cons(
-      [nodeC, nodeD],
-      {
+    const nodeC = g.cons([], { id: 'c' });
+    const nodeD = g.cons([], { id: 'd' });
+    const innerRight = g.cons([nodeC, nodeD], {
       relation: 'right',
       id: 'e2',
     });
-    const p = g.cons( [innerLeft, innerRight], { id: 'p' });
+    const p = g.cons([innerLeft, innerRight], { id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -212,17 +206,15 @@ describe('gram cons can build edges', () => {
   });
 
   it('by composing an edge with a path', () => {
-    const nodeA = g.cons( [], { id: 'a' });
-    const nodeB = g.cons( [], { id: 'b' });
-    const innerLeft = g.cons(
-      [nodeA, nodeB],
-      {
+    const nodeA = g.cons([], { id: 'a' });
+    const nodeB = g.cons([], { id: 'b' });
+    const innerLeft = g.cons([nodeA, nodeB], {
       relation: 'right',
       id: 'e',
     });
-    const nodeC = g.cons( [], { id: 'c' });
-    const innerRight = g.cons( [nodeC], { id: 'innerP' });
-    const p = g.cons( [innerLeft, innerRight], { id: 'p' });
+    const nodeC = g.cons([], { id: 'c' });
+    const innerRight = g.cons([nodeC], { id: 'innerP' });
+    const p = g.cons([innerLeft, innerRight], { id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -232,17 +224,15 @@ describe('gram cons can build edges', () => {
   });
 
   it('by composing a path with an edge', () => {
-    const nodeA = g.cons( [], { id: 'a' });
-    const nodeB = g.cons( [], { id: 'b' });
-    const innerRight = g.cons(
-      [nodeA, nodeB],
-      {
+    const nodeA = g.cons([], { id: 'a' });
+    const nodeB = g.cons([], { id: 'b' });
+    const innerRight = g.cons([nodeA, nodeB], {
       relation: 'right',
       id: 'e',
     });
-    const nodeC = g.cons( [], { id: 'c' });
-    const innerLeft = g.cons( [nodeC], { id: 'innerP' });
-    const p = g.cons( [innerLeft, innerRight], { id: 'p' });
+    const nodeC = g.cons([], { id: 'c' });
+    const innerLeft = g.cons([nodeC], { id: 'innerP' });
+    const p = g.cons([innerLeft, innerRight], { id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -252,16 +242,14 @@ describe('gram cons can build edges', () => {
   });
 
   it('by composing an edge with a node', () => {
-    const nodeA = g.cons( [], { id: 'a' });
-    const nodeB = g.cons( [], { id: 'b' });
-    const innerLeft = g.cons(
-      [nodeA, nodeB],
-      {
+    const nodeA = g.cons([], { id: 'a' });
+    const nodeB = g.cons([], { id: 'b' });
+    const innerLeft = g.cons([nodeA, nodeB], {
       relation: 'right',
       id: 'e',
     });
-    const innerRight = g.cons( [], { id: 'c' });
-    const p = g.cons( [innerLeft, innerRight], { id: 'p' });
+    const innerRight = g.cons([], { id: 'c' });
+    const p = g.cons([innerLeft, innerRight], { id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -271,16 +259,14 @@ describe('gram cons can build edges', () => {
   });
 
   it('by composing a node with an edge', () => {
-    const nodeA = g.cons( [], { id: 'a' });
-    const nodeB = g.cons( [], { id: 'b' });
-    const innerRight = g.cons(
-      [nodeA, nodeB],
-      {
+    const nodeA = g.cons([], { id: 'a' });
+    const nodeB = g.cons([], { id: 'b' });
+    const innerRight = g.cons([nodeA, nodeB], {
       relation: 'right',
       id: 'e',
     });
-    const innerLeft = g.cons( [], { id: 'c' });
-    const p = g.cons( [innerLeft, innerRight], { id: 'p' });
+    const innerLeft = g.cons([], { id: 'c' });
+    const p = g.cons([innerLeft, innerRight], { id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -290,9 +276,9 @@ describe('gram cons can build edges', () => {
   });
 
   it('by composing a node with a node, which is still just a path', () => {
-    const nodeA = g.cons( [], { id: 'a' });
-    const nodeB = g.cons( [], { id: 'b' });
-    const p = g.cons( [nodeA, nodeB], { id: 'p' });
+    const nodeA = g.cons([], { id: 'a' });
+    const nodeB = g.cons([], { id: 'b' });
+    const p = g.cons([nodeA, nodeB], { id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy(); // it's not an edge
@@ -302,9 +288,9 @@ describe('gram cons can build edges', () => {
   });
 
   it('by composing a node with a node and a navigational relation, which is a special path called an edge', () => {
-    const nodeA = g.cons( [], { id: 'a' });
-    const nodeB = g.cons( [], { id: 'b' });
-    const p = g.cons( [nodeA, nodeB], { relation: 'right', id: 'p' });
+    const nodeA = g.cons([], { id: 'a' });
+    const nodeB = g.cons([], { id: 'b' });
+    const p = g.cons([nodeA, nodeB], { relation: 'right', id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeTruthy(); // it's an edge
@@ -314,10 +300,10 @@ describe('gram cons can build edges', () => {
   });
 
   it('by composing a node with a path', () => {
-    const innerLeft = g.cons( [], { id: 'a' });
-    const nodeC = g.cons( [], { id: 'c' });
-    const innerRight = g.cons( [nodeC], { id: 'innerP' });
-    const p = g.cons( [innerLeft, innerRight], { id: 'p' });
+    const innerLeft = g.cons([], { id: 'a' });
+    const nodeC = g.cons([], { id: 'c' });
+    const innerRight = g.cons([nodeC], { id: 'innerP' });
+    const p = g.cons([innerLeft, innerRight], { id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -327,10 +313,10 @@ describe('gram cons can build edges', () => {
   });
 
   it('by composing a path with a node', () => {
-    const innerRight = g.cons( [], { id: 'a' });
-    const nodeB = g.cons( [], { id: 'b' });
-    const innerLeft = g.cons( [nodeB], { id: 'innerP' });
-    const p = g.cons( [innerLeft, innerRight], { id: 'p' });
+    const innerRight = g.cons([], { id: 'a' });
+    const nodeB = g.cons([], { id: 'b' });
+    const innerLeft = g.cons([nodeB], { id: 'innerP' });
+    const p = g.cons([innerLeft, innerRight], { id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -340,11 +326,11 @@ describe('gram cons can build edges', () => {
   });
 
   it('by composing a path with a path', () => {
-    const nodeA = g.cons( [], { id: 'a' });
-    const innerLeft = g.cons( [nodeA], { id: 'innerP' });
-    const nodeB = g.cons( [], { id: 'b' });
-    const innerRight = g.cons( [nodeB], { id: 'innerP' });
-    const p = g.cons( [innerLeft, innerRight], { id: 'p' });
+    const nodeA = g.cons([], { id: 'a' });
+    const innerLeft = g.cons([nodeA], { id: 'innerP' });
+    const nodeB = g.cons([], { id: 'b' });
+    const innerRight = g.cons([nodeB], { id: 'innerP' });
+    const p = g.cons([innerLeft, innerRight], { id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -354,9 +340,9 @@ describe('gram cons can build edges', () => {
   });
 
   it('by composing a unit with a unit, _without_ identity for the expression, which produces a unit', () => {
-    const innerLeft = g.cons( [] );
-    const innerRight = g.cons( [] );
-    const p = g.cons( [innerLeft, innerRight] );
+    const innerLeft = g.cons([]);
+    const innerRight = g.cons([]);
+    const p = g.cons([innerLeft, innerRight]);
     expect(gramTypes.isGramUnit(p)).toBeTruthy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -365,9 +351,9 @@ describe('gram cons can build edges', () => {
   });
 
   it('by composing a unit with a unit, _with_ identity for the expression, which produces a node', () => {
-    const innerLeft = g.cons( [] );
-    const innerRight = g.cons( [] );
-    const p = g.cons( [innerLeft, innerRight], { id: 'p' });
+    const innerLeft = g.cons([]);
+    const innerRight = g.cons([]);
+    const p = g.cons([innerLeft, innerRight], { id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeTruthy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -376,9 +362,9 @@ describe('gram cons can build edges', () => {
   });
 
   it('by composing a unit with a node, _without_ identity for the expression, which produces the original node', () => {
-    const innerLeft = g.cons( [] );
-    const innerRight = g.cons( [], { id: 'a' });
-    const p = g.cons( [innerLeft, innerRight] );
+    const innerLeft = g.cons([]);
+    const innerRight = g.cons([], { id: 'a' });
+    const p = g.cons([innerLeft, innerRight]);
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeTruthy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -388,9 +374,9 @@ describe('gram cons can build edges', () => {
   });
 
   it('by composing a unit with a node, _with_ identity for the expression, which produces a path with a nested node', () => {
-    const innerLeft = g.cons( [] );
-    const innerRight = g.cons( [], { id: 'a' });
-    const p = g.cons( [innerLeft, innerRight], { id: 'p' });
+    const innerLeft = g.cons([]);
+    const innerRight = g.cons([], { id: 'a' });
+    const p = g.cons([innerLeft, innerRight], { id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -399,9 +385,9 @@ describe('gram cons can build edges', () => {
   });
 
   it('by composing a node with a unit, _without_ identity for the expression, which produces the original node', () => {
-    const innerRight = g.cons( [] );
-    const innerLeft = g.cons( [], { id: 'a' });
-    const p = g.cons( [innerLeft, innerRight] );
+    const innerRight = g.cons([]);
+    const innerLeft = g.cons([], { id: 'a' });
+    const p = g.cons([innerLeft, innerRight]);
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeTruthy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -411,9 +397,9 @@ describe('gram cons can build edges', () => {
   });
 
   it('by composing a unit with a node, _with_ identity for the expression, which produces a path with a nested node', () => {
-    const innerRight = g.cons( [] );
-    const innerLeft = g.cons( [], { id: 'a' });
-    const p = g.cons( [innerLeft, innerRight], { id: 'p' });
+    const innerRight = g.cons([]);
+    const innerLeft = g.cons([], { id: 'a' });
+    const p = g.cons([innerLeft, innerRight], { id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -422,17 +408,14 @@ describe('gram cons can build edges', () => {
   });
 
   it('by composing a unit with an edge, _without_ identity for the expression, which produces the original edge', () => {
-    const innerLeft = g.cons( [] );
-    const nodeA = g.cons( [], { id: 'a' });
-    const nodeB = g.cons( [], { id: 'b' });
-    const innerRight = g.cons(
-      [nodeA, nodeB],
-      {
-        relation: 'right',
-        id: 'e',
-      }
-    );
-    const p = g.cons( [innerLeft, innerRight] );
+    const innerLeft = g.cons([]);
+    const nodeA = g.cons([], { id: 'a' });
+    const nodeB = g.cons([], { id: 'b' });
+    const innerRight = g.cons([nodeA, nodeB], {
+      relation: 'right',
+      id: 'e',
+    });
+    const p = g.cons([innerLeft, innerRight]);
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeTruthy();
@@ -442,16 +425,14 @@ describe('gram cons can build edges', () => {
   });
 
   it('by composing a unit with an edge, _with_ identity for the expression, which produces a path with a nested edge', () => {
-    const innerLeft = g.cons( [] );
-    const nodeA = g.cons( [], { id: 'a' });
-    const nodeB = g.cons( [], { id: 'b' });
-    const innerRight = g.cons(
-      [nodeA, nodeB],
-      {
-        relation: 'right',
-        id: 'e',
+    const innerLeft = g.cons([]);
+    const nodeA = g.cons([], { id: 'a' });
+    const nodeB = g.cons([], { id: 'b' });
+    const innerRight = g.cons([nodeA, nodeB], {
+      relation: 'right',
+      id: 'e',
     });
-    const p = g.cons( [innerLeft, innerRight], { id: 'p' });
+    const p = g.cons([innerLeft, innerRight], { id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -460,16 +441,14 @@ describe('gram cons can build edges', () => {
   });
 
   it('by composing a edge with a unit, _without_ identity for the expression, which produces the original edge', () => {
-    const innerRight = g.cons( [] );
-    const nodeA = g.cons( [], { id: 'a' });
-    const nodeB = g.cons( [], { id: 'b' });
-    const innerLeft = g.cons(
-      [nodeA, nodeB],
-      {
-        relation: 'right',
-        id: 'e',
+    const innerRight = g.cons([]);
+    const nodeA = g.cons([], { id: 'a' });
+    const nodeB = g.cons([], { id: 'b' });
+    const innerLeft = g.cons([nodeA, nodeB], {
+      relation: 'right',
+      id: 'e',
     });
-    const p = g.cons( [innerLeft, innerRight] );
+    const p = g.cons([innerLeft, innerRight]);
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeTruthy();
@@ -479,16 +458,14 @@ describe('gram cons can build edges', () => {
   });
 
   it('by composing [p [e --> [a][b] ] [] ]  a path with a nested edge', () => {
-    const innerRight = g.cons( [] );
-    const nodeA = g.cons( [], { id: 'a' });
-    const nodeB = g.cons( [], { id: 'b' });
-    const innerLeft = g.cons(
-      [nodeA, nodeB],
-      {
-        id: 'e',
+    const innerRight = g.cons([]);
+    const nodeA = g.cons([], { id: 'a' });
+    const nodeB = g.cons([], { id: 'b' });
+    const innerLeft = g.cons([nodeA, nodeB], {
+      id: 'e',
       relation: 'right',
     });
-    const p = g.cons( [innerLeft, innerRight], { id: 'p' });
+    const p = g.cons([innerLeft, innerRight], { id: 'p' });
     expect(gramTypes.isGramUnit(p)).toBeFalsy();
     expect(gramTypes.isGramNode(p)).toBeFalsy();
     expect(gramTypes.isGramEdge(p)).toBeFalsy();
@@ -504,56 +481,68 @@ describe('gram builder for path history', () => {
   });
   it('may have identity', () => {
     const id = 'a';
-    const paths = g.seq([], id );
+    const paths = g.seq([], id);
     expect(paths.id).toBe(id);
   });
 });
 
-
 describe('gram builder for reducing multiple paths into a tree of composed paths', () => {
   it('accepts a single node as a sub-path', () => {
     const id = 'p';
-    const paths = g.cons(g.reduce('pair', [g.node('a')]), {id});
+    const paths = g.cons(g.reduce('pair', [g.node('a')]), { id });
     expect(paths.id).toBe(id);
     expect(paths.children.length).toBe(1);
     // console.log(inspect(paths));
   });
   it('accepts two nodes as a single pair', () => {
     const id = 'p';
-    const paths = g.cons(g.reduce('pair', [g.node('a'),g.node('b')]), {id});
+    const paths = g.cons(g.reduce('pair', [g.node('a'), g.node('b')]), { id });
     expect(paths.id).toBe(id);
     // console.log(inspect(paths));
     expect(paths.children.length).toBe(1);
-    expect(treeSize(paths, {type:'path', relation:'pair'})).toBe(1)
+    expect(treeSize(paths, { type: 'path', relation: 'pair' })).toBe(1);
   });
   it('accepts three nodes, becoming two pairs', () => {
     const id = 'p';
-    const paths = g.cons(g.reduce('pair',[g.node('a'),g.node('b'),g.node('c')]), {id});
+    const paths = g.cons(
+      g.reduce('pair', [g.node('a'), g.node('b'), g.node('c')]),
+      { id }
+    );
     expect(paths.id).toBe(id);
     // console.log(inspect(paths));
     expect(paths.children.length).toBe(1);
-    expect(treeSize(paths, {type:'path', relation:'pair'})).toBe(2)
+    expect(treeSize(paths, { type: 'path', relation: 'pair' })).toBe(2);
   });
   it('accepts five nodes, becoming four pairs', () => {
     const id = 'p';
-    const paths = g.cons(g.reduce('pair',[g.node('a'),g.node('b'),g.node('c'),g.node('d'),g.node('e')]), {id});
+    const paths = g.cons(
+      g.reduce('pair', [
+        g.node('a'),
+        g.node('b'),
+        g.node('c'),
+        g.node('d'),
+        g.node('e'),
+      ]),
+      { id }
+    );
     expect(paths.id).toBe(id);
 
     // console.log(inspect(paths));
 
     expect(paths.children.length).toBe(1);
-    expect(treeSize(paths, {type:'path', relation:'pair'})).toBe(4)
+    expect(treeSize(paths, { type: 'path', relation: 'pair' })).toBe(4);
   });
   it('accepts a single edge as a sub-path', () => {
     const id = 'p';
-    const paths = g.cons(g.reduce('pair',[g.edge([g.node('a'),g.node('b')], 'right', 'e')]), {id});
+    const paths = g.cons(
+      g.reduce('pair', [g.edge([g.node('a'), g.node('b')], 'right', 'e')]),
+      { id }
+    );
     expect(paths.id).toBe(id);
     expect(paths.children.length).toBe(1);
     // console.log(inspect(paths));
   });
-
 });
-
 
 describe('gram builder for records', () => {
   it('with boolean values', () => {
@@ -671,18 +660,20 @@ describe('gram builder for nodes', () => {
       b: g.string('hello'),
       c: g.integer(42),
     };
-    const singleNode = g.node(undefined, undefined, record);
+    const singleNode = g.node(undefined, undefined, unfoldProperties(record));
 
     expect(singleNode.record).toBeDefined();
-    expect((singleNode.record?.a as gramTypes.BooleanLiteral).type).toBe(
-      'boolean'
-    );
-    expect((singleNode.record?.b as gramTypes.StringLiteral).type).toBe(
-      'string'
-    );
-    expect((singleNode.record?.c as gramTypes.IntegerLiteral).type).toBe(
-      'integer'
-    );
+    if (singleNode.record) {
+      expect(
+        (singleNode.record[0].value as gramTypes.BooleanLiteral).type
+      ).toBe('boolean');
+      expect((singleNode.record[1].value as gramTypes.StringLiteral).type).toBe(
+        'string'
+      );
+      expect(
+        (singleNode.record[2].value as gramTypes.IntegerLiteral).type
+      ).toBe('integer');
+    } else fail('Record expected to be an array of GramProperty');
   });
 });
 
@@ -728,11 +719,11 @@ describe('gram builder for edges', () => {
     expect(edge.labels).toContain(label);
   });
   it('can attach records', () => {
-    const record = {
+    const record = g.unfoldProperties({
       a: g.boolean(false),
       b: g.string('hello'),
       c: g.integer(42),
-    };
+    });
     const edge = g.edge(
       [g.node(), g.node()],
       undefined,
@@ -742,9 +733,17 @@ describe('gram builder for edges', () => {
     );
 
     expect(edge.record).toBeDefined();
-    expect((edge.record?.a as gramTypes.BooleanLiteral).type).toBe('boolean');
-    expect((edge.record?.b as gramTypes.StringLiteral).type).toBe('string');
-    expect((edge.record?.c as gramTypes.IntegerLiteral).type).toBe('integer');
+    if (edge.record) {
+      expect((edge.record[0].value as gramTypes.BooleanLiteral).type).toBe(
+        'boolean'
+      );
+      expect((edge.record[1].value as gramTypes.StringLiteral).type).toBe(
+        'string'
+      );
+      expect((edge.record[2].value as gramTypes.IntegerLiteral).type).toBe(
+        'integer'
+      );
+    } else fail('GramRecord expected on GramEdge');
   });
 });
 

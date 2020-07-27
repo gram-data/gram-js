@@ -37,6 +37,7 @@
   "author": "Andreas Kollegger",
   "module": "dist/gram-graph.esm.js",
   "devDependencies": {
+    "@types/jest": "^26.0.4",
     "husky": "^4.2.5",
     "npm-run-all": "^4.1.5",
     "rollup-plugin-node-builtins": "^2.1.2",
@@ -44,7 +45,7 @@
     "shx": "^0.3.2",
     "tsdx": "^0.13.2",
     "tslib": "^2.0.0",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.7"
   },
   "gitHead": "a255da2f7cfa6bd16f637d1241d17e10510e60c0",
   "publishConfig": {

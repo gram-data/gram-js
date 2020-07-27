@@ -22,8 +22,10 @@ describe('gram nodes', () => {
       expect(node.id).toEqual('a');
       node.labels = ['A', 'B'];
       expect(node.labels).toEqual(expect.arrayContaining(['A', 'B']));
-      node.record = { k: { type: 'string', value: 'v' } };
-      expect(gramTypes.isStringLiteral(node.record.k)).toBeTruthy();
+      node.record = [
+        { type: 'property', name: 'k', value: { type: 'string', value: 'v' } },
+      ];
+      expect(gramTypes.isStringLiteral(node.record[0].value)).toBeTruthy();
       expect(node.children).toBeUndefined();
     }
   });

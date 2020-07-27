@@ -477,7 +477,7 @@ const grammar: Grammar = {
         'Record$ebnf$1',
         { literal: '}' },
       ],
-      postprocess: ([, , p, ps]) => g.record([p, ...extractPairs(ps)]),
+      postprocess: ([, , p, ps]) => [p, ...extractPairs(ps)],
     },
     {
       name: 'Property',

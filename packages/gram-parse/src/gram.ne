@@ -114,7 +114,7 @@ Symbol ->
 
 Record -> 
     "{" _ "}" {% empty  %}
-  | "{" _ Property (_ "," _ Property):* "}" {% ([,,p,ps]) =>  g.record([p, ...extractPairs(ps)]) %}
+  | "{" _ Property (_ "," _ Property):* "}" {% ([,,p,ps]) =>  [p, ...extractPairs(ps)] %}
 
 Property -> Symbol _ ":" _ Value {% ([k,,,,v]) => g.property(k,v) %}
 

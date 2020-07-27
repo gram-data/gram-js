@@ -1,19 +1,19 @@
 import builder from '@gram-data/gram-builder';
 // import * as gramTypes from '@gram-data/gram-ast';
-import { stringify } from '../src/';
+import { toString } from '../src/';
 
 describe('gram stringify for defined paths', () => {
   it('ignores undefined paths', () => {
     const path = builder.path([builder.UNIT]);
-    expect(stringify(path)).toBe('');
+    expect(toString(path)).toBe('');
   });
   it('ignores empty labels', () => {
     const path = builder.path([builder.UNIT], undefined, []);
-    expect(stringify(path)).toBe('');
+    expect(toString(path)).toBe('');
   });
   it('ignores empty records', () => {
-    const path = builder.path([builder.UNIT], undefined, undefined, {});
-    expect(stringify(path)).toBe('');
+    const path = builder.path([builder.UNIT], undefined, undefined, []);
+    expect(toString(path)).toBe('');
   });
 });
 
