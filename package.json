@@ -2,6 +2,7 @@
   "name": "gram-js",
   "private": true,
   "scripts": {
+    "bootstrap": "lerna bootstrap --ignore-scripts",
     "docs": "typedoc"
   },
   "devDependencies": {
