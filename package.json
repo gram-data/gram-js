@@ -2,7 +2,9 @@
   "name": "gram-js",
   "private": true,
   "scripts": {
-    "bootstrap": "lerna bootstrap --ignore-scripts",
+    "lerna:clean": "lerna clean -y",
+    "lerna:bootstrap": "lerna bootstrap",
+    "prepare": "run-s lerna:clean lerna:bootstrap",
     "docs": "typedoc"
   },
   "devDependencies": {
@@ -11,6 +13,7 @@
     "eslint": "^7.4.0",
     "eslint-config-prettier": "^6.11.0",
     "lerna": "^3.22.1",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.0.5",
     "typedoc": "^0.17.8",
     "typescript": "^3.9.6"

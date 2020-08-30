@@ -24,12 +24,10 @@ import {
   MeasurementLiteral,
   GramRecord,
   GramPathlike,
-  GramUnit,
+  GramEmptyPath,
   isGramNode,
-  isGramUnit,
-  isGramEdge,
-  isGramPath,
-  UNIT_ID,
+  isGramEmptyPath,
+  EMPTY_PATH_ID,
   GramPropertyMap,
   DateLiteral,
   TimeLiteral,
@@ -65,16 +63,16 @@ const dateToDayOfMonth = (d: Date) => '--' + d.toISOString().slice(5, 10);
  * @param record optional graph-level data
  */
 export const seq = (
-  paths: Children<GramPathlike>,
+  paths: Children<GramPath>,
   id?: string,
   labels?: string[],
   record?: GramRecord
 ): GramPathSeq => ({
   type: 'seq',
-  ...(id && { id }),
+  id,
   ...(labels && { labels }),
   ...(record && { record }),
-  children: normalizeChildren<GramPathlike>(paths),
+  children: normalizeChildren<GramPath>(paths),
 });
 
 export interface PathAttributes {
@@ -85,112 +83,108 @@ export interface PathAttributes {
 }
 
 /**
- * Reduce paths into a single path composed using the given relation.
+ * Reduce a list of paths into a single path composed using the given relation.
  *
- * @parm relation the relation to apply to all sub-paths
- * @param paths sub-paths to be paired
+ * @param relation the relation to apply to all sub-paths
+ * @param pathlist sub-paths to be paired
+ * @param baseID the baseID from which path expressions will derive new IDs
  */
 export const reduce = (
   relation: Relation = 'pair',
-  paths: Children<GramPathlike>
-): [GramPathlike] | [] => {
-  const pathlist = normalizeChildren(paths);
-  if (pathlist) {
-    if (pathlist.length > 1) {
-      return [
-        pathlist.reduceRight((acc, curr) => {
-          return cons([curr, acc], { relation });
-        }, UNIT),
-      ];
-    } else {
-      return [pathlist[0]];
-    }
+  pathlist: GramPath[],
+  baseID?: string,
+): GramPathlike => {
+  let subID = 0;
+  if (pathlist.length > 1) {
+    return pathlist.reduceRight((acc:GramPathlike, curr) => {
+        const childID = baseID ? `${baseID}${subID}` : undefined;
+        return cons([curr, acc], { relation, id:childID });
+      }, EMPTY_PATH);
+  } else {
+    return pathlist[0];
   }
-  return [];
 };
 
 /**
- * Build any path-like element
+ * Build a path.
  *
  * @param members sub-paths to compose
  * @param attributes attributes
  */
 export const cons = (
-  members: [] | [GramPathlike] | [GramPathlike, GramPathlike],
+  members?: [] | [GramPathlike] | [GramPathlike, GramPathlike],
   attributes: PathAttributes = {}
 ): GramPathlike => {
   const element: any = {
     type: 'path',
-    id: attributes.id,
+    ...(attributes.id && { id: attributes.id }),
     ...(attributes.labels && { labels: attributes.labels }),
     ...(attributes.record && { record: attributes.record }),
-    children: members.filter(child => child && !isGramUnit(child)),
+    // children: members ? members.filter(child => child && !isGramEmptyPath(child)) : undefined,
   };
-  if (element.children.length === 0) {
-    if (
-      element.id ||
-      (element.labels && element.labels.length > 0) ||
-      element.record
-    ) {
-      element.type = 'node';
-      // element.id = element.id || identity.shortID();
+  if (members === undefined) {
+    if (element.id && (element.id !== EMPTY_PATH_ID)) {
+      element.children = [];
+      return element;
+    }
+    element.children = undefined;
+    return EMPTY_PATH;
+  } else if (members.length === 0) {
+    if (element.id === EMPTY_PATH_ID) {
+      return EMPTY_PATH;
+    }
+    element.children = [];
+    return element as GramNode;
+  } else if (members.length === 1) {
+    const lhs = members[0];
+    const rhs = EMPTY_PATH;
+
+    if (isGramEmptyPath(lhs)) {
+      element.children = [];
       return element as GramNode;
     } else {
-      return UNIT;
-    }
-  } else if (element.children.length === 1) {
-    const inner = element.children[0];
-    if (
-      element.id ||
-      (element.labels && element.labels.length > 0) ||
-      element.record
-    ) {
-      if (isGramUnit(inner)) {
-        element.type = 'node';
-        element.children = [];
-        return element as GramNode;
-      }
+      element.children = [lhs, rhs];
       return element as GramPath;
-    } else {
-      if (isGramUnit(inner)) return inner as GramUnit;
-      // element.id = identity.shortID();
-      if (isGramNode(inner)) return inner as GramNode;
-      if (isGramEdge(inner)) return inner as GramEdge;
-      if (isGramPath(inner)) return inner as GramPath;
     }
-  } else if (element.children.length === 2) {
+  } else if (members.length === 2) {
     if (
       attributes.relation &&
       attributes.relation !== 'pair' &&
-      isGramNode(element.children[0]) &&
-      isGramNode(element.children[1])
+      isGramNode(members[0]) &&
+      isGramNode(members[1])
     ) {
-      element.type = 'edge';
-      // element.id = element.id || identity.shortID();
       element.relation = attributes.relation;
+      element.children =[members[0], members[1]];
       return element as GramEdge;
+    } else if (
+      isGramEmptyPath(members[0]) &&
+      isGramEmptyPath(members[1])
+    ) {
+      element.relation = attributes.relation;
+      element.children = [];
+      return element as GramNode;
     }
+    element.children = [members[0], members[1]];
   }
-  // element.id = element.id || identity.shortID();
   element.relation = attributes.relation || 'pair';
   return element as GramPath;
 };
 
 /**
- * Singleton instance of GramUnit
+ * Singleton instance of GramEmptyPath
  */
-export const UNIT: GramUnit = {
-  type: 'unit',
-  id: UNIT_ID,
+export const EMPTY_PATH: GramEmptyPath = {
+  type: 'path',
+  id: EMPTY_PATH_ID,
   labels: undefined,
   record: undefined,
-  children: [],
+  children: undefined
 };
 
 /**
- * Convenience function for retrieving the singleton GramUnit.
+ * Convenience function for retrieving the singleton GramEmptyPath.
  */
-export const unit = (): GramUnit => UNIT;
+export const empty = (): GramEmptyPath => EMPTY_PATH;
 
 /**
  * Build a GramNode.
@@ -205,9 +199,8 @@ export const node = (
   labels?: string[],
   record?: GramRecord
 ): GramNode => ({
-  type: 'node',
-  // id: id || identity.shortID(),
-  id,
+  type: 'path',
+  ...(id && { id }),
   ...(labels && { labels }),
   ...(record && { record }),
   children: [],
@@ -224,13 +217,12 @@ export const node = (
  */
 export const edge = (
   children: [GramNode, GramNode],
-  relation: Navigation = 'right',
+  relation: Navigation,
   id?: string,
   labels?: string[],
   record?: GramRecord
 ): GramEdge => ({
-  type: 'edge',
-  // id: id || identity.shortID(),
+  type: 'path',
   id,
   ...(labels && { labels }),
   ...(record && { record }),
@@ -247,13 +239,13 @@ export const edge = (
  * @param record
  */
 export const path = (
-  members: [GramPathlike] | [GramPathlike, GramPathlike],
+  members: [GramPath] | [GramPath, GramPath],
   id?: string,
   labels?: string[],
   record?: GramRecord
 ): GramPath => ({
   type: 'path',
-  ...(id && { id }),
+  id,
   ...(labels && { labels }),
   ...(record && { record }),
   children: members,
@@ -379,7 +371,7 @@ export const flatten = (xs: any[], depth = 1) =>
 
 export default {
   seq,
-  unit,
+  empty,
   cons,
   path,
   node,
