@@ -1,4 +1,0 @@
-// anonymous nodes, identified relationships
-()-[a]-()
-()-[1]->()
-()<-[a1]-()

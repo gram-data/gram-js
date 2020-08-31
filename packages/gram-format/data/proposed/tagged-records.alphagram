@@ -1,6 +1,0 @@
-// unscoped record
-(1 {a:'b'})
-
-// asscociative array of records
-// cypher: MATCH (n) RETURN n[d3].x
-(2 [_:{a:'b'}, d3:{x:100,y:200}])
