@@ -1,27 +1,52 @@
-# TSDX Bootstrap
+# Gram lint
 
-This project was bootstrapped with [TSDX](https://github.com/jaredpalmer/tsdx).
+A CLI for processing Gram text literal files. 
 
-## Local Development
+```
+→ ./bin/cli.js --help
+Usage: gram [options] [path | glob ...]
 
-Below is a list of commands you will probably find useful.
+  undefined
 
-### `npm start` or `yarn start`
+Options:
 
-Runs the project in development/watch mode. Your project will be rebuilt upon changes. TSDX has a special logger for you convenience. Error messages are pretty printed and formatted for compatibility VS Code's Problems tab.
+  -h  --help                              output usage information
+  -v  --version                           output version number
+  -o  --output [path]                     specify output location
+  -r  --rc-path <path>                    specify configuration file
+  -i  --ignore-path <path>                specify ignore file
+  -s  --setting <settings>                specify settings
+  -e  --ext <extensions>                  specify extensions
+  -u  --use <plugins>                     use plugins
+  -w  --watch                             watch for changes and reprocess
+  -q  --quiet                             output only warnings and errors
+  -S  --silent                            output only errors
+  -f  --frail                             exit with 1 on warnings
+  -t  --tree                              specify input and output as syntax tree
+      --report <reporter>                 specify reporter
+      --file-path <path>                  specify path to process as
+      --ignore-path-resolve-from dir|cwd  resolve patterns in `ignore-path` from its directory or cwd
+      --ignore-pattern <globs>            specify ignore patterns
+      --silently-ignore                   do not fail when given ignored files
+      --tree-in                           specify input as syntax tree
+      --tree-out                          output syntax tree
+      --inspect                           output formatted syntax tree
+      --[no-]stdout                       specify writing to stdout (on by default)
+      --[no-]color                        specify color in report (on by default)
+      --[no-]config                       search for configuration files (on by default)
+      --[no-]ignore                       search for ignore files (on by default)
 
-<img src="https://user-images.githubusercontent.com/4060187/52168303-574d3a00-26f6-11e9-9f3b-71dbec9ebfcb.gif" width="600" />
+Examples:
 
-Your library will be rebuilt if you make edits.
+  # Process `input.gram`
+  $ gram input.gram -o output.gram
 
-### `npm run build` or `yarn build`
+  # Pipe
+  $ gram < input.gram > output.gram
 
-Bundles the package to the `dist` folder.
-The package is optimized and bundled with Rollup into multiple formats (CommonJS, UMD, and ES Module).
+  # Rewrite all applicable files
+  $ gram . -o
+  ```
 
-<img src="https://user-images.githubusercontent.com/4060187/52168322-a98e5b00-26f6-11e9-8cf6-222d716b75ef.gif" width="600" />
-
-### `npm test` or `yarn test`
-
-Runs the test watcher (Jest) in an interactive mode.
-By default, runs tests related to files changed since the last commit.
+  - See [unified-args](https://github.com/unifiedjs/unified-args) for usage details
+  
