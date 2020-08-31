@@ -1,6 +1,6 @@
 {
   "name": "@gram-data/gram-value",
-  "version": "0.2.1",
+  "version": "2.0.2",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -36,7 +36,7 @@
   "author": "Andreas Kollegger",
   "module": "dist/gram-value.esm.js",
   "devDependencies": {
-    "@gram-data/gram-builder": "^0.2.1",
+    "@gram-data/gram-builder": "^2.0.2",
     "@types/jest": "^26.0.4",
     "@types/unist": "^2.0.3",
     "@typescript-eslint/parser": "^3.6.1",
@@ -50,7 +50,7 @@
     "unist-util-inspect": "^6.0.0"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.2.1"
+    "@gram-data/gram-ast": "^2.0.2"
   },
   "publishConfig": {
     "access": "public"
