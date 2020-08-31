@@ -1,6 +1,6 @@
 {
   "name": "@gram-data/gram-identity",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -51,7 +51,7 @@
     "unist-util-inspect": "^6.0.0"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.2.3",
+    "@gram-data/gram-ast": "^0.2.4",
     "shortid": "^2.2.15",
     "unified": "^9.0.0",
     "unist-util-visit": "^2.0.3",

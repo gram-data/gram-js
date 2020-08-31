@@ -1,6 +1,6 @@
 {
   "name": "@gram-data/gram-lint",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -49,8 +49,8 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
-    "@gram-data/gram-parse": "^0.2.3",
-    "@gram-data/gram-stringify": "^0.2.3",
+    "@gram-data/gram-parse": "^0.2.4",
+    "@gram-data/gram-stringify": "^0.2.4",
     "unified": "^9.0.0",
     "unified-args": "^8.1.0"
   },
