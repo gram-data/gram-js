@@ -57,8 +57,8 @@
     "unist-util-inspect": "^6.0.0"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "0.2.1",
-    "@gram-data/gram-builder": "0.2.1",
+    "@gram-data/gram-ast": "^0.2.1",
+    "@gram-data/gram-builder": "^0.2.1",
     "moo": "^0.5.1",
     "nearley": "^2.19.5",
     "unified": "^9.0.0",

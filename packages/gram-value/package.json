@@ -50,7 +50,7 @@
     "unist-util-inspect": "^6.0.0"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "0.2.1"
+    "@gram-data/gram-ast": "^0.2.1"
   },
   "publishConfig": {
     "access": "public"
