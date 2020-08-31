@@ -1,6 +1,6 @@
 {
   "name": "@gram-data/gram-stringify",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -51,7 +51,7 @@
     "unist-util-inspect": "^6.0.0"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.2.2",
+    "@gram-data/gram-ast": "^0.2.3",
     "unified": "^9.0.0"
   },
   "gitHead": "0f6d560e002650f6c293c0737ddc2539d78fbbff",
