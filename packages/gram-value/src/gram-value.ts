@@ -18,7 +18,7 @@ import {
   Node as UnistNode,
 } from 'unist';
 
-export const iso8601Year = /^([\+-]\d{4,}\b|\d{4})$/;
+export const iso8601Year = /^([+-]\d{4,}\b|\d{4})$/;
 export const iso8601YearMonth = /^([0-9]{4})-(1[0-2]|0[1-9])$/;
 export const iso8601YearMonthDay = /^([0-9]{4})(-?)(1[0-2]|0[1-9])\2(3[01]|0[1-9]|[12][0-9])$/;
 export const iso8601OrdinalDate = /^([0-9]{4})-?(36[0-6]|3[0-5][0-9]|[12][0-9]{2}|0[1-9][0-9]|00[1-9])$/;
@@ -45,7 +45,8 @@ export const valueOfBoolean = (ast: BooleanLiteral) =>
 export const valueOfString = (ast: StringLiteral) => {
   if (ast.value) {
     return ast.value;
-  } else throw 'Missing value';
+  }
+  throw new InvalidAstError(ast);
 };
 
 export const valueOfTaggedLiteral = (ast: TaggedLiteral) => {

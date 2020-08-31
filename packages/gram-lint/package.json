@@ -21,7 +21,7 @@
     "test:watch": "tsdx test --watch",
     "lint": "tsdx lint",
     "lint:fix": "tsdx lint --fix",
-    "prepare": "run-s build"
+    "prepare": "npm run build"
   },
   "husky": {
     "hooks": {

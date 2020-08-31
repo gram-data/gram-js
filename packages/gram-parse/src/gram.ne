@@ -2,7 +2,7 @@
 
 @{% 
 import moo from 'moo';
-import * as g from '@gram-data/gram-builder';
+import {builder as g} from '@gram-data/gram-builder';
 import {tokens} from '@gram-data/gram-ast';
 
 let lexer = moo.compile({
@@ -39,22 +39,23 @@ let lexer = moo.compile({
     ',': ',',
     ':': ':',
     '`': '`',
-    '\'': '\''
+    '\'': '\'',
+    'ø': 'ø'
 }) as unknown as NearleyLexer
 
 %}
 
 @lexer lexer
 
-Gram -> (Pathlike ",":? _  {% ([pp]) => pp %}):+ EOL:? {% ([pp]) => g.seq( g.flatten(pp) ) %}
+PathSequence -> (Path ",":? _  {% ([pp]) => pp %}):+ EOL:? {% ([pp]) => g.seq( g.flatten(pp) ) %}
 
-Pathlike ->
-    EdgeExpression {% id %}
+Path ->
+    NodePattern     {% id %}
   | PathComposition {% id %}
-  | Comment     {% id %}
+  | Comment         {% id %}
 
-EdgeExpression ->
-    Node Edge EdgeExpression
+NodePattern ->
+    Node Edge NodePattern
       {% ([np,es,ep]) => g.cons([np,ep], {relation:es.relation, id:es.id, labels:es.labels, record:es.record} ) %}
   | Node {% id %}
 
@@ -77,12 +78,16 @@ Edge ->
   | "<--"     {% () => ({relation:'left'}) %}
 
 PathComposition -> 
-    "[" _ Attributes _ Pathlike:? _ "]"
-      {% ([,,attr,,sub]) => g.cons(sub ? [sub] : [], attr) %}
-  | "[" _ Attributes _ Relation _ Pathlike _ Pathlike _ "]"
-      {% ([,,attr,,relation,,lhs,,rhs]) => g.cons([lhs,rhs], {relation, id:attr.id, labels:attr.labels, record:attr.record}) %}
-  | "[" _ Attributes _ (Pathlike ",":? _  
-      {% ([pp]) => pp %}):+ "]" {% ([,,attr,,pp]) => g.cons( g.reduce('pair', g.flatten(pp)), attr ) %}
+    "[" _ "]" {% () => g.empty() %}
+  | "[" _ Attributes _ Relation:? _ Path:? _ Path:? _ "]"
+      # with both optional, rhs will match first
+      {% ([,,attr,,relation,,lhs,,rhs]) => g.cons( (rhs ? lhs ? [lhs,rhs] : [rhs] : []), {relation, id:attr.id, labels:attr.labels, record:attr.record}) %}
+  
+  # "[" _ Attributes _ Path:? _ "]"
+  #   {% ([,,attr,,lhs]) => g.cons(lhs ? [lhs] : undefined, attr) %}
+  # | "[" _ Attributes _ (Path ",":? _  
+  #     {% ([pp]) => pp %}):+ "]" {% ([,,attr,,pp]) => g.reduce('pair', g.flatten(pp)) %}
+      # {% ([pp]) => pp %}):+ "]" {% ([,,attr,,pp]) => g.cons( [g.reduce('pair', g.flatten(pp))], attr ) %}
 
 Relation ->
     ","   {% () => ('pair') %}
@@ -99,8 +104,8 @@ LabelList ->
 Label -> ":" Symbol {% ([,label]) => label %}
 
 Identity -> 
-
     %identifier   {% text %}
+  | "ø"           {% text %}
   | %symbol       {% text %}
   | %integer      {% text %}
   | %octal        {% text %}
@@ -121,9 +126,9 @@ Property -> Symbol _ ":" _ Value {% ([k,,,,v]) => g.property(k,v) %}
 # Key -> Symbol {% id %}
 
 Value -> 
-    StringLiteral  {% id %}
+    StringLiteral   {% id %}
   | NumericLiteral  {% id %}
-  | %boolean       {% (d) => g.boolean(JSON.parse(d[0].value.toLowerCase())) %}
+  | %boolean        {% (d) => g.boolean(JSON.parse(d[0].value.toLowerCase())) %}
   | "[" _ Value (_ "," _ Value):* "]" {% ([,,v,vs]) => ([v, ...extractArray(vs)]) %}
 
 StringLiteral -> 

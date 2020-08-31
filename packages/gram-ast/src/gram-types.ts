@@ -16,41 +16,26 @@ import {
   Node as UnistNode,
 } from 'unist';
 
-/**
- * A union type of interfaces which are path-like.
- */
-// export type GramPathlike = GramUnit | GramNode | GramEdge | GramPath;
-
-/**
- * Path expressions are compositions of nodes and edges.
- *
- * The ast is a tree of GramNodes and GramEdges.
- * The relation of a Path is always left to right
- * regardless of the internal relations of any
- * contained Edges.
- * The leftmost syntactic Node is the head, which
- * will be the topmost Node in the descendent tree.
- */
-export type GramPathlike = GramUnit | GramNode | GramEdge | GramPath;
-
 ///////////////////////////////////////////////////////////////////////////////
 // Base ast types...
 
 /**
- * Base type for elements which have no children.
- */
-export interface GramLeaf extends UnistNode {}
-
-/**
  * The base type for all path-like elements.
  */
-export interface GramPathlikeAttributes extends UnistParent {
+export interface GramPathlike extends UnistNode {
+
   /**
-   * A type-scoped unique identifier.
+   * A unique path identifier.
    *
    * For example, 'a' in `()-[a]->()` or '1' in `(1)`
    */
   id?: string;
+
+  /**
+   * The relationship between the left and right children,
+   * or a 'pair' that associates without being navigable.
+   */
+  relation?: Relation;
 
   /**
    * Labels are content.
@@ -65,16 +50,51 @@ export interface GramPathlikeAttributes extends UnistParent {
    */
   record?: GramRecord;
 
-  children: GramPathlike[] | [];
+  children?: GramPath[] | [];
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Pathlike types...
 
+
 /**
- * Identity of all units.
+ * GramPath contains nodes, edges and other paths that have been composed
+ * into a path expression.
+ *
+ * - denoted with matching, non-empty square brackets: `[id]`
+ * - path equivalence: `[]`
+ * - identity: yes (required)
+ * - children: yes (optional)
+ * - labels: yes
+ * - record: yes
+ * - path length: sum(children[0].length, children[1].length)
+ * - path cardinality: nodes().length
+ * - information role: data annotation
  */
-export const UNIT_ID = '0';
+export interface GramPath extends GramPathlike, UnistParent {
+  /**
+   * Type discriminator for this AST element, always 'path'.
+   */
+  type: 'path';
+
+  /**
+   * Either:
+   * - no children
+   * - a single child with an implied RHS empty path
+   * - two children which are composed into a path
+   */
+  children: [] | [GramPath] | [GramPath, GramPath];
+}
+
+/**
+ * Type guard for a Path.
+ *
+ * @param o any object
+ */
+export const isGramPath = (o: any): o is GramPath =>
+  !!o.type && o.type === 'path';
+
+export const EMPTY_PATH_ID = 'ø';
 
 /**
  * A GramUnit is an empty path expression which contains no sub-paths and has no identity.
@@ -89,34 +109,38 @@ export const UNIT_ID = '0';
  * - path cardinality: 0
  * - information role: emptiness
  */
-export interface GramUnit extends GramPathlikeAttributes {
-  /**
-   * Type discriminator for this AST element, always 'unit'.
-   */
-  type: 'unit';
+export interface GramEmptyPath extends GramPathlike {
 
-  id: '0';
+  type: 'path';
+
+  id: 'ø';
 
   labels: undefined;
 
   record: undefined;
 
-  children: [];
 }
 
 /**
- * Type guard for GramUnit.
+ * Type guard for GramEmptyPath.
  *
+ * In practice both nodes and empty paths both have no children.
+ * The distinguishing feature is that all empty paths have
+ * no labels, no record, and always has the identity `ø`, while
+ * a node may have labels, a record and always has an identity
+ * other than `ø`.
+ * 
  * @param o any object
  */
-export const isGramUnit = (o: any): o is GramUnit =>
-  !!o.type && o.type === 'unit';
+export const isGramEmptyPath = (o: any): o is GramEmptyPath =>
+  isGramPath(o) && (o.children === undefined) && (o.id === EMPTY_PATH_ID);
 
 /**
- * A GramNode is the foundation for attached data structures.
+ * A GramNode is a path composed of two empty paths,
+ * which is equivalent to having no children.
  *
  * - denoted with matching square brackets: `()`
- * - path equivalence: `[n] =~ (n)`
+ * - path equivalence: `[n] =~ [n [] []] =~ (n)`
  * - identity: yes
  * - children: 0
  * - labels: yes
@@ -125,25 +149,28 @@ export const isGramUnit = (o: any): o is GramUnit =>
  * - path cardinality: 1
  * - information role: an entity or a noun
  */
-export interface GramNode extends GramPathlikeAttributes {
-  /**
-   * Type discriminator for this AST element, always 'node'.
-   */
-  type: 'node';
+export interface GramNode extends GramPath {
 
   /**
-   * Always empty.
+   * Optimized to no children, though understood
+   * to have two empty paths as children.
    */
   children: [];
 }
 
 /**
  * Type guard for GramNode.
+ * 
+ * In practice both nodes and empty paths both have no children.
+ * The distinguishing feature is that all empty paths have
+ * no labels, no record, and always has the identity `ø`, while
+ * a node may have labels, a record and always has an identity
+ * other than `ø`.
  *
  * @param o any object
  */
 export const isGramNode = (o: any): o is GramNode =>
-  !!o.type && o.type === 'node';
+  isGramPath(o) && o.children && (o.children.length === 0) && (o.id !== EMPTY_PATH_ID);
 
 /**
  * Navigable relations to compose path expressions.
@@ -163,7 +190,7 @@ export type Navigation = 'left' | 'right' | 'either';
 export type Relation = Navigation | 'pair';
 
 /**
- * GramEdge is:
+ * GramEdge is a path composed of two GramNodes:
  *
  * - a path expression composing two nodes and a
  * - a path expression of length 1
@@ -171,16 +198,7 @@ export type Relation = Navigation | 'pair';
  * - the operand in path expressions
  * - usually a noun concept
  */
-export interface GramEdge extends GramPathlikeAttributes {
-  /**
-   * Type discriminator for this AST element, always 'edge'.
-   */
-  type: 'edge';
-
-  /**
-   * The relationship between the nodes.
-   */
-  relation?: Navigation;
+export interface GramEdge extends GramPath {
 
   /**
    * The operands of the Edge, known as "children" in the AST.
@@ -197,61 +215,20 @@ export interface GramEdge extends GramPathlikeAttributes {
  * @param o any object
  */
 export const isGramEdge = (o: any): o is GramEdge =>
-  'type' in o && 'relation' in o && o.type === 'edge';
+  isGramPath(o) && (o.relation !== undefined) && (o.relation !== 'pair') && (o.children !== undefined) && o.children.every(child => isGramNode(child))
 
-/**
- * GramPath contains nodes, edges and other paths that have been composed
- * into a path expression.
- *
- * - denoted with matching, non-empty square brackets: `[id]`
- * - path equivalence: `[]`
- * - identity: yes (required)
- * - children: yes (optional)
- * - labels: yes
- * - record: yes
- * - path length: sum(children[0].length, children[1].length)
- * - path cardinality: nodes().length
- * - information role: data annotation
- */
-export interface GramPath extends GramPathlikeAttributes {
-  /**
-   * Type discriminator for this AST element, always 'path'.
-   */
-  type: 'path';
-
-  /**
-   * The relationship between the left and right children,
-   * or a 'pair' that associates without being navigable.
-   */
-  relation?: Relation;
-
-  /**
-   * Either a single child that is nested within this path,
-   * or two children which are composed into a path.
-   *
-   */
-  children: [GramPathlike] | [GramPathlike, GramPathlike];
-}
-
-/**
- * Type guard for a Path.
- *
- * @param o any object
- */
-export const isGramPath = (o: any): o is GramPath =>
-  !!o.type && o.type === 'path';
 
 /**
  * A GramPathSeq is a sequence of paths.
  *
  */
-export interface GramPathSeq extends GramPathlikeAttributes {
+export interface GramPathSeq extends GramPathlike {
   /**
    * Type discriminator for this AST element, aways 'seq'.
    */
   type: 'seq';
 
-  children: GramPathlike[];
+  children: GramPath[];
 }
 
 /**
@@ -263,10 +240,10 @@ export const isGramPathSequence = (o: any): o is GramPathSeq =>
   !!o.type && o.type === 'seq';
 
 export const isGramPathlike = (o: any): o is GramPathlike =>
-  isGramUnit(o) ||
+  isGramPath(o) ||
+  isGramEmptyPath(o) ||
   isGramNode(o) ||
   isGramEdge(o) ||
-  isGramPath(o) ||
   isGramPathSequence(o);
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -307,7 +284,7 @@ export type GramPropertyMap = { [key: string]: GramRecordValue };
 /**
  * Property is a name paired with a record value.
  */
-export interface GramProperty extends GramLeaf {
+export interface GramProperty extends UnistNode {
   /**
    * Type discriminator for this AST element, always 'property'.
    */
@@ -630,7 +607,7 @@ export const isWellKnownTextLiteral = (o: any): o is WellKnownTextLiteral =>
   !!o.type && !!o.value && !!o.tag && o.type === 'tagged' && o.tag === 'wkt';
 
 /**
- *
+ * Represents a well-formed URI.
  *
  * ## Some examples:
  *

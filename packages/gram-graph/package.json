@@ -18,9 +18,9 @@
     "test:watch": "tsdx test --watch",
     "lint": "tsdx lint",
     "lint:fix": "tsdx lint --fix",
-    "prepare": "run-s build:lib",
     "build:demo": "shx cp dist/gram-graph.umd.development.* ./public",
-    "demo": "serve ./public/"
+    "demo": "serve ./public/",
+    "prepare": "npm run build"
   },
   "husky": {
     "hooks": {
