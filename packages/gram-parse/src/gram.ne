@@ -60,7 +60,7 @@ NodePattern ->
   | Node {% id %}
 
 Node ->
-  "(" _ Attributes ")" 
+  "(" _ Attributes _ ")" 
     {% ([,,content]) => g.node(content.id, content.labels, content.record) %}
 
 Edge ->
@@ -119,7 +119,7 @@ Symbol ->
 
 Record -> 
     "{" _ "}" {% empty  %}
-  | "{" _ Property (_ "," _ Property):* "}" {% ([,,p,ps]) =>  [p, ...extractPairs(ps)] %}
+  | "{" _ Property (_ "," _ Property):* _ "}" {% ([,,p,ps]) =>  [p, ...extractPairs(ps)] %}
 
 Property -> Symbol _ ":" _ Value {% ([k,,,,v]) => g.property(k,v) %}
 

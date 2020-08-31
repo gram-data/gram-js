@@ -15,7 +15,7 @@ describe('parsing empty paths', () => {
     const src = `[]`;
     const result = toAST(src);
     expect(result).toBeDefined();
-    console.log(inspect(result));
+    // console.log(inspect(result));
     const firstPath = result.children[0];
     expect(isGramEmptyPath(firstPath)).toBeTruthy();
     expect(firstPath.id).toBe(EMPTY_PATH_ID);
@@ -24,7 +24,7 @@ describe('parsing empty paths', () => {
     const src = `[ø]`;
     const result = toAST(src);
     expect(result).toBeDefined();
-    console.log(inspect(result));
+    // console.log(inspect(result));
     const firstPath = result.children[0];
     expect(isGramEmptyPath(firstPath)).toBeTruthy();
     expect(firstPath.id).toBe(EMPTY_PATH_ID);
@@ -182,6 +182,17 @@ describe('parsing nodes', () => {
     const result = toAST(gram);
     expect(result).toBeDefined();
     // console.log(inspect(result));
+  });
+
+  it.each`
+    gram
+    ${'({k:`v`})'}
+    ${'( {k:`v`} )'}
+    ${'( { k:`v` } )'}
+  `('$gram is tolerant of whitespace', ({ gram }) => {
+    const result = toAST(gram);
+    expect(result).toBeDefined();
+    console.log(inspect(result));
   });
 });
 

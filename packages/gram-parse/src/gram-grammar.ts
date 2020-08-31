@@ -201,7 +201,7 @@ const grammar: Grammar = {
     { name: 'NodePattern', symbols: ['Node'], postprocess: id },
     {
       name: 'Node',
-      symbols: [{ literal: '(' }, '_', 'Attributes', { literal: ')' }],
+      symbols: [{ literal: '(' }, '_', 'Attributes', '_', { literal: ')' }],
       postprocess: ([, , content]) =>
         g.node(content.id, content.labels, content.record),
     },
@@ -413,6 +413,7 @@ const grammar: Grammar = {
         '_',
         'Property',
         'Record$ebnf$1',
+        '_',
         { literal: '}' },
       ],
       postprocess: ([, , p, ps]) => [p, ...extractPairs(ps)],
