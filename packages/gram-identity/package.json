@@ -1,6 +1,6 @@
 {
   "name": "@gram-data/gram-identity",
-  "version": "0.1.2",
+  "version": "0.2.1",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -36,7 +36,7 @@
   "author": "Andreas Kollegger",
   "module": "dist/gram-identity.esm.js",
   "devDependencies": {
-    "@gram-data/gram-parse": "0.1.10",
+    "@gram-data/gram-parse": "^0.2.1",
     "@types/jest": "^26.0.4",
     "@types/shortid": "^0.0.29",
     "@types/unist": "^2.0.3",
@@ -51,7 +51,7 @@
     "unist-util-inspect": "^6.0.0"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "0.1.10",
+    "@gram-data/gram-ast": "^0.2.1",
     "shortid": "^2.2.15",
     "unified": "^9.0.0",
     "unist-util-visit": "^2.0.3",
