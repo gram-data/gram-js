@@ -1,6 +1,6 @@
 # Gram Parse
 
-Parses source text into an AST. 
+From text literal `(a)-->(b)` to a data graph syntax tree. 
 
 Provides:
 

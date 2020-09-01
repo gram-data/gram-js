@@ -1,4 +1,7 @@
 {
+  "name": "@gram-data/gram-graph",
+  "author": "Andreas Kollegger",
+  "keywords":["graph", "neo4j", "gram"],
   "version": "0.2.4",
   "license": "MIT",
   "main": "dist/index.js",
@@ -33,8 +36,6 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "@gram-data/gram-graph",
-  "author": "Andreas Kollegger",
   "module": "dist/gram-graph.esm.js",
   "devDependencies": {
     "@types/jest": "^26.0.4",

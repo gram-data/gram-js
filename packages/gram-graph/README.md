@@ -1,3 +1,3 @@
 # Gram Graph
 
-A path-based graph data structure.
+A data structure for data graphs.

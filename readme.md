@@ -1,6 +1,6 @@
 # gram-js
 
-A lightweight graph model in javascript. 
+A data graph model and exchange format. 
 
 ---
 

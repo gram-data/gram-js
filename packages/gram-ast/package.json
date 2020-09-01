@@ -1,5 +1,6 @@
 {
   "name": "@gram-data/gram-ast",
+  "keywords":["graph", "neo4j", "gram"],
   "version": "0.2.4",
   "license": "MIT",
   "main": "dist/index.js",

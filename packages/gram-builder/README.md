@@ -1,5 +1,5 @@
 # Gram Builder
 
-A builder for creating valid Gram syntax trees.
+Build valid syntax trees that represent data graphs.
 
 
