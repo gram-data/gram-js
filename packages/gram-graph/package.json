@@ -1,8 +1,12 @@
 {
   "name": "@gram-data/gram-graph",
   "author": "Andreas Kollegger",
-  "keywords":["graph", "neo4j", "gram"],
-  "version": "0.2.4",
+  "keywords": [
+    "graph",
+    "neo4j",
+    "gram"
+  ],
+  "version": "0.2.5",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

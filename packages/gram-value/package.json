@@ -1,7 +1,11 @@
 {
   "name": "@gram-data/gram-value",
-  "keywords":["graph", "neo4j", "gram"],
-  "version": "0.2.4",
+  "keywords": [
+    "graph",
+    "neo4j",
+    "gram"
+  ],
+  "version": "0.2.5",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -51,7 +55,7 @@
     "unist-util-inspect": "^6.0.0"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.2.4"
+    "@gram-data/gram-ast": "^0.2.5"
   },
   "publishConfig": {
     "access": "public"
