@@ -2,41 +2,16 @@
 
 A data graph model and exchange format. 
 
----
+This is the Javascript reference implementation.
 
-## Open questions
+## Library Components
 
-- styling & layout
-
-## References
-
-
-### Formats
-
-- [JSON Graph Format](http://jsongraphformat.info)
-- [DOT Language](https://www.graphviz.org/doc/info/lang.html)
-- [GraphML](http://graphml.graphdrawing.org)
-- [SuiteSpare Matrices](https://sparse.tamu.edu/about) - Rutherford-Boeing and Matric Market formats
-
-### Models
-
-- [ECSY](https://ecsy.io) - an Entity Component System 
-
-### Generators
-
-- [LDBC Bencbmark Spec](http://ldbc.github.io/ldbc_snb_docs/ldbc-snb-specification.pdf) - Social Network Benchmark generator specification
-- [LDBC SNB Data Generator](https://github.com/ldbc/ldbc_snb_datagen) - github repository
-
-### Tools
-
-
-
-- [Cytoscape.js](https://js.cytoscape.org) - gaph theory library for visualization and analysis
-- [Vega Lite](https://vega.github.io/vega-lite/docs/data.html) - grammar for interactive visualizations
-- [Mermaid.js](https://mermaid-js.github.io/mermaid/#/) - diagrams as text
-- [nomnoml](https://github.com/skanaar/nomnoml) - sassy UML diagram renderer
-- [graphviz.it](http://graphviz.it/) - online graph editor
-- [d3-graphviz](https://github.com/magjac/d3-graphviz) - render graphviz dot format using d3
-- [Roam](https://roamresearch.com) - as easy to use as a document. a powerful as a graph database.
-
+- `gram-ast` Abstract Syntax Tree and tokenizing regular-expressions
+- `gram-builder` to compose a valid AST
+- `gram-graph` to materialize a data graph
+- `gram-identity` AST plugin to adjust graph element identities
+- `gram-lint` to process gram files on the command line
+- `gram-parse` derived from `gram.ne` to parse text into an AST
+- `gram-stringify` to convert an AST back to text literal format
+- `gram-value` to convert AST data values to JS primitive or object values
 

@@ -1,5 +1,6 @@
 {
   "name": "@gram-data/gram-ast",
+  "author": "Andreas Kollegger",
   "keywords": [
     "graph",
     "neo4j",
@@ -8,6 +9,8 @@
   "version": "0.2.5",
   "license": "MIT",
   "main": "dist/index.js",
+  "unpkg": "dist/gram-ast.umd.production.min.js",
+  "module": "dist/gram-ast.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
@@ -38,8 +41,6 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "author": "Andreas Kollegger",
-  "module": "dist/gram-ast.esm.js",
   "devDependencies": {
     "@types/jest": "^26.0.4",
     "@types/shortid": "^0.0.29",
