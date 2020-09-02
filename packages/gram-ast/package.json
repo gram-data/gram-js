@@ -6,7 +6,7 @@
     "neo4j",
     "gram"
   ],
-  "version": "0.2.5",
+  "version": "0.2.6",
   "license": "MIT",
   "main": "dist/index.js",
   "unpkg": "dist/gram-ast.umd.production.min.js",
