@@ -7,6 +7,11 @@
   ],
   "version": "0.2.6",
   "license": "MIT",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/gram-data/gram-js.git"
+  },
+  "homepage": "https://github.com/gram-data/gram-js/tree/main/packages/gram-identity#readme",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -41,7 +46,7 @@
   "author": "Andreas Kollegger",
   "module": "dist/gram-identity.esm.js",
   "devDependencies": {
-    "@gram-data/gram-parse": "^2.0.2",
+    "@gram-data/gram-parse": "^0.2.6",
     "@types/jest": "^26.0.4",
     "@types/shortid": "^0.0.29",
     "@types/unist": "^2.0.3",
@@ -52,6 +57,7 @@
     "shx": "^0.3.2",
     "tsdx": "^0.13.2",
     "tslib": "^2.0.0",
+    "typedoc": "^0.19.2",
     "typescript": "^3.9.7",
     "unist-util-inspect": "^6.0.0"
   },

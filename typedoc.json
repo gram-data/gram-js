@@ -4,11 +4,13 @@
   "mode": "modules",
   "inputFiles": [
     "./readme.md",
-    "./packages/gram-format/src",
-    "./packages/gram-d3/src",
-    "./packages/gram-neo4j/src"
+    "./packages/gram-ast/src",
+    "./packages/gram-builder/src",
+    "./packages/gram-parse/src",
+    "./packages/gram-stringify/src",
+    "./packages/gram-value/src"
   ],
-  "out": "docs",
+  "out": "docs/api",
   "theme": "default",
   "ignoreCompilerErrors": "false",
   "preserveConstEnums": "true",

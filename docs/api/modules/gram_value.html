@@ -1,0 +1,926 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>gram-value | gram.js</title>
+	<meta name="description" content="Documentation for gram.js">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">gram.js</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="gram_value.html">gram-value</a>
+				</li>
+			</ul>
+			<h1>Package gram-value</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<a href="#gram-value" id="gram-value" style="color: inherit; text-decoration: none;">
+						<h1>Gram Value</h1>
+					</a>
+					<p>Evaluate data graph AST values, producing Javascript primitive or object values.</p>
+				</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>References</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#iso8601duration" class="tsd-kind-icon">iso8601<wbr>Duration</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#iso8601localtime" class="tsd-kind-icon">iso8601<wbr>Local<wbr>Time</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#iso8601ordinaldate" class="tsd-kind-icon">iso8601<wbr>Ordinal<wbr>Date</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#iso8601repeat" class="tsd-kind-icon">iso8601<wbr>Repeat</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#iso8601time" class="tsd-kind-icon">iso8601<wbr>Time</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#iso8601weekdate" class="tsd-kind-icon">iso8601<wbr>Week<wbr>Date</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#iso8601weekofyear" class="tsd-kind-icon">iso8601<wbr>Week<wbr>OfYear</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#iso8601year" class="tsd-kind-icon">iso8601<wbr>Year</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#iso8601yearmonth" class="tsd-kind-icon">iso8601<wbr>Year<wbr>Month</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#iso8601yearmonthday" class="tsd-kind-icon">iso8601<wbr>Year<wbr>Month<wbr>Day</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#valueofboolean" class="tsd-kind-icon">value<wbr>OfBoolean</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#valueofdate" class="tsd-kind-icon">value<wbr>OfDate</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#valueofdecimal" class="tsd-kind-icon">value<wbr>OfDecimal</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#valueofduration" class="tsd-kind-icon">value<wbr>OfDuration</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#valueofhexadecimal" class="tsd-kind-icon">value<wbr>OfHexadecimal</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#valueofinteger" class="tsd-kind-icon">value<wbr>OfInteger</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#valueofmeasurement" class="tsd-kind-icon">value<wbr>OfMeasurement</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#valueofoctal" class="tsd-kind-icon">value<wbr>OfOctal</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#valueofstring" class="tsd-kind-icon">value<wbr>OfString</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#valueoftaggedliteral" class="tsd-kind-icon">value<wbr>OfTagged<wbr>Literal</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#valueoftime" class="tsd-kind-icon">value<wbr>OfTime</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Classes</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-class tsd-parent-kind-module tsd-is-not-exported"><a href="../classes/gram_value.invalidasterror.html" class="tsd-kind-icon">Invalid<wbr>Ast<wbr>Error</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Variables</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="gram_value.html#millis_in_an_hour" class="tsd-kind-icon">MILLIS_<wbr>IN_<wbr>AN_<wbr>HOUR</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="gram_value.html#millis_in_a_day" class="tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_DAY</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="gram_value.html#millis_in_a_minute" class="tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_MINUTE</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="gram_value.html#millis_in_a_month" class="tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_MONTH</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="gram_value.html#millis_in_a_second" class="tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_SECOND</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="gram_value.html#millis_in_a_year" class="tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_YEAR</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="gram_value.html#iso8601duration-1" class="tsd-kind-icon">iso8601<wbr>Duration</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="gram_value.html#iso8601localtime-1" class="tsd-kind-icon">iso8601<wbr>Local<wbr>Time</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="gram_value.html#iso8601ordinaldate-1" class="tsd-kind-icon">iso8601<wbr>Ordinal<wbr>Date</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="gram_value.html#iso8601repeat-1" class="tsd-kind-icon">iso8601<wbr>Repeat</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="gram_value.html#iso8601time-1" class="tsd-kind-icon">iso8601<wbr>Time</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="gram_value.html#iso8601weekdate-1" class="tsd-kind-icon">iso8601<wbr>Week<wbr>Date</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="gram_value.html#iso8601weekofyear-1" class="tsd-kind-icon">iso8601<wbr>Week<wbr>OfYear</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="gram_value.html#iso8601year-1" class="tsd-kind-icon">iso8601<wbr>Year</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="gram_value.html#iso8601yearmonth-1" class="tsd-kind-icon">iso8601<wbr>Year<wbr>Month</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="gram_value.html#iso8601yearmonthday-1" class="tsd-kind-icon">iso8601<wbr>Year<wbr>Month<wbr>Day</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_value.html#valueofboolean-1" class="tsd-kind-icon">value<wbr>OfBoolean</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_value.html#valueofdate-1" class="tsd-kind-icon">value<wbr>OfDate</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_value.html#valueofdecimal-1" class="tsd-kind-icon">value<wbr>OfDecimal</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_value.html#valueofduration-1" class="tsd-kind-icon">value<wbr>OfDuration</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_value.html#valueofhexadecimal-1" class="tsd-kind-icon">value<wbr>OfHexadecimal</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_value.html#valueofinteger-1" class="tsd-kind-icon">value<wbr>OfInteger</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_value.html#valueofmeasurement-1" class="tsd-kind-icon">value<wbr>OfMeasurement</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_value.html#valueofoctal-1" class="tsd-kind-icon">value<wbr>OfOctal</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_value.html#valueofstring-1" class="tsd-kind-icon">value<wbr>OfString</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_value.html#valueoftaggedliteral-1" class="tsd-kind-icon">value<wbr>OfTagged<wbr>Literal</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_value.html#valueoftime-1" class="tsd-kind-icon">value<wbr>OfTime</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>References</h2>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="iso8601duration" class="tsd-anchor"></a>
+					<h3>iso8601<wbr>Duration</h3>
+					Re-exports <a href="gram_value.html#iso8601duration-1">iso8601Duration</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="iso8601localtime" class="tsd-anchor"></a>
+					<h3>iso8601<wbr>Local<wbr>Time</h3>
+					Re-exports <a href="gram_value.html#iso8601localtime-1">iso8601LocalTime</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="iso8601ordinaldate" class="tsd-anchor"></a>
+					<h3>iso8601<wbr>Ordinal<wbr>Date</h3>
+					Re-exports <a href="gram_value.html#iso8601ordinaldate-1">iso8601OrdinalDate</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="iso8601repeat" class="tsd-anchor"></a>
+					<h3>iso8601<wbr>Repeat</h3>
+					Re-exports <a href="gram_value.html#iso8601repeat-1">iso8601Repeat</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="iso8601time" class="tsd-anchor"></a>
+					<h3>iso8601<wbr>Time</h3>
+					Re-exports <a href="gram_value.html#iso8601time-1">iso8601Time</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="iso8601weekdate" class="tsd-anchor"></a>
+					<h3>iso8601<wbr>Week<wbr>Date</h3>
+					Re-exports <a href="gram_value.html#iso8601weekdate-1">iso8601WeekDate</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="iso8601weekofyear" class="tsd-anchor"></a>
+					<h3>iso8601<wbr>Week<wbr>OfYear</h3>
+					Re-exports <a href="gram_value.html#iso8601weekofyear-1">iso8601WeekOfYear</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="iso8601year" class="tsd-anchor"></a>
+					<h3>iso8601<wbr>Year</h3>
+					Re-exports <a href="gram_value.html#iso8601year-1">iso8601Year</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="iso8601yearmonth" class="tsd-anchor"></a>
+					<h3>iso8601<wbr>Year<wbr>Month</h3>
+					Re-exports <a href="gram_value.html#iso8601yearmonth-1">iso8601YearMonth</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="iso8601yearmonthday" class="tsd-anchor"></a>
+					<h3>iso8601<wbr>Year<wbr>Month<wbr>Day</h3>
+					Re-exports <a href="gram_value.html#iso8601yearmonthday-1">iso8601YearMonthDay</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="valueofboolean" class="tsd-anchor"></a>
+					<h3>value<wbr>OfBoolean</h3>
+					Re-exports <a href="gram_value.html#valueofboolean-1">valueOfBoolean</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="valueofdate" class="tsd-anchor"></a>
+					<h3>value<wbr>OfDate</h3>
+					Re-exports <a href="gram_value.html#valueofdate-1">valueOfDate</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="valueofdecimal" class="tsd-anchor"></a>
+					<h3>value<wbr>OfDecimal</h3>
+					Re-exports <a href="gram_value.html#valueofdecimal-1">valueOfDecimal</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="valueofduration" class="tsd-anchor"></a>
+					<h3>value<wbr>OfDuration</h3>
+					Re-exports <a href="gram_value.html#valueofduration-1">valueOfDuration</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="valueofhexadecimal" class="tsd-anchor"></a>
+					<h3>value<wbr>OfHexadecimal</h3>
+					Re-exports <a href="gram_value.html#valueofhexadecimal-1">valueOfHexadecimal</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="valueofinteger" class="tsd-anchor"></a>
+					<h3>value<wbr>OfInteger</h3>
+					Re-exports <a href="gram_value.html#valueofinteger-1">valueOfInteger</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="valueofmeasurement" class="tsd-anchor"></a>
+					<h3>value<wbr>OfMeasurement</h3>
+					Re-exports <a href="gram_value.html#valueofmeasurement-1">valueOfMeasurement</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="valueofoctal" class="tsd-anchor"></a>
+					<h3>value<wbr>OfOctal</h3>
+					Re-exports <a href="gram_value.html#valueofoctal-1">valueOfOctal</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="valueofstring" class="tsd-anchor"></a>
+					<h3>value<wbr>OfString</h3>
+					Re-exports <a href="gram_value.html#valueofstring-1">valueOfString</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="valueoftaggedliteral" class="tsd-anchor"></a>
+					<h3>value<wbr>OfTagged<wbr>Literal</h3>
+					Re-exports <a href="gram_value.html#valueoftaggedliteral-1">valueOfTaggedLiteral</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="valueoftime" class="tsd-anchor"></a>
+					<h3>value<wbr>OfTime</h3>
+					Re-exports <a href="gram_value.html#valueoftime-1">valueOfTime</a>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="millis_in_an_hour" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> MILLIS_<wbr>IN_<wbr>AN_<wbr>HOUR</h3>
+					<div class="tsd-signature tsd-kind-icon">MILLIS_<wbr>IN_<wbr>AN_<wbr>HOUR<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = MILLIS_IN_A_MINUTE * 60</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L87">packages/gram-value/src/gram-value.ts:87</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="millis_in_a_day" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> MILLIS_<wbr>IN_<wbr><wbr>A_DAY</h3>
+					<div class="tsd-signature tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_DAY<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = MILLIS_IN_AN_HOUR * 24</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L88">packages/gram-value/src/gram-value.ts:88</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="millis_in_a_minute" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> MILLIS_<wbr>IN_<wbr><wbr>A_MINUTE</h3>
+					<div class="tsd-signature tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_MINUTE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = MILLIS_IN_A_SECOND * 60</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L86">packages/gram-value/src/gram-value.ts:86</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="millis_in_a_month" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> MILLIS_<wbr>IN_<wbr><wbr>A_MONTH</h3>
+					<div class="tsd-signature tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_MONTH<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = MILLIS_IN_A_DAY * 30</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L89">packages/gram-value/src/gram-value.ts:89</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="millis_in_a_second" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> MILLIS_<wbr>IN_<wbr><wbr>A_SECOND</h3>
+					<div class="tsd-signature tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_SECOND<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">1000</span><span class="tsd-signature-symbol"> = 1000</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L85">packages/gram-value/src/gram-value.ts:85</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="millis_in_a_year" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> MILLIS_<wbr>IN_<wbr><wbr>A_YEAR</h3>
+					<div class="tsd-signature tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_YEAR<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = MILLIS_IN_A_DAY * 365</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L90">packages/gram-value/src/gram-value.ts:90</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="iso8601duration-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> iso8601<wbr>Duration</h3>
+					<div class="tsd-signature tsd-kind-icon">iso8601<wbr>Duration<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = /^P((\d+)Y)?((\d+)M)?((\d+)D)?(T((\d+)H)?((\d+)M)?((\d+)S)?)?$/</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L30">packages/gram-value/src/gram-value.ts:30</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="iso8601localtime-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> iso8601<wbr>Local<wbr>Time</h3>
+					<div class="tsd-signature tsd-kind-icon">iso8601<wbr>Local<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = /^(2[0-3]|[01][0-9]):?([0-5][0-9])(:?([0-5][0-9](\.[0-9]{3})?))?$/</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L27">packages/gram-value/src/gram-value.ts:27</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="iso8601ordinaldate-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> iso8601<wbr>Ordinal<wbr>Date</h3>
+					<div class="tsd-signature tsd-kind-icon">iso8601<wbr>Ordinal<wbr>Date<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = /^([0-9]{4})-?(36[0-6]|3[0-5][0-9]|[12][0-9]{2}|0[1-9][0-9]|00[1-9])$/</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L24">packages/gram-value/src/gram-value.ts:24</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="iso8601repeat-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> iso8601<wbr>Repeat</h3>
+					<div class="tsd-signature tsd-kind-icon">iso8601<wbr>Repeat<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = /^R(\d*)$/</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L31">packages/gram-value/src/gram-value.ts:31</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="iso8601time-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> iso8601<wbr>Time</h3>
+					<div class="tsd-signature tsd-kind-icon">iso8601<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = /^(2[0-3]|[01][0-9]):?([0-5][0-9]):?([0-5][0-9](\.[0-9]{3})?)?(Z|([+-])((?:2[0-3]|[01][0-9]))(?::?([0-5][0-9]))?)?$/</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L29">packages/gram-value/src/gram-value.ts:29</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="iso8601weekdate-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> iso8601<wbr>Week<wbr>Date</h3>
+					<div class="tsd-signature tsd-kind-icon">iso8601<wbr>Week<wbr>Date<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = /^([0-9]{4})-?W(5[0-3]|[1-4][0-9]|0[1-9])-?([1-7])$/</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L26">packages/gram-value/src/gram-value.ts:26</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="iso8601weekofyear-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> iso8601<wbr>Week<wbr>OfYear</h3>
+					<div class="tsd-signature tsd-kind-icon">iso8601<wbr>Week<wbr>OfYear<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = /^([0-9]{4})-?W(5[0-3]|[1-4][0-9]|0[1-9])$/</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L25">packages/gram-value/src/gram-value.ts:25</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="iso8601year-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> iso8601<wbr>Year</h3>
+					<div class="tsd-signature tsd-kind-icon">iso8601<wbr>Year<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = /^([+-]\d{4,}\b|\d{4})$/</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L21">packages/gram-value/src/gram-value.ts:21</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="iso8601yearmonth-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> iso8601<wbr>Year<wbr>Month</h3>
+					<div class="tsd-signature tsd-kind-icon">iso8601<wbr>Year<wbr>Month<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = /^([0-9]{4})-(1[0-2]|0[1-9])$/</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L22">packages/gram-value/src/gram-value.ts:22</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="iso8601yearmonthday-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> iso8601<wbr>Year<wbr>Month<wbr>Day</h3>
+					<div class="tsd-signature tsd-kind-icon">iso8601<wbr>Year<wbr>Month<wbr>Day<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> = /^([0-9]{4})(-?)(1[0-2]|0[1-9])\2(3[01]|0[1-9]|[12][0-9])$/</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L23">packages/gram-value/src/gram-value.ts:23</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="valueofboolean-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> value<wbr>OfBoolean</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">value<wbr>OfBoolean<span class="tsd-signature-symbol">(</span>ast<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BooleanLiteral</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L42">packages/gram-value/src/gram-value.ts:42</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ast: <span class="tsd-signature-type">BooleanLiteral</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="valueofdate-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> value<wbr>OfDate</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">value<wbr>OfDate<span class="tsd-signature-symbol">(</span>ast<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DateLiteral</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L59">packages/gram-value/src/gram-value.ts:59</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ast: <span class="tsd-signature-type">DateLiteral</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Date</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="valueofdecimal-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> value<wbr>OfDecimal</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">value<wbr>OfDecimal<span class="tsd-signature-symbol">(</span>ast<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DecimalLiteral</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L177">packages/gram-value/src/gram-value.ts:177</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ast: <span class="tsd-signature-type">DecimalLiteral</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="valueofduration-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> value<wbr>OfDuration</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">value<wbr>OfDuration<span class="tsd-signature-symbol">(</span>ast<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DurationLiteral</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L137">packages/gram-value/src/gram-value.ts:137</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Evaluates the duration as a total of milliseconds, unreliably estimating milliseconds
+										per year or month. Reliable duration values can only be calculated with precision
+									of days, hours, minutes or seconds.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ast: <span class="tsd-signature-type">DurationLiteral</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Date</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="valueofhexadecimal-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> value<wbr>OfHexadecimal</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">value<wbr>OfHexadecimal<span class="tsd-signature-symbol">(</span>ast<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HexadecimalLiteral</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L183">packages/gram-value/src/gram-value.ts:183</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ast: <span class="tsd-signature-type">HexadecimalLiteral</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="valueofinteger-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> value<wbr>OfInteger</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">value<wbr>OfInteger<span class="tsd-signature-symbol">(</span>ast<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IntegerLiteral</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L165">packages/gram-value/src/gram-value.ts:165</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ast: <span class="tsd-signature-type">IntegerLiteral</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="valueofmeasurement-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> value<wbr>OfMeasurement</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">value<wbr>OfMeasurement<span class="tsd-signature-symbol">(</span>ast<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">MeasurementLiteral</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L171">packages/gram-value/src/gram-value.ts:171</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ast: <span class="tsd-signature-type">MeasurementLiteral</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="valueofoctal-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> value<wbr>OfOctal</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">value<wbr>OfOctal<span class="tsd-signature-symbol">(</span>ast<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">OctalLiteral</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L189">packages/gram-value/src/gram-value.ts:189</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ast: <span class="tsd-signature-type">OctalLiteral</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="valueofstring-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> value<wbr>OfString</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">value<wbr>OfString<span class="tsd-signature-symbol">(</span>ast<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StringLiteral</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L45">packages/gram-value/src/gram-value.ts:45</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ast: <span class="tsd-signature-type">StringLiteral</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="valueoftaggedliteral-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> value<wbr>OfTagged<wbr>Literal</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">value<wbr>OfTagged<wbr>Literal<span class="tsd-signature-symbol">(</span>ast<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TaggedLiteral</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L52">packages/gram-value/src/gram-value.ts:52</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ast: <span class="tsd-signature-type">TaggedLiteral</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="valueoftime-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> value<wbr>OfTime</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">value<wbr>OfTime<span class="tsd-signature-symbol">(</span>ast<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TimeLiteral</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/gram-data/gram-js/blob/0e76e33/packages/gram-value/src/gram-value.ts#L97">packages/gram-value/src/gram-value.ts:97</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Value of time as number of milliseconds since midnight.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ast: <span class="tsd-signature-type">TimeLiteral</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Date</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="gram_ast.html">gram-<wbr>ast</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="gram_builder.html">gram-<wbr>builder</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="gram_parse.html">gram-<wbr>parse</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="gram_stringify.html">gram-<wbr>stringify</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="gram_value.html">gram-<wbr>value</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-module">
+						<a href="gram_ast.html" class="tsd-kind-icon">gram-<wbr>ast</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="gram_builder.html" class="tsd-kind-icon">gram-<wbr>builder</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="gram_parse.html" class="tsd-kind-icon">gram-<wbr>parse</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="gram_stringify.html" class="tsd-kind-icon">gram-<wbr>stringify</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-module">
+						<a href="gram_value.html" class="tsd-kind-icon">gram-<wbr>value</a>
+						<ul>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601duration" class="tsd-kind-icon">iso8601<wbr>Duration</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601localtime" class="tsd-kind-icon">iso8601<wbr>Local<wbr>Time</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601ordinaldate" class="tsd-kind-icon">iso8601<wbr>Ordinal<wbr>Date</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601repeat" class="tsd-kind-icon">iso8601<wbr>Repeat</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601time" class="tsd-kind-icon">iso8601<wbr>Time</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601weekdate" class="tsd-kind-icon">iso8601<wbr>Week<wbr>Date</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601weekofyear" class="tsd-kind-icon">iso8601<wbr>Week<wbr>OfYear</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601year" class="tsd-kind-icon">iso8601<wbr>Year</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601yearmonth" class="tsd-kind-icon">iso8601<wbr>Year<wbr>Month</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601yearmonthday" class="tsd-kind-icon">iso8601<wbr>Year<wbr>Month<wbr>Day</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#valueofboolean" class="tsd-kind-icon">value<wbr>OfBoolean</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#valueofdate" class="tsd-kind-icon">value<wbr>OfDate</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#valueofdecimal" class="tsd-kind-icon">value<wbr>OfDecimal</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#valueofduration" class="tsd-kind-icon">value<wbr>OfDuration</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#valueofhexadecimal" class="tsd-kind-icon">value<wbr>OfHexadecimal</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#valueofinteger" class="tsd-kind-icon">value<wbr>OfInteger</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#valueofmeasurement" class="tsd-kind-icon">value<wbr>OfMeasurement</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#valueofoctal" class="tsd-kind-icon">value<wbr>OfOctal</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#valueofstring" class="tsd-kind-icon">value<wbr>OfString</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#valueoftaggedliteral" class="tsd-kind-icon">value<wbr>OfTagged<wbr>Literal</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#valueoftime" class="tsd-kind-icon">value<wbr>OfTime</a>
+							</li>
+							<li class=" tsd-kind-class tsd-parent-kind-module tsd-is-not-exported">
+								<a href="../classes/gram_value.invalidasterror.html" class="tsd-kind-icon">Invalid<wbr>Ast<wbr>Error</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+								<a href="gram_value.html#millis_in_an_hour" class="tsd-kind-icon">MILLIS_<wbr>IN_<wbr>AN_<wbr>HOUR</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+								<a href="gram_value.html#millis_in_a_day" class="tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_DAY</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+								<a href="gram_value.html#millis_in_a_minute" class="tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_MINUTE</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+								<a href="gram_value.html#millis_in_a_month" class="tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_MONTH</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+								<a href="gram_value.html#millis_in_a_second" class="tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_SECOND</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+								<a href="gram_value.html#millis_in_a_year" class="tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_YEAR</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601duration-1" class="tsd-kind-icon">iso8601<wbr>Duration</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601localtime-1" class="tsd-kind-icon">iso8601<wbr>Local<wbr>Time</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601ordinaldate-1" class="tsd-kind-icon">iso8601<wbr>Ordinal<wbr>Date</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601repeat-1" class="tsd-kind-icon">iso8601<wbr>Repeat</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601time-1" class="tsd-kind-icon">iso8601<wbr>Time</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601weekdate-1" class="tsd-kind-icon">iso8601<wbr>Week<wbr>Date</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601weekofyear-1" class="tsd-kind-icon">iso8601<wbr>Week<wbr>OfYear</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601year-1" class="tsd-kind-icon">iso8601<wbr>Year</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601yearmonth-1" class="tsd-kind-icon">iso8601<wbr>Year<wbr>Month</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module">
+								<a href="gram_value.html#iso8601yearmonthday-1" class="tsd-kind-icon">iso8601<wbr>Year<wbr>Month<wbr>Day</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_value.html#valueofboolean-1" class="tsd-kind-icon">value<wbr>OfBoolean</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_value.html#valueofdate-1" class="tsd-kind-icon">value<wbr>OfDate</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_value.html#valueofdecimal-1" class="tsd-kind-icon">value<wbr>OfDecimal</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_value.html#valueofduration-1" class="tsd-kind-icon">value<wbr>OfDuration</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_value.html#valueofhexadecimal-1" class="tsd-kind-icon">value<wbr>OfHexadecimal</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_value.html#valueofinteger-1" class="tsd-kind-icon">value<wbr>OfInteger</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_value.html#valueofmeasurement-1" class="tsd-kind-icon">value<wbr>OfMeasurement</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_value.html#valueofoctal-1" class="tsd-kind-icon">value<wbr>OfOctal</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_value.html#valueofstring-1" class="tsd-kind-icon">value<wbr>OfString</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_value.html#valueoftaggedliteral-1" class="tsd-kind-icon">value<wbr>OfTagged<wbr>Literal</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_value.html#valueoftime-1" class="tsd-kind-icon">value<wbr>OfTime</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
