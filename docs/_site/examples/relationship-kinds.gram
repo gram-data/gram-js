@@ -1,0 +1,85 @@
+////////
+// # Relationships are shared information.
+//   Different kinds of relationships indicate the intent of how
+//   to use that information.
+
+////
+// ## 'Oriented' relationships indicate the direction of the information,
+//     that it is 'from' a source 'to' or 'about' a destination. 
+//     For example, (a)-[:LIKES]->(b) does not indicate anything about
+//     how 'b' feels about 'a'.
+// 
+//     These are classic graph relationships which are expected to be traversable.
+
+// 'a' is related to 'b'
+(a)-->(b)
+
+// 'b' is related to 'a'
+(a)<--(b)
+
+// 'a' and 'b' are related to each other
+(a)--(b)
+
+(a)==>(b)
+
+(a)<==(b)
+
+-<<
+>>-
+<~~
+~~>
+
+
+////
+// ## 'At' relationships indicate that the lhs provides extra 
+
+(a)@(b) 
+
+////
+// ## Comparison operators
+
+// greater than
+(a)>(b)
+
+// less than
+(a)<(b)
+
+// comparable
+(a)=(b)
+
+////
+// ## 'Pairwise' relationships
+
+(a),(b)
+
+(a):(b)
+
+(a)::(b)
+
+(a);(b)
+
+////
+// ## 'Logical' relationships
+
+(a)&(b)
+
+(a)|(b)
+
+////
+// ## 'Arithmetic' relationships
+
+(a)<+>(b)
+
+(a)---(b)
+
+(a)***(b)
+
+(a)///(b)
+
+////
+// ## 'Container' relationships
+
+(a)-|(b)
+
+(a)|-(b)
+

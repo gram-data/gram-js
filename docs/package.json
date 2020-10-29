@@ -1,0 +1,23 @@
+{
+  "name": "@relate/docs",
+  "private": true,
+  "description": "Relate framework documentation",
+  "main": "index.js",
+  "scripts": {
+    "init": "bundle install",
+    "start": "bundle exec jekyll serve",
+    "build": "bundle exec jekyll build",
+    "tailwind:development": "cross-env NODE_ENV=development postcss _tailwind/global.css -o assets/site.css",
+    "tailwind:production": "cross-env NODE_ENV=production postcss _tailwind/global.css -o assets/site.css"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.2.0",
+    "autoprefixer": "^10.0.1",
+    "cross-env": "^7.0.2",
+    "cssnano": "^4.1.10",
+    "postcss": "^8.1.1",
+    "postcss-cli": "^8.1.0",
+    "tailwindcss": "^1.9.2"
+  }
+}

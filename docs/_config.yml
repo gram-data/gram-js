@@ -1,0 +1,45 @@
+
+title: "gram.js"
+description: "The reference implementation of Gram."
+
+twitter_username: akollegger
+github_username:  akollegger
+repository: gram-data/gram-js
+
+permalink: pretty
+
+show_excerpts: true
+
+defaults:  
+  - scope:
+      path: ""
+    values:
+      layout: "page"
+
+exclude:  
+  - "*.config.js"
+  - "package*.json"
+  - "node_modules"
+
+collections:
+  guides:
+    output: true
+
+highlighter: rouge
+
+kramdown:
+  syntax_highlighter: rouge
+  input: GFM
+
+social_links:
+  twitter: akollegger
+  github: gram-data
+  stackoverflow: gram-data
+  keybase: akollegger
+
+plugins:
+  - rouge
+  - jekyll-feed
+  - jemoji
+  - jekyll-sitemap
+  - jekyll-seo-tag

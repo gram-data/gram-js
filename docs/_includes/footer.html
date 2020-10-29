@@ -1,0 +1,17 @@
+<footer class="bg-white border-t border-gray-400 shadow">
+  <div class="container mx-auto flex flex-wrap items-center justify-between p-8">
+     <div class="w-3/4 mx-auto flex flex-grow flex-wrap">
+        <div class="flex w-full lg:w-1/2 ">
+           <div>
+              <h3 class="font-bold text-gray-900">About {{ site.title }}</h3>
+              <p class="py-4 text-gray-600 text-sm">
+                 {{ site.description }} 
+              </p>
+           </div>
+        </div>
+     </div>
+     <div class="">
+         {%- include social.html -%}
+     </div>
+  </div>
+</footer>
