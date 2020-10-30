@@ -54,11 +54,6 @@
                <li class="mr-3 py-2 lg:py-0">
                   <a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:underline py-2 px-4" href="{{ "/api/" | relative_url }}">API</a>
                </li>
-               {% for post in site.posts limit:1 %}
-                  <li class="mr-3 py-2 lg:py-0">
-                     <a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:underline py-2 px-4" href="{{ post.url | relative_url}}">Blog</a>
-                  </li>
-               {% endfor %}
             </ul>
          </div>
       </div>

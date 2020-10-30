@@ -2,15 +2,15 @@
 
 <html lang="en">
 <head>
-  <title>Gram Data</title>
+  <title>neo4j(r)elate</title>
   <meta name="description" content="The reference implementation of Gram.">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Gram Data | gram.js</title>
+<title>neo4j(r)elate | gram.js</title>
 <meta name="generator" content="Jekyll v3.9.0" />
-<meta property="og:title" content="Gram Data" />
+<meta property="og:title" content="neo4j(r)elate" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="The reference implementation of Gram." />
 <meta property="og:description" content="The reference implementation of Gram." />
@@ -18,7 +18,7 @@
 <meta property="og:url" content="http://localhost:4000/" />
 <meta property="og:site_name" content="gram.js" />
 <script type="application/ld+json">
-{"headline":"Gram Data","description":"The reference implementation of Gram.","url":"http://localhost:4000/","name":"gram.js","@type":"WebSite","@context":"https://schema.org"}</script>
+{"headline":"neo4j(r)elate","description":"The reference implementation of Gram.","url":"http://localhost:4000/","name":"gram.js","@type":"WebSite","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/site.css">
   <!-- <link rel="stylesheet" href="/assets/site.css"> --><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="gram.js" /><link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
@@ -88,11 +88,6 @@
                <li class="mr-3 py-2 lg:py-0">
                   <a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:underline py-2 px-4" href="/api/">API</a>
                </li>
-               
-                  <li class="mr-3 py-2 lg:py-0">
-                     <a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:underline py-2 px-4" href="/tutorial/2020/10/17/intro-to-relate/">Blog</a>
-                  </li>
-               
             </ul>
          </div>
       </div>
@@ -156,79 +151,20 @@
    
 </script>
 <main class="page-content" aria-label="Content">
-      <div class="container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-16">
-   <div class="w-full lg:w-1/5 lg:px-6 text-xl text-gray-800 leading-normal"><p class="text-base font-bold py-2 lg:pb-6 text-gray-700"><a href="/guides/">Guides</a></p>
-<div class="block lg:hidden sticky inset-0">
-   <button id="menu-toggle" class="flex w-full justify-end px-3 py-3 bg-white lg:bg-transparent border rounded border-gray-600 hover:border-blue-500 appearance-none focus:outline-none">
-      <svg class="fill-current h-3 float-right" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-         <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-      </svg>
-   </button>
-</div>
-<div class="w-full sticky inset-0 hidden h-64 lg:h-auto overflow-x-hidden overflow-y-auto lg:overflow-y-hidden lg:block mt-0 border border-gray-400 lg:border-transparent bg-white shadow lg:shadow-none lg:bg-transparent z-20" style="top:5em;" id="menu-content">
-   <ul class="list-reset">
-      
-      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
-         <a href="/guides/gram-ast/" 
-            
-               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
-            
-         >
-         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">Gram Ast</span>
-         </a>
-      </li>
-      
-      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
-         <a href="/guides/gram-builder/" 
-            
-               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
-            
-         >
-         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">Gram Builder</span>
-         </a>
-      </li>
-      
-      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
-         <a href="/guides/gram-parse/" 
-            
-               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
-            
-         >
-         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">Gram Parse</span>
-         </a>
-      </li>
-      
-   </ul>
-</div>
-</div>
-   <div class="w-full lg:w-4/5 p-8 mt-6 lg:mt-0 text-gray-900 leading-normal bg-white border border-gray-400 border-rounded">
-      <!--Title-->
-      <div class="font-sans">
-         <h1 class="font-sans break-normal text-gray-900 pt-6 pb-2 text-xl">Gram Data</h1>
-         <hr class="border-b border-gray-400">
-      </div>
-      <!--Page Content-->
-      <div class="prose max-w-none">
-         <h1 id="gram-data">Gram Data</h1>
-
-
-      </div>
-      <!--/ Page Content-->
-   </div>
-
-   <!-- page footer -->
-   <div class="w-full container mx-auto items-center justify-between mt-0 py-4">
-      <div class="float-right lg:content-center lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 z-20" id="nav-content">
-         <a href="https://github.com/gram-data/gram-js/tree/master/docs/index.md">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current inline-block text-gray-500 h-5 w-5">
-               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-            </svg>
-            <span>Help improve this page</span>
-            </a>
-      </div>
-   </div>
+      <div class="w-full mt-16 p-8 leading-normal bg-gray-800">
+  <div class="container mx-auto">
+    <h1 class="font-neo4j text-white text-6xl">neo<span class="oldstyle-nums">4</span>j (r)elate</h1>
+    <h2 class="font-mono text-white text-3xl mb-16 -mt-2">code + data = purpose</h2>
+    <p class="text-white mb-0">a framework of tools, services and libraries for working with neo4j
+    </p>
+    <pre class="bg-white rounded pl-2 mt-8 mb-0 w-2/3">
+npx @relate/cli help</pre>
+  </div>
 </div>
 
+<div class="container w-full mx-auto">
+  
+</div>
     </main><footer class="bg-white border-t border-gray-400 shadow">
   <div class="container mx-auto flex flex-wrap items-center justify-between p-8">
      <div class="w-3/4 mx-auto flex flex-grow flex-wrap">

@@ -23,7 +23,7 @@
   },
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build --format cjs,esm,umd",
+    "build": "tsdx build --format umd,esm,cjs --tsconfig tsconfig.build.json",
     "test": "tsdx test",
     "test:watch": "tsdx test --watch",
     "lint": "tsdx lint",
@@ -61,7 +61,7 @@
     "unist-util-size": "^2.0.0"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.2.6"
+    "@gram-data/gram-ast": "*"
   },
   "gitHead": "0f6d560e002650f6c293c0737ddc2539d78fbbff",
   "publishConfig": {

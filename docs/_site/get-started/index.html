@@ -2,26 +2,23 @@
 
 <html lang="en">
 <head>
-  <title>Introducing Gram</title>
+  <title>DEPRECATED</title>
   <meta name="description" content="The reference implementation of Gram.">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Introducing Gram | gram.js</title>
+<title>DEPRECATED | gram.js</title>
 <meta name="generator" content="Jekyll v3.9.0" />
-<meta property="og:title" content="Introducing Gram" />
-<meta name="author" content="akollegger" />
+<meta property="og:title" content="DEPRECATED" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Neo4j Relate is a framework of tools, services and libraries for working with Neo4j, giving the world’s best graph database a world-class developer experience." />
-<meta property="og:description" content="Neo4j Relate is a framework of tools, services and libraries for working with Neo4j, giving the world’s best graph database a world-class developer experience." />
-<link rel="canonical" href="http://localhost:4000/tutorial/2020/10/17/intro-to-relate/" />
-<meta property="og:url" content="http://localhost:4000/tutorial/2020/10/17/intro-to-relate/" />
+<meta name="description" content="The reference implementation of Gram." />
+<meta property="og:description" content="The reference implementation of Gram." />
+<link rel="canonical" href="http://localhost:4000/get-started/" />
+<meta property="og:url" content="http://localhost:4000/get-started/" />
 <meta property="og:site_name" content="gram.js" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-10-17T00:00:00+02:00" />
 <script type="application/ld+json">
-{"headline":"Introducing Gram","dateModified":"2020-10-17T00:00:00+02:00","datePublished":"2020-10-17T00:00:00+02:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/tutorial/2020/10/17/intro-to-relate/"},"author":{"@type":"Person","name":"akollegger"},"description":"Neo4j Relate is a framework of tools, services and libraries for working with Neo4j, giving the world’s best graph database a world-class developer experience.","url":"http://localhost:4000/tutorial/2020/10/17/intro-to-relate/","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"headline":"DEPRECATED","description":"The reference implementation of Gram.","url":"http://localhost:4000/get-started/","@type":"WebPage","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/site.css">
   <!-- <link rel="stylesheet" href="/assets/site.css"> --><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="gram.js" /><link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
@@ -91,11 +88,6 @@
                <li class="mr-3 py-2 lg:py-0">
                   <a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:underline py-2 px-4" href="/api/">API</a>
                </li>
-               
-                  <li class="mr-3 py-2 lg:py-0">
-                     <a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:underline py-2 px-4" href="/tutorial/2020/10/17/intro-to-relate/">Blog</a>
-                  </li>
-               
             </ul>
          </div>
       </div>
@@ -159,124 +151,279 @@
    
 </script>
 <main class="page-content" aria-label="Content">
-      <article class="container w-full mx-auto px-2 pt-8 lg:pt-16 mt-16 mb-8 h-entry" itemscope itemtype="http://schema.org/BlogPosting">
-
-  <div class="flex-none mx-auto overflow-hidden shadow-lg mb-6 p-6 px-8 lg:w-4/5">
-    <div class="flex items-center justify-between">
-
-      <div>
-        <p class="w-full text-gray-600 text-xs md:text-sm"><span>Tutorial</span>&nbsp;</p>
-        <div class="w-full font-bold text-2xl text-gray-900">Introducing Gram</div>
-
+      <div class="container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-16">
+   <div class="w-full lg:w-1/5 lg:px-6 text-xl text-gray-800 leading-normal"><p class="text-base font-bold py-2 lg:pb-6 text-gray-700"><a href="/guides/">Guides</a></p>
+<div class="block lg:hidden sticky inset-0">
+   <button id="menu-toggle" class="flex w-full justify-end px-3 py-3 bg-white lg:bg-transparent border rounded border-gray-600 hover:border-blue-500 appearance-none focus:outline-none">
+      <svg class="fill-current h-3 float-right" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+      </svg>
+   </button>
+</div>
+<div class="w-full sticky inset-0 hidden h-64 lg:h-auto overflow-x-hidden overflow-y-auto lg:overflow-y-hidden lg:block mt-0 border border-gray-400 lg:border-transparent bg-white shadow lg:shadow-none lg:bg-transparent z-20" style="top:5em;" id="menu-content">
+   <ul class="list-reset">
+      
+      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
+         <a href="/guides/gram-ast/" 
+            
+               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
+            
+         >
+         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">Gram Ast</span>
+         </a>
+      </li>
+      
+      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
+         <a href="/guides/gram-builder/" 
+            
+               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
+            
+         >
+         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">Gram Builder</span>
+         </a>
+      </li>
+      
+      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
+         <a href="/guides/gram-parse/" 
+            
+               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
+            
+         >
+         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">Gram Parse</span>
+         </a>
+      </li>
+      
+   </ul>
+</div>
+</div>
+   <div class="w-full lg:w-4/5 p-8 mt-6 lg:mt-0 text-gray-900 leading-normal bg-white border border-gray-400 border-rounded">
+      <!--Title-->
+      <div class="font-sans">
+         <h1 class="font-sans break-normal text-gray-900 pt-6 pb-2 text-xl">DEPRECATED</h1>
+         <hr class="border-b border-gray-400">
       </div>
-      <div><p class="text-gray-600" itemprop="author" itemscope itemtype="http://schema.org/Person"><a href="https://github.com/akollegger">
-              <img class="w-8 h-8 rounded-full mr-4 avatar inline" data-tippy-content="" src="https://avatars3.githubusercontent.com/u/53756?v=4" alt="Avatar image of the post author">
-            </a><span>akollegger</span>
-          </p></div>
-    </div>
-  </div>
+      <!--Page Content-->
+      <div class="prose max-w-none">
+         <h1 id="deprecated">DEPRECATED</h1>
 
-  <div class="w-full lg:w-4/5 p-8 mx-auto mt-6 lg:mt-0 text-gray-900 leading-normal bg-white border border-gray-400 border-rounded">
-    <!--Title-->
-    <!-- <div class="font-sans">
-       <h1 class="font-sans break-normal text-gray-900 pt-6 pb-2 text-xl">Introducing Gram</h1>
-       <hr class="border-b border-gray-400">
-    </div> -->
-    <!--Page Content-->
-    <div class="prose max-w-none">
-       <p><img src="/assets/posts/intro-to-relate-what.png" alt="Three phases helped by Neo4j Relate" title="Code, test, deploy with Neo4j Relate" width="30%" style="float: right; margin: 0 0 0 1em" />
-Neo4j Relate is a framework of tools, services and libraries for working with Neo4j, giving
-the world’s best graph database a world-class developer experience.</p>
+<p>This package has broken up into smaller, focused packages.</p>
 
-<p>Neo4j Relate helps in three phases of your work.</p>
+<h1 id="gram-format">gram-format</h1>
 
+<p>This is the Gram data interchange format. Gram is a lightweight data graph.
+This textual representation is easy to read and write.</p>
+
+<h2 id="data-graphs-in-gram">Data Graphs in Gram</h2>
+
+<p>Gram data comes in two parts:</p>
+
+<ol>
+  <li>Records which contain data values</li>
+  <li>Paths which compose records into structures</li>
+</ol>
+
+<p>A gram file is a sequence of paths, making it ideal for streaming.</p>
+
+<p>Let’s create some data…</p>
+
+<h3 id="unit-path-an-empty-path">Unit Path, an empty path</h3>
+
+<p>The smallest amount of data is no data, put in a container so we know
+it is there. An empty path is infinite nothingness.</p>
+
+<p>Empty path constructions:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
+[] + [] = []
+[ [] [] ] = []
+</code></pre></div></div>
+
+<p>As a special case, a single nest path implies composition with an empty path:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[ [] ] = [ [] [] ] = []
+</code></pre></div></div>
+
+<p>Identity:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>identityof [] = undefined || all the same?
+</code></pre></div></div>
+
+<h3 id="nodes-a-named-path-of-length-0">Nodes, a named path of length 0</h3>
+
+<p>When given a name, a path can be identified and described and discussed. 
+The smallest named path has a special name in graphs. It is called a Node.</p>
+
+<p>To help identify Nodes they can use special notation using parenthesis.</p>
+
+<p>Node constructions:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[n]
+(n) =~ [n]
+() != []
+</code></pre></div></div>
+
+<p>The empty parenthesis expression is <em>not</em> an empty path. Nodes always
+have identity. The identity is simply unknown. Implementations may
+invent an identity, but must guarantee that it is unique across all paths.</p>
+
+<p>Node compositions with units:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(n) + []   =~ [ + n _ ]  =~ [n] =~ (n)
+[]  + (n)  =~ [ + _ n ]  =~ [n] =~ (n)
+</code></pre></div></div>
+
+<p>Identity:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>identityof (n) =~ n
+identityof ()  =~ &lt;auto&gt;
+</code></pre></div></div>
+
+<h3 id="edges-named-paths-of-length-1">Edges, named paths of length 1</h3>
+
+<p>Nodes can be composed together to create a new path called an Edge.</p>
+
+<p>Edge construction:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>e = (n) + (n)  =~ [e + n n ]
+e = (n1) + (n2) =~ [e + n1 n2]
+</code></pre></div></div>
+
+<p>That <code class="language-plaintext highlighter-rouge">+</code> is a placeholder for any path composition operator. 
+Edges use operators that define the navigability of the path.</p>
+
+<p>Edge operators:</p>
 <ul>
-  <li>Code: simple, on-demand provisioning of Neo4j DBMS</li>
-  <li>Test: integrating Neo4j into your end-to-end tests</li>
-  <li>Deploy: monitoring and querying of production databases</li>
+  <li><code class="language-plaintext highlighter-rouge">--&gt;</code> right association</li>
+  <li><code class="language-plaintext highlighter-rouge">&lt;--</code> left association</li>
+  <li><code class="language-plaintext highlighter-rouge">--</code> either direction</li>
 </ul>
 
-<p>Let’s try it out. We’ll use the <code class="language-plaintext highlighter-rouge">@relate/cli</code> command line tool running straight from <code class="language-plaintext highlighter-rouge">npx</code> to skip installation (<a href="https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b">what’s npx?</a>). Follow along or check out a tidy project which uses <a href="https://github.com/akollegger/relate-with-npm/">relate-with-npm</a>.</p>
+<p>The edge operators can include the name of the edge.</p>
 
-<h2 id="code-add-neo4j-dbms-to-your-stack">Code: add Neo4j DBMS to your <a href="https://stackshare.io/neo4j">stack</a></h2>
-
-<p><img src="/assets/posts/intro-to-relate-get-neo4j.png" alt="Get Neo4j" title="Get Neo4j" width="20%" style="float: left; margin: 0 2em 0 0" /></p>
-
-<p>All projects, from quick experiments to global industry disruptions, need a technology stack that is right for
-the job. When you need to add a database Relate makes it effortless to get Neo4j.</p>
-
-<p><strong>1. Start with the one-time setup of a data environment:</strong></p>
-
-<pre><code class="language-Shell">npx @relate/cli env:init --name=relate-tutorials --type=LOCAL
-</code></pre>
-
-<p>Accept the default settings when prompted. Relate is still in early access,
-so you’ll also need to provide this semi-secret access code ‘r31473’:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Enter the access code you received from applying at https://neo4j.relate.by/invite:r31473
-✔ Do you need to enable authentication? (y/N) · false
-✔ Do you need to restrict access to the GraphQL API methods? (y/N) · false
-✔ Are HTTP consumers required to have an API key? (y/N) · false
-Creating environment... done
-</code></pre></div></div>
-
-<p><strong>2. Then install a Neo4j DBMS named “intro” into the data environment named “relate-tutorials”:</strong></p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npx @relate/cli dbms:install 4.1.3 -e relate-tutorials -n intro
-</code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">Enter new passphrase:</code> will set the password for the admin user named “neo4j”:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>✔ Enter new passphrase · 
-DOWNLOAD PROGRESS [████████████████████████████████████████] 100%
-extracting neo4j... done
-[b92ada41] intro
-</code></pre></div></div>
-
-<p><strong>3. Finally, start the DBMS named “intro” within the “relate-tutorials” environment:</strong></p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npx @relate/cli dbms:start -e relate-tutorials intro
-</code></pre></div></div>
-
-<p>A couple of commands, a bunch of prompts, just to start a database. 😖 Arrgghh! <em>Not</em> easy!</p>
-
-<p>Yes, that was a lot to do by hand. And we’ll do more. 🙂
-This demonstrates what Relate makes possible. 
-The magic happens later when we flex our command-line skills and
-incorporate Relate into common build tools.</p>
-
-<h2 id="test-create-some-data-modify-it-check-the-results">Test: create some data, modify it, check the results</h2>
-
-<p>OK, now the fun starts! Let’s create a graph.</p>
-
-<p><strong>1. create an access-token</strong></p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>→ npx relate dbms:access-token -e relate-tutorials intro 
-</code></pre></div></div>
-
-<p>Enter the passphrase for the “neo4j” user which you set earlier:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>✔ Enter passphrase · 
-eyJ4NWMiOlsiTUlJREJ6Q0NBZStnQXdJQkFnSUJBVEFOQmdrcWhraUc5dzBCQVFVRkFEQkdNUkl3RUFZRFZRUURFd2x1Wlc4MGFpNWpiMjB4Q3pBSkJnTlZCQVlUQWxORk1SQXdEZ1lEVlFRS0V3ZEFjbVZzWVhSbE1SRXdEd1lEVlFRTEV3aEtWMVFnUVhWMGFEQWdGdzB5TURFd01qRXdPRFUyTlRKYUdBOHlNRFV3TVRBeU1UQTROVFkxTWxvd1JqRVNNQkFHQTFVRUF4TUpibVZ2TkdvdVkyOXRNUXN3Q1FZRFZRUUdFd0pUUlRFUU1BNEdBMVVFQ2hNSFFISmxiR0YwWlRFUk1BOEdBMVVFQ3hNSVNsZFVJRUYxZEdnd2dnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUURHRWhaV2FIckp2Vncxbll6ZFI1czZGZ2h4TVFpSlwvUG5yNkpzU2owR3hcL3huK0w4YlErZitUWEpXZ2hvREtPTGhxdDBjdXo1Y0tlYXV3Z05IVURFREFmZUFnUUhtT0Z1NmNPU2g3cTBYekJXdFVwQ09kczZsaXRJVE5PWnZadEpaWTlPUzBEZlNJeU5lUjRoNXlORHI2cUVIc0gyTjZjekhQWDZhaEtIXC9kYnNWREdUWHIwOVFIbkw0elBLcUdDM0J1WHlkOFZwNUJxVk44RHNRdGtaV3dmNGxhM2lsUTMzZ3dwWWIwQUJSUklCS0JjZWhRcHdwRFhpa2tRQjlTMEc2TkxVTHB5RmpTYjlDRldabmxDSlhJcWhnQ1MyMFdMdVhGRUx5N1dXM09mbm5VYjZuRjUwWXljVTQxa1o1ekFNNGVReHhFRDlhWG5WbnFIN2FqcXV3ekFnTUJBQUV3RFFZSktvWklodmNOQVFFRkJRQURnZ0VCQUxGaXIrK1kwT0l3d2RNb0JkUW5DbFpTM3A1QnRLb0NrOEdkNmpoeVFKaHMza0tSXC9aUk1VXC9sZ1RFRnNWSFdHRkc0MmNMeGt6U2dPTVhTMnVQcmhoWkI1OFZFSHVKVnJcL2lTUGtMQTRNNzNXeEVMZjNwelpPdTI2ZFwvVkFMNkpXR1FBK0NqWnhWSFdTQUtcL1dZdVRIVVgyelp6cjRmaG1lc1NhZkJVNG5hdGpMS3Y2TFloZjdkYXphUnFCbmdvYkJ3N09ETmI1d0dKakR0Uzd1aGhQTGNuRE9MNGRZemx6UUhsckdhaW9HcVlCU3V1a1dDTmRKR0RKVkZKVzZldEJPblRtSHFSZnNMcEUrS0dlYlMrc1hNOEY4VzdBSmJpOEtRZVlNRXQ2NHIrTHQ5RUhzYWdjXC9tUTc5aXQxeXZtY2pub2FmR0plY2JzZU1wSTB5UUFDZjlTaz0iXSwidHlwIjoiSldUIiwiYWxnIjoiUlM1MTIifQ.eyJhdWQiOiJyZWxhdGUiLCJuYmYiOjE2MDMyNzA4MDQsInNjb3BlIjpbImFkbWluIiwiUFVCTElDIl0sImlzcyI6Im5lbzRqIiwiZmxhZ3MiOltdLCJleHAiOjE2MDU4NjY0MDQsImlhdCI6MTYwMzI3MDgwNCwianRpIjoiQWc1T1gyamsiLCJ1c2VybmFtZSI6Im5lbzRqIn0.O9jJLVGC2BR4kIRaYIjRlt2DpdPmsY-VpN4KvxrpLrh54pH7OgVhluqeEFP8H4uvPOB5qGmXj6h_Ncgz53TVD_BN5qFVHaznfZ8lghaHAZCckWt_QOlljW-GLiQwT2q9Ni0Bm_805pYZNK18XA7QlyV50tg-lJlnh3I_eKyLtnWTCIIysDUvG7K6Tap4yInTKmtdhVtXoOLPdrcDR6YY-cz9tCdiYH9VDWR4xpZ28O2qJRTBOJbQDlea-Qe-SmPC7NYTQxlb0bugj-gAUUfOD0fmJWIc0uJDh38U9DQPUxDQI5JMoWAsu5jtQxUFhQoYclIbxfq_Vl5cDTxJvPo53Q
-</code></pre></div></div>
-
-<h2 id="deploy-use-neo4j-browser">Deploy: use Neo4j Browser</h2>
-
-<h2 id="cleaning-up">Cleaning up</h2>
-
-<p>Remove all resources managed by Neo4j Relate.</p>
-
-<p>MacOS:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm -rf '~/Library/Caches/com.Neo4j.Relate/' '~/Library/Application Support/com.Neo4j.Relate/'
+<p>Identity:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>e =~ ()--&gt;() =~ ()-[e]-&gt;() =~ [e --&gt; () ()]
 
 </code></pre></div></div>
 
-    </div>
-    <!--/ Page Content-->
- </div>
+<h3 id="paths-general-composition">Paths, general composition</h3>
 
-  <a class="u-url" href="/tutorial/2020/10/17/intro-to-relate/" hidden></a>
-</article>
+<p>Paths generalize nodes and edges, allowing composition of any path-like
+structure into larger structures. By using binary composition, this
+forms a tree-like nesting of paths within paths.</p>
+
+<p>Path construction:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>p =~ (1)--&gt;(2)&lt;--(3) =~ [p --&gt;  (1) [e &lt;-- (2) (3)] ] =~ [p &lt;-- [e --&gt; (1) (2)] (3) ] ]
+</code></pre></div></div>
+
+<p>Paths can use any of the navigability operators used by edges,
+and also a special ‘pair’ operator which associates two
+path-like elements without explicitly connecting them.</p>
+
+<p>Path composition without an explicit operator implies the <code class="language-plaintext highlighter-rouge">,</code> pair operator:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>p =~ [p [p1] [p2]] =~ [p , [p1] [p2] ]
+</code></pre></div></div>
+
+<p>Identitity:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>identityof [p + n n2] =~ p
+identityof [  + n n ] =~ &lt;auto&gt;
+</code></pre></div></div>
+
+<h3 id="sequence-a-list-or-stream-of-paths">Sequence, a list or stream of paths</h3>
+
+<p>Really just a convenience for a path of paths, optimized
+for processing.</p>
+
+<p>Process how? Reduce a sequence to a node list or an edge list. 
+Together, those two lists become a graph.</p>
+
+<p>For fun take different windows of the sequence to see a 
+graph at different points in time.</p>
+
+<h3 id="graphs-a-merged-view-of-all-paths">Graphs, a merged view of all paths</h3>
+
+<p>A graph is a view of all the paths. Mhmm.</p>
+
+<h3 id="records-type-safe-nested-data-values">Records, type-safe nested data values</h3>
+
+<p>JSON-like nested structures:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  name: 'Andreas',
+  birthDay: date'1969-01-07',
+  height: 184cm
+  nicknames: ['abk']
+}
+</code></pre></div></div>
+
+<h2 id="identifiers-and-symbols">Identifiers and Symbols</h2>
+
+<p>Identifier alphabet:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_@
+</code></pre></div></div>
+
+<p>Identifier regex: <code class="language-plaintext highlighter-rouge">/[0-9a-zA-Z_@]+\b@*/</code></p>
+
+<p>Symbol alphabet:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+</code></pre></div></div>
+
+<p>Symbol regex: <code class="language-plaintext highlighter-rouge">/[a-zA-Z_][0-9a-zA-Z_]*\b(?!@)/</code></p>
+
+<h3 id="cypher-and-gql-compatibility">Cypher and GQL compatibility</h3>
+
+<p>For compatibility with Cypher and GQL statements, identifiers
+should be restricted to valid symbols.</p>
+
+<h2 id="exploration">Exploration…</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// unary path operations
+[p [u]] =~ [p]
+[p [e]]
+[p (n)]
+[p [p2]]
+[p [p]] =~ [p]
+
+// binary path operations with unit produce the non-unit operand
+(n) =~ (n) . []
+(n) =~ []  . (n)
+[e] =~ [e] . []
+[e] =~ []  . [e]
+[p] =~ [p] . []
+[p] =~ []  . [p]
+
+// binary path operations with non-unit
+[p [e]  . [p2]]  =~ [e]  . [p2]
+[p [e]  . [e] ]  =~ [e]  . [e]
+[p [e]  . (n) ]  =~ [e]  . (n)
+[p (n)  . [p2]]  =~ (n)  . [p2]
+[p (n)  . [e] ]  =~ (n)  . [e]
+[p (n)  . (n) ]  =~ (n)  . (n)   // aka an edge!
+[p [p1] . [p2]]  =~ [p1] . [p2]
+[p [p1] . [e]]   =~ [p1] . [e]
+[p [p1] . (n)    =~ [p1] . (n)
+</code></pre></div></div>
+
+<h1 id="credits">Credits</h1>
+
+<p>Thanks to these project for inspiration:</p>
+
+<ul>
+  <li>The entire <a href="https://unifiedjs.com">unist family</a></li>
+  <li><a href="https://github.com/mike-north/mdast-builder">mdast-builder</a> for how to make a builder</li>
+</ul>
+
+      </div>
+      <!--/ Page Content-->
+   </div>
+
+   <!-- page footer -->
+   <div class="w-full container mx-auto items-center justify-between mt-0 py-4">
+      <div class="float-right lg:content-center lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 z-20" id="nav-content">
+         <a href="https://github.com/gram-data/gram-js/tree/master/docs/get-started.md">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current inline-block text-gray-500 h-5 w-5">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+            <span>Help improve this page</span>
+            </a>
+      </div>
+   </div>
+</div>
+
     </main><footer class="bg-white border-t border-gray-400 shadow">
   <div class="container mx-auto flex flex-wrap items-center justify-between p-8">
      <div class="w-3/4 mx-auto flex flex-grow flex-wrap">

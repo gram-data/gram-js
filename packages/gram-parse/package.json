@@ -28,7 +28,7 @@
     "start": "tsdx watch",
     "build": "run-s build:near lint:fix build:dist",
     "build:near": "nearleyc src/gram.ne -o src/gram-grammar.ts",
-    "build:dist": "tsdx build --format umd,esm,cjs",
+    "build:dist": "tsdx build --format umd,esm,cjs --tsconfig tsconfig.build.json",
     "test": "tsdx test",
     "test:watch": "tsdx test --watch",
     "lint": "tsdx lint",
@@ -68,8 +68,8 @@
     "unist-util-inspect": "^6.0.0"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.2.6",
-    "@gram-data/gram-builder": "^0.2.6",
+    "@gram-data/gram-ast": "*",
+    "@gram-data/gram-builder": "*",
     "moo": "^0.5.1",
     "nearley": "^2.19.5",
     "unified": "^9.0.0",

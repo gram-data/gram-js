@@ -1,6 +1,22 @@
 # Gram Parse
 
-From text literal `(a)-->(b)` to a data graph syntax tree. 
+From text literal `(a)-->(b)` to an abstract syntax tree for data graphs. 
+
+
+## Install
+
+```
+npm install @gram-data/gram-parse`
+```
+
+## Parse a gram
+
+```
+import 
+
+const src = `(a)-->(b)`
+const parsed = 
+```
 
 Provides:
 

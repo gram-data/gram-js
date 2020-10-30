@@ -22,7 +22,7 @@ import {
   valueOfDuration,
 } from '../src';
 import * as builder from '@gram-data/gram-builder';
-import { StringLiteral } from '@gram-data/gram-ast/src';
+import { StringLiteral } from '@gram-data/gram-ast';
 
 describe('boolean value', () => {
   it('converts {type:"boolean", value:"true"} to a primitive boolean true', () => {

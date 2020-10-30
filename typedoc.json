@@ -1,5 +1,5 @@
 {
-  "name": "gram.js",
+  "name": "gram.js API",
   "readme": "./readme.md",
   "mode": "modules",
   "inputFiles": [
@@ -11,10 +11,15 @@
     "./packages/gram-value/src"
   ],
   "out": "docs/api",
-  "theme": "default",
+  "theme": "node_modules/typedoc-neo-theme/bin/default",
   "ignoreCompilerErrors": "false",
   "preserveConstEnums": "true",
   "exclude": "*.spec.ts",
   "external-modulemap": ".*packages\/([^\/]+)\/src/.*",
-  "stripInternal": "false"
+  "hideGenerator": true,
+  "stripInternal": "false",
+  "links": [{
+    "label": "Guides",
+    "url": "https://gram-data.github.io/gram-js/guides"
+  }]
 }
