@@ -1,4 +1,4 @@
-import {builder as g} from '@gram-data/gram-builder';
+import { builder as g } from '@gram-data/gram-builder';
 // import {Relation} from '@gram-data/gram-ast';
 import { toString } from '../src/';
 
@@ -29,14 +29,14 @@ describe('gram stringify for basic node patterns', () => {
     expect(toString(p)).toBe('(:Thing)');
   });
   it('shows a node with record, ({k:"v"}) => "({k:`v`})"', () => {
-    const record = g.unfoldProperties({"k":g.string("v")});
+    const record = g.unfoldProperties({ k: g.string('v') });
     const p = g.node(undefined, undefined, record);
     // console.log(inspect(p));
     expect(toString(p)).toBe('({k:`v`})');
   });
   it('shows a fully specified node, (n:Thing {k:"v"}) => "(n:Thing {k:`v`})"', () => {
-    const record = g.unfoldProperties({"k":g.string("v")});
-    const p = g.node("n", ["Thing"], record);
+    const record = g.unfoldProperties({ k: g.string('v') });
+    const p = g.node('n', ['Thing'], record);
     // console.log(inspect(p));
     expect(toString(p)).toBe('(n:Thing {k:`v`})');
   });
@@ -54,18 +54,24 @@ describe('gram stringify for basic edge patterns', () => {
     expect(toString(p)).toBe('()-[e]-()');
   });
   it('shows labled edges, ()-[:THEN]-() => "()-[:THEN]-()"', () => {
-    const p = g.edge([g.node(), g.node()], 'either', undefined, ["THEN"]);
+    const p = g.edge([g.node(), g.node()], 'either', undefined, ['THEN']);
     // console.log(inspect(p));
     expect(toString(p)).toBe('()-[:THEN]-()');
   });
   it('shows an edge with record, ()-[{k:"v"}]-() => "()-[k:`v`]-()"', () => {
-    const record = g.unfoldProperties({"k":g.string("v")});
-    const p = g.edge([g.node(), g.node()], 'either', undefined, undefined, record);
+    const record = g.unfoldProperties({ k: g.string('v') });
+    const p = g.edge(
+      [g.node(), g.node()],
+      'either',
+      undefined,
+      undefined,
+      record
+    );
     // console.log(inspect(p));
     expect(toString(p)).toBe('()-[{k:`v`}]-()');
   });
   it('shows a fully specified edge, ()-[e:THEN {k:"v"}]-() => "()-[e:THEN k:`v`]-()"', () => {
-    const record = g.unfoldProperties({"k":g.string("v")});
+    const record = g.unfoldProperties({ k: g.string('v') });
     const p = g.edge([g.node(), g.node()], 'either', 'e', ['THEN'], record);
     // console.log(inspect(p));
     expect(toString(p)).toBe('()-[e:THEN {k:`v`}]-()');
@@ -73,37 +79,42 @@ describe('gram stringify for basic edge patterns', () => {
 });
 
 describe('gram stringify of pairwise paths', () => {
-  it('shows two paired nodes, [p () ()] as "[p , () ()]', ()=> {
-    const p = g.cons([g.node(), g.node()], {id:'p'});
+  it('shows two paired nodes, [p () ()] as "[p , () ()]', () => {
+    const p = g.cons([g.node(), g.node()], { id: 'p' });
     // console.log(inspect(p));
-    expect(toString(p)).toBe('[p , () ()]')
+    expect(toString(p)).toBe('[p , () ()]');
   });
-  it('shows two paired named nodes, [p (a) (b)] as "[p , (a) (b)]', ()=> {
-    const p = g.cons([g.node('a'), g.node('b')], {id:'p'});
+  it('shows two paired named nodes, [p (a) (b)] as "[p , (a) (b)]', () => {
+    const p = g.cons([g.node('a'), g.node('b')], { id: 'p' });
     // console.log(inspect(p));
-    expect(toString(p)).toBe('[p , (a) (b)]')
+    expect(toString(p)).toBe('[p , (a) (b)]');
   });
-  it('shows one node paired with an empty path, [p () [ø]] as "[p ()]', ()=> {
-    const p = g.cons([g.node(), g.empty()], {id:'p'});
+  it('shows one node paired with an empty path, [p () [ø]] as "[p ()]', () => {
+    const p = g.cons([g.node(), g.empty()], { id: 'p' });
     // console.log(inspect(p));
-    expect(toString(p)).toBe('[p ()]')
+    expect(toString(p)).toBe('[p ()]');
   });
-  it('shows one empty path paired with a node, [p [ø] ()] as "[p ()]', ()=> {
-    const p = g.cons([g.empty(), g.node()], {id:'p'});
+  it('shows one empty path paired with a node, [p [ø] ()] as "[p ()]', () => {
+    const p = g.cons([g.empty(), g.node()], { id: 'p' });
     // console.log(inspect(p));
-    expect(toString(p)).toBe('[p ()]')
+    expect(toString(p)).toBe('[p ()]');
   });
-  it('shows a single node with an implied ø rhs, [p ()] as "[p ()]', ()=> {
-    const p = g.cons([g.empty(),g.node()], {id:'p'});
+  it('shows a single node with an implied ø rhs, [p ()] as "[p ()]', () => {
+    const p = g.cons([g.empty(), g.node()], { id: 'p' });
     console.log(inspect(p));
-    expect(toString(p)).toBe('[p ()]')
+    expect(toString(p)).toBe('[p ()]');
   });
-  it('shows two paired edges, [p , ()--() ()--()] as "[p , ()--() ()--()]', ()=> {
-    const p = g.cons([g.edge([g.node(), g.node()], 'either'), g.edge([g.node(), g.node()], 'either')], {id:'p'});
+  it('shows two paired edges, [p , ()--() ()--()] as "[p , ()--() ()--()]', () => {
+    const p = g.cons(
+      [
+        g.edge([g.node(), g.node()], 'either'),
+        g.edge([g.node(), g.node()], 'either'),
+      ],
+      { id: 'p' }
+    );
     // console.log(inspect(p));
-    expect(toString(p)).toBe('[p , ()--() ()--()]')
+    expect(toString(p)).toBe('[p , ()--() ()--()]');
   });
-
 });
 
 // describe('gram builder for records', () => {
@@ -198,5 +209,3 @@ describe('gram stringify of pairwise paths', () => {
 //     expect((record.k as gramTypes.GeospatialLiteral).tag).toBe(String(tag));
 //   });
 // });
-
-

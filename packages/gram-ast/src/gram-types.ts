@@ -23,7 +23,6 @@ import {
  * The base type for all path-like elements.
  */
 export interface GramPathlike extends UnistNode {
-
   /**
    * A unique path identifier.
    *
@@ -55,7 +54,6 @@ export interface GramPathlike extends UnistNode {
 
 ///////////////////////////////////////////////////////////////////////////////
 // Pathlike types...
-
 
 /**
  * GramPath contains nodes, edges and other paths that have been composed
@@ -110,7 +108,6 @@ export const EMPTY_PATH_ID = 'ø';
  * - information role: emptiness
  */
 export interface GramEmptyPath extends GramPathlike {
-
   type: 'path';
 
   id: 'ø';
@@ -118,7 +115,6 @@ export interface GramEmptyPath extends GramPathlike {
   labels: undefined;
 
   record: undefined;
-
 }
 
 /**
@@ -129,11 +125,11 @@ export interface GramEmptyPath extends GramPathlike {
  * no labels, no record, and always has the identity `ø`, while
  * a node may have labels, a record and always has an identity
  * other than `ø`.
- * 
+ *
  * @param o any object
  */
 export const isGramEmptyPath = (o: any): o is GramEmptyPath =>
-  isGramPath(o) && (o.children === undefined) && (o.id === EMPTY_PATH_ID);
+  isGramPath(o) && o.children === undefined && o.id === EMPTY_PATH_ID;
 
 /**
  * A GramNode is a path composed of two empty paths,
@@ -150,7 +146,6 @@ export const isGramEmptyPath = (o: any): o is GramEmptyPath =>
  * - information role: an entity or a noun
  */
 export interface GramNode extends GramPath {
-
   /**
    * Optimized to no children, though understood
    * to have two empty paths as children.
@@ -160,7 +155,7 @@ export interface GramNode extends GramPath {
 
 /**
  * Type guard for GramNode.
- * 
+ *
  * In practice both nodes and empty paths both have no children.
  * The distinguishing feature is that all empty paths have
  * no labels, no record, and always has the identity `ø`, while
@@ -170,7 +165,10 @@ export interface GramNode extends GramPath {
  * @param o any object
  */
 export const isGramNode = (o: any): o is GramNode =>
-  isGramPath(o) && o.children && (o.children.length === 0) && (o.id !== EMPTY_PATH_ID);
+  isGramPath(o) &&
+  o.children &&
+  o.children.length === 0 &&
+  o.id !== EMPTY_PATH_ID;
 
 /**
  * Navigable relations to compose path expressions.
@@ -199,7 +197,6 @@ export type Relation = Navigation | 'pair';
  * - usually a noun concept
  */
 export interface GramEdge extends GramPath {
-
   /**
    * The operands of the Edge, known as "children" in the AST.
    *
@@ -215,8 +212,11 @@ export interface GramEdge extends GramPath {
  * @param o any object
  */
 export const isGramEdge = (o: any): o is GramEdge =>
-  isGramPath(o) && (o.relation !== undefined) && (o.relation !== 'pair') && (o.children !== undefined) && o.children.every(child => isGramNode(child))
-
+  isGramPath(o) &&
+  o.relation !== undefined &&
+  o.relation !== 'pair' &&
+  o.children !== undefined &&
+  o.children.every(child => isGramNode(child));
 
 /**
  * A GramPathSeq is a sequence of paths.

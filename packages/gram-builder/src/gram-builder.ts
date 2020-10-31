@@ -92,14 +92,14 @@ export interface PathAttributes {
 export const reduce = (
   relation: Relation = 'pair',
   pathlist: GramPath[],
-  baseID?: string,
+  baseID?: string
 ): GramPathlike => {
   let subID = 0;
   if (pathlist.length > 1) {
-    return pathlist.reduceRight((acc:GramPathlike, curr) => {
-        const childID = baseID ? `${baseID}${subID}` : undefined;
-        return cons([curr, acc], { relation, id:childID });
-      }, EMPTY_PATH);
+    return pathlist.reduceRight((acc: GramPathlike, curr) => {
+      const childID = baseID ? `${baseID}${subID}` : undefined;
+      return cons([curr, acc], { relation, id: childID });
+    }, EMPTY_PATH);
   } else {
     return pathlist[0];
   }
@@ -123,7 +123,7 @@ export const cons = (
     // children: members ? members.filter(child => child && !isGramEmptyPath(child)) : undefined,
   };
   if (members === undefined) {
-    if (element.id && (element.id !== EMPTY_PATH_ID)) {
+    if (element.id && element.id !== EMPTY_PATH_ID) {
       element.children = [];
       return element;
     }
@@ -153,12 +153,9 @@ export const cons = (
       isGramNode(members[1])
     ) {
       element.relation = attributes.relation;
-      element.children =[members[0], members[1]];
+      element.children = [members[0], members[1]];
       return element as GramEdge;
-    } else if (
-      isGramEmptyPath(members[0]) &&
-      isGramEmptyPath(members[1])
-    ) {
+    } else if (isGramEmptyPath(members[0]) && isGramEmptyPath(members[1])) {
       element.relation = attributes.relation;
       element.children = [];
       return element as GramNode;
@@ -177,7 +174,7 @@ export const EMPTY_PATH: GramEmptyPath = {
   id: EMPTY_PATH_ID,
   labels: undefined,
   record: undefined,
-  children: undefined
+  children: undefined,
 };
 
 /**

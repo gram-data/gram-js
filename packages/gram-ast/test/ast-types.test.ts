@@ -1,5 +1,19 @@
-
-import { EMPTY_PATH_ID, isGramEmptyPath, isGramNode, isStringLiteral, isGramEdge, isBooleanLiteral, isTaggedLiteral, isIntegerLiteral, isMeasurementLiteral, isDecimalLiteral, isHexadecimalLiteral, isOctalLiteral, isDateLiteral, isWellKnownTextLiteral } from '../src/gram-types';
+import {
+  EMPTY_PATH_ID,
+  isGramEmptyPath,
+  isGramNode,
+  isStringLiteral,
+  isGramEdge,
+  isBooleanLiteral,
+  isTaggedLiteral,
+  isIntegerLiteral,
+  isMeasurementLiteral,
+  isDecimalLiteral,
+  isHexadecimalLiteral,
+  isOctalLiteral,
+  isDateLiteral,
+  isWellKnownTextLiteral,
+} from '../src/gram-types';
 
 describe('gram empty path', () => {
   it('is entirely empty', () => {
@@ -16,7 +30,7 @@ describe('gram empty path', () => {
 
 describe('gram nodes', () => {
   it('have identity, labels and a record, but no children', () => {
-    const node = { type: 'path', id:'a', children:[] };
+    const node = { type: 'path', id: 'a', children: [] };
     expect(isGramNode(node)).toBeTruthy();
     if (isGramNode(node)) {
       expect(node.id).toEqual('a');
@@ -33,8 +47,8 @@ describe('gram nodes', () => {
 
 describe('gram edges', () => {
   it('have identity, labels and a record, two node children and never a pair relation', () => {
-    const a = { type: 'path', id:'a', children:[] };
-    const edge = { type: 'path', id:'e', relation:'right', children:[a,a] };
+    const a = { type: 'path', id: 'a', children: [] };
+    const edge = { type: 'path', id: 'e', relation: 'right', children: [a, a] };
     expect(isGramEdge(edge)).toBeTruthy();
     if (isGramEdge(edge)) {
       expect(edge.id).toEqual('e');
@@ -49,8 +63,8 @@ describe('gram edges', () => {
     }
   });
   it('can never have a pair relation', () => {
-    const a = { type: 'path', id:'a', children:[] };
-    const edge = { type: 'path', id:'e', relation:'pair', children:[a,a] };
+    const a = { type: 'path', id: 'a', children: [] };
+    const edge = { type: 'path', id: 'e', relation: 'pair', children: [a, a] };
     expect(isGramEdge(edge)).toBeFalsy();
   });
 });
@@ -299,8 +313,7 @@ describe('gram ast octal literals', () => {
   });
   it('has a type guard', () => {
     const literal: any = { type: 'octal', value: 'false' };
-    if (isOctalLiteral(literal))
-      expect(literal.type === 'octal').toBeTruthy();
+    if (isOctalLiteral(literal)) expect(literal.type === 'octal').toBeTruthy();
     else fail('Denied by typeguard');
   });
 });
@@ -348,8 +361,7 @@ describe('gram ast tagged date literals', () => {
   });
   it('has a type guard', () => {
     const literal: any = { type: 'tagged', tag: 'date', value: 'false' };
-    if (isDateLiteral(literal))
-      expect(literal.tag === 'date').toBeTruthy();
+    if (isDateLiteral(literal)) expect(literal.tag === 'date').toBeTruthy();
     else fail('Denied by typeguard');
   });
 });

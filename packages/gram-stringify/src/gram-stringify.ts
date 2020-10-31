@@ -55,7 +55,10 @@ const elementContentToString = (ast: GramPathlike): string => {
   const recordString =
     ast.record && !isEmpty(ast.record) ? recordToString(ast.record) : '';
   return `${idString}${labelsString}${
-    (((idString.length > 0) || (labelsString.length > 0)) && recordString.length) > 0 ? ' ' : ''
+    ((idString.length > 0 || labelsString.length > 0) && recordString.length) >
+    0
+      ? ' '
+      : ''
   }${recordString}`;
 };
 
@@ -79,24 +82,40 @@ const edgeToString = (ast: GramEdge): string => {
 };
 
 const pathCompositionToString = (ast: GramPath): string => {
-  const lhs = (ast.children && ast.children.length > 0) ? pathToString(ast.children[0]) : '';
-  const rhs = (ast.children && ast.children.length > 1) ? pathToString(ast.children[1]) : '';
-  const relation = 
-      (ast.relation === 'left') ? '<--' 
-    : (ast.relation === 'right') ? '-->' 
-    : (ast.relation === 'either') ? '--'
-    : ((lhs.length > 0) && (rhs.length > 0)) ? ',' : '';
+  const lhs =
+    ast.children && ast.children.length > 0
+      ? pathToString(ast.children[0])
+      : '';
+  const rhs =
+    ast.children && ast.children.length > 1
+      ? pathToString(ast.children[1])
+      : '';
+  const relation =
+    ast.relation === 'left'
+      ? '<--'
+      : ast.relation === 'right'
+      ? '-->'
+      : ast.relation === 'either'
+      ? '--'
+      : lhs.length > 0 && rhs.length > 0
+      ? ','
+      : '';
   const content = elementContentToString(ast);
-  
-  return `[${content}${relation.length > 0 ? ' ' : ''}${relation}${lhs.length > 0 ? ' ' : ''}${lhs}${rhs.length > 0 ? ' ' : ''}${rhs}]`
-}
+
+  return `[${content}${relation.length > 0 ? ' ' : ''}${relation}${
+    lhs.length > 0 ? ' ' : ''
+  }${lhs}${rhs.length > 0 ? ' ' : ''}${rhs}]`;
+};
 const pathToString = (ast?: GramPath): string => {
   const pathExpression = ast
     ? `${
-      isGramEmptyPath(ast) ? ''
-        : isGramNode(ast)  ? nodeToString(ast)
-        : isGramEdge(ast)  ? edgeToString(ast)
-        : pathCompositionToString(ast)
+        isGramEmptyPath(ast)
+          ? ''
+          : isGramNode(ast)
+          ? nodeToString(ast)
+          : isGramEdge(ast)
+          ? edgeToString(ast)
+          : pathCompositionToString(ast)
       }`
     : '';
   return pathExpression;

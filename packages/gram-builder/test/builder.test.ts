@@ -1,5 +1,32 @@
 import * as g from '../src/';
-import { isGramEmptyPath, EMPTY_PATH_ID, isGramNode, isGramEdge, isGramPath, BooleanLiteral, StringLiteral, IntegerLiteral, isBooleanLiteral, GramLiteral, isStringLiteral, isIntegerLiteral, TaggedLiteral, isTaggedLiteral, MeasurementLiteral, isMeasurementLiteral, DecimalLiteral, isDecimalLiteral, HexadecimalLiteral, isHexadecimalLiteral, OctalLiteral, isOctalLiteral, DateLiteral, isDateLiteral, WellKnownTextLiteral, isWellKnownTextLiteral } from '@gram-data/gram-ast';
+import {
+  isGramEmptyPath,
+  EMPTY_PATH_ID,
+  isGramNode,
+  isGramEdge,
+  isGramPath,
+  BooleanLiteral,
+  StringLiteral,
+  IntegerLiteral,
+  isBooleanLiteral,
+  GramLiteral,
+  isStringLiteral,
+  isIntegerLiteral,
+  TaggedLiteral,
+  isTaggedLiteral,
+  MeasurementLiteral,
+  isMeasurementLiteral,
+  DecimalLiteral,
+  isDecimalLiteral,
+  HexadecimalLiteral,
+  isHexadecimalLiteral,
+  OctalLiteral,
+  isOctalLiteral,
+  DateLiteral,
+  isDateLiteral,
+  WellKnownTextLiteral,
+  isWellKnownTextLiteral,
+} from '@gram-data/gram-ast';
 
 import { unfoldProperties } from '../src/';
 // import { unfoldProperties } from '../src/';
@@ -120,7 +147,7 @@ describe('gram cons() can build empty paths', () => {
     expect(treeSize(p)).toBe(0);
   });
   it('when the identity is ø, as empty = [ø] =~ [ø]', () => {
-    const p = g.cons(undefined, {id:"ø"});
+    const p = g.cons(undefined, { id: 'ø' });
     console.log(inspect(p));
     expect(isGramEmptyPath(p)).toBeTruthy();
     expect(isGramPath(p)).toBeTruthy(); // empty paths are paths
@@ -142,16 +169,14 @@ describe('gram empty() maps to the empty path singleton', () => {
   });
   it('called a few times as empty() === empty() === empty()', () => {
     const ps = [g.empty(), g.empty(), g.empty()];
-    expect(ps.every( p => isGramEmptyPath(p))).toBeTruthy();
-    expect(ps.every( p => p.id === EMPTY_PATH_ID)).toBeTruthy();
+    expect(ps.every(p => isGramEmptyPath(p))).toBeTruthy();
+    expect(ps.every(p => p.id === EMPTY_PATH_ID)).toBeTruthy();
   });
-
 });
 
 describe('gram cons() can build nodes, which are paths of length 0', () => {
-
   it('using an identified node, as n = [ a ] =~ [a [ø] [ø] ]', () => {
-    const p = g.cons(undefined, {id:'a'});
+    const p = g.cons(undefined, { id: 'a' });
     // console.log(inspect(p));
     expect(isGramEmptyPath(p)).toBeFalsy();
     expect(isGramNode(p)).toBeTruthy();
@@ -214,7 +239,7 @@ describe('gram cons() can build nodes, which are paths of length 0', () => {
     // console.log(inspect(p));
     expect(isGramEmptyPath(p)).toBeFalsy();
     expect(isGramNode(p)).toBeTruthy();
-    expect(p.labels).toContain('NEGATE')
+    expect(p.labels).toContain('NEGATE');
     expect(p.children).toHaveLength(0);
   });
 
@@ -225,7 +250,6 @@ describe('gram cons() can build nodes, which are paths of length 0', () => {
     expect(isGramNode(p)).toBeTruthy();
     expect(p.children).toHaveLength(0);
   });
-
 });
 
 describe('gram node() builder ', () => {
@@ -259,15 +283,9 @@ describe('gram node() builder ', () => {
 
     expect(p.record).toBeDefined();
     if (p.record) {
-      expect(
-        (p.record[0].value as BooleanLiteral).type
-      ).toBe('boolean');
-      expect((p.record[1].value as StringLiteral).type).toBe(
-        'string'
-      );
-      expect(
-        (p.record[2].value as IntegerLiteral).type
-      ).toBe('integer');
+      expect((p.record[0].value as BooleanLiteral).type).toBe('boolean');
+      expect((p.record[1].value as StringLiteral).type).toBe('string');
+      expect((p.record[2].value as IntegerLiteral).type).toBe('integer');
     } else fail('Record expected to be an array of GramProperty');
   });
 });
@@ -281,7 +299,7 @@ describe('gram cons() can build edges, which are paths of length 1', () => {
     expect(isGramEmptyPath(p)).toBeFalsy();
     expect(isGramNode(p)).toBeFalsy();
     expect(isGramEdge(p)).toBeFalsy();
-    expect(isGramPath(p)).toBeTruthy(); 
+    expect(isGramPath(p)).toBeTruthy();
     expect(p.relation).toBe('pair');
     expect(isGramPath(p) && isGramNode(p.children[0])).toBeTruthy();
     expect(isGramPath(p) && isGramNode(p.children[1])).toBeTruthy();
@@ -335,11 +353,10 @@ describe('gram cons() can build edges, which are paths of length 1', () => {
 });
 
 describe('gram edge() can build edges', () => {
-
   it('()-->() is an edge', () => {
     const left = g.node();
     const right = g.node();
-    const p = g.edge([left, right], 'right', 'e'  );
+    const p = g.edge([left, right], 'right', 'e');
     // console.log(inspect(p));
     expect(isGramEmptyPath(p)).toBeFalsy();
     expect(isGramNode(p)).toBeFalsy();
@@ -381,7 +398,6 @@ describe('gram edge() can build edges', () => {
     expect(treeSize(p)).toBe(2);
   });
 
-
   it('()-[e]-() is a named edge', () => {
     const pid = 'e';
     const p = g.edge([g.node(), g.node()], 'either', pid);
@@ -412,15 +428,9 @@ describe('gram edge() can build edges', () => {
     );
     expect(p.record).toBeDefined();
     if (p.record) {
-      expect((p.record[0].value as BooleanLiteral).type).toBe(
-        'boolean'
-      );
-      expect((p.record[1].value as StringLiteral).type).toBe(
-        'string'
-      );
-      expect((p.record[2].value as IntegerLiteral).type).toBe(
-        'integer'
-      );
+      expect((p.record[0].value as BooleanLiteral).type).toBe('boolean');
+      expect((p.record[1].value as StringLiteral).type).toBe('string');
+      expect((p.record[2].value as IntegerLiteral).type).toBe('integer');
     } else fail('GramRecord expected on GramEdge');
   });
 });
@@ -429,14 +439,13 @@ describe('gram edge() can build edges', () => {
  * The decorator pattern extends an existing path element without
  * changing the structure of the graph by composing with an empty
  * path.
- * 
+ *
  * This can be useful for graph annotations.
  */
-describe("gram cons() decorator patterns", () => {
-
+describe('gram cons() decorator patterns', () => {
   it('extend an empty path with an implied RHS [ø], producing a node [ [ø] [ø] ]', () => {
     const child = g.empty();
-    const p = g.cons([child], {id:'p'});
+    const p = g.cons([child], { id: 'p' });
     // console.log(inspect(p));
     expect(isGramEmptyPath(p)).toBeFalsy();
     expect(isGramNode(p)).toBeTruthy();
@@ -445,7 +454,7 @@ describe("gram cons() decorator patterns", () => {
 
   it('extend a node with an implied RHS [ø], as [p (n)] =~ [p (n) [ø] ]', () => {
     const child = g.node('n');
-    const p = g.cons([child], {id:'p'});
+    const p = g.cons([child], { id: 'p' });
     // console.log(inspect(p));
     expect(isGramEmptyPath(p)).toBeFalsy();
     expect(isGramNode(p)).toBeFalsy();
@@ -455,7 +464,7 @@ describe("gram cons() decorator patterns", () => {
 
   it('decorate a node with label, as  [:EXTRA (n)] =~ [:EXTRA (n) [ø] ]', () => {
     const child = g.node('n');
-    const p = g.cons([child], {labels:['EXTRA']});
+    const p = g.cons([child], { labels: ['EXTRA'] });
     // console.log(inspect(p));
     expect(isGramEmptyPath(p)).toBeFalsy();
     expect(isGramNode(p)).toBeFalsy();
@@ -465,7 +474,9 @@ describe("gram cons() decorator patterns", () => {
 
   it('decorate a node with an extra record, as  [{editor:"ABK"} (n)] =~ [{editor:"ABK"} (n) [ø] ]', () => {
     const child = g.node('n');
-    const p = g.cons([child], {record:unfoldProperties({editor:g.string("ABK")})});
+    const p = g.cons([child], {
+      record: unfoldProperties({ editor: g.string('ABK') }),
+    });
     // console.log(inspect(p));
     expect(isGramEmptyPath(p)).toBeFalsy();
     expect(isGramNode(p)).toBeFalsy();
@@ -475,63 +486,60 @@ describe("gram cons() decorator patterns", () => {
 
   it('extend an edge with an implied RHS [ø], producing [p ()-[e]-() [ø] ], but drops the ø', () => {
     const child = g.edge([g.node(), g.node()], 'right', 'e');
-    const p = g.cons([child], {id:'p'});
+    const p = g.cons([child], { id: 'p' });
     // console.log(inspect(p));
     expect(isGramEmptyPath(p)).toBeFalsy();
     expect(isGramPath(p)).toBeTruthy();
     expect(treeSize(p)).toBe(3); // node (2) + edge (1) + empty (0) = 3
   });
-
 });
 
 describe('gram cons() composing combinations of empty, node, and edge', () => {
-  const lhs =            [g.empty(),  g.node(),   g.edge([g.node(), g.node()], 'right')];
-  const rhs =            [g.empty(),  g.node(),   g.edge([g.node(), g.node()], 'left')];
-  const isExpectedPair = [isGramNode, isGramPath, isGramPath]
-  const isExpectedPath = [isGramNode, isGramPath, isGramPath]
+  const lhs = [g.empty(), g.node(), g.edge([g.node(), g.node()], 'right')];
+  const rhs = [g.empty(), g.node(), g.edge([g.node(), g.node()], 'left')];
+  const isExpectedPair = [isGramNode, isGramPath, isGramPath];
+  const isExpectedPath = [isGramNode, isGramPath, isGramPath];
 
   it('pair relation', () => {
-    const relation = 'pair'
-    for (let i=0; i<lhs.length; i++) {
+    const relation = 'pair';
+    for (let i = 0; i < lhs.length; i++) {
       const p = g.cons([lhs[i], rhs[i]], { id: 'p', relation });
       // console.log(inspect( p1 p2]", p);
       expect(isExpectedPair[i](p)).toBeTruthy();
-      expect(p.relation).toBe(relation)
+      expect(p.relation).toBe(relation);
     }
   });
 
   it('left relation', () => {
-    const relation = 'left'
-    for (let i=0; i<lhs.length; i++) {
+    const relation = 'left';
+    for (let i = 0; i < lhs.length; i++) {
       const p = g.cons([lhs[i], rhs[i]], { id: 'p', relation });
       // console.log(inspect(p));
       expect(isExpectedPath[i](p)).toBeTruthy();
-      expect(p.relation).toBe(relation)
+      expect(p.relation).toBe(relation);
     }
   });
 
   it('right relation', () => {
-    const relation = 'right'
-    for (let i=0; i<lhs.length; i++) {
+    const relation = 'right';
+    for (let i = 0; i < lhs.length; i++) {
       const p = g.cons([lhs[i], rhs[i]], { id: 'p', relation });
       // console.log(inspect(p));
       expect(isExpectedPath[i](p)).toBeTruthy();
-      expect(p.relation).toBe(relation)
+      expect(p.relation).toBe(relation);
     }
   });
 
   it('either relation', () => {
-    const relation = 'either'
-    for (let i=0; i<lhs.length; i++) {
+    const relation = 'either';
+    for (let i = 0; i < lhs.length; i++) {
       const p = g.cons([lhs[i], rhs[i]], { id: 'p', relation });
       // console.log(inspect(p));
       expect(isExpectedPath[i](p)).toBeTruthy();
-      expect(p.relation).toBe(relation)
+      expect(p.relation).toBe(relation);
     }
   });
-
 });
-
 
 describe('gram builder for path sequence', () => {
   it('may be empty', () => {
@@ -551,7 +559,7 @@ describe('gram builder for reducing an array of paths into a tree of composed pa
     const p = g.reduce('pair', [g.node(id)]);
     // console.log(inspect(p));
     expect(p.id).toBe(id);
-    expect(p.children?.length).toBe(0); 
+    expect(p.children?.length).toBe(0);
   });
   it('two nodes as a tree of two pairs, terminated by ø', () => {
     const p = g.reduce('pair', [g.node('a'), g.node('b')]);
@@ -567,18 +575,16 @@ describe('gram builder for reducing an array of paths into a tree of composed pa
   });
   it('accepts five nodes, becoming five pairs, terminated by ø', () => {
     const p = g.reduce('pair', [
-        g.node('a'),
-        g.node('b'),
-        g.node('c'),
-        g.node('d'),
-        g.node('e'),
-      ]);
+      g.node('a'),
+      g.node('b'),
+      g.node('c'),
+      g.node('d'),
+      g.node('e'),
+    ]);
     // console.log(inspect((b),(c),(d),(e) =~ [, a [, b [, c [, d [, e ø ] ] ] ] ]", p);
     expect(treeSize(p, { type: 'path', relation: 'pair' })).toBe(4); // descendent count
   });
 });
-
-
 
 // describe('gram builder flatten()', () => {
 //   it('flattens an already flat array', () => {

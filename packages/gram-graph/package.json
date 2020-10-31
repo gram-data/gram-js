@@ -27,7 +27,9 @@
     "lint:fix": "tsdx lint --fix",
     "build:demo": "shx cp dist/gram-graph.umd.development.* ./public",
     "demo": "serve ./public/",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "update": "ncu -u",
+    "update:check": "ncu"
   },
   "husky": {
     "hooks": {
@@ -42,15 +44,16 @@
   },
   "module": "dist/gram-graph.esm.js",
   "devDependencies": {
-    "@types/jest": "^26.0.4",
-    "husky": "^4.2.5",
+    "@types/jest": "^26.0.15",
+    "husky": "^4.3.0",
+    "npm-check-updates": "^9.2.3",
     "npm-run-all": "^4.1.5",
     "rollup-plugin-node-builtins": "^2.1.2",
     "serve": "^11.3.2",
-    "shx": "^0.3.2",
-    "tsdx": "^0.13.2",
-    "tslib": "^2.0.0",
-    "typescript": "^3.9.7"
+    "shx": "^0.3.3",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.0.3",
+    "typescript": "^4.0.5"
   },
   "gitHead": "0f6d560e002650f6c293c0737ddc2539d78fbbff",
   "publishConfig": {
