@@ -137,13 +137,12 @@ export const cons = (
     return element as GramNode;
   } else if (members.length === 1) {
     const lhs = members[0];
-    const rhs = EMPTY_PATH;
 
     if (isGramEmptyPath(lhs)) {
       element.children = [];
       return element as GramNode;
     } else {
-      element.children = [lhs, rhs];
+      element.children = [lhs];
       return element as GramPath;
     }
   } else if (members.length === 2) {

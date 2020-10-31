@@ -450,7 +450,7 @@ describe("gram cons() decorator patterns", () => {
     expect(isGramEmptyPath(p)).toBeFalsy();
     expect(isGramNode(p)).toBeFalsy();
     expect(isGramPath(p)).toBeTruthy();
-    expect(treeSize(p)).toBe(2); // the node and the empty path
+    expect(treeSize(p)).toBe(1); // the node with the empty path
   });
 
   it('decorate a node with label, as  [:EXTRA (n)] =~ [:EXTRA (n) [ø] ]', () => {
@@ -460,7 +460,7 @@ describe("gram cons() decorator patterns", () => {
     expect(isGramEmptyPath(p)).toBeFalsy();
     expect(isGramNode(p)).toBeFalsy();
     expect(isGramPath(p)).toBeTruthy();
-    expect(treeSize(p)).toBe(2); // the node and the empty path
+    expect(treeSize(p)).toBe(1); // the node without the implied empty path
   });
 
   it('decorate a node with an extra record, as  [{editor:"ABK"} (n)] =~ [{editor:"ABK"} (n) [ø] ]', () => {
@@ -470,16 +470,16 @@ describe("gram cons() decorator patterns", () => {
     expect(isGramEmptyPath(p)).toBeFalsy();
     expect(isGramNode(p)).toBeFalsy();
     expect(isGramPath(p)).toBeTruthy();
-    expect(treeSize(p)).toBe(2); // the node and the empty path
+    expect(treeSize(p)).toBe(1); // the node without the implied ø
   });
 
-  it('extend an edge with an implied RHS [ø], producing [p ()-[e]-() [ø] ]', () => {
+  it('extend an edge with an implied RHS [ø], producing [p ()-[e]-() [ø] ], but drops the ø', () => {
     const child = g.edge([g.node(), g.node()], 'right', 'e');
     const p = g.cons([child], {id:'p'});
     // console.log(inspect(p));
     expect(isGramEmptyPath(p)).toBeFalsy();
     expect(isGramPath(p)).toBeTruthy();
-    expect(treeSize(p)).toBe(4); // edge (3) + empty (1) = 4 
+    expect(treeSize(p)).toBe(3); // node (2) + edge (1) + empty (0) = 3
   });
 
 });

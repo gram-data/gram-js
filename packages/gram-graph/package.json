@@ -20,7 +20,7 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "run-s build:lib build:demo",
-    "build:lib": "tsdx build --format cjs,esm,umd",
+    "build:lib": "tsdx build --format umd,esm,cjs --tsconfig tsconfig.build.json",
     "test": "tsdx test",
     "test:watch": "tsdx test --watch",
     "lint": "tsdx lint",

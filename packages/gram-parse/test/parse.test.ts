@@ -8,7 +8,7 @@ import {
   isGramEmptyPath,
 } from '@gram-data/gram-ast';
 
-const inspect = require('unist-util-inspect');
+// const inspect = require('unist-util-inspect');
 
 describe('parsing empty paths', () => {
   it('[] as an empty path', () => {
@@ -100,7 +100,7 @@ describe('parsing nodes', () => {
     // console.log(inspect(result));
     const firstPath = result.children[0];
     expect(isGramPath(firstPath)).toBeTruthy();
-    expect(firstPath.children).toHaveLength(2);
+    expect(firstPath.children).toHaveLength(1); // the implied ø gets dropped
     expect(
       isGramPath(firstPath) && isGramNode(firstPath.children[0])
     ).toBeTruthy();
@@ -192,7 +192,7 @@ describe('parsing nodes', () => {
   `('$gram is tolerant of whitespace', ({ gram }) => {
     const result = toAST(gram);
     expect(result).toBeDefined();
-    console.log(inspect(result));
+    // console.log(inspect(result));
   });
 });
 

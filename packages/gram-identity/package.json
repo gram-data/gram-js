@@ -23,7 +23,7 @@
   },
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build --format cjs,esm,umd",
+    "build": "tsdx build --format umd,esm,cjs --tsconfig tsconfig.build.json",
     "test": "tsdx test",
     "test:watch": "tsdx test --watch",
     "lint": "tsdx lint",
@@ -46,7 +46,7 @@
   "author": "Andreas Kollegger",
   "module": "dist/gram-identity.esm.js",
   "devDependencies": {
-    "@gram-data/gram-parse": "^0.2.6",
+    "@gram-data/gram-parse": "*",
     "@types/jest": "^26.0.4",
     "@types/shortid": "^0.0.29",
     "@types/unist": "^2.0.3",
@@ -62,7 +62,7 @@
     "unist-util-inspect": "^6.0.0"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.2.6",
+    "@gram-data/gram-ast": "*",
     "shortid": "^2.2.15",
     "unified": "^9.0.0",
     "unist-util-visit": "^2.0.3",

@@ -2,8 +2,9 @@
   "name": "gram-js",
   "private": true,
   "scripts": {
-    "lerna:clean": "lerna clean -y",
-    "lerna:bootstrap": "lerna bootstrap",
+    "clean": "lerna clean -y",
+    "build": "lerna bootstrap",
+    "test": "lerna run test --concurrency 1",
     "prepare": "run-s lerna:clean lerna:bootstrap",
     "docs": "typedoc"
   },

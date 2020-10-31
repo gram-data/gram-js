@@ -9,7 +9,7 @@ import { gramIdentityPlugin } from '../src';
 
 const visit = require('unist-util-visit');
 
-const inspect = require('unist-util-inspect');
+// const inspect = require('unist-util-inspect');
 
 const mockCompiler: CompilerFunction = () => {
   // console.log(element, file);
@@ -22,7 +22,7 @@ const testCompilerPlugin: Plugin = function() {
 
 const expectAllPathlikeElementsToHaveId = () => {
   return (tree: UnistNode) => {
-    console.log(inspect(tree));
+    // console.log(inspect(tree));
     visit(tree, (element: UnistNode) => {
       if (element && isGramPathlike(element)) {
         expect(tokens.isValidIdentifier(element.id)).toBeTruthy();
