@@ -5,7 +5,7 @@
     "clean": "lerna clean -y",
     "build": "lerna bootstrap",
     "test": "lerna run test --concurrency 1",
-    "prepare": "run-s lerna:clean lerna:bootstrap",
+    "prepare": "run-s clean build",
     "docs": "typedoc"
   },
   "devDependencies": {
