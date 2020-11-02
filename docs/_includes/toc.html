@@ -10,7 +10,7 @@
    <ul class="list-reset">
       {% for guide in site.guides %}
       <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
-         <a href="{{ guide.url }}" 
+         <a href="{{ guide.url | relative_url }}" 
             {% if guide.url == page.url %}
                class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:border-blue-500 lg:hover:border-green-500"
             {% else %}
