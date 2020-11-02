@@ -4,13 +4,13 @@ From nothing to a valid gram AST.
 
 ### Install:
 
-```
+``` bash
 npm install @gram-data/gram-builder
 ```
 
 ### Build an AST using [[gram-builder]]:
 
-```
+``` TypeScript
 import { node, edge } from '@gram-data/gram-builder';
 
 const left = node('a');

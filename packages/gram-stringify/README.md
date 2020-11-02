@@ -4,13 +4,13 @@ From gram AST to text literal `(a)-->(b)`.
 
 ### Install:
 
-```
+``` bash
 npm install @gram-data/gram-stringify
 ```
 
 ### Build an AST using [[gram-builder]], then pretty print with gram-stringify:
 
-```
+``` TypeScript
 import { node, edge } from '@gram-data/gram-builder';
 import { stringify } from '@gram-data/gram-stringify'; 
 
@@ -23,7 +23,7 @@ console.log(stringify(ast));
 
 ### Parse to AST using [[gram-parse]], then pretty print with gram-stringify:
 
-```
+``` TypeScript
 import { toAST } from '@gram-data/gram-parse'; 
 import { stringify } from '@gram-data/gram-stringify'; 
 

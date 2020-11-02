@@ -4,13 +4,13 @@ Gram abstract syntax tree definitions and utilities like type guards.
 
 ### Install:
 
-```
+``` bash
 npm install @gram-data/gram-ast
 ```
 
 ### Use [[gram-parse]] to create an AST, then introspect with gram-ast:
 
-```
+``` TypeScript
 import { toAST } from '@gram-data/gram-parse'; 
 
 const src = '(a)-->(b)';
