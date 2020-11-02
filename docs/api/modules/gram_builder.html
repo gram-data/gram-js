@@ -101,15 +101,15 @@
 					<a href="#install" id="install" style="color: inherit; text-decoration: none;">
 						<h3>Install:</h3>
 					</a>
-					<pre><code><span class="hljs-built_in">npm</span> install @gram-data/gram-builder</code></pre>
+					<pre><code class="language-bash">npm install @gram-data/gram-builder</code></pre>
 					<a href="#build-an-ast-using-gram-builder" id="build-an-ast-using-gram-builder" style="color: inherit; text-decoration: none;">
 						<h3>Build an AST using <a href="gram_builder.html">gram-builder</a>:</h3>
 					</a>
-					<pre><code>import { <span class="hljs-keyword">node</span><span class="hljs-title">, edge</span> } from &#x27;@gram-data/gram-builder&#x27;;
+					<pre><code class="language-TypeScript"><span class="hljs-keyword">import</span> { node, edge } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@gram-data/gram-builder&#x27;</span>;
 
-const left = <span class="hljs-keyword">node</span><span class="hljs-title">(&#x27;a</span>&#x27;);
-const right = <span class="hljs-keyword">node</span><span class="hljs-title">(&#x27;b</span>&#x27;);
-const ast = edge([left, right], &#x27;right&#x27;);</code></pre>
+<span class="hljs-keyword">const</span> left = node(<span class="hljs-string">&#x27;a&#x27;</span>);
+<span class="hljs-keyword">const</span> right = node(<span class="hljs-string">&#x27;b&#x27;</span>);
+<span class="hljs-keyword">const</span> ast = edge([left, right], <span class="hljs-string">&#x27;right&#x27;</span>);</code></pre>
 					<a href="#next-steps" id="next-steps" style="color: inherit; text-decoration: none;">
 						<h2>Next Steps</h2>
 					</a>

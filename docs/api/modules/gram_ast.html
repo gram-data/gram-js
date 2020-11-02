@@ -101,25 +101,25 @@
 					<a href="#install" id="install" style="color: inherit; text-decoration: none;">
 						<h3>Install:</h3>
 					</a>
-					<pre><code><span class="hljs-built_in">npm</span> install @gram-data/gram-ast</code></pre>
+					<pre><code class="language-bash">npm install @gram-data/gram-ast</code></pre>
 					<a href="#use-gram-parse-to-create-an-ast-then-introspect-with-gram-ast" id="use-gram-parse-to-create-an-ast-then-introspect-with-gram-ast" style="color: inherit; text-decoration: none;">
 						<h3>Use <a href="gram_parse.html">gram-parse</a> to create an AST, then introspect with gram-ast:</h3>
 					</a>
-					<pre><code>import { toAST } from &#x27;@gram-data/gram-parse&#x27;;
+					<pre><code class="language-TypeScript"><span class="hljs-keyword">import</span> { toAST } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@gram-data/gram-parse&#x27;</span>;
 
-const src = &#x27;(a)--&gt;(b)&#x27;;
-const parsed = <span class="hljs-keyword">to</span><span class="hljs-constructor">AST(<span class="hljs-params">src</span>)</span>;
+<span class="hljs-keyword">const</span> src = <span class="hljs-string">&#x27;(a)--&gt;(b)&#x27;</span>;
+<span class="hljs-keyword">const</span> parsed = toAST(src);
 
 <span class="hljs-comment">// the top-level of the AST is a sequence of paths</span>
-console.<span class="hljs-keyword">assert</span>(is<span class="hljs-constructor">GramPathSequence(<span class="hljs-params">parsed</span>)</span>);
+<span class="hljs-built_in">console</span>.assert(isGramPathSequence(parsed));
 
 <span class="hljs-comment">// the first path should be an edge</span>
-const firstPath = parsed.children<span class="hljs-literal">[<span class="hljs-number">0</span>]</span>;
-console.<span class="hljs-keyword">assert</span>(is<span class="hljs-constructor">GramEdge(<span class="hljs-params">firstPath</span>)</span>);
+<span class="hljs-keyword">const</span> firstPath = parsed.children[<span class="hljs-number">0</span>];
+<span class="hljs-built_in">console</span>.assert(isGramEdge(firstPath));
 
 <span class="hljs-comment">// the children of an edge are nodes</span>
-console.<span class="hljs-keyword">assert</span>(is<span class="hljs-constructor">GramNode(<span class="hljs-params">firstPath</span>.<span class="hljs-params">children</span>[0])</span>);
-console.<span class="hljs-keyword">assert</span>(is<span class="hljs-constructor">GramNode(<span class="hljs-params">firstPath</span>.<span class="hljs-params">children</span>[1])</span>);</code></pre>
+<span class="hljs-built_in">console</span>.assert(isGramNode(firstPath.children[<span class="hljs-number">0</span>]));
+<span class="hljs-built_in">console</span>.assert(isGramNode(firstPath.children[<span class="hljs-number">1</span>]));</code></pre>
 					<a href="#next-steps" id="next-steps" style="color: inherit; text-decoration: none;">
 						<h2>Next Steps</h2>
 					</a>
