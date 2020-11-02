@@ -29,7 +29,6 @@ import {
 } from '@gram-data/gram-ast';
 
 import { unfoldProperties } from '../src/';
-// import { unfoldProperties } from '../src/';
 
 // import { Node as UnistNode } from 'unist';
 const inspect = require('unist-util-inspect');
@@ -353,11 +352,11 @@ describe('gram cons() can build edges, which are paths of length 1', () => {
 });
 
 describe('gram edge() can build edges', () => {
-  it('()-->() is an edge', () => {
-    const left = g.node();
-    const right = g.node();
-    const p = g.edge([left, right], 'right', 'e');
-    // console.log(inspect(p));
+  it('(a)-->(b) is an edge', () => {
+    const left = g.node('a');
+    const right = g.node('b');
+    const p = g.edge([left, right], 'right');
+    console.log(inspect(p));
     expect(isGramEmptyPath(p)).toBeFalsy();
     expect(isGramNode(p)).toBeFalsy();
     expect(isGramEdge(p)).toBeTruthy();

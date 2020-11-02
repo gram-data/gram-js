@@ -6,6 +6,7 @@
     "./readme.md",
     "./packages/gram-ast/src",
     "./packages/gram-builder/src",
+    "./packages/gram-identity/src",
     "./packages/gram-parse/src",
     "./packages/gram-stringify/src",
     "./packages/gram-value/src"

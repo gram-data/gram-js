@@ -121,7 +121,7 @@ const pathToString = (ast?: GramPath): string => {
   return pathExpression;
 };
 
-const stringify = (ast: GramPathlike | GramPathSeq): string => {
+export const stringify = (ast: GramPathlike | GramPathSeq): string => {
   const tokens: Array<string> = [];
   switch (ast.type) {
     case 'seq':

@@ -1,17 +1,19 @@
-# gram-js
+The Javascript reference implementation of the [gram](https://gram-data.github.io) property 
+graph model and exchange format.
 
-A data graph model and exchange format. 
+## How to gram in javascript
 
-This is the Javascript reference implementation.
+There are 2 places to start:
 
-## Library Components
+1. Parse from text using [[gram-parse]]
+2. Build an AST by hand using [[gram-builder]]
 
-- `gram-ast` Abstract Syntax Tree and tokenizing regular-expressions
-- `gram-builder` to compose a valid AST
-- `gram-graph` to materialize a data graph
-- `gram-identity` AST plugin to adjust graph element identities
-- `gram-lint` to process gram files on the command line
-- `gram-parse` derived from `gram.ne` to parse text into an AST
-- `gram-stringify` to convert an AST back to text literal format
-- `gram-value` to convert AST data values to JS primitive or object values
+### All packages
+
+- [[gram-ast]] definitions and tokenizing regular-expressions
+- [[gram-builder]] composes a valid AST
+- [[gram-identity]] adjusts element identities
+- [[gram-parse]] from text literal gram into an AST
+- [[gram-stringify]] to convert an AST back to text literal format
+- [[gram-value]] to convert AST data values to JS primitive or object values
 

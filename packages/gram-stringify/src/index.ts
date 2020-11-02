@@ -1,4 +1,4 @@
 import gramStringifyPlugin from './gram-stringify-plugin';
-import toString from './gram-stringify';
+import toGram, {stringify} from './gram-stringify';
 
-export { toString, gramStringifyPlugin };
+export { stringify, toGram, gramStringifyPlugin };

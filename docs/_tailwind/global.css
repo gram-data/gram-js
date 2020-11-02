@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "~fontsource-cormorant-garamond/index.css";
+
 /*
 Fira Code
 https://fonts.googleapis.com/css?family=Fira+Code:400&display=swap

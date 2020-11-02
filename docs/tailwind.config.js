@@ -13,6 +13,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 "sans": ['"Open Sans"', ...defaultTheme.fontFamily.sans],
+                "serif": ['"Cormorant Garamond"', ...defaultTheme.fontFamily.serif],
                 "mono": ['"Fira Code"', ...defaultTheme.fontFamily.mono]
               }      
         },

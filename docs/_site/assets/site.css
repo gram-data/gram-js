@@ -11533,7 +11533,7 @@ video {
 }
 
 .font-serif {
-  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  font-family: "Cormorant Garamond", Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
 .font-mono {
@@ -22864,6 +22864,8 @@ video {
   -webkit-animation: bounce 1s infinite;
           animation: bounce 1s infinite;
 }
+
+@import "~fontsource-cormorant-garamond/index.css";
 
 /*
 Fira Code
@@ -34688,7 +34690,7 @@ https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap'
   }
 
   .sm\:font-serif {
-    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+    font-family: "Cormorant Garamond", Georgia, Cambria, "Times New Roman", Times, serif;
   }
 
   .sm\:font-mono {
@@ -56903,7 +56905,7 @@ https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap'
   }
 
   .md\:font-serif {
-    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+    font-family: "Cormorant Garamond", Georgia, Cambria, "Times New Roman", Times, serif;
   }
 
   .md\:font-mono {
@@ -79118,7 +79120,7 @@ https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap'
   }
 
   .lg\:font-serif {
-    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+    font-family: "Cormorant Garamond", Georgia, Cambria, "Times New Roman", Times, serif;
   }
 
   .lg\:font-mono {
@@ -101333,7 +101335,7 @@ https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap'
   }
 
   .xl\:font-serif {
-    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+    font-family: "Cormorant Garamond", Georgia, Cambria, "Times New Roman", Times, serif;
   }
 
   .xl\:font-mono {

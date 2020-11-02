@@ -1,26 +1,32 @@
-# Gram Parse
+From text literal `(a)-->(b)` to an gram AST. 
 
-From text literal `(a)-->(b)` to an abstract syntax tree for data graphs. 
+## How to gram-parse
 
-
-## Install
-
-```
-npm install @gram-data/gram-parse`
-```
-
-## Parse a gram
+### Install:
 
 ```
-import 
-
-const src = `(a)-->(b)`
-const parsed = 
+npm install @gram-data/gram-parse
 ```
 
-Provides:
+### Parse text into an AST:
 
-- gram.ne: a grammer written in [Nearley](https://nearley.js.org)
-- gram-parser-plugin: a plugin for the [unified](https://unifiedjs.com/explore/package/unified/) text processing framework
-- toAST: a convenience function for parsing text to AST
+```
+import { toAST } from '@gram-data/gram-parse'; 
 
+const src = '(a)-->(b)';
+const parsed = toAST(src);
+```
+
+### Inspect AST using [unist-util-inspect](https://github.com/syntax-tree/unist-util-inspect):
+
+```
+const inspect = require('unist-util-inspect');
+
+console.log(inspect(parsed));
+```
+
+## Next Steps
+
+- Transform to js objects using [[gram-value]]
+- Write back to a string using [[gram-stringify]]
+- Introspect the AST using [[gram-ast]]
