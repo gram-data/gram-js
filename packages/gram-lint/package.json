@@ -5,7 +5,7 @@
     "neo4j",
     "gram"
   ],
-  "version": "0.2.7",
+  "version": "0.2.8",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -49,8 +49,8 @@
   "author": "Andreas Kollegger",
   "module": "dist/gram-lint.esm.js",
   "devDependencies": {
-    "@gram-data/gram-ast": "^0.2.7",
-    "@gram-data/gram-identity": "^0.2.7",
+    "@gram-data/gram-ast": "^0.2.8",
+    "@gram-data/gram-identity": "^0.2.8",
     "@types/jest": "^26.0.15",
     "husky": "^4.3.0",
     "npm-check-updates": "^9.2.3",
@@ -63,8 +63,8 @@
     "typescript": "^4.0.5"
   },
   "dependencies": {
-    "@gram-data/gram-parse": "^0.2.7",
-    "@gram-data/gram-stringify": "^0.2.7",
+    "@gram-data/gram-parse": "^0.2.8",
+    "@gram-data/gram-stringify": "^0.2.8",
     "unified": "^9.2.0",
     "unified-args": "^8.1.0"
   },
