@@ -7,5 +7,9 @@ module.exports = {
     "react": {
       "version": "999.999.999"
     }
+  },
+  "rules": {
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["off"]
   }
 }

@@ -259,9 +259,9 @@ export type GramRecordValue = GramLiteral | GramLiteral[] | GramRecord;
 /**
  * A GramRecord is an array of name/value pairs, or simply GramProperty[].
  *
- * Using an array preserves the ordering of properties and accepts multiple 
+ * Using an array preserves the ordering of properties and accepts multiple
  * values per name. The "current value" of a property is the last GramProperty
- * in the array for a given key. 
+ * in the array for a given key.
  *
  * For convenience this can be converted to/from a GramPropertyMap,
  * which has the wrong semantics and loses information, but is
@@ -271,8 +271,8 @@ export type GramRecord = GramProperty[];
 
 /**
  * A type guard to narrow a GramRecordValue to a GramRecord,
- * which is a GramProperty[]. 
- * 
+ * which is a GramProperty[].
+ *
  * @param v any GramRecordValue
  */
 export const isGramRecord = (v: GramRecordValue): v is GramRecord =>
@@ -325,23 +325,23 @@ export interface GramLiteral extends UnistLiteral {
   value: string;
 }
 
-export type AnyGramLiteral = 
-  BooleanLiteral | 
-  StringLiteral | 
-  TaggedLiteral | 
-  IntegerLiteral | 
-  MeasurementLiteral | 
-  DecimalLiteral | 
-  HexadecimalLiteral |
-  OctalLiteral
-
+export type AnyGramLiteral =
+  | BooleanLiteral
+  | StringLiteral
+  | TaggedLiteral
+  | IntegerLiteral
+  | MeasurementLiteral
+  | DecimalLiteral
+  | HexadecimalLiteral
+  | OctalLiteral;
 
 /**
  * Type guard for GramLiteral.
  *
  * @param o any object
  */
-export const isLiteral = (o: any): o is GramLiteral => !!o.type && !!o.value && (o.type !== 'property');
+export const isLiteral = (o: any): o is GramLiteral =>
+  !!o.type && !!o.value && o.type !== 'property';
 
 /**
  * Represents a boolean literal, like `true` or `false`.
