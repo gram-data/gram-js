@@ -19,6 +19,8 @@ import {
 ///////////////////////////////////////////////////////////////////////////////
 // Base ast types...
 
+export type AnyGramPath = GramNode | GramEdge | GramPath;
+
 /**
  * The base type for all path-like elements.
  */
@@ -49,7 +51,7 @@ export interface GramPathlike extends UnistNode {
    */
   record?: GramRecord;
 
-  children?: GramPath[] | [];
+  children?: GramPath[];
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -255,11 +257,11 @@ export const isGramPathlike = (o: any): o is GramPathlike =>
 export type GramRecordValue = GramLiteral | GramLiteral[] | GramRecord;
 
 /**
- * A GramRecord is an order-preserving associative array of name/value pairs.
- * The AST representation is an array of GramProperty.
+ * A GramRecord is an array of name/value pairs, or simply GramProperty[].
  *
- * Javascript lacks native support for associative arrays. Using a list
- * preserves the ordering and accepting multiple values per name.
+ * Using an array preserves the ordering of properties and accepts multiple 
+ * values per name. The "current value" of a property is the last GramProperty
+ * in the array for a given key. 
  *
  * For convenience this can be converted to/from a GramPropertyMap,
  * which has the wrong semantics and loses information, but is
@@ -267,6 +269,12 @@ export type GramRecordValue = GramLiteral | GramLiteral[] | GramRecord;
  */
 export type GramRecord = GramProperty[];
 
+/**
+ * A type guard to narrow a GramRecordValue to a GramRecord,
+ * which is a GramProperty[]. 
+ * 
+ * @param v any GramRecordValue
+ */
 export const isGramRecord = (v: GramRecordValue): v is GramRecord =>
   Array.isArray(v) && isGramProperty(v[0]);
 
@@ -317,12 +325,23 @@ export interface GramLiteral extends UnistLiteral {
   value: string;
 }
 
+export type AnyGramLiteral = 
+  BooleanLiteral | 
+  StringLiteral | 
+  TaggedLiteral | 
+  IntegerLiteral | 
+  MeasurementLiteral | 
+  DecimalLiteral | 
+  HexadecimalLiteral |
+  OctalLiteral
+
+
 /**
  * Type guard for GramLiteral.
  *
  * @param o any object
  */
-export const isLiteral = (o: any): o is GramLiteral => !!o.type && !!o.value;
+export const isLiteral = (o: any): o is GramLiteral => !!o.type && !!o.value && (o.type !== 'property');
 
 /**
  * Represents a boolean literal, like `true` or `false`.

@@ -21,7 +21,7 @@ import {
   valueOfTime,
   valueOfDuration,
 } from '../src';
-import * as builder from '@gram-data/gram-builder';
+import { builder } from '@gram-data/gram-builder';
 import { StringLiteral } from '@gram-data/gram-ast';
 
 describe('boolean value', () => {

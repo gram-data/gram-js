@@ -10,6 +10,12 @@ import {
   OctalLiteral,
   TimeLiteral,
   DurationLiteral,
+  GramRecordValue,
+  GramLiteral,
+  isGramLiteralArray,
+  isLiteral,
+  AnyGramLiteral,
+  isGramRecord,
 } from '@gram-data/gram-ast';
 
 import {
@@ -36,6 +42,37 @@ class InvalidAstError extends Error {
     super('AST is invalid:' + JSON.stringify(ast));
     this.name = 'InvalidAstError';
     this.ast = ast;
+  }
+}
+
+export const valueOf = (recordValue: GramRecordValue): any => {
+  if (isGramLiteralArray(recordValue)) {
+    return recordValue.map((v:GramLiteral) => valueOf(v));
+  } else if (isLiteral(recordValue)) {
+    return valueOfLiteral(recordValue as AnyGramLiteral);
+  } else if (isGramRecord(recordValue)) {
+    return recordValue.reduce((acc, property) => {
+      acc[property.name] = valueOf(property.value);
+      return acc;
+    }, {} as { [key: string]: any });
+  }
+};
+
+function assertNever(x: never): never {
+  throw new Error("Unexpected object: " + x);
+}
+export const valueOfLiteral = (ast:AnyGramLiteral):any => {
+  switch (ast.type) {
+    case 'boolean': return valueOfBoolean(ast);
+    case 'string': return valueOfString(ast);
+    case 'integer': return valueOfInteger(ast);
+    case 'decimal': return valueOfDecimal(ast);
+    case 'hexadecimal': return valueOfHexadecimal(ast);
+    case 'octal': return valueOfOctal(ast);
+    case 'tagged': return 'tag, you are it!';
+    case 'measurement': return 'measure by measure';
+    default: 
+      return assertNever(ast)
   }
 }
 

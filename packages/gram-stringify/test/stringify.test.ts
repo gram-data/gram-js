@@ -29,13 +29,13 @@ describe('gram stringify for basic node patterns', () => {
     expect(stringify(p)).toBe('(:Thing)');
   });
   it('shows a node with record, ({k:"v"}) => "({k:`v`})"', () => {
-    const record = g.unfoldProperties({ k: g.string('v') });
+    const record = g.mapToRecord({ k: g.string('v') });
     const p = g.node(undefined, undefined, record);
     // console.log(inspect(p));
     expect(stringify(p)).toBe('({k:`v`})');
   });
   it('shows a fully specified node, (n:Thing {k:"v"}) => "(n:Thing {k:`v`})"', () => {
-    const record = g.unfoldProperties({ k: g.string('v') });
+    const record = g.mapToRecord({ k: g.string('v') });
     const p = g.node('n', ['Thing'], record);
     // console.log(inspect(p));
     expect(stringify(p)).toBe('(n:Thing {k:`v`})');
@@ -59,7 +59,7 @@ describe('gram stringify for basic edge patterns', () => {
     expect(stringify(p)).toBe('()-[:THEN]-()');
   });
   it('shows an edge with record, ()-[{k:"v"}]-() => "()-[k:`v`]-()"', () => {
-    const record = g.unfoldProperties({ k: g.string('v') });
+    const record = g.mapToRecord({ k: g.string('v') });
     const p = g.edge(
       [g.node(), g.node()],
       'either',
@@ -71,7 +71,7 @@ describe('gram stringify for basic edge patterns', () => {
     expect(stringify(p)).toBe('()-[{k:`v`}]-()');
   });
   it('shows a fully specified edge, ()-[e:THEN {k:"v"}]-() => "()-[e:THEN k:`v`]-()"', () => {
-    const record = g.unfoldProperties({ k: g.string('v') });
+    const record = g.mapToRecord({ k: g.string('v') });
     const p = g.edge([g.node(), g.node()], 'either', 'e', ['THEN'], record);
     // console.log(inspect(p));
     expect(stringify(p)).toBe('()-[e:THEN {k:`v`}]-()');

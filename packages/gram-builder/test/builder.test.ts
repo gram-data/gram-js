@@ -26,12 +26,11 @@ import {
   isDateLiteral,
   WellKnownTextLiteral,
   isWellKnownTextLiteral,
+  isGramRecord,
 } from '@gram-data/gram-ast';
 
-import { unfoldProperties } from '../src/';
-
 // import { Node as UnistNode } from 'unist';
-const inspect = require('unist-util-inspect');
+// const inspect = require('unist-util-inspect');
 
 /**
  * treeSize returns the number of exclusive descendents
@@ -45,19 +44,23 @@ const treeSize = require('unist-util-size');
 describe('gram builder for records', () => {
   it('with boolean values', () => {
     const value = true;
-    const record = { k: g.boolean(value) };
+    const record = g.mapToRecord({ k: g.boolean(value) });
+    const pluckedProperty = g.pluck(record, 'k');
 
-    expect((record.k as BooleanLiteral).type).toBe('boolean');
-    expect(isBooleanLiteral(record.k)).toBeTruthy();
-    expect((record.k as GramLiteral).value).toBe(String(value));
+    expect(isGramRecord(record)).toBeTruthy();
+    expect(pluckedProperty.name).toBe('k');
+    expect(isBooleanLiteral(pluckedProperty.value)).toBeTruthy();
+    expect((pluckedProperty.value as BooleanLiteral).value).toBe(String(value));
   });
   it('with string values', () => {
     const value = 'some text';
-    const record = { k: g.string(value) };
+    const record = g.mapToRecord({ k: g.string(value) });
+    const pluckedProperty = g.pluck(record, 'k');
 
-    expect((record.k as StringLiteral).type).toBe('string');
-    expect(isStringLiteral(record.k)).toBeTruthy();
-    expect((record.k as GramLiteral).value).toBe(String(value));
+    expect(isGramRecord(record)).toBeTruthy();
+    expect(pluckedProperty.name).toBe('k');
+    expect(isStringLiteral(pluckedProperty.value)).toBeTruthy();
+    expect((pluckedProperty.value as StringLiteral).value).toBe(String(value));
   });
   it('with integer values', () => {
     const value = 42;
@@ -147,7 +150,7 @@ describe('gram cons() can build empty paths', () => {
   });
   it('when the identity is ø, as empty = [ø] =~ [ø]', () => {
     const p = g.cons(undefined, { id: 'ø' });
-    console.log(inspect(p));
+    // console.log(inspect(p));
     expect(isGramEmptyPath(p)).toBeTruthy();
     expect(isGramPath(p)).toBeTruthy(); // empty paths are paths
     expect(p.id).toBe(EMPTY_PATH_ID);
@@ -277,7 +280,7 @@ describe('gram node() builder ', () => {
       b: g.string('hello'),
       c: g.integer(42),
     };
-    const p = g.node(undefined, undefined, unfoldProperties(record));
+    const p = g.node(undefined, undefined, g.mapToRecord(record));
     // console.log(inspect( b:'hello', c:42})", p);
 
     expect(p.record).toBeDefined();
@@ -356,7 +359,7 @@ describe('gram edge() can build edges', () => {
     const left = g.node('a');
     const right = g.node('b');
     const p = g.edge([left, right], 'right');
-    console.log(inspect(p));
+    // console.log(inspect(p));
     expect(isGramEmptyPath(p)).toBeFalsy();
     expect(isGramNode(p)).toBeFalsy();
     expect(isGramEdge(p)).toBeTruthy();
@@ -413,7 +416,7 @@ describe('gram edge() can build edges', () => {
   });
 
   it('()-[{a:false, b:"hello", c:42}]->()', () => {
-    const record = g.unfoldProperties({
+    const record = g.mapToRecord({
       a: g.boolean(false),
       b: g.string('hello'),
       c: g.integer(42),
@@ -474,7 +477,7 @@ describe('gram cons() decorator patterns', () => {
   it('decorate a node with an extra record, as  [{editor:"ABK"} (n)] =~ [{editor:"ABK"} (n) [ø] ]', () => {
     const child = g.node('n');
     const p = g.cons([child], {
-      record: unfoldProperties({ editor: g.string('ABK') }),
+      record: g.mapToRecord({ editor: g.string('ABK') }),
     });
     // console.log(inspect(p));
     expect(isGramEmptyPath(p)).toBeFalsy();

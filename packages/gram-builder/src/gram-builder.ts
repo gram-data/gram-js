@@ -252,7 +252,7 @@ export const path = (
  *
  * @param properties
  */
-export const reduceRecord = (properties: GramRecord): GramPropertyMap => {
+export const recordToMap = (properties: GramRecord): GramPropertyMap => {
   return properties.reduce((acc: GramPropertyMap, p: GramProperty) => {
     acc[p.name] = p.value;
     return acc;
@@ -264,12 +264,18 @@ export const reduceRecord = (properties: GramRecord): GramPropertyMap => {
  *
  * @param properties
  */
-export const unfoldProperties = (properties: GramPropertyMap): GramRecord => {
+export const mapToRecord = (properties: GramPropertyMap): GramRecord => {
   return Object.entries(properties).reduce((acc: GramRecord, [k, v]) => {
     acc.push(property(k, v));
     return acc;
   }, [] as GramRecord);
 };
+
+export const pluck = (properties: GramRecord, path:string) => {
+  return properties.reduce( (acc, prop) => {
+    return prop.name === path ? prop : acc
+  })
+}
 
 export const property = (
   name: string,
@@ -385,6 +391,6 @@ export default {
   time,
   duration,
   flatten,
-  reduceRecord,
-  unfoldProperties,
+  recordToMap,
+  mapToRecord,
 };

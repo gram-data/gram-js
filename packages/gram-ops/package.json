@@ -1,5 +1,5 @@
 {
-  "name": "@gram-data/gram-value",
+  "name": "@gram-data/gram-ops",
   "keywords": [
     "graph",
     "neo4j",
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "https://github.com/gram-data/gram-js.git"
   },
-  "homepage": "https://github.com/gram-data/gram-js/tree/main/packages/gram-value#readme",
+  "homepage": "https://github.com/gram-data/gram-js/tree/main/packages/gram-ops#readme",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -29,7 +29,7 @@
     "lint": "tsdx lint",
     "lint:fix": "tsdx lint --fix",
     "prepare": "run-s build",
-    "build:demo": "shx cp dist/gram-value.umd.development.* ./public",
+    "build:demo": "shx cp dist/gram-ops.umd.development.* ./public",
     "demo": "serve ./public/",
     "update": "ncu -u",
     "update:check": "ncu"
@@ -46,9 +46,8 @@
     "trailingComma": "es5"
   },
   "author": "Andreas Kollegger",
-  "module": "dist/gram-value.esm.js",
+  "module": "dist/gram-ops.esm.js",
   "devDependencies": {
-    "@gram-data/gram-builder": "^0.2.8",
     "@types/jest": "^26.0.15",
     "@types/unist": "^2.0.3",
     "@typescript-eslint/parser": "^4.8.1",
@@ -64,10 +63,11 @@
     "unist-util-inspect": "^6.0.1"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.2.8"
+    "@gram-data/gram-builder": "*",
+    "@gram-data/gram-ast": "*",
+    "fp-ts": "^2.8.6"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "gitHead": "0f6d560e002650f6c293c0737ddc2539d78fbbff"
+  }
 }
