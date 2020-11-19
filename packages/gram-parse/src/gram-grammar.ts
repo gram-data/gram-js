@@ -192,7 +192,7 @@ const grammar: Grammar = {
       symbols: ['Node', 'Edge', 'NodePattern'],
       postprocess: ([np, es, ep]) =>
         g.cons([np, ep], {
-          relation: es.relation,
+          kind: es.kind,
           id: es.id,
           labels: es.labels,
           record: es.record,
@@ -208,47 +208,47 @@ const grammar: Grammar = {
     {
       name: 'Edge',
       symbols: [{ literal: '-[' }, '_', 'Attributes', { literal: ']->' }],
-      postprocess: ([, , content]) => ({ relation: 'right', ...content }),
+      postprocess: ([, , content]) => ({ kind: 'right', ...content }),
     },
     {
       name: 'Edge',
       symbols: [{ literal: '-[' }, '_', 'Attributes', { literal: ']-' }],
-      postprocess: ([, , content]) => ({ relation: 'either', ...content }),
+      postprocess: ([, , content]) => ({ kind: 'either', ...content }),
     },
     {
       name: 'Edge',
       symbols: [{ literal: '<-[' }, '_', 'Attributes', { literal: ']-' }],
-      postprocess: ([, , content]) => ({ relation: 'left', ...content }),
+      postprocess: ([, , content]) => ({ kind: 'left', ...content }),
     },
     {
       name: 'Edge',
       symbols: [{ literal: '-[]->' }],
-      postprocess: () => ({ relation: 'right' }),
+      postprocess: () => ({ kind: 'right' }),
     },
     {
       name: 'Edge',
       symbols: [{ literal: '-[]-' }],
-      postprocess: () => ({ relation: 'either' }),
+      postprocess: () => ({ kind: 'either' }),
     },
     {
       name: 'Edge',
       symbols: [{ literal: '<-[]-' }],
-      postprocess: () => ({ relation: 'left' }),
+      postprocess: () => ({ kind: 'left' }),
     },
     {
       name: 'Edge',
       symbols: [{ literal: '-->' }],
-      postprocess: () => ({ relation: 'right' }),
+      postprocess: () => ({ kind: 'right' }),
     },
     {
       name: 'Edge',
       symbols: [{ literal: '--' }],
-      postprocess: () => ({ relation: 'either' }),
+      postprocess: () => ({ kind: 'either' }),
     },
     {
       name: 'Edge',
       symbols: [{ literal: '<--' }],
-      postprocess: () => ({ relation: 'left' }),
+      postprocess: () => ({ kind: 'left' }),
     },
     {
       name: 'PathComposition',
@@ -276,9 +276,9 @@ const grammar: Grammar = {
         '_',
         { literal: ']' },
       ],
-      postprocess: ([, , attr, , relation, , lhs, , rhs]) =>
+      postprocess: ([, , attr, , kind, , lhs, , rhs]) =>
         g.cons(rhs ? (lhs ? [lhs, rhs] : [rhs]) : [], {
-          relation,
+          kind,
           id: attr.id,
           labels: attr.labels,
           record: attr.record,

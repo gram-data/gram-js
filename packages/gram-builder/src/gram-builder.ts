@@ -12,8 +12,6 @@ import {
   GramEdge,
   GramProperty,
   GramRecordValue,
-  Relation,
-  Navigation,
   BooleanLiteral,
   StringLiteral,
   TaggedLiteral,
@@ -23,7 +21,6 @@ import {
   OctalLiteral,
   MeasurementLiteral,
   GramRecord,
-  GramPathlike,
   GramEmptyPath,
   isGramNode,
   isGramEmptyPath,
@@ -32,6 +29,8 @@ import {
   DateLiteral,
   TimeLiteral,
   DurationLiteral,
+  RelationshipKind,
+  OrientedKind,
 } from '@gram-data/gram-ast';
 
 export type Children<T> = T | T[] | (() => T | T[]);
@@ -79,26 +78,26 @@ export interface PathAttributes {
   id?: string;
   labels?: string[];
   record?: GramRecord;
-  relation?: Relation;
+  kind?: RelationshipKind;
 }
 
 /**
- * Reduce a list of paths into a single path composed using the given relation.
+ * Reduce a list of paths into a single path composed using the given kind.
  *
- * @param relation the relation to apply to all sub-paths
+ * @param kind the kind to apply to all sub-paths
  * @param pathlist sub-paths to be paired
  * @param baseID the baseID from which path expressions will derive new IDs
  */
 export const reduce = (
-  relation: Relation = 'pair',
+  kind: RelationshipKind = 'pair',
   pathlist: GramPath[],
   baseID?: string
-): GramPathlike => {
+): GramPath => {
   let subID = 0;
   if (pathlist.length > 1) {
-    return pathlist.reduceRight((acc: GramPathlike, curr) => {
+    return pathlist.reduceRight((acc: GramPath, curr) => {
       const childID = baseID ? `${baseID}${subID}` : undefined;
-      return cons([curr, acc], { relation, id: childID });
+      return cons([curr, acc], { kind, id: childID });
     }, EMPTY_PATH);
   } else {
     return pathlist[0];
@@ -112,9 +111,9 @@ export const reduce = (
  * @param attributes attributes
  */
 export const cons = (
-  members?: [] | [GramPathlike] | [GramPathlike, GramPathlike],
+  members?: [] | [GramPath] | [GramPath, GramPath],
   attributes: PathAttributes = {}
-): GramPathlike => {
+): GramPath => {
   const element: any = {
     type: 'path',
     ...(attributes.id && { id: attributes.id }),
@@ -147,34 +146,34 @@ export const cons = (
     }
   } else if (members.length === 2) {
     if (
-      attributes.relation &&
-      attributes.relation !== 'pair' &&
+      attributes.kind &&
+      attributes.kind !== 'pair' &&
       isGramNode(members[0]) &&
       isGramNode(members[1])
     ) {
-      element.relation = attributes.relation;
+      element.kind = attributes.kind;
       element.children = [members[0], members[1]];
       return element as GramEdge;
     } else if (isGramEmptyPath(members[0]) && isGramEmptyPath(members[1])) {
-      element.relation = attributes.relation;
+      element.kind = attributes.kind;
       element.children = [];
       return element as GramNode;
     }
     element.children = [members[0], members[1]];
   }
-  element.relation = attributes.relation || 'pair';
+  element.kind = attributes.kind || 'pair';
   return element as GramPath;
 };
 
 /**
  * Singleton instance of GramEmptyPath
  */
-export const EMPTY_PATH: GramEmptyPath = {
+const EMPTY_PATH: GramEmptyPath = {
   type: 'path',
   id: EMPTY_PATH_ID,
   labels: undefined,
   record: undefined,
-  children: undefined,
+  children: [],
 };
 
 /**
@@ -206,14 +205,14 @@ export const node = (
  * Build an Edge.
  *
  * @param children
- * @param relation
+ * @param kind
  * @param id
  * @param labels
  * @param record
  */
 export const edge = (
   children: [GramNode, GramNode],
-  relation: Navigation,
+  kind: OrientedKind,
   id?: string,
   labels?: string[],
   record?: GramRecord
@@ -222,7 +221,7 @@ export const edge = (
   id,
   ...(labels && { labels }),
   ...(record && { record }),
-  relation,
+  kind,
   children,
 });
 

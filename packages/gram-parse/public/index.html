@@ -11,14 +11,14 @@
     <p>To parsed AST:</p>
     <pre id="ast">parsed AST should appear here</pre>
 
-    <script src="./gram-parse.umd.development.js"></script>
-    <script>
+    <script type="module">
+      import * as gram from './gram-parse.umd.development.js'
+
       window.onload = function () {
         var src = document.getElementById('src').textContent;
-        var ast = gram.parse.toAST(src)
+        var ast = this.gram.parse.toAST(src)
         document.getElementById("ast").textContent = JSON.stringify(ast,null,2);
       }
-
     </script>
   </body>
 </html>

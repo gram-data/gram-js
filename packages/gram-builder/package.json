@@ -48,9 +48,11 @@
   "author": "Andreas Kollegger",
   "module": "dist/gram-builder.esm.js",
   "devDependencies": {
+    "@types/chalk": "^2.2.0",
     "@types/jest": "^26.0.15",
     "@types/unist": "^2.0.3",
     "@typescript-eslint/parser": "^4.8.1",
+    "chalk": "^4.1.0",
     "husky": "^4.3.0",
     "npm-check-updates": "^10.2.1",
     "npm-run-all": "^4.1.5",
@@ -64,7 +66,7 @@
     "unist-util-size": "^2.0.1"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.2.9"
+    "@gram-data/gram-ast": "*"
   },
   "gitHead": "0f6d560e002650f6c293c0737ddc2539d78fbbff",
   "publishConfig": {

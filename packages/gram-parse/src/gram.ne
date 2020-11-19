@@ -56,7 +56,7 @@ Path ->
 
 NodePattern ->
     Node Edge NodePattern
-      {% ([np,es,ep]) => g.cons([np,ep], {relation:es.relation, id:es.id, labels:es.labels, record:es.record} ) %}
+      {% ([np,es,ep]) => g.cons([np,ep], {kind:es.kind, id:es.id, labels:es.labels, record:es.record} ) %}
   | Node {% id %}
 
 Node ->
@@ -65,23 +65,23 @@ Node ->
 
 Edge ->
     "-[" _ Attributes "]->"   
-              {% ([,,content]) => ({relation:'right', ...content}) %}
+              {% ([,,content]) => ({kind:'right', ...content}) %}
   | "-[" _ Attributes "]-"    
-              {% ([,,content]) => ({relation:'either', ...content}) %}
+              {% ([,,content]) => ({kind:'either', ...content}) %}
   | "<-[" _ Attributes "]-"   
-              {% ([,,content]) => ({relation:'left', ...content}) %}
-  | "-[]->"   {% () => ({relation:'right'}) %}
-  | "-[]-"    {% () => ({relation:'either'}) %}
-  | "<-[]-"   {% () => ({relation:'left'}) %}
-  | "-->"     {% () => ({relation:'right'}) %}
-  | "--"      {% () => ({relation:'either'}) %}
-  | "<--"     {% () => ({relation:'left'}) %}
+              {% ([,,content]) => ({kind:'left', ...content}) %}
+  | "-[]->"   {% () => ({kind:'right'}) %}
+  | "-[]-"    {% () => ({kind:'either'}) %}
+  | "<-[]-"   {% () => ({kind:'left'}) %}
+  | "-->"     {% () => ({kind:'right'}) %}
+  | "--"      {% () => ({kind:'either'}) %}
+  | "<--"     {% () => ({kind:'left'}) %}
 
 PathComposition -> 
     "[" _ "]" {% () => g.empty() %}
   | "[" _ Attributes _ Relation:? _ Path:? _ Path:? _ "]"
       # with both optional, rhs will match first
-      {% ([,,attr,,relation,,lhs,,rhs]) => g.cons( (rhs ? lhs ? [lhs,rhs] : [rhs] : []), {relation, id:attr.id, labels:attr.labels, record:attr.record}) %}
+      {% ([,,attr,,kind,,lhs,,rhs]) => g.cons( (rhs ? lhs ? [lhs,rhs] : [rhs] : []), {kind, id:attr.id, labels:attr.labels, record:attr.record}) %}
   
   # "[" _ Attributes _ Path:? _ "]"
   #   {% ([,,attr,,lhs]) => g.cons(lhs ? [lhs] : undefined, attr) %}

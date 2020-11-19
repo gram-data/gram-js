@@ -251,7 +251,7 @@ describe('parsing edges', () => {
     // console.log(inspect(result));
     const firstPath = result.children[0];
     expect(isGramEdge(firstPath)).toBeTruthy();
-    expect(firstPath.relation).toBe('either');
+    expect(firstPath.kind).toBe('either');
     expect(firstPath.children.length).toBe(2);
     expect(isGramNode(firstPath.children[0])).toBeTruthy();
     expect(isGramNode(firstPath.children[1])).toBeTruthy();
@@ -264,7 +264,7 @@ describe('parsing edges', () => {
     // console.log(inspect(result));
     const firstPath = result.children[0];
     expect(isGramEdge(firstPath)).toBeTruthy();
-    expect(firstPath.relation).toBe('right');
+    expect(firstPath.kind).toBe('right');
     expect(firstPath.id).toBeUndefined();
     expect(firstPath.children.length).toBe(2);
     expect(isGramNode(firstPath.children[0])).toBeTruthy();
@@ -278,7 +278,7 @@ describe('parsing edges', () => {
     // console.log(inspect(result));
     const firstPath = result.children[0];
     expect(isGramEdge(firstPath)).toBeTruthy();
-    expect(firstPath.relation).toBe('left');
+    expect(firstPath.kind).toBe('left');
     expect(firstPath.id).toBeUndefined();
     expect(firstPath.children.length).toBe(2);
     expect(isGramNode(firstPath.children[0])).toBeTruthy();
@@ -335,7 +335,7 @@ describe('parsing edges', () => {
     // console.log(inspect(result));
     const firstPath = result.children[0];
     expect(isGramEdge(firstPath)).toBeTruthy();
-    expect(firstPath.relation).toBe('right');
+    expect(firstPath.kind).toBe('right');
     expect(firstPath.id).toBe(edgeId);
     expect(firstPath.children.length).toBe(2);
     expect(isGramNode(firstPath.children[0])).toBeTruthy();
@@ -350,7 +350,7 @@ describe('parsing edges', () => {
     // console.log(inspect(result));
     const firstPath = result.children[0];
     expect(isGramEdge(firstPath)).toBeTruthy();
-    expect(firstPath.relation).toBe('left');
+    expect(firstPath.kind).toBe('left');
     expect(firstPath.id).toBe(edgeId);
     expect(firstPath.children.length).toBe(2);
     expect(isGramNode(firstPath.children[0])).toBeTruthy();
@@ -408,7 +408,7 @@ describe('parsing path notation for edges', () => {
     // console.log(inspect(result));
     const firstPath = result.children[0];
     expect(isGramEdge(firstPath)).toBeTruthy();
-    expect(firstPath.relation).toBe('either');
+    expect(firstPath.kind).toBe('either');
     expect(firstPath.id).toBe(edgeId);
     expect(firstPath.children.length).toBe(2);
     expect(isGramNode(firstPath.children[0])).toBeTruthy();
@@ -423,7 +423,7 @@ describe('parsing path notation for edges', () => {
     // console.log(inspect(result));
     const firstPath = result.children[0];
     expect(isGramEdge(firstPath)).toBeTruthy();
-    expect(firstPath.relation).toBe('right');
+    expect(firstPath.kind).toBe('right');
     expect(firstPath.id).toBe(edgeId);
     expect(firstPath.children.length).toBe(2);
     expect(isGramNode(firstPath.children[0])).toBeTruthy();

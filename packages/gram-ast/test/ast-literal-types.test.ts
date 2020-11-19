@@ -1,9 +1,5 @@
 import {
-  EMPTY_PATH_ID,
-  isGramEmptyPath,
-  isGramNode,
   isStringLiteral,
-  isGramEdge,
   isBooleanLiteral,
   isTaggedLiteral,
   isIntegerLiteral,
@@ -15,59 +11,6 @@ import {
   isWellKnownTextLiteral,
 } from '../src/gram-types';
 
-describe('gram empty path', () => {
-  it('is entirely empty', () => {
-    const unit = { type: 'path', id: EMPTY_PATH_ID };
-    expect(isGramEmptyPath(unit)).toBeTruthy();
-    if (isGramEmptyPath(unit)) {
-      expect(unit.id).toBe(EMPTY_PATH_ID);
-      expect(unit.labels).toBeUndefined();
-      expect(unit.record).toBeUndefined();
-      expect(unit.children).toBeUndefined();
-    }
-  });
-});
-
-describe('gram nodes', () => {
-  it('have identity, labels and a record, but no children', () => {
-    const node = { type: 'path', id: 'a', children: [] };
-    expect(isGramNode(node)).toBeTruthy();
-    if (isGramNode(node)) {
-      expect(node.id).toEqual('a');
-      node.labels = ['A', 'B'];
-      expect(node.labels).toEqual(expect.arrayContaining(['A', 'B']));
-      node.record = [
-        { type: 'property', name: 'k', value: { type: 'string', value: 'v' } },
-      ];
-      expect(isStringLiteral(node.record[0].value)).toBeTruthy();
-      expect(node.children).toHaveLength(0);
-    }
-  });
-});
-
-describe('gram edges', () => {
-  it('have identity, labels and a record, two node children and never a pair relation', () => {
-    const a = { type: 'path', id: 'a', children: [] };
-    const edge = { type: 'path', id: 'e', relation: 'right', children: [a, a] };
-    expect(isGramEdge(edge)).toBeTruthy();
-    if (isGramEdge(edge)) {
-      expect(edge.id).toEqual('e');
-      edge.labels = ['A', 'B'];
-      expect(edge.labels).toEqual(expect.arrayContaining(['A', 'B']));
-      edge.record = [
-        { type: 'property', name: 'k', value: { type: 'string', value: 'v' } },
-      ];
-      expect(isStringLiteral(edge.record[0].value)).toBeTruthy();
-      expect(edge.children).toHaveLength(2);
-      expect(edge.relation).toBeDefined();
-    }
-  });
-  it('can never have a pair relation', () => {
-    const a = { type: 'path', id: 'a', children: [] };
-    const edge = { type: 'path', id: 'e', relation: 'pair', children: [a, a] };
-    expect(isGramEdge(edge)).toBeFalsy();
-  });
-});
 
 describe('gram ast boolean literals', () => {
   it('are a type with value', () => {

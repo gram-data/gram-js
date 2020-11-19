@@ -1,7 +1,6 @@
 /**
  * # Gram AST Types
  *
- * These AST elements
  *
  * References:
  *
@@ -16,27 +15,32 @@ import {
   Node as UnistNode,
 } from 'unist';
 
-///////////////////////////////////////////////////////////////////////////////
-// Base ast types...
 
-export type AnyGramPath = GramNode | GramEdge | GramPath;
+///////////////////////////////////////////////////////////////////////////////
+// Path-like types...
 
 /**
- * The base type for all path-like elements.
+ * GramPath is composed of nodes, edges and other paths that have been composed
+ * into a path expression.
+ *
  */
-export interface GramPathlike extends UnistNode {
+export interface GramPath extends UnistParent {
   /**
-   * A unique path identifier.
+   * Type discriminator for this AST element, always 'path'.
+   */
+  type: 'path';
+
+  /**
+   * An identifier for the path.
    *
-   * For example, 'a' in `()-[a]->()` or '1' in `(1)`
+   * For example, '1' in `()-[1]->()` or 'a' in `(a)`
    */
   id?: string;
 
   /**
-   * The relationship between the left and right children,
-   * or a 'pair' that associates without being navigable.
+   * The kind of relationship between the path members.
    */
-  relation?: Relation;
+  kind?: RelationshipKind;
 
   /**
    * Labels are content.
@@ -50,32 +54,6 @@ export interface GramPathlike extends UnistNode {
    *
    */
   record?: GramRecord;
-
-  children?: GramPath[];
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// Pathlike types...
-
-/**
- * GramPath contains nodes, edges and other paths that have been composed
- * into a path expression.
- *
- * - denoted with matching, non-empty square brackets: `[id]`
- * - path equivalence: `[]`
- * - identity: yes (required)
- * - children: yes (optional)
- * - labels: yes
- * - record: yes
- * - path length: sum(children[0].length, children[1].length)
- * - path cardinality: nodes().length
- * - information role: data annotation
- */
-export interface GramPath extends GramPathlike, UnistParent {
-  /**
-   * Type discriminator for this AST element, always 'path'.
-   */
-  type: 'path';
 
   /**
    * Either:
@@ -97,26 +75,18 @@ export const isGramPath = (o: any): o is GramPath =>
 export const EMPTY_PATH_ID = 'ø';
 
 /**
- * A GramUnit is an empty path expression which contains no sub-paths and has no identity.
+ * A GramEmptyPath is an empty path expression which contains no sub-paths and has no identity.
  *
- * - denoted with matching square brackets: `[]`
- * - path equivalence: `[]`
- * - identity: no
- * - children: no
- * - labels: no
- * - record: no
- * - path length: 0
- * - path cardinality: 0
- * - information role: emptiness
  */
-export interface GramEmptyPath extends GramPathlike {
-  type: 'path';
+export interface GramEmptyPath extends GramPath {
 
-  id: 'ø';
+  id: typeof EMPTY_PATH_ID;
 
   labels: undefined;
 
   record: undefined;
+
+  children: [];
 }
 
 /**
@@ -131,7 +101,7 @@ export interface GramEmptyPath extends GramPathlike {
  * @param o any object
  */
 export const isGramEmptyPath = (o: any): o is GramEmptyPath =>
-  isGramPath(o) && o.children === undefined && o.id === EMPTY_PATH_ID;
+  isGramPath(o) && o.id === EMPTY_PATH_ID;
 
 /**
  * A GramNode is a path composed of two empty paths,
@@ -173,58 +143,72 @@ export const isGramNode = (o: any): o is GramNode =>
   o.id !== EMPTY_PATH_ID;
 
 /**
- * Navigable relations to compose path expressions.
- * Gram includes one extra relation that is not
- * navigable, the ',' pair relation used only in
- * path composition and not allowed in Edge definition.
- *
+ * Kind of path which is oriented
+ * for navigation.
+ * 
  * One of:
  *
  * - left   `(a)<--(b)`
  * - right  `(a)-->(b)`
  * - either `(a)--(b)`
- * - self   `(a) =~ (a)--(a)`
+ * 
  */
-export type Navigation = 'left' | 'right' | 'either';
+export type OrientedKind = 'left' | 'right' | 'either';
 
-export type Relation = Navigation | 'pair';
+/**
+ * RelationshipKind describes the kind of 
+ * relationship between composed paths.
+ * 
+ * Classically this is the Orientation of
+ * the edge between two nodes. 
+ * 
+ * Nodes can also be composed into a simple ordered
+ * pair, which does not imply navigability. 
+ * Pairs enable compound paths to be assembled
+ * which do not follow a linear flow. 
+ * 
+ * For example, this is a single path which
+ * pairs two adjacent edges that coincide at `(a)`:
+ * `(a)-->(b),(a)-->(c)
+ * 
+ * One of:
+ * 
+ * - Orientation
+ * - pair         `[a,b]`
+ */
+export type RelationshipKind = OrientedKind | 'pair';
 
 /**
  * GramEdge is a path composed of two GramNodes:
  *
- * - a path expression composing two nodes and a
- * - a path expression of length 1
- * - logically equivalent to an empty path (path with no children) within an enclosing path: `(n) =~ [n []]`
- * - the operand in path expressions
- * - usually a noun concept
  */
 export interface GramEdge extends GramPath {
   /**
-   * The operands of the Edge, known as "children" in the AST.
+   * The adjacent Nodes of the Edge, known as "children" in the AST.
    *
-   * children[0] is the 'left' child
-   * children[1] is the 'right' child
+   * children[0] is the 'left' Node
+   * children[1] is the 'right' Node
    */
   children: [GramNode, GramNode];
 }
 
 /**
- * Type guard for GramEdge.
+ * Type guard for GramEdge. 
+ * 
+ * An edge is a path composed of two nodes.
  *
  * @param o any object
  */
 export const isGramEdge = (o: any): o is GramEdge =>
   isGramPath(o) &&
-  o.relation !== undefined &&
-  o.relation !== 'pair' &&
-  o.children !== undefined &&
-  o.children.every(child => isGramNode(child));
+  o.kind !== undefined && o.kind !== 'pair' &&
+  o.children !== undefined && o.children.every(child => isGramNode(child));
 
 /**
  * A GramPathSeq is a sequence of paths.
  *
  */
-export interface GramPathSeq extends GramPathlike {
+export interface GramPathSeq extends UnistParent {
   /**
    * Type discriminator for this AST element, aways 'seq'.
    */
@@ -241,12 +225,12 @@ export interface GramPathSeq extends GramPathlike {
 export const isGramPathSequence = (o: any): o is GramPathSeq =>
   !!o.type && o.type === 'seq';
 
-export const isGramPathlike = (o: any): o is GramPathlike =>
-  isGramPath(o) ||
-  isGramEmptyPath(o) ||
-  isGramNode(o) ||
-  isGramEdge(o) ||
-  isGramPathSequence(o);
+// export const isGramPathlike = (o: any): o is GramPathlike =>
+//   isGramPath(o) ||
+//   isGramEmptyPath(o) ||
+//   isGramNode(o) ||
+//   isGramEdge(o) ||
+//   isGramPathSequence(o);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Records...
@@ -320,12 +304,12 @@ export const isGramProperty = (o: any): o is GramProperty =>
 /**
  * GramLiteral is a data value represented as plain text.
  */
-export interface GramLiteral extends UnistLiteral {
-  type: string;
-  value: string;
-}
+// export interface GramLiteral extends UnistLiteral {
+//   type: string;
+//   value: string;
+// }
 
-export type AnyGramLiteral =
+export type GramLiteral =
   | BooleanLiteral
   | StringLiteral
   | TaggedLiteral
@@ -340,13 +324,13 @@ export type AnyGramLiteral =
  *
  * @param o any object
  */
-export const isLiteral = (o: any): o is GramLiteral =>
+export const isLiteral = (o: any): o is UnistLiteral =>
   !!o.type && !!o.value && o.type !== 'property';
 
 /**
  * Represents a boolean literal, like `true` or `false`.
  */
-export interface BooleanLiteral extends GramLiteral {
+export interface BooleanLiteral extends UnistLiteral {
   /**
    * Represents this variant of a Literal.
    */
@@ -366,7 +350,7 @@ export const isBooleanLiteral = (o: any): o is BooleanLiteral =>
 /**
  * Represents a string literal, like "hello".
  */
-export interface StringLiteral extends GramLiteral {
+export interface StringLiteral extends UnistLiteral {
   /**
    * Represents this variant of a Literal.
    */
@@ -378,7 +362,7 @@ export interface StringLiteral extends GramLiteral {
  *
  * @param o any object
  */
-export const isStringLiteral = (o: any): o is StringLiteral =>
+export const isStringLiteral = (o: any): o is UnistLiteral =>
   !!o.type && !!o.value && o.type === 'string';
 
 /**
@@ -396,7 +380,7 @@ export const isStringLiteral = (o: any): o is StringLiteral =>
  * @see GeospatialLiteral
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
  */
-export interface TaggedLiteral extends GramLiteral {
+export interface TaggedLiteral extends UnistLiteral {
   type: 'tagged';
 
   /**
@@ -410,13 +394,13 @@ export interface TaggedLiteral extends GramLiteral {
  *
  * @param o any object
  */
-export const isTaggedLiteral = (o: any): o is TaggedLiteral =>
+export const isTaggedLiteral = (o: any): o is UnistLiteral =>
   !!o.type && !!o.value && !!o.tag && o.type === 'tagged';
 
 /**
  * Represents an integer number, like 235276234.
  */
-export interface IntegerLiteral extends GramLiteral {
+export interface IntegerLiteral extends UnistLiteral {
   type: 'integer';
 }
 
@@ -431,7 +415,7 @@ export const isIntegerLiteral = (o: any): o is IntegerLiteral =>
 /**
  * Represents a decimal with units, like 12.4px or 42.0mm
  */
-export interface MeasurementLiteral extends GramLiteral {
+export interface MeasurementLiteral extends UnistLiteral {
   type: 'measurement';
 
   /**
@@ -451,7 +435,7 @@ export const isMeasurementLiteral = (o: any): o is MeasurementLiteral =>
 /**
  * Represents an decimal number, like 3.1495.
  */
-export interface DecimalLiteral extends GramLiteral {
+export interface DecimalLiteral extends UnistLiteral {
   type: 'decimal';
 }
 
@@ -468,7 +452,7 @@ export const isDecimalLiteral = (o: any): o is DecimalLiteral =>
  *
  * The prefix `0x` signifies a hexadecimal value to follow.
  */
-export interface HexadecimalLiteral extends GramLiteral {
+export interface HexadecimalLiteral extends UnistLiteral {
   type: 'hexadecimal';
 }
 
@@ -486,7 +470,7 @@ export const isHexadecimalLiteral = (o: any): o is HexadecimalLiteral =>
  * The prefix `0` signifies octal notation value to follow.
  * Without the leading 0, the number would represent an integer.
  */
-export interface OctalLiteral extends GramLiteral {
+export interface OctalLiteral extends UnistLiteral {
   type: 'octal';
 }
 

@@ -13,26 +13,38 @@ import {
   GramPathSeq,
   isGramEmptyPath,
   isGramLiteralArray,
+  GramPropertyMap,
+  isGramPathlike,
+  AnyGramLiteral,
 } from '@gram-data/gram-ast';
 
 const isEmpty = (o: any) => Object.keys(o).length === 0;
 
-const toStringLiteral = (l: GramLiteral): string => {
+function assertNever(x: never): never {
+  throw new Error("Unexpected object: " + x);
+}
+const toStringLiteral = (l: AnyGramLiteral): string => {
   switch (l.type) {
     case 'integer':
+    case 'boolean':
+    case 'octal':
+    case 'hexadecimal':
+    case 'decimal':
       return l.value;
     case 'string':
       return `\`${l.value}\``;
     case 'tagged':
       return `${l.tag}\`${l.value}\``;
-    default:
-      return `<ERROR, can't stringify literals of type ${l.type}>`;
+    case 'measurement':
+      return `${l.value}${l.unit}`;
+    default: 
+      return assertNever(l)
   }
 };
 
 const toStringValue = (v: GramRecordValue) => {
   if (isGramLiteralArray(v)) {
-    return `[${v.map((l: GramLiteral) => toStringLiteral(l)).join(',')}]`;
+    return `[${v.map((l: AnyGramLiteral) => toStringLiteral(l)).join(',')}]`;
   } else if (isLiteral(v)) {
     return toStringLiteral(v);
   } else {
@@ -44,6 +56,14 @@ const recordToString = (record: GramRecord): string => {
   const fields = record.map(
     (property: GramProperty, i: number) =>
       `${i > 0 ? ',' : ''}${property.name}:${toStringValue(property.value)}`
+  );
+  return `{${fields.join('')}}`;
+};
+
+const recordMapToString = (record: GramPropertyMap): string => {
+  const fields = Object.entries(record).map(
+    ([name, value], i: number) =>
+      `${i > 0 ? ',' : ''}${name}:${toStringValue(value)}`
   );
   return `{${fields.join('')}}`;
 };
@@ -121,19 +141,23 @@ const pathToString = (ast?: GramPath): string => {
   return pathExpression;
 };
 
-export const stringify = (ast: GramPathlike | GramPathSeq): string => {
-  const tokens: Array<string> = [];
-  switch (ast.type) {
-    case 'seq':
-      const paths = ast.children as GramPath[];
-      return paths.map((path: GramPath) => stringify(path)).join('\n');
-    case 'path':
-      return pathToString(ast as GramPath);
-    default:
-      console.error(`Impossible:`, typeof ast);
+export const stringify = (ast: GramPathlike | GramPathSeq | GramPropertyMap): string => {
+  
+  if (isGramPathlike(ast)) {
+    switch (ast.type) {
+      case 'seq':
+        const paths = ast.children as GramPath[];
+        return paths.map((path: GramPath) => stringify(path)).join('\n');
+      case 'path':
+        return pathToString(ast as GramPath);
+      default:
+        console.error(`Impossible:`, typeof ast);
+    }
+  } else if (typeof ast === 'object') {
+    return recordMapToString(ast)
   }
 
-  return tokens.join('');
+  throw new Error(`Can't stringify <${ast}>`)
 };
 
 export default stringify;
