@@ -1,7 +1,7 @@
 import unified, { CompilerFunction, Plugin } from 'unified';
 import { Node as UnistNode } from 'unist';
 
-import { tokens, isGramPathlike } from '@gram-data/gram-ast';
+import { tokens, isGramPath } from '@gram-data/gram-ast';
 
 import { gramParserPlugin } from '@gram-data/gram-parse';
 
@@ -24,7 +24,7 @@ const expectAllPathlikeElementsToHaveId = () => {
   return (tree: UnistNode) => {
     // console.log(inspect(tree));
     visit(tree, (element: UnistNode) => {
-      if (element && isGramPathlike(element)) {
+      if (element && isGramPath(element)) {
         expect(tokens.isValidIdentifier(element.id)).toBeTruthy();
       }
     });

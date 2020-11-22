@@ -65,7 +65,7 @@
     "typedoc": "^0.19.2",
     "typescript": "^4.0.5"
   },
-  "gitHead": "0f6d560e002650f6c293c0737ddc2539d78fbbff",
+  "gitHead": "ace408982d62d42809cb2597821590ebe5d6fe08",
   "publishConfig": {
     "access": "public"
   }

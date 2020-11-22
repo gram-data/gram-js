@@ -3,7 +3,7 @@ import { Node as UnistNode } from 'unist';
 
 // import {VFile} from 'vfile'
 
-import { isGramPathlike } from '@gram-data/gram-ast';
+import { isGramPath } from '@gram-data/gram-ast';
 import { shortID } from './gram-identity';
 const visit = require('unist-util-visit');
 
@@ -23,7 +23,7 @@ const gramIdentityPlugin: Plugin<IdentityPluginSettings[]> = (
   const identification: Transformer = (tree: UnistNode) => {
     let counter = 0;
     visit(tree, (element: UnistNode) => {
-      if (isGramPathlike(element)) {
+      if (isGramPath(element)) {
         switch (mergedSettings.kind) {
           case 'numeric':
             element.id = element.id || `${counter++}`;
