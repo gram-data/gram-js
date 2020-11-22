@@ -8,6 +8,6 @@ const toAST = (src: string) => {
   const processor = unified()
     .use(gramParserPlugin)
     .freeze();
-  return processor.parse(src) as gramTypes.GramPathSeq;
+  return processor.parse(src) as gramTypes.GramSeq;
 };
 export { toAST, gramParserPlugin, errors };

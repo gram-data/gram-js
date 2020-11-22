@@ -111,7 +111,7 @@ const src = &#x27;(a)--&gt;(b)&#x27;;
 const parsed = <span class="hljs-keyword">to</span><span class="hljs-constructor">AST(<span class="hljs-params">src</span>)</span>;
 
 <span class="hljs-comment">// the top-level of the AST is a sequence of paths</span>
-console.<span class="hljs-keyword">assert</span>(is<span class="hljs-constructor">GramPathSequence(<span class="hljs-params">parsed</span>)</span>);
+console.<span class="hljs-keyword">assert</span>(is<span class="hljs-constructor">GramSeq(<span class="hljs-params">parsed</span>)</span>);
 
 <span class="hljs-comment">// the first path should be an edge</span>
 const firstPath = parsed.children<span class="hljs-literal">[<span class="hljs-number">0</span>]</span>;
@@ -173,7 +173,7 @@ console.<span class="hljs-keyword">assert</span>(is<span class="hljs-constructor
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ast.html#isgramliteralarray" class="tsd-kind-icon">isGramLiteralArray</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ast.html#isgramnode" class="tsd-kind-icon">isGramNode</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ast.html#isgrampath" class="tsd-kind-icon">isGramPath</a></li>
-								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ast.html#isgrampathsequence" class="tsd-kind-icon">isGramPathSequence</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ast.html#isGramSeq" class="tsd-kind-icon">isGramSeq</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ast.html#isgrampathlike" class="tsd-kind-icon">isGramPathlike</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ast.html#isgramproperty" class="tsd-kind-icon">isGramProperty</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ast.html#isgramrecord" class="tsd-kind-icon">isGramRecord</a></li>
@@ -260,7 +260,7 @@ console.<span class="hljs-keyword">assert</span>(is<span class="hljs-constructor
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_ast.html#isgramliteralarray-1" class="tsd-kind-icon">isGramLiteralArray</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_ast.html#isgramnode-1" class="tsd-kind-icon">isGramNode</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_ast.html#isgrampath-1" class="tsd-kind-icon">isGramPath</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_ast.html#isgrampathsequence-1" class="tsd-kind-icon">isGramPathSequence</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_ast.html#isGramSeq-1" class="tsd-kind-icon">isGramSeq</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_ast.html#isgrampathlike-1" class="tsd-kind-icon">isGramPathlike</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_ast.html#isgramproperty-1" class="tsd-kind-icon">isGramProperty</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_ast.html#isgramrecord-1" class="tsd-kind-icon">isGramRecord</a></li>
@@ -557,7 +557,7 @@ console.<span class="hljs-keyword">assert</span>(is<span class="hljs-constructor
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
-					<a name="isgrampathsequence" class="tsd-anchor"></a>
+					<a name="isGramSeq" class="tsd-anchor"></a>
 					<h3>is<wbr>Gram<wbr>Path<wbr>Sequence</h3>
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Gram<wbr>Path<wbr>Sequence<span class="tsd-signature-symbol">:</span></div>
 					<aside class="tsd-sources">
@@ -1248,7 +1248,7 @@ console.<span class="hljs-keyword">assert</span>(is<span class="hljs-constructor
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="isgrampathsequence-1" class="tsd-anchor"></a>
+					<a name="isGramSeq-1" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> is<wbr>Gram<wbr>Path<wbr>Sequence</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
 						<li class="tsd-signature tsd-kind-icon">is<wbr>Gram<wbr>Path<wbr>Sequence<span class="tsd-signature-symbol">(</span>o<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">o</span></li>
@@ -1262,7 +1262,7 @@ console.<span class="hljs-keyword">assert</span>(is<span class="hljs-constructor
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
 								<div class="lead">
-									<p>Type guard for GramPathSequence.</p>
+									<p>Type guard for GramSeq.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1572,7 +1572,7 @@ console.<span class="hljs-keyword">assert</span>(is<span class="hljs-constructor
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
 								<div class="lead">
-									<p>Type guard for GramPathSequence.</p>
+									<p>Type guard for GramSeq.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1890,7 +1890,7 @@ console.<span class="hljs-keyword">assert</span>(is<span class="hljs-constructor
 								<a href="gram_ast.html#isgrampath" class="tsd-kind-icon">is<wbr>Gram<wbr>Path</a>
 							</li>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
-								<a href="gram_ast.html#isgrampathsequence" class="tsd-kind-icon">is<wbr>Gram<wbr>Path<wbr>Sequence</a>
+								<a href="gram_ast.html#isGramSeq" class="tsd-kind-icon">is<wbr>Gram<wbr>Path<wbr>Sequence</a>
 							</li>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
 								<a href="gram_ast.html#isgrampathlike" class="tsd-kind-icon">is<wbr>Gram<wbr>Pathlike</a>
@@ -2091,7 +2091,7 @@ console.<span class="hljs-keyword">assert</span>(is<span class="hljs-constructor
 								<a href="gram_ast.html#isgrampath-1" class="tsd-kind-icon">is<wbr>Gram<wbr>Path</a>
 							</li>
 							<li class=" tsd-kind-function tsd-parent-kind-module">
-								<a href="gram_ast.html#isgrampathsequence-1" class="tsd-kind-icon">is<wbr>Gram<wbr>Path<wbr>Sequence</a>
+								<a href="gram_ast.html#isGramSeq-1" class="tsd-kind-icon">is<wbr>Gram<wbr>Path<wbr>Sequence</a>
 							</li>
 							<li class=" tsd-kind-function tsd-parent-kind-module">
 								<a href="gram_ast.html#isgrampathlike-1" class="tsd-kind-icon">is<wbr>Gram<wbr>Pathlike</a>

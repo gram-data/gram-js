@@ -47,29 +47,39 @@ let lexer = moo.compile({
 
 @lexer lexer
 
-PathSequence -> (Path ",":? _  {% ([pp]) => pp %}):+ EOL:? {% ([pp]) => g.seq( g.flatten(pp) ) %}
+# Gram -> (Path | Comment):*
+
+GramSeq -> (Path _  {% ([pp]) => pp %}):+ EOL:? {% ([pp]) => g.seq( g.flatten(pp) ) %}
+# PathSequence -> (Path _  {% ([pp]) => pp %}):+ EOL:? {% ([pp]) => g.seq( g.flatten(pp) ) %}
+# PathSequence -> Path (_ "," _  Path {% ([,,,p]) => p %}):* EOL:? {% ([p, pp]) => g.seq( [p, ...g.flatten(pp)] ) %}
+# PathSequence -> (PathSequence _ {% ([pp]) => pp %}):+ EOL:? {% ([pp]) => g.seq( g.flatten(pp) ) %}
+
+# PathPair ->
+#   Path _ "," _ PathPair
+#     {% ([np,,es,,ep]) => g.cons([np,ep], {kind:'pair', id:es.id, labels:es.labels, record:es.record} ) %}
+#   | Path {% id %}
 
 Path ->
     NodePattern     {% id %}
   | PathComposition {% id %}
-  | Comment         {% id %}
+  | PathPair        {% id %}
 
 NodePattern ->
-    Node Edge NodePattern
-      {% ([np,es,ep]) => g.cons([np,ep], {kind:es.kind, id:es.id, labels:es.labels, record:es.record} ) %}
+    Node _ Edge _ NodePattern
+      {% ([np,,es,,ep]) => g.cons([np,ep], {kind:es.kind, id:es.id, labels:es.labels, record:es.record} ) %}
   | Node {% id %}
 
 Node ->
   "(" _ Attributes _ ")" 
-    {% ([,,content]) => g.node(content.id, content.labels, content.record) %}
+    {% ([,,attrs]) => g.node(attrs.id, attrs.labels, attrs.record)  %}
 
 Edge ->
     "-[" _ Attributes "]->"   
-              {% ([,,content]) => ({kind:'right', ...content}) %}
+              {% ([,,attrs]) => ({kind:'right', ...attrs}) %}
   | "-[" _ Attributes "]-"    
-              {% ([,,content]) => ({kind:'either', ...content}) %}
+              {% ([,,attrs]) => ({kind:'either', ...attrs}) %}
   | "<-[" _ Attributes "]-"   
-              {% ([,,content]) => ({kind:'left', ...content}) %}
+              {% ([,,attrs]) => ({kind:'left', ...attrs}) %}
   | "-[]->"   {% () => ({kind:'right'}) %}
   | "-[]-"    {% () => ({kind:'either'}) %}
   | "<-[]-"   {% () => ({kind:'left'}) %}
@@ -78,25 +88,50 @@ Edge ->
   | "<--"     {% () => ({kind:'left'}) %}
 
 PathComposition -> 
-    "[" _ "]" {% () => g.empty() %}
-  | "[" _ Attributes _ Relation:? _ Path:? _ Path:? _ "]"
-      # with both optional, rhs will match first
-      {% ([,,attr,,kind,,lhs,,rhs]) => g.cons( (rhs ? lhs ? [lhs,rhs] : [rhs] : []), {kind, id:attr.id, labels:attr.labels, record:attr.record}) %}
-  
-  # "[" _ Attributes _ Path:? _ "]"
-  #   {% ([,,attr,,lhs]) => g.cons(lhs ? [lhs] : undefined, attr) %}
-  # | "[" _ Attributes _ (Path ",":? _  
-  #     {% ([pp]) => pp %}):+ "]" {% ([,,attr,,pp]) => g.reduce('pair', g.flatten(pp)) %}
-      # {% ([pp]) => pp %}):+ "]" {% ([,,attr,,pp]) => g.cons( [g.reduce('pair', g.flatten(pp))], attr ) %}
+    PathPoint    {% id %}
+  | PathAnnotation  {% id %}
+  | PathExpression  {% id %}
 
-Relation ->
+PathPoint ->
+  "[" _ Attributes _ "]"
+    {% ([,,attr]) => {
+      if ( (attr.id || attr.labels || attr.record) && attr.id !== 'ø' ) {
+        // console.log(attr);
+        return g.node(attr.id, attr.labels, attr.record)
+      } else {
+        return g.empty();
+      }
+    }
+    %}
+
+PathAnnotation ->
+  "[" _ Attributes _ Path "]"
+    {% ([,,attr,,lhs]) => {
+      // console.log('annotate()', lhs)
+      return g.cons( [lhs], {id:attr.id, labels:attr.labels, record:attr.record}) 
+    }
+    %}
+
+PathExpression -> 
+  "[" _ Attributes _ Kind:? _ Path _ Path _ "]"
+    # with both optional, rhs will match first
+    {% ([,,attrs,,kind,,lhs,,rhs]) => {
+      return g.cons( [lhs,rhs], {kind, id:attrs.id, labels:attrs.labels, record:attrs.record}) 
+    }
+    %}
+
+PathPair ->
+  (NodePattern | PathComposition) _ "," _ Path
+    {% ([lp,,,,rp]) => g.pair([lp[0],rp] ) %}
+
+Kind ->
     ","   {% () => ('pair') %}
   | "-->" {% () => ('right') %}
   | "--"  {% () => ('either') %}
   | "<--" {% () => ('left') %}
 
 Attributes ->
-  Identity:? _ LabelList:? _ Record:? {% ([id,,labels,,record]) =>  ( {id, labels, record} )  %}
+  Identity:? (_ LabelList {% ([,ll]) => ll %}):? (_ Record {% ([,r]) => r %}):? {% ([id,,labels,,record]) =>  ( {id, labels, record} )  %}
 
 LabelList -> 
   Label:+ {% ([labels]) => labels %}

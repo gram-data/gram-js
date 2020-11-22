@@ -6,7 +6,7 @@ import { stringify } from '../src/';
 
 describe('gram stringify lists', () => {
   it('shows node lists, [(a),(b),(c)] => "(a) (b) (c)"', () => {
-    const p:GramPath[] = ["a","b","c"].map(id => g.node(id));
+    const p: GramPath[] = ['a', 'b', 'c'].map(id => g.node(id));
     // console.log(inspect(p));
     expect(stringify(p[0])).toBe('(a)');
   });
@@ -16,4 +16,3 @@ describe('gram stringify lists', () => {
   //   expect(stringify(p)).toBe('()-[e]-()');
   // });
 });
-

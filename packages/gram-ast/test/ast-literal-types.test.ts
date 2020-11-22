@@ -11,7 +11,6 @@ import {
   isWellKnownTextLiteral,
 } from '../src/gram-types';
 
-
 describe('gram ast boolean literals', () => {
   it('are a type with value', () => {
     const literal = { type: 'boolean', value: 'true' };

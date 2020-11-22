@@ -20,7 +20,7 @@ import {
   DateLiteral,
   isDateLiteral,
   WellKnownTextLiteral,
-  isWellKnownTextLiteral
+  isWellKnownTextLiteral,
 } from '@gram-data/gram-ast';
 
 // import { Node as UnistNode } from 'unist';
@@ -91,7 +91,7 @@ describe('gram builder for literal values', () => {
 
   it('with hexadecimal values', () => {
     const value = '0xCAFE1234';
-    const literal =g.hexadecimal(value);
+    const literal = g.hexadecimal(value);
 
     expect((literal as HexadecimalLiteral).type).toBe('hexadecimal');
     expect(isHexadecimalLiteral(literal)).toBeTruthy();

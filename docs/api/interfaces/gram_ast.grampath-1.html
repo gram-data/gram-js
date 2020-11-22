@@ -98,34 +98,22 @@
 			<h1>Interface GramPath</h1>
 			<section class="tsd-panel tsd-comment"><div class="tsd-comment tsd-typography tsd-comment-shorttext">
 					<div class="lead">
-						<p>GramPath contains nodes, edges and other paths that have been composed
+						<p>GramPath is composed of nodes, edges and other paths that have been composed
 						into a path expression.</p>
 					</div>
-					</div><div class="tsd-comment tsd-typography tsd-comment-text">
-					<ul>
-						<li>denoted with matching, non-empty square brackets: <code>[id]</code></li>
-						<li>path equivalence: <code>[]</code></li>
-						<li>identity: yes (required)</li>
-						<li>children: yes (optional)</li>
-						<li>labels: yes</li>
-						<li>record: yes</li>
-						<li>path length: sum(children[0].length, children[1].length)</li>
-						<li>path cardinality: nodes().length</li>
-						<li>information role: data annotation</li>
-					</ul>
 			</div></section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
-					<li>
-						<a href="gram_ast.grampathlike-1.html" class="tsd-signature-type">GramPathlike</a>
-					</li>
 					<li>
 						<span class="tsd-signature-type">Parent</span>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">GramPath</span>
 								<ul class="tsd-hierarchy">
+									<li>
+										<a href="gram_ast.gramemptypath-1.html" class="tsd-signature-type">GramEmptyPath</a>
+									</li>
 									<li>
 										<a href="gram_ast.gramnode-1.html" class="tsd-signature-type">GramNode</a>
 									</li>
@@ -143,21 +131,9 @@
 				<div class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">unknown</span></div>
 				<div class="tsd-comment tsd-typography tsd-comment-shorttext">
 					<div class="lead">
-						<p>GramPath contains nodes, edges and other paths that have been composed
+						<p>GramPath is composed of nodes, edges and other paths that have been composed
 						into a path expression.</p>
 					</div>
-					</div><div class="tsd-comment tsd-typography tsd-comment-text">
-					<ul>
-						<li>denoted with matching, non-empty square brackets: <code>[id]</code></li>
-						<li>path equivalence: <code>[]</code></li>
-						<li>identity: yes (required)</li>
-						<li>children: yes (optional)</li>
-						<li>labels: yes</li>
-						<li>record: yes</li>
-						<li>path length: sum(children[0].length, children[1].length)</li>
-						<li>path cardinality: nodes().length</li>
-						<li>information role: data annotation</li>
-					</ul>
 				</div>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -167,12 +143,12 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="gram_ast.grampath-1.html#children" class="tsd-kind-icon">children</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="gram_ast.grampath-1.html#data" class="tsd-kind-icon">data</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="gram_ast.grampath-1.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="gram_ast.grampath-1.html#labels" class="tsd-kind-icon">labels</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited"><a href="gram_ast.grampath-1.html#position" class="tsd-kind-icon">position</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="gram_ast.grampath-1.html#record" class="tsd-kind-icon">record</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="gram_ast.grampath-1.html#relation" class="tsd-kind-icon">relation</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="gram_ast.grampath-1.html#data" class="tsd-kind-icon">data</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="gram_ast.grampath-1.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="gram_ast.grampath-1.html#kind" class="tsd-kind-icon">kind</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="gram_ast.grampath-1.html#labels" class="tsd-kind-icon">labels</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="gram_ast.grampath-1.html#position" class="tsd-kind-icon">position</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="gram_ast.grampath-1.html#record" class="tsd-kind-icon">record</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="gram_ast.grampath-1.html#type" class="tsd-kind-icon">type</a></li>
 							</ul>
 						</section>
@@ -186,9 +162,9 @@
 					<h3>children</h3>
 					<div class="tsd-signature tsd-kind-icon">children<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">[</span><a href="gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">[</span><a href="gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a><span class="tsd-signature-symbol">, </span><a href="gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a><span class="tsd-signature-symbol">]</span></div>
 					<aside class="tsd-sources">
-						<p>Overrides <a href="gram_ast.grampathlike-1.html">GramPathlike</a>.<a href="gram_ast.grampathlike-1.html#children">children</a></p>
+						<p>Overrides Parent.children</p>
 						<ul>
-							<li>Defined in packages/gram-ast/src/gram-types.ts:84</li>
+							<li>Defined in packages/gram-ast/src/gram-types.ts:83</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -202,13 +178,12 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="data" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> data</h3>
 					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Data</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="gram_ast.grampathlike-1.html">GramPathlike</a>.<a href="gram_ast.grampathlike-1.html#data">data</a></p>
-						<p>Overrides <a href="gram_ast.grampathlike-1.html">GramPathlike</a>.<a href="gram_ast.grampathlike-1.html#data">data</a></p>
+						<p>Inherited from <a href="gram_ast.gramseq-1.html">GramSeq</a>.<a href="gram_ast.gramseq-1.html#data">data</a></p>
 						<ul>
 							<li>Defined in packages/gram-ast/node_modules/@types/unist/index.d.ts:23</li>
 						</ul>
@@ -219,32 +194,45 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="id" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> id</h3>
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="gram_ast.grampathlike-1.html">GramPathlike</a>.<a href="gram_ast.grampathlike-1.html#id">id</a></p>
 						<ul>
-							<li>Defined in packages/gram-ast/src/gram-types.ts:31</li>
+							<li>Defined in packages/gram-ast/src/gram-types.ts:57</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography tsd-comment-shorttext">
 						<div class="lead">
-							<p>A unique path identifier.</p>
+							<p>An identifier for the path.</p>
 						</div>
 						</div><div class="tsd-comment tsd-typography tsd-comment-text">
-						<p>For example, &#39;a&#39; in <code>()-[a]-&gt;()</code> or &#39;1&#39; in <code>(1)</code></p>
+						<p>For example, &#39;1&#39; in <code>()-[1]-&gt;()</code> or &#39;a&#39; in <code>(a)</code></p>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="kind" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> kind</h3>
+					<div class="tsd-signature tsd-kind-icon">kind<span class="tsd-signature-symbol">:</span> <a href="../modules/gram_ast.html#relationshipkind" class="tsd-signature-type">RelationshipKind</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in packages/gram-ast/src/gram-types.ts:62</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography tsd-comment-shorttext">
+						<div class="lead">
+							<p>The kind of relationship between the path members.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="labels" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> labels</h3>
 					<div class="tsd-signature tsd-kind-icon">labels<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="gram_ast.grampathlike-1.html">GramPathlike</a>.<a href="gram_ast.grampathlike-1.html#labels">labels</a></p>
 						<ul>
-							<li>Defined in packages/gram-ast/src/gram-types.ts:44</li>
+							<li>Defined in packages/gram-ast/src/gram-types.ts:69</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -255,13 +243,12 @@
 						<p>For example, &#39;Aye&#39; in (:Aye)</p>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="position" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> position</h3>
 					<div class="tsd-signature tsd-kind-icon">position<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Position</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="gram_ast.grampathlike-1.html">GramPathlike</a>.<a href="gram_ast.grampathlike-1.html#position">position</a></p>
-						<p>Overrides <a href="gram_ast.grampathlike-1.html">GramPathlike</a>.<a href="gram_ast.grampathlike-1.html#position">position</a></p>
+						<p>Inherited from <a href="gram_ast.gramseq-1.html">GramSeq</a>.<a href="gram_ast.gramseq-1.html#position">position</a></p>
 						<ul>
 							<li>Defined in packages/gram-ast/node_modules/@types/unist/index.d.ts:29</li>
 						</ul>
@@ -273,14 +260,13 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="record" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> record</h3>
 					<div class="tsd-signature tsd-kind-icon">record<span class="tsd-signature-symbol">:</span> <a href="../modules/gram_ast.html#gramrecord" class="tsd-signature-type">GramRecord</a></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="gram_ast.grampathlike-1.html">GramPathlike</a>.<a href="gram_ast.grampathlike-1.html#record">record</a></p>
 						<ul>
-							<li>Defined in packages/gram-ast/src/gram-types.ts:50</li>
+							<li>Defined in packages/gram-ast/src/gram-types.ts:75</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -289,31 +275,14 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="relation" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> relation</h3>
-					<div class="tsd-signature tsd-kind-icon">relation<span class="tsd-signature-symbol">:</span> <a href="../modules/gram_ast.html#relation" class="tsd-signature-type">Relation</a></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="gram_ast.grampathlike-1.html">GramPathlike</a>.<a href="gram_ast.grampathlike-1.html#relation">relation</a></p>
-						<ul>
-							<li>Defined in packages/gram-ast/src/gram-types.ts:37</li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography tsd-comment-shorttext">
-						<div class="lead">
-							<p>The relationship between the left and right children,
-							or a &#39;pair&#39; that associates without being navigable.</p>
-						</div>
-					</div>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 					<a name="type" class="tsd-anchor"></a>
 					<h3>type</h3>
 					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"path"</span></div>
 					<aside class="tsd-sources">
-						<p>Overrides <a href="gram_ast.grampathlike-1.html">GramPathlike</a>.<a href="gram_ast.grampathlike-1.html#type">type</a></p>
+						<p>Overrides <a href="gram_ast.textliteral.html">TextLiteral</a>.<a href="gram_ast.textliteral.html#type">type</a></p>
 						<ul>
-							<li>Defined in packages/gram-ast/src/gram-types.ts:76</li>
+							<li>Defined in packages/gram-ast/src/gram-types.ts:50</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -339,23 +308,23 @@
 									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 										<a href="gram_ast.grampath-1.html#children" class="tsd-kind-icon">children</a>
 									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 										<a href="gram_ast.grampath-1.html#data" class="tsd-kind-icon">data</a>
 									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="gram_ast.grampath-1.html#id" class="tsd-kind-icon">id</a>
 									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="gram_ast.grampath-1.html#kind" class="tsd-kind-icon">kind</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="gram_ast.grampath-1.html#labels" class="tsd-kind-icon">labels</a>
 									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited">
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 										<a href="gram_ast.grampath-1.html#position" class="tsd-kind-icon">position</a>
 									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="gram_ast.grampath-1.html#record" class="tsd-kind-icon">record</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="gram_ast.grampath-1.html#relation" class="tsd-kind-icon">relation</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 										<a href="gram_ast.grampath-1.html#type" class="tsd-kind-icon">type</a>

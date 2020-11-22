@@ -48,7 +48,7 @@
   "author": "Andreas Kollegger",
   "module": "dist/gram-value.esm.js",
   "devDependencies": {
-    "@gram-data/gram-builder": "^0.2.9",
+    "@gram-data/gram-builder": "*",
     "@types/jest": "^26.0.15",
     "@types/unist": "^2.0.3",
     "@typescript-eslint/parser": "^4.8.1",
@@ -64,7 +64,7 @@
     "unist-util-inspect": "^6.0.1"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.2.9"
+    "@gram-data/gram-ast": "*"
   },
   "publishConfig": {
     "access": "public"

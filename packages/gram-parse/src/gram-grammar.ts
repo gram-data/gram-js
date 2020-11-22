@@ -139,58 +139,35 @@ const grammar: Grammar = {
   Lexer: lexer,
   ParserRules: [
     {
-      name: 'PathSequence$ebnf$1$subexpression$1$ebnf$1',
-      symbols: [{ literal: ',' }],
-      postprocess: id,
+      name: 'GramSeq$ebnf$1$subexpression$1',
+      symbols: ['Path', '_'],
+      postprocess: ([pp]) => pp,
     },
+    { name: 'GramSeq$ebnf$1', symbols: ['GramSeq$ebnf$1$subexpression$1'] },
     {
-      name: 'PathSequence$ebnf$1$subexpression$1$ebnf$1',
-      symbols: [],
-      postprocess: () => null,
-    },
-    {
-      name: 'PathSequence$ebnf$1$subexpression$1',
-      symbols: ['Path', 'PathSequence$ebnf$1$subexpression$1$ebnf$1', '_'],
+      name: 'GramSeq$ebnf$1$subexpression$2',
+      symbols: ['Path', '_'],
       postprocess: ([pp]) => pp,
     },
     {
-      name: 'PathSequence$ebnf$1',
-      symbols: ['PathSequence$ebnf$1$subexpression$1'],
-    },
-    {
-      name: 'PathSequence$ebnf$1$subexpression$2$ebnf$1',
-      symbols: [{ literal: ',' }],
-      postprocess: id,
-    },
-    {
-      name: 'PathSequence$ebnf$1$subexpression$2$ebnf$1',
-      symbols: [],
-      postprocess: () => null,
-    },
-    {
-      name: 'PathSequence$ebnf$1$subexpression$2',
-      symbols: ['Path', 'PathSequence$ebnf$1$subexpression$2$ebnf$1', '_'],
-      postprocess: ([pp]) => pp,
-    },
-    {
-      name: 'PathSequence$ebnf$1',
-      symbols: ['PathSequence$ebnf$1', 'PathSequence$ebnf$1$subexpression$2'],
+      name: 'GramSeq$ebnf$1',
+      symbols: ['GramSeq$ebnf$1', 'GramSeq$ebnf$1$subexpression$2'],
       postprocess: d => d[0].concat([d[1]]),
     },
-    { name: 'PathSequence$ebnf$2', symbols: ['EOL'], postprocess: id },
-    { name: 'PathSequence$ebnf$2', symbols: [], postprocess: () => null },
+    { name: 'GramSeq$ebnf$2', symbols: ['EOL'], postprocess: id },
+    { name: 'GramSeq$ebnf$2', symbols: [], postprocess: () => null },
     {
-      name: 'PathSequence',
-      symbols: ['PathSequence$ebnf$1', 'PathSequence$ebnf$2'],
+      name: 'GramSeq',
+      symbols: ['GramSeq$ebnf$1', 'GramSeq$ebnf$2'],
       postprocess: ([pp]) => g.seq(g.flatten(pp)),
     },
     { name: 'Path', symbols: ['NodePattern'], postprocess: id },
     { name: 'Path', symbols: ['PathComposition'], postprocess: id },
-    { name: 'Path', symbols: ['Comment'], postprocess: id },
+    { name: 'Path', symbols: ['PathPair'], postprocess: id },
     {
       name: 'NodePattern',
-      symbols: ['Node', 'Edge', 'NodePattern'],
-      postprocess: ([np, es, ep]) =>
+      symbols: ['Node', '_', 'Edge', '_', 'NodePattern'],
+      postprocess: ([np, , es, , ep]) =>
         g.cons([np, ep], {
           kind: es.kind,
           id: es.id,
@@ -202,23 +179,23 @@ const grammar: Grammar = {
     {
       name: 'Node',
       symbols: [{ literal: '(' }, '_', 'Attributes', '_', { literal: ')' }],
-      postprocess: ([, , content]) =>
-        g.node(content.id, content.labels, content.record),
+      postprocess: ([, , attrs]) =>
+        g.node(attrs.id, attrs.labels, attrs.record),
     },
     {
       name: 'Edge',
       symbols: [{ literal: '-[' }, '_', 'Attributes', { literal: ']->' }],
-      postprocess: ([, , content]) => ({ kind: 'right', ...content }),
+      postprocess: ([, , attrs]) => ({ kind: 'right', ...attrs }),
     },
     {
       name: 'Edge',
       symbols: [{ literal: '-[' }, '_', 'Attributes', { literal: ']-' }],
-      postprocess: ([, , content]) => ({ kind: 'either', ...content }),
+      postprocess: ([, , attrs]) => ({ kind: 'either', ...attrs }),
     },
     {
       name: 'Edge',
       symbols: [{ literal: '<-[' }, '_', 'Attributes', { literal: ']-' }],
-      postprocess: ([, , content]) => ({ kind: 'left', ...content }),
+      postprocess: ([, , attrs]) => ({ kind: 'left', ...attrs }),
     },
     {
       name: 'Edge',
@@ -250,75 +227,104 @@ const grammar: Grammar = {
       symbols: [{ literal: '<--' }],
       postprocess: () => ({ kind: 'left' }),
     },
+    { name: 'PathComposition', symbols: ['PathPoint'], postprocess: id },
+    { name: 'PathComposition', symbols: ['PathAnnotation'], postprocess: id },
+    { name: 'PathComposition', symbols: ['PathExpression'], postprocess: id },
     {
-      name: 'PathComposition',
-      symbols: [{ literal: '[' }, '_', { literal: ']' }],
-      postprocess: () => g.empty(),
+      name: 'PathPoint',
+      symbols: [{ literal: '[' }, '_', 'Attributes', '_', { literal: ']' }],
+      postprocess: ([, , attr]) => {
+        if ((attr.id || attr.labels || attr.record) && attr.id !== 'ø') {
+          // console.log(attr);
+          return g.node(attr.id, attr.labels, attr.record);
+        } else {
+          return g.empty();
+        }
+      },
     },
-    { name: 'PathComposition$ebnf$1', symbols: ['Relation'], postprocess: id },
-    { name: 'PathComposition$ebnf$1', symbols: [], postprocess: () => null },
-    { name: 'PathComposition$ebnf$2', symbols: ['Path'], postprocess: id },
-    { name: 'PathComposition$ebnf$2', symbols: [], postprocess: () => null },
-    { name: 'PathComposition$ebnf$3', symbols: ['Path'], postprocess: id },
-    { name: 'PathComposition$ebnf$3', symbols: [], postprocess: () => null },
     {
-      name: 'PathComposition',
+      name: 'PathAnnotation',
       symbols: [
         { literal: '[' },
         '_',
         'Attributes',
         '_',
-        'PathComposition$ebnf$1',
-        '_',
-        'PathComposition$ebnf$2',
-        '_',
-        'PathComposition$ebnf$3',
-        '_',
+        'Path',
         { literal: ']' },
       ],
-      postprocess: ([, , attr, , kind, , lhs, , rhs]) =>
-        g.cons(rhs ? (lhs ? [lhs, rhs] : [rhs]) : [], {
-          kind,
+      postprocess: ([, , attr, , lhs]) => {
+        // console.log('annotate()', lhs)
+        return g.cons([lhs], {
           id: attr.id,
           labels: attr.labels,
           record: attr.record,
-        }),
+        });
+      },
     },
+    { name: 'PathExpression$ebnf$1', symbols: ['Kind'], postprocess: id },
+    { name: 'PathExpression$ebnf$1', symbols: [], postprocess: () => null },
     {
-      name: 'Relation',
-      symbols: [{ literal: ',' }],
-      postprocess: () => 'pair',
+      name: 'PathExpression',
+      symbols: [
+        { literal: '[' },
+        '_',
+        'Attributes',
+        '_',
+        'PathExpression$ebnf$1',
+        '_',
+        'Path',
+        '_',
+        'Path',
+        '_',
+        { literal: ']' },
+      ],
+      postprocess: ([, , attrs, , kind, , lhs, , rhs]) => {
+        return g.cons([lhs, rhs], {
+          kind,
+          id: attrs.id,
+          labels: attrs.labels,
+          record: attrs.record,
+        });
+      },
     },
+    { name: 'PathPair$subexpression$1', symbols: ['NodePattern'] },
+    { name: 'PathPair$subexpression$1', symbols: ['PathComposition'] },
     {
-      name: 'Relation',
-      symbols: [{ literal: '-->' }],
-      postprocess: () => 'right',
+      name: 'PathPair',
+      symbols: ['PathPair$subexpression$1', '_', { literal: ',' }, '_', 'Path'],
+      postprocess: ([lp, , , , rp]) => g.pair([lp[0], rp]),
     },
-    {
-      name: 'Relation',
-      symbols: [{ literal: '--' }],
-      postprocess: () => 'either',
-    },
-    {
-      name: 'Relation',
-      symbols: [{ literal: '<--' }],
-      postprocess: () => 'left',
-    },
+    { name: 'Kind', symbols: [{ literal: ',' }], postprocess: () => 'pair' },
+    { name: 'Kind', symbols: [{ literal: '-->' }], postprocess: () => 'right' },
+    { name: 'Kind', symbols: [{ literal: '--' }], postprocess: () => 'either' },
+    { name: 'Kind', symbols: [{ literal: '<--' }], postprocess: () => 'left' },
     { name: 'Attributes$ebnf$1', symbols: ['Identity'], postprocess: id },
     { name: 'Attributes$ebnf$1', symbols: [], postprocess: () => null },
-    { name: 'Attributes$ebnf$2', symbols: ['LabelList'], postprocess: id },
+    {
+      name: 'Attributes$ebnf$2$subexpression$1',
+      symbols: ['_', 'LabelList'],
+      postprocess: ([, ll]) => ll,
+    },
+    {
+      name: 'Attributes$ebnf$2',
+      symbols: ['Attributes$ebnf$2$subexpression$1'],
+      postprocess: id,
+    },
     { name: 'Attributes$ebnf$2', symbols: [], postprocess: () => null },
-    { name: 'Attributes$ebnf$3', symbols: ['Record'], postprocess: id },
+    {
+      name: 'Attributes$ebnf$3$subexpression$1',
+      symbols: ['_', 'Record'],
+      postprocess: ([, r]) => r,
+    },
+    {
+      name: 'Attributes$ebnf$3',
+      symbols: ['Attributes$ebnf$3$subexpression$1'],
+      postprocess: id,
+    },
     { name: 'Attributes$ebnf$3', symbols: [], postprocess: () => null },
     {
       name: 'Attributes',
-      symbols: [
-        'Attributes$ebnf$1',
-        '_',
-        'Attributes$ebnf$2',
-        '_',
-        'Attributes$ebnf$3',
-      ],
+      symbols: ['Attributes$ebnf$1', 'Attributes$ebnf$2', 'Attributes$ebnf$3'],
       postprocess: ([id, , labels, , record]) => ({ id, labels, record }),
     },
     { name: 'LabelList$ebnf$1', symbols: ['Label'] },
@@ -533,7 +539,7 @@ const grammar: Grammar = {
     },
     { name: 'EOL', symbols: [{ literal: '\n' }], postprocess: empty },
   ],
-  ParserStart: 'PathSequence',
+  ParserStart: 'GramSeq',
 };
 
 export default grammar;

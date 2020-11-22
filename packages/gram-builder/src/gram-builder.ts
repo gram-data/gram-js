@@ -6,7 +6,7 @@
 
 import { Node as UnistNode } from 'unist';
 import {
-  GramPathSeq,
+  GramSeq,
   GramPath,
   GramNode,
   GramEdge,
@@ -53,8 +53,7 @@ const dateToYMD = (d: Date) => d.toISOString().slice(0, 10);
 const dateToDayOfMonth = (d: Date) => '--' + d.toISOString().slice(5, 10);
 
 /**
- * Build a path sequence that represents a graph
- * accumulating structure over time.
+ * Build a path sequence that represents a graph.
  *
  * @param paths sequence of paths through history
  * @param id optional reference identifier. The "name" of this graph instance.
@@ -66,7 +65,7 @@ export const seq = (
   id?: string,
   labels?: string[],
   record?: GramRecord
-): GramPathSeq => ({
+): GramSeq => ({
   type: 'seq',
   id,
   ...(labels && { labels }),
@@ -88,17 +87,16 @@ export interface PathAttributes {
  * @param pathlist sub-paths to be paired
  * @param baseID the baseID from which path expressions will derive new IDs
  */
-export const reduce = (
+export const listToPath = (
   kind: RelationshipKind = 'pair',
-  pathlist: GramPath[],
-  baseID?: string
+  pathlist: GramPath[]
 ): GramPath => {
-  let subID = 0;
   if (pathlist.length > 1) {
-    return pathlist.reduceRight((acc: GramPath, curr) => {
-      const childID = baseID ? `${baseID}${subID}` : undefined;
-      return cons([curr, acc], { kind, id: childID });
-    }, EMPTY_PATH);
+    return pathlist
+      .slice(0, pathlist.length - 1)
+      .reduceRight((acc: GramPath, curr) => {
+        return cons([curr, acc], { kind });
+      }, pathlist[pathlist.length - 1]);
   } else {
     return pathlist[0];
   }
@@ -233,13 +231,35 @@ export const edge = (
  * @param labels
  * @param record
  */
-export const path = (
-  members: [GramPath] | [GramPath, GramPath],
+// export const path = (
+//   members: [GramPath] | [GramPath, GramPath],
+//   id?: string,
+//   labels?: string[],
+//   record?: GramRecord
+// ): GramPath => ({
+//   type: 'path',
+//   id,
+//   ...(labels && { labels }),
+//   ...(record && { record }),
+//   children: members,
+// });
+
+/**
+ * Build a pair
+ *
+ * @param children
+ * @param id
+ * @param labels
+ * @param record
+ */
+export const pair = (
+  members: [GramPath, GramPath],
   id?: string,
   labels?: string[],
   record?: GramRecord
 ): GramPath => ({
   type: 'path',
+  kind: 'pair',
   id,
   ...(labels && { labels }),
   ...(record && { record }),
@@ -270,11 +290,11 @@ export const mapToRecord = (properties: GramPropertyMap): GramRecord => {
   }, [] as GramRecord);
 };
 
-export const pluck = (properties: GramRecord, path:string) => {
-  return properties.reduce( (acc, prop) => {
-    return prop.name === path ? prop : acc
-  })
-}
+export const pluck = (properties: GramRecord, path: string) => {
+  return properties.reduce((acc, prop) => {
+    return prop.name === path ? prop : acc;
+  });
+};
 
 export const property = (
   name: string,
@@ -374,7 +394,8 @@ export default {
   seq,
   empty,
   cons,
-  path,
+  pair,
+  listToPath,
   node,
   edge,
   property,

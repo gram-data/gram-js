@@ -44,21 +44,21 @@
     return !!o.type && o.type === 'path';
   };
   /**
-   * Type guard for GramPathSequence.
+   * Type guard for GramSeq.
    *
    * @param o any object
    */
 
 
-  var isGramPathSequence = function isGramPathSequence(o) {
+  var isGramSeq = function isGramSeq(o) {
     return !!o.type && o.type === 'seq';
   };
 
   var isGramPathlike = function isGramPathlike(o) {
-    return isGramUnit(o) || isGramNode(o) || isGramEdge(o) || isGramPath(o) || isGramPathSequence(o);
+    return isGramUnit(o) || isGramNode(o) || isGramEdge(o) || isGramPath(o) || isGramSeq(o);
   };
   /**
-   * Type guard for GramPathSequence.
+   * Type guard for GramSeq.
    *
    * @param o any object
    */

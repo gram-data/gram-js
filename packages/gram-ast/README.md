@@ -17,7 +17,7 @@ const src = '(a)-->(b)';
 const parsed = toAST(src);
 
 // the top-level of the AST is a sequence of paths
-console.assert(isGramPathSequence(parsed));
+console.assert(isGramSeq(parsed));
 
 // the first path should be an edge
 const firstPath = parsed.children[0];

@@ -63,8 +63,8 @@
     "unist-util-inspect": "^6.0.1"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.2.9",
-    "@gram-data/gram-builder": "^0.2.9",
+    "@gram-data/gram-ast": "*",
+    "@gram-data/gram-builder": "*",
     "fp-ts": "^2.8.6"
   },
   "publishConfig": {

@@ -15,6 +15,25 @@ import {
   Node as UnistNode,
 } from 'unist';
 
+/**
+ * A GramSeq is a graph expressed as a sequence of paths.
+ *
+ */
+export interface GramSeq extends UnistParent {
+  /**
+   * Type discriminator for this AST element, aways 'seq'.
+   */
+  type: 'seq';
+
+  children: GramPath[];
+}
+
+/**
+ * Type guard for GramSeq.
+ *
+ * @param o any object
+ */
+export const isGramSeq = (o: any): o is GramSeq => !!o.type && o.type === 'seq';
 
 ///////////////////////////////////////////////////////////////////////////////
 // Path-like types...
@@ -79,7 +98,6 @@ export const EMPTY_PATH_ID = 'ø';
  *
  */
 export interface GramEmptyPath extends GramPath {
-
   id: typeof EMPTY_PATH_ID;
 
   labels: undefined;
@@ -143,42 +161,6 @@ export const isGramNode = (o: any): o is GramNode =>
   o.id !== EMPTY_PATH_ID;
 
 /**
- * Kind of path which is oriented
- * for navigation.
- * 
- * One of:
- *
- * - left   `(a)<--(b)`
- * - right  `(a)-->(b)`
- * - either `(a)--(b)`
- * 
- */
-export type OrientedKind = 'left' | 'right' | 'either';
-
-/**
- * RelationshipKind describes the kind of 
- * relationship between composed paths.
- * 
- * Classically this is the Orientation of
- * the edge between two nodes. 
- * 
- * Nodes can also be composed into a simple ordered
- * pair, which does not imply navigability. 
- * Pairs enable compound paths to be assembled
- * which do not follow a linear flow. 
- * 
- * For example, this is a single path which
- * pairs two adjacent edges that coincide at `(a)`:
- * `(a)-->(b),(a)-->(c)
- * 
- * One of:
- * 
- * - Orientation
- * - pair         `[a,b]`
- */
-export type RelationshipKind = OrientedKind | 'pair';
-
-/**
  * GramEdge is a path composed of two GramNodes:
  *
  */
@@ -193,44 +175,63 @@ export interface GramEdge extends GramPath {
 }
 
 /**
- * Type guard for GramEdge. 
- * 
+ * Type guard for GramEdge.
+ *
  * An edge is a path composed of two nodes.
  *
  * @param o any object
  */
 export const isGramEdge = (o: any): o is GramEdge =>
   isGramPath(o) &&
-  o.kind !== undefined && o.kind !== 'pair' &&
-  o.children !== undefined && o.children.every(child => isGramNode(child));
+  o.kind !== undefined &&
+  o.kind !== 'pair' &&
+  o.children !== undefined &&
+  o.children.every(child => isGramNode(child));
 
 /**
- * A GramPathSeq is a sequence of paths.
+ * Kind of path which is oriented
+ * for navigation.
+ *
+ * One of:
+ *
+ * - left   `(a)<--(b)`
+ * - right  `(a)-->(b)`
+ * - either `(a)--(b)`
  *
  */
-export interface GramPathSeq extends UnistParent {
-  /**
-   * Type discriminator for this AST element, aways 'seq'.
-   */
-  type: 'seq';
-
-  children: GramPath[];
-}
+export type OrientedKind = 'left' | 'right' | 'either';
 
 /**
- * Type guard for GramPathSequence.
+ * RelationshipKind describes the kind of
+ * relationship between composed paths.
  *
- * @param o any object
+ * Classically this is the Orientation of
+ * the edge between two nodes.
+ *
+ * Nodes can also be composed into a simple ordered
+ * pair, which does not imply navigability.
+ * Pairs enable compound paths to be assembled
+ * which do not follow a linear flow.
+ *
+ * For example, this is a single path which
+ * pairs two adjacent edges that coincide at `(a)`:
+ * `(a)-->(b),(a)-->(c)
+ *
+ * One of:
+ *
+ * - Orientation
+ * - pair         `[a,b]`
  */
-export const isGramPathSequence = (o: any): o is GramPathSeq =>
-  !!o.type && o.type === 'seq';
+export type RelationshipKind = OrientedKind | 'pair';
+
+export type GramPathlike = GramPath | GramNode | GramEdge;
 
 // export const isGramPathlike = (o: any): o is GramPathlike =>
 //   isGramPath(o) ||
 //   isGramEmptyPath(o) ||
 //   isGramNode(o) ||
 //   isGramEdge(o) ||
-//   isGramPathSequence(o);
+//   isGramSeq(o);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Records...
@@ -302,12 +303,13 @@ export const isGramProperty = (o: any): o is GramProperty =>
   !!o.type && o.type === 'property';
 
 /**
- * GramLiteral is a data value represented as plain text.
+ * Base interface for literals, all of which
+ * only provide textual value representations.
+ *
  */
-// export interface GramLiteral extends UnistLiteral {
-//   type: string;
-//   value: string;
-// }
+interface TextLiteral extends UnistLiteral {
+  value: string;
+}
 
 export type GramLiteral =
   | BooleanLiteral
@@ -324,13 +326,13 @@ export type GramLiteral =
  *
  * @param o any object
  */
-export const isLiteral = (o: any): o is UnistLiteral =>
+export const isLiteral = (o: any): o is TextLiteral =>
   !!o.type && !!o.value && o.type !== 'property';
 
 /**
  * Represents a boolean literal, like `true` or `false`.
  */
-export interface BooleanLiteral extends UnistLiteral {
+export interface BooleanLiteral extends TextLiteral {
   /**
    * Represents this variant of a Literal.
    */
@@ -344,13 +346,13 @@ export interface BooleanLiteral extends UnistLiteral {
  *
  * @param o any object
  */
-export const isBooleanLiteral = (o: any): o is BooleanLiteral =>
+export const isBooleanLiteral = (o: any): o is TextLiteral =>
   !!o.type && !!o.value && o.type === 'boolean';
 
 /**
  * Represents a string literal, like "hello".
  */
-export interface StringLiteral extends UnistLiteral {
+export interface StringLiteral extends TextLiteral {
   /**
    * Represents this variant of a Literal.
    */
@@ -362,7 +364,7 @@ export interface StringLiteral extends UnistLiteral {
  *
  * @param o any object
  */
-export const isStringLiteral = (o: any): o is UnistLiteral =>
+export const isStringLiteral = (o: any): o is TextLiteral =>
   !!o.type && !!o.value && o.type === 'string';
 
 /**
@@ -380,7 +382,7 @@ export const isStringLiteral = (o: any): o is UnistLiteral =>
  * @see GeospatialLiteral
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
  */
-export interface TaggedLiteral extends UnistLiteral {
+export interface TaggedLiteral extends TextLiteral {
   type: 'tagged';
 
   /**
@@ -390,17 +392,17 @@ export interface TaggedLiteral extends UnistLiteral {
 }
 
 /**
- * Type guard for GramPathSequence.
+ * Type guard for GramSeq.
  *
  * @param o any object
  */
-export const isTaggedLiteral = (o: any): o is UnistLiteral =>
+export const isTaggedLiteral = (o: any): o is TextLiteral =>
   !!o.type && !!o.value && !!o.tag && o.type === 'tagged';
 
 /**
  * Represents an integer number, like 235276234.
  */
-export interface IntegerLiteral extends UnistLiteral {
+export interface IntegerLiteral extends TextLiteral {
   type: 'integer';
 }
 
@@ -415,7 +417,7 @@ export const isIntegerLiteral = (o: any): o is IntegerLiteral =>
 /**
  * Represents a decimal with units, like 12.4px or 42.0mm
  */
-export interface MeasurementLiteral extends UnistLiteral {
+export interface MeasurementLiteral extends TextLiteral {
   type: 'measurement';
 
   /**
@@ -435,7 +437,7 @@ export const isMeasurementLiteral = (o: any): o is MeasurementLiteral =>
 /**
  * Represents an decimal number, like 3.1495.
  */
-export interface DecimalLiteral extends UnistLiteral {
+export interface DecimalLiteral extends TextLiteral {
   type: 'decimal';
 }
 
@@ -452,7 +454,7 @@ export const isDecimalLiteral = (o: any): o is DecimalLiteral =>
  *
  * The prefix `0x` signifies a hexadecimal value to follow.
  */
-export interface HexadecimalLiteral extends UnistLiteral {
+export interface HexadecimalLiteral extends TextLiteral {
   type: 'hexadecimal';
 }
 
@@ -470,7 +472,7 @@ export const isHexadecimalLiteral = (o: any): o is HexadecimalLiteral =>
  * The prefix `0` signifies octal notation value to follow.
  * Without the leading 0, the number would represent an integer.
  */
-export interface OctalLiteral extends UnistLiteral {
+export interface OctalLiteral extends TextLiteral {
   type: 'octal';
 }
 

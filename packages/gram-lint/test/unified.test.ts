@@ -8,7 +8,7 @@ describe('using gram as the Parser for unified()', () => {
     const src = `()`;
     const result = lint.parse(src) as gramTypes.GramPathSeq;
 
-    expect(gramTypes.isGramPathSequence(result)).toBeTruthy();
+    expect(gramTypes.isGramSeq(result)).toBeTruthy();
     const firstPath = result.children[0];
     expect(gramTypes.isGramNode(firstPath)).toBeTruthy();
   });

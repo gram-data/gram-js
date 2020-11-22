@@ -14,7 +14,6 @@ import {
   GramLiteral,
   isGramLiteralArray,
   isLiteral,
-  AnyGramLiteral,
   isGramRecord,
 } from '@gram-data/gram-ast';
 
@@ -47,9 +46,9 @@ class InvalidAstError extends Error {
 
 export const valueOf = (recordValue: GramRecordValue): any => {
   if (isGramLiteralArray(recordValue)) {
-    return recordValue.map((v:GramLiteral) => valueOf(v));
+    return recordValue.map((v: GramLiteral) => valueOf(v));
   } else if (isLiteral(recordValue)) {
-    return valueOfLiteral(recordValue as AnyGramLiteral);
+    return valueOfLiteral(recordValue as GramLiteral);
   } else if (isGramRecord(recordValue)) {
     return recordValue.reduce((acc, property) => {
       acc[property.name] = valueOf(property.value);
@@ -59,22 +58,30 @@ export const valueOf = (recordValue: GramRecordValue): any => {
 };
 
 function assertNever(x: never): never {
-  throw new Error("Unexpected object: " + x);
+  throw new Error('Unexpected object: ' + x);
 }
-export const valueOfLiteral = (ast:AnyGramLiteral):any => {
+export const valueOfLiteral = (ast: GramLiteral): any => {
   switch (ast.type) {
-    case 'boolean': return valueOfBoolean(ast);
-    case 'string': return valueOfString(ast);
-    case 'integer': return valueOfInteger(ast);
-    case 'decimal': return valueOfDecimal(ast);
-    case 'hexadecimal': return valueOfHexadecimal(ast);
-    case 'octal': return valueOfOctal(ast);
-    case 'tagged': return 'tag, you are it!';
-    case 'measurement': return 'measure by measure';
-    default: 
-      return assertNever(ast)
+    case 'boolean':
+      return valueOfBoolean(ast);
+    case 'string':
+      return valueOfString(ast);
+    case 'integer':
+      return valueOfInteger(ast);
+    case 'decimal':
+      return valueOfDecimal(ast);
+    case 'hexadecimal':
+      return valueOfHexadecimal(ast);
+    case 'octal':
+      return valueOfOctal(ast);
+    case 'tagged':
+      return 'tag, you are it!';
+    case 'measurement':
+      return 'measure by measure';
+    default:
+      return assertNever(ast);
   }
-}
+};
 
 export const valueOfBoolean = (ast: BooleanLiteral) =>
   ast.value && ast.value.toLowerCase() === 'true';

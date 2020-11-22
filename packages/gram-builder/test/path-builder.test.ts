@@ -10,7 +10,7 @@ import {
   IntegerLiteral,
 } from '@gram-data/gram-ast';
 
-import chalk from "chalk";
+import chalk from 'chalk';
 import { Node as UnistNode } from 'unist';
 const inspect = require('unist-util-inspect');
 
@@ -22,9 +22,16 @@ let DEBUG = true;
 const treeSize = require('unist-util-size');
 
 // @ts-ignore
-const show = (expected:string, actual:UnistNode) => {
+const show = (expected: string, actual: UnistNode) => {
   if (DEBUG) console.log(chalk`{green ${expected}}\n ${inspect(actual)}`);
-}
+};
+
+describe('gram empty() builds empty paths', () => {
+  it('empty() always returns the singleton empty path', () => {
+    const p = g.empty();
+    expect(isGramEmptyPath(p)).toBeTruthy();
+  });
+});
 
 describe('gram cons() can build empty paths', () => {
   it('when there are no children, as empty = [] =~ [ø]', () => {
@@ -446,33 +453,33 @@ describe('gram builder for path sequence', () => {
 describe('gram builder for reducing an array of paths into a tree of composed paths', () => {
   it('a single node returns unchanged', () => {
     const id = 'a';
-    const p = g.reduce('pair', [g.node(id)]);
+    const p = g.listToPath('pair', [g.node(id)]);
     // console.log(inspect(p));
     expect(p.id).toBe(id);
     expect(p.children?.length).toBe(0);
   });
-  it('two nodes as a tree of two pairs, terminated by ø', () => {
-    const p = g.reduce('pair', [g.node('a'), g.node('b')]);
-    // console.log(inspect((b) =~ [, a [, b ø] ]", p);
+  it('two nodes as a tree of 1 pair', () => {
+    const p = g.listToPath('pair', [g.node('a'), g.node('b')]);
+    // console.log(inspect(p));
+    expect(p.children?.length).toBe(2);
+    expect(treeSize(p, { type: 'path', kind: 'pair' })).toBe(0); // descendent count
+  });
+  it('three nodes, becoming two pairs', () => {
+    const p = g.listToPath('pair', [g.node('a'), g.node('b'), g.node('c')]);
+    // console.log(inspect(p));
     expect(p.children?.length).toBe(2);
     expect(treeSize(p, { type: 'path', kind: 'pair' })).toBe(1); // descendent count
   });
-  it('three nodes, becoming three pairs, terminated by ø', () => {
-    const p = g.reduce('pair', [g.node('a'), g.node('b'), g.node('c')]);
-    // console.log(inspect((b),(c) =~ [, a [, b [, c ø ] ] ]", p);
-    expect(p.children?.length).toBe(2);
-    expect(treeSize(p, { type: 'path', kind: 'pair' })).toBe(2); // descendent count
-  });
-  it('accepts five nodes, becoming five pairs, terminated by ø', () => {
-    const p = g.reduce('pair', [
+  it('five nodes, becoming four pairs', () => {
+    const p = g.listToPath('pair', [
       g.node('a'),
       g.node('b'),
       g.node('c'),
       g.node('d'),
       g.node('e'),
     ]);
-    // console.log(inspect((b),(c),(d),(e) =~ [, a [, b [, c [, d [, e ø ] ] ] ] ]", p);
-    expect(treeSize(p, { type: 'path', kind: 'pair' })).toBe(4); // descendent count
+    // console.log(inspect(p));
+    expect(treeSize(p, { type: 'path', kind: 'pair' })).toBe(3); // descendent count
   });
 });
 

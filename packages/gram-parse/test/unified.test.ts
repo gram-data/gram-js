@@ -22,9 +22,9 @@ describe('using gram as the Parser for unified()', () => {
     const processor = unified()
       .use(gramParserPlugin)
       .freeze();
-    const result = processor.parse(src) as gramTypes.GramPathSeq;
+    const result = processor.parse(src) as gramTypes.GramSeq;
 
-    expect(gramTypes.isGramPathSequence(result)).toBeTruthy();
+    expect(gramTypes.isGramSeq(result)).toBeTruthy();
     const firstPath = result.children[0];
     expect(gramTypes.isGramNode(firstPath)).toBeTruthy();
   });

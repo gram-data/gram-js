@@ -34,6 +34,9 @@ export const parse: ParserFunction = (text: string, file: VFile) => {
       const location = lexerLocation(parsed.lexerState);
       file.fail(errors.INCOMPLETE_PARSE, location);
     }
+    if (parsed.results.length > 1) {
+      file.info('[WARN] parsing is ambiguous');
+    }
     return parsed.results[0] || { type: 'error' };
   } catch (e) {
     const location = e.token ? tokenLocation(e.token) : { line: 0, column: 0 };

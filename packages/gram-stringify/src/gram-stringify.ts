@@ -2,28 +2,25 @@ import {
   GramNode,
   GramEdge,
   GramRecord,
-  GramLiteral,
   GramPath,
   GramRecordValue,
   GramProperty,
   isLiteral,
   isGramNode,
   isGramEdge,
-  GramPathlike,
-  GramPathSeq,
+  GramSeq,
   isGramEmptyPath,
   isGramLiteralArray,
   GramPropertyMap,
-  isGramPathlike,
-  AnyGramLiteral,
+  GramLiteral,
 } from '@gram-data/gram-ast';
 
 const isEmpty = (o: any) => Object.keys(o).length === 0;
 
 function assertNever(x: never): never {
-  throw new Error("Unexpected object: " + x);
+  throw new Error('Unexpected object: ' + x);
 }
-const toStringLiteral = (l: AnyGramLiteral): string => {
+const toStringLiteral = (l: GramLiteral): string => {
   switch (l.type) {
     case 'integer':
     case 'boolean':
@@ -37,14 +34,14 @@ const toStringLiteral = (l: AnyGramLiteral): string => {
       return `${l.tag}\`${l.value}\``;
     case 'measurement':
       return `${l.value}${l.unit}`;
-    default: 
-      return assertNever(l)
+    default:
+      return assertNever(l);
   }
 };
 
 const toStringValue = (v: GramRecordValue) => {
   if (isGramLiteralArray(v)) {
-    return `[${v.map((l: AnyGramLiteral) => toStringLiteral(l)).join(',')}]`;
+    return `[${v.map((l: GramLiteral) => toStringLiteral(l)).join(',')}]`;
   } else if (isLiteral(v)) {
     return toStringLiteral(v);
   } else {
@@ -68,7 +65,7 @@ const recordMapToString = (record: GramPropertyMap): string => {
   return `{${fields.join('')}}`;
 };
 
-const elementContentToString = (ast: GramPathlike): string => {
+const elementContentToString = (ast: GramPath): string => {
   const idString = ast.id || '';
   const labelsString =
     ast.labels && ast.labels.length > 0 ? ':' + ast.labels.join(':') : '';
@@ -86,8 +83,8 @@ const nodeToString = (ast: GramNode): string =>
   `(${elementContentToString(ast)})`;
 
 const edgeToString = (ast: GramEdge): string => {
-  const left = ast.relation === 'left' ? '<-' : '-';
-  const right = ast.relation === 'right' ? '->' : '-';
+  const left = ast.kind === 'left' ? '<-' : '-';
+  const right = ast.kind === 'right' ? '->' : '-';
 
   const leftNode = isGramNode(ast.children[0])
     ? nodeToString(ast.children[0])
@@ -111,11 +108,11 @@ const pathCompositionToString = (ast: GramPath): string => {
       ? pathToString(ast.children[1])
       : '';
   const relation =
-    ast.relation === 'left'
+    ast.kind === 'left'
       ? '<--'
-      : ast.relation === 'right'
+      : ast.kind === 'right'
       ? '-->'
-      : ast.relation === 'either'
+      : ast.kind === 'either'
       ? '--'
       : lhs.length > 0 && rhs.length > 0
       ? ','
@@ -126,6 +123,21 @@ const pathCompositionToString = (ast: GramPath): string => {
     lhs.length > 0 ? ' ' : ''
   }${lhs}${rhs.length > 0 ? ' ' : ''}${rhs}]`;
 };
+
+const pairToString = (ast: GramPath): string => {
+  const lhs =
+    ast.children && ast.children.length > 0
+      ? pathToString(ast.children[0])
+      : '';
+  const rhs =
+    ast.children && ast.children.length > 1
+      ? pathToString(ast.children[1])
+      : '';
+  return `${lhs},${rhs.length > 0 ? ' ' : ''}${rhs}`;
+};
+
+const hasAttributes = (p: GramPath) => p.id || p.labels || p.record;
+
 const pathToString = (ast?: GramPath): string => {
   const pathExpression = ast
     ? `${
@@ -135,29 +147,31 @@ const pathToString = (ast?: GramPath): string => {
           ? nodeToString(ast)
           : isGramEdge(ast)
           ? edgeToString(ast)
-          : pathCompositionToString(ast)
+          : hasAttributes(ast)
+          ? pathCompositionToString(ast)
+          : pairToString(ast)
       }`
     : '';
   return pathExpression;
 };
 
-export const stringify = (ast: GramPathlike | GramPathSeq | GramPropertyMap): string => {
-  
-  if (isGramPathlike(ast)) {
+export const stringify = (
+  ast: GramPath | GramSeq | GramPath[] | GramPropertyMap
+): string => {
+  if (Array.isArray(ast)) {
+    return ast.map(stringify).join(' ');
+  } else if (ast.type !== undefined) {
     switch (ast.type) {
-      case 'seq':
-        const paths = ast.children as GramPath[];
-        return paths.map((path: GramPath) => stringify(path)).join('\n');
       case 'path':
         return pathToString(ast as GramPath);
-      default:
-        console.error(`Impossible:`, typeof ast);
+      case 'seq':
+        return stringify(ast.children as GramPath[]);
     }
   } else if (typeof ast === 'object') {
-    return recordMapToString(ast)
+    return recordMapToString(ast);
   }
 
-  throw new Error(`Can't stringify <${ast}>`)
+  throw new Error(`Can't stringify <${ast}>`);
 };
 
 export default stringify;

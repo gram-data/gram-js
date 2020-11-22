@@ -88,16 +88,16 @@
     return !!o.type && o.type === 'path';
   };
   /**
-   * Type guard for GramPathSequence.
+   * Type guard for GramSeq.
    *
    * @param o any object
    */
 
-  var isGramPathSequence = function isGramPathSequence(o) {
+  var isGramSeq = function isGramSeq(o) {
     return !!o.type && o.type === 'seq';
   };
   var isGramPathlike = function isGramPathlike(o) {
-    return isGramUnit(o) || isGramNode(o) || isGramEdge(o) || isGramPath(o) || isGramPathSequence(o);
+    return isGramUnit(o) || isGramNode(o) || isGramEdge(o) || isGramPath(o) || isGramSeq(o);
   };
   /**
    * Type guard for GramProperty.
@@ -109,7 +109,7 @@
     return !!o.type && o.type === 'property';
   };
   /**
-   * Type guard for GramPathSequence.
+   * Type guard for GramSeq.
    *
    * @param o any object
    */
@@ -118,7 +118,7 @@
     return !!o.type && !!o.value;
   };
   /**
-   * Type guard for GramPathSequence.
+   * Type guard for GramSeq.
    *
    * @param o any object
    */
@@ -127,7 +127,7 @@
     return !!o.type && !!o.value && o.type === 'boolean';
   };
   /**
-   * Type guard for GramPathSequence.
+   * Type guard for GramSeq.
    *
    * @param o any object
    */
@@ -136,7 +136,7 @@
     return !!o.type && !!o.value && o.type === 'string';
   };
   /**
-   * Type guard for GramPathSequence.
+   * Type guard for GramSeq.
    *
    * @param o any object
    */
@@ -145,7 +145,7 @@
     return !!o.type && !!o.value && !!o.tag && o.type === 'tagged';
   };
   /**
-   * Type guard for GramPathSequence.
+   * Type guard for GramSeq.
    *
    * @param o any object
    */
@@ -216,7 +216,7 @@
   exports.isGramEdge = isGramEdge;
   exports.isGramNode = isGramNode;
   exports.isGramPath = isGramPath;
-  exports.isGramPathSequence = isGramPathSequence;
+  exports.isGramSeq = isGramSeq;
   exports.isGramPathlike = isGramPathlike;
   exports.isGramProperty = isGramProperty;
   exports.isGramUnit = isGramUnit;
