@@ -5,7 +5,10 @@
      <div class="pl-4 flex items-center">
         <a class="text-gray-900 text-base no-underline hover:no-underline font-neo4j font-thin text-xl pb-2"  href="{{ "/" | relative_url }}"> 
          {{ site.title }}
-         {{ site.github.latest_release | default: 0.0 }}
+        </a>
+        &nbsp;
+        <a class="text-gray-600 p-1 text-base no-underline hover:no-underline font-neo4j font-thin text-xl pb-2"  href="{{ site.github.latest_release.html_url }}"> 
+         {{ site.github.latest_release.tag_name }}
         </a>
      </div>
      
