@@ -5,7 +5,7 @@
     "neo4j",
     "gram"
   ],
-  "version": "0.2.11",
+  "version": "0.2.12-alpha.0",
   "license": "MIT",
   "repository": {
     "type": "git",

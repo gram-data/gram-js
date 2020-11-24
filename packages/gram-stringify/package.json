@@ -5,7 +5,7 @@
     "neo4j",
     "gram"
   ],
-  "version": "0.2.11",
+  "version": "0.2.12-alpha.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -48,8 +48,8 @@
   "author": "Andreas Kollegger",
   "module": "dist/gram-stringify.esm.js",
   "devDependencies": {
-    "@gram-data/gram-builder": "^0.2.11",
-    "@gram-data/gram-ops": "^0.2.11",
+    "@gram-data/gram-builder": "^0.2.12-alpha.0",
+    "@gram-data/gram-ops": "^0.2.12-alpha.0",
     "@types/jest": "^26.0.15",
     "@types/unist": "^2.0.3",
     "@typescript-eslint/parser": "^4.8.1",
