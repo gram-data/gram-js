@@ -52,6 +52,7 @@
     "trailingComma": "es5"
   },
   "devDependencies": {
+    "@gram-data/gram-stringify": "^0.2.11-alpha.0",
     "@types/jest": "^26.0.15",
     "@types/moo": "^0.5.3",
     "@types/nearley": "^2.11.1",

@@ -131,7 +131,7 @@ Kind ->
   | "<--" {% () => ('left') %}
 
 Attributes ->
-  Identity:? (_ LabelList {% ([,ll]) => ll %}):? (_ Record {% ([,r]) => r %}):? {% ([id,,labels,,record]) =>  ( {id, labels, record} )  %}
+  Identity:? (_ LabelList {% ([,ll]) => ll %}):? (_ Record {% ([,r]) => r %}):? {% ([id,labels,record]) =>  ( {id, labels, record} )  %}
 
 LabelList -> 
   Label:+ {% ([labels]) => labels %}

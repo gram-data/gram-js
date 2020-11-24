@@ -325,7 +325,7 @@ const grammar: Grammar = {
     {
       name: 'Attributes',
       symbols: ['Attributes$ebnf$1', 'Attributes$ebnf$2', 'Attributes$ebnf$3'],
-      postprocess: ([id, , labels, , record]) => ({ id, labels, record }),
+      postprocess: ([id, labels, record]) => ({ id, labels, record }),
     },
     { name: 'LabelList$ebnf$1', symbols: ['Label'] },
     {

@@ -1,5 +1,5 @@
 import { toAST } from '../src';
-import { isGramNode, isGramSeq } from '@gram-data/gram-ast';
+import { GramLiteral, isGramNode, isGramSeq } from '@gram-data/gram-ast';
 import { Node } from 'unist';
 
 let DEBUG = true;
@@ -40,6 +40,64 @@ describe('parsing nodes', () => {
     // console.log(inspect(result));
     const firstPath = result.children[0];
     expect(firstPath?.id).toBe(nodeId);
+  });
+
+  it('(:Aye) with a label', () => {
+    const labels = ['Aye'];
+    const src = `(:${labels.join(':')})`;
+    const result = toAST(src);
+    // show(result);
+    expect(result).toBeDefined();
+    const firstPath = result.children[0];
+    expect(firstPath!.labels).toStrictEqual(expect.arrayContaining(labels));
+  });
+
+  it('(:Aye:Bee) with a label', () => {
+    const labels = ['Aye', 'Bee'];
+    const src = `(:${labels.join(':')})`;
+    const result = toAST(src);
+    // show(result);
+    expect(result).toBeDefined();
+    const firstPath = result.children[0];
+    expect(firstPath!.labels).toStrictEqual(expect.arrayContaining(labels));
+  });
+
+  it('(a:Aye) with an id and label', () => {
+    const nodeId = 'n';
+    const labels = ['Aye'];
+    const src = `(${nodeId}:${labels.join(':')})`;
+    const result = toAST(src);
+    // show(result);
+    expect(result).toBeDefined();
+    const firstPath = result.children[0];
+    expect(firstPath!.id).toBe(nodeId);
+    expect(firstPath!.labels).toStrictEqual(expect.arrayContaining(labels));
+  });
+
+  it('({k:"v"}) with a record', () => {
+    const src = `({k:"v"})`;
+    const result = toAST(src);
+    // show(result);
+    expect(result).toBeDefined();
+    const firstPath = result.children[0];
+    expect(firstPath!.record).toBeDefined();
+    expect(firstPath!.record![0].name).toBe('k');
+    expect((firstPath!.record![0].value as GramLiteral).value).toBe('v');
+  });
+
+  it('(a:Aye{k:"v"}) with an id with label and record', () => {
+    const nodeId = 'n';
+    const labels = ['Aye'];
+    const src = `(${nodeId}:${labels.join(':')}{k:"v"})`;
+    const result = toAST(src);
+    // show(result);
+    expect(result).toBeDefined();
+    const firstPath = result.children[0];
+    expect(firstPath!.id).toBe(nodeId);
+    expect(firstPath!.labels).toStrictEqual(expect.arrayContaining(labels));
+    expect(firstPath!.record).toBeDefined();
+    expect(firstPath!.record![0].name).toBe('k');
+    expect((firstPath!.record![0].value as GramLiteral).value).toBe('v');
   });
 
   it.each`
