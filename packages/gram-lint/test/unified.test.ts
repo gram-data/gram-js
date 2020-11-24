@@ -6,7 +6,7 @@ import lint from '../src';
 describe('using gram as the Parser for unified()', () => {
   it('accepts an empty node "()" ', () => {
     const src = `()`;
-    const result = lint.parse(src) as gramTypes.GramPathSeq;
+    const result = lint.parse(src) as gramTypes.GramSeq;
 
     expect(gramTypes.isGramSeq(result)).toBeTruthy();
     const firstPath = result.children[0];
