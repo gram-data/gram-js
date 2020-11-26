@@ -1,5 +1,5 @@
 import { nodes, count, head, tail, edges } from '../src';
-import { builder as g } from '@gram-data/gram-builder';
+import { builder as g, listToPath } from '@gram-data/gram-builder';
 
 import { Node } from 'unist';
 const inspect = require('unist-util-inspect');
@@ -156,17 +156,35 @@ describe('nodes() from paths are unique', () => {
   it('nodes(`(a)`) has 1 node', () => {
     const a = g.node('a');
     const paths = a;
-    // const expectedNodes = [a];
-    // expect(nodes(paths)).toHaveLength(1);
-    // expect(nodes(paths)).toEqual(expect.arrayContaining(expectedNodes));
+    const expectedNodes = [a];
+    expect(nodes(paths)).toHaveLength(1);
+    expect(nodes(paths)).toEqual(expect.arrayContaining(expectedNodes));
   });
   it('nodes(`(a)-->(a)`) has 1 node', () => {
-    // const a1 = g.node('a');
-    // const a2 = g.node('a')
-    // const paths = g.edge([a1, a2], 'right');
-    // const expectedNodes = [a1];
-    // expect(nodes(paths)).toHaveLength(1);
-    // expect(nodes(paths)).toEqual(expect.arrayContaining(expectedNodes));
+    const a1 = g.node('a');
+    const a2 = g.node('a')
+    const paths = g.edge([a1, a2], 'right');
+    const expectedNodes = [a1];
+    expect(nodes(paths)).toHaveLength(1);
+    expect(nodes(paths)).toEqual(expect.arrayContaining(expectedNodes));
+  });
+  it('nodes(`(a), (a)`) has 1 node', () => {
+    const a1 = g.node('a');
+    const a2 = g.node('a')
+    const paths = g.seq([a1, a2]);
+    const expectedNodes = [a1];
+    expect(nodes(paths)).toHaveLength(1);
+    expect(nodes(paths)).toEqual(expect.arrayContaining(expectedNodes));
+  });
+  it('nodes(`(a)-->(b), (a)-->(c)`) has 3 nodes', () => {
+    const a1 = g.node('a');
+    const b  = g.node('b');
+    const a2 = g.node('a');
+    const c  = g.node('c');
+    const paths = g.seq([g.edge([a1,b],'right'), g.edge([a2,c],'right')]);
+    const expectedNodes = [a1,b,c];
+    expect(nodes(paths)).toHaveLength(3);
+    expect(nodes(paths)).toEqual(expect.arrayContaining(expectedNodes));
   });
 
 });

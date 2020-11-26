@@ -1,4 +1,4 @@
-import { GramNode, GramPath, isGramNode } from '@gram-data/gram-ast';
+import { GramNode, GramPath, GramSeq, isGramNode, isGramSeq } from '@gram-data/gram-ast';
 import { edge } from '@gram-data/gram-builder';
 
 export const count = (p: GramPath): number => {
@@ -29,11 +29,32 @@ export const identity = (p:GramPath) => {
   return p.id;
 }
 
-export const nodes = (p: GramPath): GramPath[] => {
-  return (p.children as GramPath[]).reduce(
-    (acc: GramPath[], child: GramPath) => [...acc, ...nodes(child)],
-    isGramNode(p) ? [p] : ([] as GramPath[])
-  );
+/**
+ * Node set projected from within a path.
+ * 
+ * @param p paths from which to project nodes
+ */
+export const nodes = (p: GramPath | GramPath[] | GramSeq): GramPath[] => {
+  if (isGramNode(p)) return [p];
+  if (isGramSeq(p)) return nodes(p.children);
+  if (Array.isArray(p)) {
+    const nodemap = p.map(nodes).flat().reduce(
+      (acc: Map<string, GramPath>, child: GramPath) => {
+        if (child.id) {
+          if (acc.has(child.id)) {
+            acc.set(child.id, Object.assign(acc.get(child.id), child))
+          } else {
+            acc.set(child.id, child);
+          }
+        }
+        return acc;
+      },
+      new Map<string, GramPath>()
+    );
+    return Array.from(nodemap.values());  
+  } else {
+    return nodes(p.children);
+  }
 };
 
 export const edges = (p: GramPath): GramPath[] => {
