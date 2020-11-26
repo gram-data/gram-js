@@ -1,6 +1,6 @@
 {
   "name": "@gram-data/gram-preset-basic",
-  "version": "0.2.12-alpha.1",
+  "version": "0.2.12",
   "description": "Gram preset to produce a usable graph model. Parse, add missing identities, transform text to js values. ",
   "keywords": [
     "gram",
@@ -34,7 +34,7 @@
     "unist-util-visit": "^2.0.3"
   },
   "dependencies": {
-    "@gram-data/gram-identity": "^0.2.12-alpha.1",
-    "@gram-data/gram-parse": "^0.2.12-alpha.1"
+    "@gram-data/gram-identity": "^0.2.12",
+    "@gram-data/gram-parse": "^0.2.12"
   }
 }
