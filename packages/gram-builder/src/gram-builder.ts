@@ -252,19 +252,35 @@ export const edge = (
  * @param labels
  * @param record
  */
-export const pair = (
+export const path = (
+  kind: RelationshipKind,
   members: [GramPath, GramPath],
   id?: string,
   labels?: string[],
   record?: GramRecord
 ): GramPath => ({
   type: 'path',
-  kind: 'pair',
+  kind,
   id,
   ...(labels && { labels }),
   ...(record && { record }),
   children: members,
 });
+
+/**
+ * Build a pair
+ *
+ * @param children
+ * @param id
+ * @param labels
+ * @param record
+ */
+export const pair = (
+  members: [GramPath, GramPath],
+  id?: string,
+  labels?: string[],
+  record?: GramRecord
+): GramPath => path('pair', members, id, labels, record);
 
 /**
  * Reduces an array of GramProperties into a map.

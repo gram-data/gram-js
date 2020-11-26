@@ -164,15 +164,15 @@ to read on GitHub as well as in various git tools.
 
 The footer should contain a [closing reference to an issue](https://help.github.com/articles/closing-issues-via-commit-messages/) if any.
 
-Samples: (even more [samples](https://github.com/neo4j-devtools/relate/commits/master))
+Samples: (even more [samples](https://github.com/gram-data/gram-js/commits/master))
 
 ```
-docs(changelog): update changelog to beta.5
+docs(ast): Say more by saying less 
 ```
 ```
-fix(release): need to depend on latest rxjs and zone.js
+fix(parser): reduce everything down to paths
 
-The version in our package.json gets copied to the one we publish, and users need the latest of these.
+Treat nodes and edges as special cases of a path.
 ```
 
 ### Revert
@@ -185,21 +185,14 @@ Must be one of the following:
 * **docs**: Documentation only changes
 * **feat**: A new feature
 * **fix**: A bug fix
+* **ex**: Experimental, exploratory or extra code changes that may be later removed
 * **perf**: A code change that improves performance
 * **refactor**: A code change that neither fixes a bug nor adds a feature
 * **style**: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
 * **test**: Adding missing tests or correcting existing tests
 
 ### Scope
-The scope should be the name of the npm package affected (as perceived by the person reading the changelog generated from commit messages).
-
-The following is the list of supported scopes:
-
-* **web**
-* **cli**
-* **common**
-* **electron**
-* **documentation**
+The scope should be the name of the npm package affected (as perceived by the person reading the changelog generated from commit messages). Just use the suffix, without `@gram-data/gram-`.
 
 ### Subject
 The subject contains a succinct description of the change:

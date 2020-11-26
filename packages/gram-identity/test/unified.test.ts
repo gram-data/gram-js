@@ -31,46 +31,25 @@ const expectAllPathlikeElementsToHaveId = () => {
   };
 };
 
-const defaultProcessor = unified()
+const identifierProcessor = unified()
   .use(gramParserPlugin)
   .use(gramIdentityPlugin)
   .use(testCompilerPlugin)
   .use(expectAllPathlikeElementsToHaveId);
 
-const shortIdProcessor = unified()
-  .use(gramParserPlugin)
-  .use(gramIdentityPlugin, { kind: 'shortid' })
-  .use(testCompilerPlugin)
-  .use(expectAllPathlikeElementsToHaveId);
 
-describe('using the gram-identity-plugin with default settings', () => {
+describe('using the gram-identity-plugin with default identifiers', () => {
   it('adds identity to an empty node "()" ', () => {
     const src = `()`;
-    return defaultProcessor.process(src);
+    return identifierProcessor.process(src);
   });
   it('adds identity to an empty edge and its nodes "()-->()" ', () => {
     const src = `()-->()`;
-    return defaultProcessor.process(src);
+    return identifierProcessor.process(src);
   });
 
-  it('adds identity to a paths "[:PreservedPath ()-->()]" ', () => {
+  it('adds identity to paths "[:PreservedPath ()-->()]" ', () => {
     const src = `[:PreservedPath ()-->()]`;
-    return defaultProcessor.process(src);
-  });
-});
-
-describe('using the gram-identity-plugin with shortid identifiers', () => {
-  it('adds identity to an empty node "()" ', () => {
-    const src = `()`;
-    return shortIdProcessor.process(src);
-  });
-  it('adds identity to an empty edge and its nodes "()-->()" ', () => {
-    const src = `()-->()`;
-    return shortIdProcessor.process(src);
-  });
-
-  it('adds identity to a paths "[:PreservedPath ()-->()]" ', () => {
-    const src = `[:PreservedPath ()-->()]`;
-    return shortIdProcessor.process(src);
+    return identifierProcessor.process(src);
   });
 });

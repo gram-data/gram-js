@@ -29,15 +29,15 @@
     "build": "tsdx build",
     "test": "tsdx test",
     "test:watch": "tsdx test --watch",
-    "lint": "tsdx lint",
-    "lint:fix": "tsdx lint --fix",
+    "lint": "tsdx lint src",
+    "lint:fix": "tsdx lint src --fix",
     "prepare": "npm run build",
     "update": "ncu -u",
     "update:check": "ncu"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint"
+      "pre-commit": "tsdx lint src"
     }
   },
   "prettier": {

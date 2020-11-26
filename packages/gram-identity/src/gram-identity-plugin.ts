@@ -4,34 +4,45 @@ import { Node as UnistNode } from 'unist';
 // import {VFile} from 'vfile'
 
 import { isGramPath } from '@gram-data/gram-ast';
-import { shortID } from './gram-identity';
+import { alphabets, IDGenerator } from './gram-identity';
+import { counterIDGenerator } from './counter-generator';
+import { nanoidGenerator } from './nanoid-generator';
+
 const visit = require('unist-util-visit');
 
 interface IdentityPluginSettings {
-  kind?: 'numeric' | 'shortid';
+  generator: 'counter' | 'nanoid',
+  alphabet?: string,
+  prefix?: string,
 }
 
-const defaultSettings: IdentityPluginSettings = {
-  kind: 'numeric',
-};
+const defaultSettings = {
+  generator: 'counter',
+  alphabet: alphabets.base58,
+  prefix: undefined
+}
 
 const gramIdentityPlugin: Plugin<IdentityPluginSettings[]> = (
-  s: IdentityPluginSettings = defaultSettings
+  settings: IdentityPluginSettings
 ) => {
-  const mergedSettings = { ...defaultSettings, ...s };
+
+  const s = {...defaultSettings, ...settings};
 
   const identification: Transformer = (tree: UnistNode) => {
-    let counter = 0;
+
+    let generator:IDGenerator;
+    switch (s.generator) {
+      case 'nanoid':
+        generator = nanoidGenerator(s.alphabet, 21, s.prefix)
+        break;
+      case 'counter':
+      default:
+        generator = counterIDGenerator(s.prefix);
+    }
+
     visit(tree, (element: UnistNode) => {
       if (isGramPath(element)) {
-        switch (mergedSettings.kind) {
-          case 'numeric':
-            element.id = element.id || `${counter++}`;
-            break;
-          case 'shortid':
-            element.id = element.id || shortID();
-            break;
-        }
+        element.id = element.id || generator.generate();
       }
     });
   };

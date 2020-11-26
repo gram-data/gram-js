@@ -20,6 +20,15 @@ export const tail = (p: GramPath): GramNode => {
     : tail(p.children[p.children.length - 1]);
 };
 
+export const merge = (_: GramPath, next: GramPath) => {
+  // return path
+  return next;
+}
+
+export const identity = (p:GramPath) => {
+  return p.id;
+}
+
 export const nodes = (p: GramPath): GramPath[] => {
   return (p.children as GramPath[]).reduce(
     (acc: GramPath[], child: GramPath) => [...acc, ...nodes(child)],

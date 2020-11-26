@@ -1,0 +1,43 @@
+
+import { alphabets, shortUUIDGenerator, counterIDGenerator, nanoidGenerator, simpleBaseIDGenerator } from "../src";
+import { basexIDGenerator } from '../src/basex-generator';
+
+const {
+  performance
+} = require('perf_hooks');
+
+const ITERATIONS = 1000;
+
+describe("identity generators", () => {
+  const generators = [
+    {name:'shortUUID default', generator: shortUUIDGenerator()},
+    {name:'shortUUID base10', generator: shortUUIDGenerator(alphabets.base10)},
+    {name:'counter', generator: counterIDGenerator()},
+    {name:'nanoid default', generator: nanoidGenerator()},
+    {name:'nanoid crock32', generator: nanoidGenerator(alphabets.crock32)},
+    {name:'nanoid base58', generator: nanoidGenerator(alphabets.base58)},
+    {name:'nanoid base62', generator: nanoidGenerator(alphabets.base62)},
+    {name:'simplebase default', generator: simpleBaseIDGenerator()},
+    {name:'basex default', generator: basexIDGenerator()},
+    {name:'basex base62', generator: basexIDGenerator(alphabets.base62)},
+  ]
+  it(`over ${ITERATIONS} iterations`, () => {
+    generators.forEach( ({name, generator}) => {
+      const ids:Set<string> = new Set<string>();
+      const fromTo:string[] = [];
+      const t0 = performance.now();
+      for (let i=0;i<=ITERATIONS; i++) {
+        const id = generator.generate();
+        expect(ids.has(id)).toBeFalsy();
+        ids.add(id);
+        if (i===0 || i === ITERATIONS) fromTo.push(id);
+      }
+      const t1 = performance.now();      
+      console.log(`"${name}" generated from ${fromTo.join()} took ${t1-t0} milliseconds`)
+    })
+  });
+  it('does not yet support unicode alphabets', () => {
+    expect(true).toBeTruthy();
+  })
+
+});

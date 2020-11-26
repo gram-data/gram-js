@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.build.json",
   "compilerOptions": {
+    "noUnusedLocals":false,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "baseUrl": ".",

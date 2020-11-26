@@ -152,6 +152,25 @@ describe('nodes() from paths', () => {
   });
 });
 
+describe('nodes() from paths are unique', () => {
+  it('nodes(`(a)`) has 1 node', () => {
+    const a = g.node('a');
+    const paths = a;
+    // const expectedNodes = [a];
+    // expect(nodes(paths)).toHaveLength(1);
+    // expect(nodes(paths)).toEqual(expect.arrayContaining(expectedNodes));
+  });
+  it('nodes(`(a)-->(a)`) has 1 node', () => {
+    // const a1 = g.node('a');
+    // const a2 = g.node('a')
+    // const paths = g.edge([a1, a2], 'right');
+    // const expectedNodes = [a1];
+    // expect(nodes(paths)).toHaveLength(1);
+    // expect(nodes(paths)).toEqual(expect.arrayContaining(expectedNodes));
+  });
+
+});
+
 describe('edges() from paths', () => {
   it('edges(`(a)`) has 0 edges', () => {
     const a = g.node('a');
