@@ -1,6 +1,6 @@
 {
   "name": "@gram-data/gram-preset-basic",
-  "version": "0.2.15",
+  "version": "0.2.16",
   "description": "Gram preset to produce a usable graph model. Parse, add missing identities, transform text to js values. ",
   "keywords": [
     "gram",
