@@ -66,13 +66,7 @@
   },
   "dependencies": {
     "@gram-data/gram-ast": "^0.2.15",
-    "base-x": "^3.0.8",
-    "bigint-buffer": "^1.1.5",
     "nanoid": "^3.1.18",
-    "power-radix": "^2.5.6",
-    "short-uuid": "^4.1.0",
-    "shortid": "^2.2.16",
-    "simple-base-converter": "^1.0.5",
     "unified": "^9.2.0",
     "unist-util-visit": "^2.0.3",
     "vfile": "^4.2.0"

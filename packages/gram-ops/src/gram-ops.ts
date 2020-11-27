@@ -85,7 +85,7 @@ export const edges = (p: GramPath): GramEdge[] => {
                 p.record
               ),
             ]
-          : [] as GramEdge[]),
+          : ([] as GramEdge[])),
         ...edges(p.children[1]),
       ]
     : p.children.reduce(
