@@ -5,7 +5,7 @@
     "neo4j",
     "gram"
   ],
-  "version": "0.2.13-alpha.0",
+  "version": "0.2.13",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -66,7 +66,7 @@
     "unist-util-size": "^2.0.1"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.2.13-alpha.0"
+    "@gram-data/gram-ast": "^0.2.13"
   },
   "gitHead": "ace408982d62d42809cb2597821590ebe5d6fe08",
   "publishConfig": {
