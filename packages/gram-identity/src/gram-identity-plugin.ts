@@ -11,29 +11,27 @@ import { nanoidGenerator } from './nanoid-generator';
 const visit = require('unist-util-visit');
 
 interface IdentityPluginSettings {
-  generator: 'counter' | 'nanoid',
-  alphabet?: string,
-  prefix?: string,
+  generator: 'counter' | 'nanoid';
+  alphabet?: string;
+  prefix?: string;
 }
 
 const defaultSettings = {
   generator: 'counter',
   alphabet: alphabets.base58,
-  prefix: undefined
-}
+  prefix: undefined,
+};
 
 const gramIdentityPlugin: Plugin<IdentityPluginSettings[]> = (
   settings: IdentityPluginSettings
 ) => {
-
-  const s = {...defaultSettings, ...settings};
+  const s = { ...defaultSettings, ...settings };
 
   const identification: Transformer = (tree: UnistNode) => {
-
-    let generator:IDGenerator;
+    let generator: IDGenerator;
     switch (s.generator) {
       case 'nanoid':
-        generator = nanoidGenerator(s.alphabet, 21, s.prefix)
+        generator = nanoidGenerator(s.alphabet, 21, s.prefix);
         break;
       case 'counter':
       default:

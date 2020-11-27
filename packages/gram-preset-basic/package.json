@@ -25,7 +25,9 @@
     "url": "git+https://github.com/gram-data/gram-js.git"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "",
+    "lint:fix": ""
   },
   "bugs": {
     "url": "https://github.com/gram-data/gram-js/issues"
