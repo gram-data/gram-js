@@ -1,5 +1,8 @@
 'use strict';
 
-module.exports = [
-    require('@gram-data/gram-identity').gramIdentityPlugin
-]
+module.exports = {
+    plugins: [
+        require('@gram-data/gram-identity').gramIdentityPlugin
+    ],
+    settings: []
+}

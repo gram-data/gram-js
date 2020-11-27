@@ -10,6 +10,7 @@
   "homepage": "https://github.com/gram-data/gram-js/tree/main/packages/gram-preset-basic#readme",
   "license": "MIT",
   "main": "lib/gram-preset-basic.js",
+  "types": "lib/index.d.ts",
   "publishConfig": {
     "access": "public"
   },

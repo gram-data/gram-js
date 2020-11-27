@@ -1,4 +1,5 @@
 import {
+  GramEdge,
   GramNode,
   GramPath,
   GramSeq,
@@ -66,7 +67,7 @@ export const nodes = (p: GramPath | GramPath[] | GramSeq): GramNode[] => {
   }
 };
 
-export const edges = (p: GramPath): GramPath[] => {
+export const edges = (p: GramPath): GramEdge[] => {
   return p === undefined
     ? []
     : p.children === undefined || p.children.length === 0
@@ -84,11 +85,11 @@ export const edges = (p: GramPath): GramPath[] => {
                 p.record
               ),
             ]
-          : []),
+          : [] as GramEdge[]),
         ...edges(p.children[1]),
       ]
     : p.children.reduce(
-        (acc: GramPath[], child: GramPath) => [...acc, ...edges(child)],
-        [] as GramPath[]
+        (acc: GramEdge[], child: GramPath) => [...acc, ...edges(child)],
+        [] as GramEdge[]
       );
 };
