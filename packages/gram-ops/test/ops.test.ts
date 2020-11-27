@@ -153,6 +153,13 @@ describe('nodes() from paths', () => {
 });
 
 describe('nodes() from paths are unique', () => {
+  it('nodes(`()`) has 1 node', () => {
+    const a = g.node();
+    const paths = g.seq([a]);
+    const expectedNodes = [a];
+    expect(nodes(paths)).toHaveLength(1);
+    expect(nodes(paths)).toEqual(expect.arrayContaining(expectedNodes));
+  });
   it('nodes(`(a)`) has 1 node', () => {
     const a = g.node('a');
     const paths = a;

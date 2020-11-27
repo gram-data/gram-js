@@ -40,24 +40,27 @@ export const identity = (p: GramPath) => {
  *
  * @param p paths from which to project nodes
  */
-export const nodes = (p: GramPath | GramPath[] | GramSeq): GramPath[] => {
+export const nodes = (p: GramPath | GramPath[] | GramSeq): GramNode[] => {
   if (isGramNode(p)) return [p];
   if (isGramSeq(p)) return nodes(p.children);
   if (Array.isArray(p)) {
+    const unidentifiedNodes: GramNode[] = [];
     const nodemap = p
       .map(nodes)
       .flat()
-      .reduce((acc: Map<string, GramPath>, child: GramPath) => {
+      .reduce((acc: Map<string, GramNode>, child: GramNode) => {
         if (child.id) {
           if (acc.has(child.id)) {
             acc.set(child.id, Object.assign(acc.get(child.id), child));
           } else {
             acc.set(child.id, child);
           }
+        } else {
+          unidentifiedNodes.push(child);
         }
         return acc;
-      }, new Map<string, GramPath>());
-    return Array.from(nodemap.values());
+      }, new Map<string, GramNode>());
+    return Array.from(nodemap.values()).concat(unidentifiedNodes);
   } else {
     return nodes(p.children);
   }
