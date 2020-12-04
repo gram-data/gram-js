@@ -4,6 +4,8 @@
   "description": "Gram preset to produce a usable graph model. Parse, add missing identities, transform text to js values. ",
   "keywords": [
     "gram",
+    "graphs",
+    "neo4j",
     "unified"
   ],
   "author": "Andreas Kollegger <akollegger@gmail.com>",

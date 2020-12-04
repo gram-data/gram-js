@@ -80,6 +80,9 @@
 						<a href="gram_identity.html">gram-identity</a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="gram_ops.html">gram-ops</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="gram_parse.html">gram-parse</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -94,7 +97,7 @@
 		<div class="col-7 offset-3 col-content">
 			<h1>Package gram-builder</h1>
 			<section class="tsd-panel tsd-comment"><div class="tsd-comment tsd-typography tsd-comment-text">
-					<p>From nothing to a valid gram AST.</p>
+					<p>From nothing to a valid <code>gram</code> AST.</p>
 					<a href="#how-to-gram-builder" id="how-to-gram-builder" style="color: inherit; text-decoration: none;">
 						<h2>How to gram-builder</h2>
 					</a>
@@ -102,8 +105,8 @@
 						<h3>Install:</h3>
 					</a>
 					<pre><code class="language-bash">npm install @gram-data/gram-builder</code></pre>
-					<a href="#build-an-ast-using-gram-builder" id="build-an-ast-using-gram-builder" style="color: inherit; text-decoration: none;">
-						<h3>Build an AST using <a href="gram_builder.html">gram-builder</a>:</h3>
+					<a href="#build-an-ast" id="build-an-ast" style="color: inherit; text-decoration: none;">
+						<h3>Build an AST:</h3>
 					</a>
 					<pre><code class="language-TypeScript"><span class="hljs-keyword">import</span> { node, edge } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@gram-data/gram-builder&#x27;</span>;
 
@@ -114,8 +117,8 @@
 						<h2>Next Steps</h2>
 					</a>
 					<ul>
-						<li>Transform to js objects using <a href="gram_value.html">gram-value</a></li>
-						<li>Write back to a string using <a href="gram_stringify.html">gram-stringify</a></li>
+						<li>Enrich properties as js objects using <a href="gram_value.html">gram-value</a></li>
+						<li>Serializes to a string using <a href="gram_stringify.html">gram-stringify</a></li>
 						<li>Introspect the AST using <a href="gram_ast.html">gram-ast</a></li>
 					</ul>
 			</div></section>
@@ -144,6 +147,7 @@
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_builder.html#node" class="tsd-kind-icon">node</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_builder.html#octal" class="tsd-kind-icon">octal</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_builder.html#pair" class="tsd-kind-icon">pair</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_builder.html#path" class="tsd-kind-icon">path</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_builder.html#pluck" class="tsd-kind-icon">pluck</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_builder.html#property" class="tsd-kind-icon">property</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_builder.html#recordtomap" class="tsd-kind-icon">recordToMap</a></li>
@@ -189,6 +193,7 @@
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported"><a href="gram_builder.html#normalizechildren" class="tsd-kind-icon">normalizeChildren</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_builder.html#octal-1" class="tsd-kind-icon">octal</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_builder.html#pair-1" class="tsd-kind-icon">pair</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_builder.html#path-1" class="tsd-kind-icon">path</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_builder.html#pluck-1" class="tsd-kind-icon">pluck</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_builder.html#property-1" class="tsd-kind-icon">property</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_builder.html#recordtomap-1" class="tsd-kind-icon">recordToMap</a></li>
@@ -344,6 +349,13 @@
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="path" class="tsd-anchor"></a>
+					<h3>path</h3>
+					<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span></div>
+					<aside class="tsd-sources">
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
 					<a name="pluck" class="tsd-anchor"></a>
 					<h3>pluck</h3>
 					<div class="tsd-signature tsd-kind-icon">pluck<span class="tsd-signature-symbol">:</span></div>
@@ -431,7 +443,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-builder/src/gram-builder.ts:311</li>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:327</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -495,7 +507,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-builder/src/gram-builder.ts:362</li>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:378</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -564,7 +576,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-builder/src/gram-builder.ts:368</li>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:384</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -587,7 +599,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-builder/src/gram-builder.ts:332</li>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:348</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -610,7 +622,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-builder/src/gram-builder.ts:380</li>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:396</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -699,7 +711,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-builder/src/gram-builder.ts:390</li>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:406</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -725,7 +737,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-builder/src/gram-builder.ts:337</li>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:353</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -748,7 +760,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-builder/src/gram-builder.ts:327</li>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:343</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -812,7 +824,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-builder/src/gram-builder.ts:286</li>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:302</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -844,7 +856,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-builder/src/gram-builder.ts:347</li>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:363</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -938,7 +950,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-builder/src/gram-builder.ts:342</li>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:358</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -961,7 +973,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-builder/src/gram-builder.ts:255</li>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:278</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -993,6 +1005,50 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="path-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> path</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">(</span>kind<span class="tsd-signature-symbol">: </span><a href="gram_ast.html#relationshipkind-1" class="tsd-signature-type">RelationshipKind</a>, members<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a><span class="tsd-signature-symbol">, </span><a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a><span class="tsd-signature-symbol">]</span>, id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, labels<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, record<span class="tsd-signature-symbol">?: </span><a href="gram_ast.html#gramrecord-1" class="tsd-signature-type">GramRecord</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:255</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
+								<div class="lead">
+									<p>Build a pair</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>kind: <a href="gram_ast.html#relationshipkind-1" class="tsd-signature-type">RelationshipKind</a></h5>
+								</li>
+								<li>
+									<h5>members: <span class="tsd-signature-symbol">[</span><a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a><span class="tsd-signature-symbol">, </span><a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a><span class="tsd-signature-symbol">]</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> id: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> labels: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> record: <a href="gram_ast.html#gramrecord-1" class="tsd-signature-type">GramRecord</a></h5>
+									<div class="tsd-comment tsd-typography tsd-comment-shorttext">
+										<div class="lead">
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="pluck-1" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> pluck</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
@@ -1002,7 +1058,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-builder/src/gram-builder.ts:293</li>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:309</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1028,7 +1084,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-builder/src/gram-builder.ts:299</li>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:315</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1054,7 +1110,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-builder/src/gram-builder.ts:274</li>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:290</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -1143,7 +1199,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-builder/src/gram-builder.ts:316</li>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:332</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1166,7 +1222,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-builder/src/gram-builder.ts:321</li>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:337</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1192,7 +1248,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-builder/src/gram-builder.ts:374</li>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:390</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1215,7 +1271,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-builder/src/gram-builder.ts:356</li>
+									<li>Defined in packages/gram-builder/src/gram-builder.ts:372</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1297,7 +1353,7 @@
 					</section>
 				</section>
 			</section>
-			<!--{&quot;options&quot;:&quot;/Users/akollegger/Developer/gram-data/gram-js&quot;,&quot;tsconfig&quot;:&quot;/Users/akollegger/Developer/gram-data/gram-js&quot;,&quot;inputFiles&quot;:[&quot;./readme.md&quot;,&quot;./packages/gram-ast/src&quot;,&quot;./packages/gram-builder/src&quot;,&quot;./packages/gram-identity/src&quot;,&quot;./packages/gram-parse/src&quot;,&quot;./packages/gram-stringify/src&quot;,&quot;./packages/gram-value/src&quot;],&quot;mode&quot;:1,&quot;includeDeclarations&quot;:false,&quot;entryPoint&quot;:&quot;&quot;,&quot;exclude&quot;:[&quot;*.spec.ts&quot;],&quot;externalPattern&quot;:[],&quot;excludeExternals&quot;:false,&quot;excludeNotExported&quot;:false,&quot;excludeNotDocumented&quot;:false,&quot;excludePrivate&quot;:false,&quot;excludeProtected&quot;:false,&quot;ignoreCompilerErrors&quot;:true,&quot;disableSources&quot;:false,&quot;includes&quot;:&quot;&quot;,&quot;media&quot;:&quot;&quot;,&quot;out&quot;:&quot;docs/api&quot;,&quot;json&quot;:&quot;&quot;,&quot;theme&quot;:&quot;node_modules/typedoc-neo-theme/bin/default&quot;,&quot;name&quot;:&quot;gram.js API&quot;,&quot;includeVersion&quot;:false,&quot;excludeTags&quot;:[],&quot;readme&quot;:&quot;./readme.md&quot;,&quot;defaultCategory&quot;:&quot;Other&quot;,&quot;categoryOrder&quot;:[],&quot;categorizeByGroup&quot;:true,&quot;gitRevision&quot;:&quot;&quot;,&quot;gitRemote&quot;:&quot;origin&quot;,&quot;gaID&quot;:&quot;&quot;,&quot;gaSite&quot;:&quot;auto&quot;,&quot;hideGenerator&quot;:true,&quot;toc&quot;:[],&quot;disableOutputCheck&quot;:false,&quot;help&quot;:false,&quot;version&quot;:false,&quot;plugin&quot;:[],&quot;logger&quot;:&quot;console&quot;,&quot;listInvalidSymbolLinks&quot;:false,&quot;external-modulemap&quot;:&quot;.*packages/([^/]+)/src/.*&quot;,&quot;links&quot;:[{&quot;label&quot;:&quot;Guides&quot;,&quot;url&quot;:&quot;https://gram-data.github.io/gram-js/guides&quot;}]}-->
+			<!--{&quot;options&quot;:&quot;/Users/akollegger/Developer/gram-data/gram-js&quot;,&quot;tsconfig&quot;:&quot;/Users/akollegger/Developer/gram-data/gram-js&quot;,&quot;inputFiles&quot;:[&quot;./readme.md&quot;,&quot;./packages/gram-ast/src&quot;,&quot;./packages/gram-builder/src&quot;,&quot;./packages/gram-identity/src&quot;,&quot;./packages/gram-ops/src&quot;,&quot;./packages/gram-parse/src&quot;,&quot;./packages/gram-preset-basic/src&quot;,&quot;./packages/gram-stringify/src&quot;,&quot;./packages/gram-value/src&quot;],&quot;mode&quot;:1,&quot;includeDeclarations&quot;:false,&quot;entryPoint&quot;:&quot;&quot;,&quot;exclude&quot;:[&quot;*.spec.ts&quot;],&quot;externalPattern&quot;:[],&quot;excludeExternals&quot;:false,&quot;excludeNotExported&quot;:false,&quot;excludeNotDocumented&quot;:false,&quot;excludePrivate&quot;:false,&quot;excludeProtected&quot;:false,&quot;ignoreCompilerErrors&quot;:true,&quot;disableSources&quot;:false,&quot;includes&quot;:&quot;&quot;,&quot;media&quot;:&quot;&quot;,&quot;out&quot;:&quot;docs/api&quot;,&quot;json&quot;:&quot;&quot;,&quot;theme&quot;:&quot;node_modules/typedoc-neo-theme/bin/default&quot;,&quot;name&quot;:&quot;gram.js API&quot;,&quot;includeVersion&quot;:false,&quot;excludeTags&quot;:[],&quot;readme&quot;:&quot;./readme.md&quot;,&quot;defaultCategory&quot;:&quot;Other&quot;,&quot;categoryOrder&quot;:[],&quot;categorizeByGroup&quot;:true,&quot;gitRevision&quot;:&quot;&quot;,&quot;gitRemote&quot;:&quot;origin&quot;,&quot;gaID&quot;:&quot;&quot;,&quot;gaSite&quot;:&quot;auto&quot;,&quot;hideGenerator&quot;:true,&quot;toc&quot;:[],&quot;disableOutputCheck&quot;:false,&quot;help&quot;:false,&quot;version&quot;:false,&quot;plugin&quot;:[],&quot;logger&quot;:&quot;console&quot;,&quot;listInvalidSymbolLinks&quot;:false,&quot;external-modulemap&quot;:&quot;.*packages/([^/]+)/src/.*&quot;,&quot;links&quot;:[{&quot;label&quot;:&quot;Guides&quot;,&quot;url&quot;:&quot;https://gram-data.github.io/gram-js/guides&quot;}]}-->
 		</div>
 		<div class="col-2 col-menu secondary-menu">
 			<nav class="tsd-navigation secondary menu-sticky">
@@ -1366,6 +1422,9 @@
 							</li>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
 								<a href="gram_builder.html#pair" class="tsd-kind-icon">pair</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_builder.html#path" class="tsd-kind-icon">path</a>
 							</li>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
 								<a href="gram_builder.html#pluck" class="tsd-kind-icon">pluck</a>
@@ -1458,6 +1517,9 @@
 								<a href="gram_builder.html#pair-1" class="tsd-kind-icon">pair</a>
 							</li>
 							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_builder.html#path-1" class="tsd-kind-icon">path</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
 								<a href="gram_builder.html#pluck-1" class="tsd-kind-icon">pluck</a>
 							</li>
 							<li class=" tsd-kind-function tsd-parent-kind-module">
@@ -1490,6 +1552,9 @@
 				<ul class="after-current">
 					<li class=" tsd-kind-module root">
 						<a href="gram_identity.html" class="tsd-kind-icon">gram-<wbr>identity</a>
+					</li>
+					<li class=" tsd-kind-module root">
+						<a href="gram_ops.html" class="tsd-kind-icon">gram-<wbr>ops</a>
 					</li>
 					<li class=" tsd-kind-module root">
 						<a href="gram_parse.html" class="tsd-kind-icon">gram-<wbr>parse</a>

@@ -1,0 +1,484 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>gram-ops | gram.js API</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<ul class="results-priority" style="display:none">
+					</ul>
+					<a href="../index.html" class="title">gram.js API</a>
+					&emsp;<a href="https://gram-data.github.io/gram-js/guides" class="title">Guides</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="gram_ops.html">gram-ops</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-3 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="gram_ast.html">gram-ast</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="gram_builder.html">gram-builder</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="gram_identity.html">gram-identity</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="gram_ops.html">gram-ops</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="gram_parse.html">gram-parse</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="gram_stringify.html">gram-stringify</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="gram_value.html">gram-value</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+		<div class="col-7 offset-3 col-content">
+			<h1>Package gram-ops</h1>
+			<section class="tsd-panel tsd-comment"><div class="tsd-comment tsd-typography tsd-comment-text">
+					<p>Utility operations for extracting path features.</p>
+					<a href="#how-to-gram-ops" id="how-to-gram-ops" style="color: inherit; text-decoration: none;">
+						<h2>How to gram-ops</h2>
+					</a>
+					<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+						<h3>Install:</h3>
+					</a>
+					<pre><code class="language-bash">npm install @gram-data/gram-ops</code></pre>
+					<a href="#build-a-path" id="build-a-path" style="color: inherit; text-decoration: none;">
+						<h3>Build a path</h3>
+					</a>
+					<p>Use <a href="gram_builder.html">gram-builder</a> to create a path. </p>
+					<pre><code class="language-TypeScript"><span class="hljs-keyword">import</span> { node, edge } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@gram-data/gram-builder&#x27;</span>;
+
+<span class="hljs-keyword">const</span> left = node(<span class="hljs-string">&#x27;a&#x27;</span>);
+<span class="hljs-keyword">const</span> right = node(<span class="hljs-string">&#x27;b&#x27;</span>);
+<span class="hljs-keyword">const</span> path = edge([left, right], <span class="hljs-string">&#x27;right&#x27;</span>);</code></pre>
+					<a href="#extract-features-from-the-path" id="extract-features-from-the-path" style="color: inherit; text-decoration: none;">
+						<h3>Extract features from the path</h3>
+					</a>
+					<p>Extract a node list:</p>
+					<pre><code class="language-TypeScript"><span class="hljs-keyword">import</span> { nodes } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@gram-data/gram-ops&#x27;</span>;
+
+<span class="hljs-keyword">const</span> ns:GramPath[] = nodes(path); </code></pre>
+					<p>Extract an edge list:</p>
+					<pre><code class="language-TypeScript"><span class="hljs-keyword">import</span> { nodes } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@gram-data/gram-ops&#x27;</span>;
+
+<span class="hljs-keyword">const</span> es:GramPath[] = edges(path); 
+<span class="hljs-built_in">console</span>.log(ns.map(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> stringify(n)).join()); <span class="hljs-comment">// (a),(b)</span></code></pre>
+					<a href="#next-steps" id="next-steps" style="color: inherit; text-decoration: none;">
+						<h2>Next Steps</h2>
+					</a>
+					<ul>
+						<li>Transform to js objects using <a href="gram_value.html">gram-value</a></li>
+						<li>Write back to a string using <a href="gram_stringify.html">gram-stringify</a></li>
+						<li>Introspect the AST using <a href="gram_ast.html">gram-ast</a></li>
+					</ul>
+			</div></section>
+			<section class="tsd-panel-group tsd-index-group">
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>References</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ops.html#count" class="tsd-kind-icon">count</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ops.html#edges" class="tsd-kind-icon">edges</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ops.html#head" class="tsd-kind-icon">head</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ops.html#identity" class="tsd-kind-icon">identity</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ops.html#merge" class="tsd-kind-icon">merge</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ops.html#nodes" class="tsd-kind-icon">nodes</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ops.html#tail" class="tsd-kind-icon">tail</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_ops.html#count-1" class="tsd-kind-icon">count</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_ops.html#edges-1" class="tsd-kind-icon">edges</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_ops.html#head-1" class="tsd-kind-icon">head</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_ops.html#identity-1" class="tsd-kind-icon">identity</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_ops.html#merge-1" class="tsd-kind-icon">merge</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_ops.html#nodes-1" class="tsd-kind-icon">nodes</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_ops.html#tail-1" class="tsd-kind-icon">tail</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>References</h2>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="count" class="tsd-anchor"></a>
+					<h3>count</h3>
+					<div class="tsd-signature tsd-kind-icon">count<span class="tsd-signature-symbol">:</span></div>
+					<aside class="tsd-sources">
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="edges" class="tsd-anchor"></a>
+					<h3>edges</h3>
+					<div class="tsd-signature tsd-kind-icon">edges<span class="tsd-signature-symbol">:</span></div>
+					<aside class="tsd-sources">
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="head" class="tsd-anchor"></a>
+					<h3>head</h3>
+					<div class="tsd-signature tsd-kind-icon">head<span class="tsd-signature-symbol">:</span></div>
+					<aside class="tsd-sources">
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="identity" class="tsd-anchor"></a>
+					<h3>identity</h3>
+					<div class="tsd-signature tsd-kind-icon">identity<span class="tsd-signature-symbol">:</span></div>
+					<aside class="tsd-sources">
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="merge" class="tsd-anchor"></a>
+					<h3>merge</h3>
+					<div class="tsd-signature tsd-kind-icon">merge<span class="tsd-signature-symbol">:</span></div>
+					<aside class="tsd-sources">
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="nodes" class="tsd-anchor"></a>
+					<h3>nodes</h3>
+					<div class="tsd-signature tsd-kind-icon">nodes<span class="tsd-signature-symbol">:</span></div>
+					<aside class="tsd-sources">
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="tail" class="tsd-anchor"></a>
+					<h3>tail</h3>
+					<div class="tsd-signature tsd-kind-icon">tail<span class="tsd-signature-symbol">:</span></div>
+					<aside class="tsd-sources">
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="count-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> count</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">count<span class="tsd-signature-symbol">(</span>p<span class="tsd-signature-symbol">: </span><a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/gram-ops/src/gram-ops.ts:11</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>p: <a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="edges-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> edges</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">edges<span class="tsd-signature-symbol">(</span>p<span class="tsd-signature-symbol">: </span><a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/gram_ast.gramedge-1.html" class="tsd-signature-type">GramEdge</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/gram-ops/src/gram-ops.ts:70</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>p: <a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/gram_ast.gramedge-1.html" class="tsd-signature-type">GramEdge</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="head-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> head</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">head<span class="tsd-signature-symbol">(</span>p<span class="tsd-signature-symbol">: </span><a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/gram_ast.gramnode-1.html" class="tsd-signature-type">GramNode</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/gram-ops/src/gram-ops.ts:18</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>p: <a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/gram_ast.gramnode-1.html" class="tsd-signature-type">GramNode</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="identity-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> identity</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">identity<span class="tsd-signature-symbol">(</span>p<span class="tsd-signature-symbol">: </span><a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/gram-ops/src/gram-ops.ts:35</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>p: <a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span>
+								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">string</span>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="merge-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> merge</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">merge<span class="tsd-signature-symbol">(</span>_<span class="tsd-signature-symbol">: </span><a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a>, next<span class="tsd-signature-symbol">: </span><a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/gram-ops/src/gram-ops.ts:30</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>_: <a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a></h5>
+								</li>
+								<li>
+									<h5>next: <a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="nodes-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> nodes</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">nodes<span class="tsd-signature-symbol">(</span>p<span class="tsd-signature-symbol">: </span><a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.gramseq-1.html" class="tsd-signature-type">GramSeq</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/gram_ast.gramnode-1.html" class="tsd-signature-type">GramNode</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/gram-ops/src/gram-ops.ts:44</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
+								<div class="lead">
+									<p>Node set projected from within a path.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>p: <a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.gramseq-1.html" class="tsd-signature-type">GramSeq</a></h5>
+									<div class="tsd-comment tsd-typography tsd-comment-shorttext">
+										<div class="lead">
+											<p>paths from which to project nodes</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/gram_ast.gramnode-1.html" class="tsd-signature-type">GramNode</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="tail-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> tail</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">tail<span class="tsd-signature-symbol">(</span>p<span class="tsd-signature-symbol">: </span><a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/gram_ast.gramnode-1.html" class="tsd-signature-type">GramNode</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/gram-ops/src/gram-ops.ts:24</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>p: <a href="../interfaces/gram_ast.grampath-1.html" class="tsd-signature-type">GramPath</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/gram_ast.gramnode-1.html" class="tsd-signature-type">GramNode</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<!--{&quot;options&quot;:&quot;/Users/akollegger/Developer/gram-data/gram-js&quot;,&quot;tsconfig&quot;:&quot;/Users/akollegger/Developer/gram-data/gram-js&quot;,&quot;inputFiles&quot;:[&quot;./readme.md&quot;,&quot;./packages/gram-ast/src&quot;,&quot;./packages/gram-builder/src&quot;,&quot;./packages/gram-identity/src&quot;,&quot;./packages/gram-ops/src&quot;,&quot;./packages/gram-parse/src&quot;,&quot;./packages/gram-preset-basic/src&quot;,&quot;./packages/gram-stringify/src&quot;,&quot;./packages/gram-value/src&quot;],&quot;mode&quot;:1,&quot;includeDeclarations&quot;:false,&quot;entryPoint&quot;:&quot;&quot;,&quot;exclude&quot;:[&quot;*.spec.ts&quot;],&quot;externalPattern&quot;:[],&quot;excludeExternals&quot;:false,&quot;excludeNotExported&quot;:false,&quot;excludeNotDocumented&quot;:false,&quot;excludePrivate&quot;:false,&quot;excludeProtected&quot;:false,&quot;ignoreCompilerErrors&quot;:true,&quot;disableSources&quot;:false,&quot;includes&quot;:&quot;&quot;,&quot;media&quot;:&quot;&quot;,&quot;out&quot;:&quot;docs/api&quot;,&quot;json&quot;:&quot;&quot;,&quot;theme&quot;:&quot;node_modules/typedoc-neo-theme/bin/default&quot;,&quot;name&quot;:&quot;gram.js API&quot;,&quot;includeVersion&quot;:false,&quot;excludeTags&quot;:[],&quot;readme&quot;:&quot;./readme.md&quot;,&quot;defaultCategory&quot;:&quot;Other&quot;,&quot;categoryOrder&quot;:[],&quot;categorizeByGroup&quot;:true,&quot;gitRevision&quot;:&quot;&quot;,&quot;gitRemote&quot;:&quot;origin&quot;,&quot;gaID&quot;:&quot;&quot;,&quot;gaSite&quot;:&quot;auto&quot;,&quot;hideGenerator&quot;:true,&quot;toc&quot;:[],&quot;disableOutputCheck&quot;:false,&quot;help&quot;:false,&quot;version&quot;:false,&quot;plugin&quot;:[],&quot;logger&quot;:&quot;console&quot;,&quot;listInvalidSymbolLinks&quot;:false,&quot;external-modulemap&quot;:&quot;.*packages/([^/]+)/src/.*&quot;,&quot;links&quot;:[{&quot;label&quot;:&quot;Guides&quot;,&quot;url&quot;:&quot;https://gram-data.github.io/gram-js/guides&quot;}]}-->
+		</div>
+		<div class="col-2 col-menu secondary-menu">
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-module root">
+						<a href="gram_ast.html" class="tsd-kind-icon">gram-<wbr>ast</a>
+					</li>
+					<li class=" tsd-kind-module root">
+						<a href="gram_builder.html" class="tsd-kind-icon">gram-<wbr>builder</a>
+					</li>
+					<li class=" tsd-kind-module root">
+						<a href="gram_identity.html" class="tsd-kind-icon">gram-<wbr>identity</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-module root">
+						<a href="gram_ops.html" class="tsd-kind-icon">gram-<wbr>ops</a>
+						<ul>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_ops.html#count" class="tsd-kind-icon">count</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_ops.html#edges" class="tsd-kind-icon">edges</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_ops.html#head" class="tsd-kind-icon">head</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_ops.html#identity" class="tsd-kind-icon">identity</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_ops.html#merge" class="tsd-kind-icon">merge</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_ops.html#nodes" class="tsd-kind-icon">nodes</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_ops.html#tail" class="tsd-kind-icon">tail</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_ops.html#count-1" class="tsd-kind-icon">count</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_ops.html#edges-1" class="tsd-kind-icon">edges</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_ops.html#head-1" class="tsd-kind-icon">head</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_ops.html#identity-1" class="tsd-kind-icon">identity</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_ops.html#merge-1" class="tsd-kind-icon">merge</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_ops.html#nodes-1" class="tsd-kind-icon">nodes</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_ops.html#tail-1" class="tsd-kind-icon">tail</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-module root">
+						<a href="gram_parse.html" class="tsd-kind-icon">gram-<wbr>parse</a>
+					</li>
+					<li class=" tsd-kind-module root">
+						<a href="gram_stringify.html" class="tsd-kind-icon">gram-<wbr>stringify</a>
+					</li>
+					<li class=" tsd-kind-module root">
+						<a href="gram_value.html" class="tsd-kind-icon">gram-<wbr>value</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer>
+</footer>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

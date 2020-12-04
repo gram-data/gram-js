@@ -4,7 +4,9 @@
   "keywords": [
     "graph",
     "neo4j",
-    "gram"
+    "gram",
+    "unified",
+    "ast"
   ],
   "version": "0.2.15",
   "license": "MIT",

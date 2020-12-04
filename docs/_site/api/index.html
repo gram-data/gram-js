@@ -77,6 +77,9 @@
 						<a href="modules/gram_identity.html">gram-identity</a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="modules/gram_ops.html">gram-ops</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="modules/gram_parse.html">gram-parse</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -91,12 +94,17 @@
 		<div class="col-7 offset-3 col-content">
 			<h1>gram.js API</h1>
 			<div class="tsd-panel tsd-typography">
-				<p>The Javascript reference implementation of the <a href="https://gram-data.github.io">gram</a> property
-				graph model and exchange format.</p>
+				<p><code>(text)--&gt;(ast)--&gt;(text)</code></p>
+				<p><code>gram.js</code> is a collection of packages for working with the <a href="https://gram-data.github.io">gram</a>
+				textual format for graph data.</p>
+				<p>You can parse <code>.gram</code> files into an AST. </p>
+				<p>Or, you can produce <code>.gram</code> files from an existing AST. </p>
+				<p>The AST is not a data model. But it does easily maps to a data model. For example see
+				<a href="https://github.com/gram-data/d3-gram">d3-gram</a>.</p>
 				<a href="#how-to-gram-in-javascript" id="how-to-gram-in-javascript" style="color: inherit; text-decoration: none;">
 					<h2>How to gram in javascript</h2>
 				</a>
-				<p>There are 2 places to start:</p>
+				<p>The 2 best places to start:</p>
 				<ol>
 					<li>Parse from text using <a href="modules/gram_parse.html">gram-parse</a></li>
 					<li>Build an AST by hand using <a href="modules/gram_builder.html">gram-builder</a></li>
@@ -105,15 +113,24 @@
 					<h3>All packages</h3>
 				</a>
 				<ul>
-					<li><a href="modules/gram_ast.html">gram-ast</a> definitions and tokenizing regular-expressions</li>
+					<li><a href="modules/gram_ast.html">gram-ast</a> defines abstract syntax tree types </li>
 					<li><a href="modules/gram_builder.html">gram-builder</a> composes a valid AST</li>
-					<li><a href="modules/gram_identity.html">gram-identity</a> adjusts element identities</li>
-					<li><a href="modules/gram_parse.html">gram-parse</a> from text literal gram into an AST</li>
-					<li><a href="modules/gram_stringify.html">gram-stringify</a> to convert an AST back to text literal format</li>
-					<li><a href="modules/gram_value.html">gram-value</a> to convert AST data values to JS primitive or object values</li>
+					<li><a href="modules/gram_identity.html">gram-identity</a> generates identity. (available as a <a href="https://github.com/unifiedjs/unified#plugin">unified plugin</a> )</li>
+					<li><a href="modules/gram_ops.html">gram-ops</a> extracts features from the AST</li>
+					<li><a href="modules/gram_parse.html">gram-parse</a> processes text literal <code>.gram</code> into an AST. (available as a <a href="https://github.com/unifiedjs/unified#plugin">unified plugin</a> )</li>
+					<li>[[gram-preset-basic]] a <a href="https://github.com/unifiedjs/unified#preset">unified preset</a> for processing <code>.gram</code> files</li>
+					<li><a href="modules/gram_stringify.html">gram-stringify</a> serializes AST back to text literal format (available as a <a href="https://github.com/unifiedjs/unified#plugin">unified plugin</a> )</li>
+					<li><a href="modules/gram_value.html">gram-value</a> enrich AST text literals with JS primitive or object values</li>
 				</ul>
+				<a href="#credit" id="credit" style="color: inherit; text-decoration: none;">
+					<h2>Credit</h2>
+				</a>
+				<a href="#unified-quotcontent-as-structured-dataquot" id="unified-quotcontent-as-structured-dataquot" style="color: inherit; text-decoration: none;">
+					<h3>Unified &quot;Content as structured data&quot;</h3>
+				</a>
+				<p>Gram leverages the excellent <a href="https://unifiedjs.com">unified</a> framework &quot;for parsing, inspecting, transforming, and serializing content through syntax trees.&quot;</p>
 			</div>
-			<!--{&quot;options&quot;:&quot;/Users/akollegger/Developer/gram-data/gram-js&quot;,&quot;tsconfig&quot;:&quot;/Users/akollegger/Developer/gram-data/gram-js&quot;,&quot;inputFiles&quot;:[&quot;./readme.md&quot;,&quot;./packages/gram-ast/src&quot;,&quot;./packages/gram-builder/src&quot;,&quot;./packages/gram-identity/src&quot;,&quot;./packages/gram-parse/src&quot;,&quot;./packages/gram-stringify/src&quot;,&quot;./packages/gram-value/src&quot;],&quot;mode&quot;:1,&quot;includeDeclarations&quot;:false,&quot;entryPoint&quot;:&quot;&quot;,&quot;exclude&quot;:[&quot;*.spec.ts&quot;],&quot;externalPattern&quot;:[],&quot;excludeExternals&quot;:false,&quot;excludeNotExported&quot;:false,&quot;excludeNotDocumented&quot;:false,&quot;excludePrivate&quot;:false,&quot;excludeProtected&quot;:false,&quot;ignoreCompilerErrors&quot;:true,&quot;disableSources&quot;:false,&quot;includes&quot;:&quot;&quot;,&quot;media&quot;:&quot;&quot;,&quot;out&quot;:&quot;docs/api&quot;,&quot;json&quot;:&quot;&quot;,&quot;theme&quot;:&quot;node_modules/typedoc-neo-theme/bin/default&quot;,&quot;name&quot;:&quot;gram.js API&quot;,&quot;includeVersion&quot;:false,&quot;excludeTags&quot;:[],&quot;readme&quot;:&quot;./readme.md&quot;,&quot;defaultCategory&quot;:&quot;Other&quot;,&quot;categoryOrder&quot;:[],&quot;categorizeByGroup&quot;:true,&quot;gitRevision&quot;:&quot;&quot;,&quot;gitRemote&quot;:&quot;origin&quot;,&quot;gaID&quot;:&quot;&quot;,&quot;gaSite&quot;:&quot;auto&quot;,&quot;hideGenerator&quot;:true,&quot;toc&quot;:[],&quot;disableOutputCheck&quot;:false,&quot;help&quot;:false,&quot;version&quot;:false,&quot;plugin&quot;:[],&quot;logger&quot;:&quot;console&quot;,&quot;listInvalidSymbolLinks&quot;:false,&quot;external-modulemap&quot;:&quot;.*packages/([^/]+)/src/.*&quot;,&quot;links&quot;:[{&quot;label&quot;:&quot;Guides&quot;,&quot;url&quot;:&quot;https://gram-data.github.io/gram-js/guides&quot;}]}-->
+			<!--{&quot;options&quot;:&quot;/Users/akollegger/Developer/gram-data/gram-js&quot;,&quot;tsconfig&quot;:&quot;/Users/akollegger/Developer/gram-data/gram-js&quot;,&quot;inputFiles&quot;:[&quot;./readme.md&quot;,&quot;./packages/gram-ast/src&quot;,&quot;./packages/gram-builder/src&quot;,&quot;./packages/gram-identity/src&quot;,&quot;./packages/gram-ops/src&quot;,&quot;./packages/gram-parse/src&quot;,&quot;./packages/gram-preset-basic/src&quot;,&quot;./packages/gram-stringify/src&quot;,&quot;./packages/gram-value/src&quot;],&quot;mode&quot;:1,&quot;includeDeclarations&quot;:false,&quot;entryPoint&quot;:&quot;&quot;,&quot;exclude&quot;:[&quot;*.spec.ts&quot;],&quot;externalPattern&quot;:[],&quot;excludeExternals&quot;:false,&quot;excludeNotExported&quot;:false,&quot;excludeNotDocumented&quot;:false,&quot;excludePrivate&quot;:false,&quot;excludeProtected&quot;:false,&quot;ignoreCompilerErrors&quot;:true,&quot;disableSources&quot;:false,&quot;includes&quot;:&quot;&quot;,&quot;media&quot;:&quot;&quot;,&quot;out&quot;:&quot;docs/api&quot;,&quot;json&quot;:&quot;&quot;,&quot;theme&quot;:&quot;node_modules/typedoc-neo-theme/bin/default&quot;,&quot;name&quot;:&quot;gram.js API&quot;,&quot;includeVersion&quot;:false,&quot;excludeTags&quot;:[],&quot;readme&quot;:&quot;./readme.md&quot;,&quot;defaultCategory&quot;:&quot;Other&quot;,&quot;categoryOrder&quot;:[],&quot;categorizeByGroup&quot;:true,&quot;gitRevision&quot;:&quot;&quot;,&quot;gitRemote&quot;:&quot;origin&quot;,&quot;gaID&quot;:&quot;&quot;,&quot;gaSite&quot;:&quot;auto&quot;,&quot;hideGenerator&quot;:true,&quot;toc&quot;:[],&quot;disableOutputCheck&quot;:false,&quot;help&quot;:false,&quot;version&quot;:false,&quot;plugin&quot;:[],&quot;logger&quot;:&quot;console&quot;,&quot;listInvalidSymbolLinks&quot;:false,&quot;external-modulemap&quot;:&quot;.*packages/([^/]+)/src/.*&quot;,&quot;links&quot;:[{&quot;label&quot;:&quot;Guides&quot;,&quot;url&quot;:&quot;https://gram-data.github.io/gram-js/guides&quot;}]}-->
 		</div>
 		<div class="col-2 col-menu secondary-menu">
 			<nav class="tsd-navigation secondary menu-sticky">
@@ -126,6 +143,9 @@
 					</li>
 					<li class=" tsd-kind-module root">
 						<a href="modules/gram_identity.html" class="tsd-kind-icon">gram-<wbr>identity</a>
+					</li>
+					<li class=" tsd-kind-module root">
+						<a href="modules/gram_ops.html" class="tsd-kind-icon">gram-<wbr>ops</a>
 					</li>
 					<li class=" tsd-kind-module root">
 						<a href="modules/gram_parse.html" class="tsd-kind-icon">gram-<wbr>parse</a>

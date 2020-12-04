@@ -1,4 +1,4 @@
-From nothing to a valid gram AST.
+From nothing to a valid `gram` AST.
 
 ## How to gram-builder
 
@@ -8,7 +8,7 @@ From nothing to a valid gram AST.
 npm install @gram-data/gram-builder
 ```
 
-### Build an AST using [[gram-builder]]:
+### Build an AST:
 
 ``` TypeScript
 import { node, edge } from '@gram-data/gram-builder';
@@ -20,6 +20,6 @@ const ast = edge([left, right], 'right');
 
 ## Next Steps
 
-- Transform to js objects using [[gram-value]]
-- Write back to a string using [[gram-stringify]]
+- Enrich properties as js objects using [[gram-value]]
+- Serializes to a string using [[gram-stringify]]
 - Introspect the AST using [[gram-ast]]

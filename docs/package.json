@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "init": "bundle install",
-    "start": "bundle exec jekyll serve",
+    "start": "bundle exec jekyll serve --watch",
     "build": "bundle exec jekyll build",
     "tailwind:development": "cross-env NODE_ENV=development postcss _tailwind/global.css -o assets/site.css",
     "tailwind:production": "cross-env NODE_ENV=production postcss _tailwind/global.css -o assets/site.css"

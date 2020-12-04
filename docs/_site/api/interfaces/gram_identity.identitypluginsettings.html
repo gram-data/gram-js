@@ -83,6 +83,9 @@
 						<a href="../modules/gram_identity.html">gram-identity</a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="../modules/gram_ops.html">gram-ops</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="../modules/gram_parse.html">gram-parse</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -110,7 +113,9 @@
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="gram_identity.identitypluginsettings.html#kind" class="tsd-kind-icon">kind</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="gram_identity.identitypluginsettings.html#alphabet" class="tsd-kind-icon">alphabet</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="gram_identity.identitypluginsettings.html#generator" class="tsd-kind-icon">generator</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="gram_identity.identitypluginsettings.html#prefix" class="tsd-kind-icon">prefix</a></li>
 							</ul>
 						</section>
 					</div>
@@ -119,17 +124,37 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="kind" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> kind</h3>
-					<div class="tsd-signature tsd-kind-icon">kind<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"numeric"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"shortid"</span></div>
+					<a name="alphabet" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> alphabet</h3>
+					<div class="tsd-signature tsd-kind-icon">alphabet<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in packages/gram-identity/src/gram-identity-plugin.ts:11</li>
+							<li>Defined in packages/gram-identity/src/gram-identity-plugin.ts:15</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+					<a name="generator" class="tsd-anchor"></a>
+					<h3>generator</h3>
+					<div class="tsd-signature tsd-kind-icon">generator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"counter"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"nanoid"</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in packages/gram-identity/src/gram-identity-plugin.ts:14</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+					<a name="prefix" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> prefix</h3>
+					<div class="tsd-signature tsd-kind-icon">prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in packages/gram-identity/src/gram-identity-plugin.ts:16</li>
 						</ul>
 					</aside>
 				</section>
 			</section>
-			<!--{&quot;options&quot;:&quot;/Users/akollegger/Developer/gram-data/gram-js&quot;,&quot;tsconfig&quot;:&quot;/Users/akollegger/Developer/gram-data/gram-js&quot;,&quot;inputFiles&quot;:[&quot;./readme.md&quot;,&quot;./packages/gram-ast/src&quot;,&quot;./packages/gram-builder/src&quot;,&quot;./packages/gram-identity/src&quot;,&quot;./packages/gram-parse/src&quot;,&quot;./packages/gram-stringify/src&quot;,&quot;./packages/gram-value/src&quot;],&quot;mode&quot;:1,&quot;includeDeclarations&quot;:false,&quot;entryPoint&quot;:&quot;&quot;,&quot;exclude&quot;:[&quot;*.spec.ts&quot;],&quot;externalPattern&quot;:[],&quot;excludeExternals&quot;:false,&quot;excludeNotExported&quot;:false,&quot;excludeNotDocumented&quot;:false,&quot;excludePrivate&quot;:false,&quot;excludeProtected&quot;:false,&quot;ignoreCompilerErrors&quot;:true,&quot;disableSources&quot;:false,&quot;includes&quot;:&quot;&quot;,&quot;media&quot;:&quot;&quot;,&quot;out&quot;:&quot;docs/api&quot;,&quot;json&quot;:&quot;&quot;,&quot;theme&quot;:&quot;node_modules/typedoc-neo-theme/bin/default&quot;,&quot;name&quot;:&quot;gram.js API&quot;,&quot;includeVersion&quot;:false,&quot;excludeTags&quot;:[],&quot;readme&quot;:&quot;./readme.md&quot;,&quot;defaultCategory&quot;:&quot;Other&quot;,&quot;categoryOrder&quot;:[],&quot;categorizeByGroup&quot;:true,&quot;gitRevision&quot;:&quot;&quot;,&quot;gitRemote&quot;:&quot;origin&quot;,&quot;gaID&quot;:&quot;&quot;,&quot;gaSite&quot;:&quot;auto&quot;,&quot;hideGenerator&quot;:true,&quot;toc&quot;:[],&quot;disableOutputCheck&quot;:false,&quot;help&quot;:false,&quot;version&quot;:false,&quot;plugin&quot;:[],&quot;logger&quot;:&quot;console&quot;,&quot;listInvalidSymbolLinks&quot;:false,&quot;external-modulemap&quot;:&quot;.*packages/([^/]+)/src/.*&quot;,&quot;links&quot;:[{&quot;label&quot;:&quot;Guides&quot;,&quot;url&quot;:&quot;https://gram-data.github.io/gram-js/guides&quot;}]}-->
+			<!--{&quot;options&quot;:&quot;/Users/akollegger/Developer/gram-data/gram-js&quot;,&quot;tsconfig&quot;:&quot;/Users/akollegger/Developer/gram-data/gram-js&quot;,&quot;inputFiles&quot;:[&quot;./readme.md&quot;,&quot;./packages/gram-ast/src&quot;,&quot;./packages/gram-builder/src&quot;,&quot;./packages/gram-identity/src&quot;,&quot;./packages/gram-ops/src&quot;,&quot;./packages/gram-parse/src&quot;,&quot;./packages/gram-preset-basic/src&quot;,&quot;./packages/gram-stringify/src&quot;,&quot;./packages/gram-value/src&quot;],&quot;mode&quot;:1,&quot;includeDeclarations&quot;:false,&quot;entryPoint&quot;:&quot;&quot;,&quot;exclude&quot;:[&quot;*.spec.ts&quot;],&quot;externalPattern&quot;:[],&quot;excludeExternals&quot;:false,&quot;excludeNotExported&quot;:false,&quot;excludeNotDocumented&quot;:false,&quot;excludePrivate&quot;:false,&quot;excludeProtected&quot;:false,&quot;ignoreCompilerErrors&quot;:true,&quot;disableSources&quot;:false,&quot;includes&quot;:&quot;&quot;,&quot;media&quot;:&quot;&quot;,&quot;out&quot;:&quot;docs/api&quot;,&quot;json&quot;:&quot;&quot;,&quot;theme&quot;:&quot;node_modules/typedoc-neo-theme/bin/default&quot;,&quot;name&quot;:&quot;gram.js API&quot;,&quot;includeVersion&quot;:false,&quot;excludeTags&quot;:[],&quot;readme&quot;:&quot;./readme.md&quot;,&quot;defaultCategory&quot;:&quot;Other&quot;,&quot;categoryOrder&quot;:[],&quot;categorizeByGroup&quot;:true,&quot;gitRevision&quot;:&quot;&quot;,&quot;gitRemote&quot;:&quot;origin&quot;,&quot;gaID&quot;:&quot;&quot;,&quot;gaSite&quot;:&quot;auto&quot;,&quot;hideGenerator&quot;:true,&quot;toc&quot;:[],&quot;disableOutputCheck&quot;:false,&quot;help&quot;:false,&quot;version&quot;:false,&quot;plugin&quot;:[],&quot;logger&quot;:&quot;console&quot;,&quot;listInvalidSymbolLinks&quot;:false,&quot;external-modulemap&quot;:&quot;.*packages/([^/]+)/src/.*&quot;,&quot;links&quot;:[{&quot;label&quot;:&quot;Guides&quot;,&quot;url&quot;:&quot;https://gram-data.github.io/gram-js/guides&quot;}]}-->
 		</div>
 		<div class="col-2 col-menu secondary-menu">
 			<nav class="tsd-navigation secondary menu-sticky">
@@ -146,30 +171,45 @@
 						<a href="../modules/gram_identity.html" class="tsd-kind-icon">gram-<wbr>identity</a>
 						<ul>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="../modules/gram_identity.html#idgenerator" class="tsd-kind-icon">IDGenerator</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
 								<a href="../modules/gram_identity.html#alphabets" class="tsd-kind-icon">alphabets</a>
 							</li>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
-								<a href="../modules/gram_identity.html#shortid" class="tsd-kind-icon">shortID</a>
+								<a href="../modules/gram_identity.html#counteridgenerator" class="tsd-kind-icon">counterIDGenerator</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="../modules/gram_identity.html#nanoidgenerator" class="tsd-kind-icon">nanoid<wbr>Generator</a>
 							</li>
 							<li class="current tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported">
 								<a href="gram_identity.identitypluginsettings.html" class="tsd-kind-icon">Identity<wbr>Plugin<wbr>Settings</a>
 								<ul>
 									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-										<a href="gram_identity.identitypluginsettings.html#kind" class="tsd-kind-icon">kind</a>
+										<a href="gram_identity.identitypluginsettings.html#alphabet" class="tsd-kind-icon">alphabet</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+										<a href="gram_identity.identitypluginsettings.html#generator" class="tsd-kind-icon">generator</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+										<a href="gram_identity.identitypluginsettings.html#prefix" class="tsd-kind-icon">prefix</a>
 									</li>
 								</ul>
 							</li>
-							<li class=" tsd-kind-variable tsd-parent-kind-module">
-								<a href="../modules/gram_identity.html#shortid-1" class="tsd-kind-icon">shortID</a>
-							</li>
-							<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
-								<a href="../modules/gram_identity.html#shortid-2" class="tsd-kind-icon">shortid</a>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+								<a href="../modules/gram_identity.html#idgenerator-1" class="tsd-kind-icon">IDGenerator</a>
 							</li>
 							<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
 								<a href="../modules/gram_identity.html#visit" class="tsd-kind-icon">visit</a>
 							</li>
 							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="../modules/gram_identity.html#counteridgenerator-1" class="tsd-kind-icon">counterIDGenerator</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
 								<a href="../modules/gram_identity.html#gramidentityplugin" class="tsd-kind-icon">gram<wbr>Identity<wbr>Plugin</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="../modules/gram_identity.html#nanoidgenerator-1" class="tsd-kind-icon">nanoid<wbr>Generator</a>
 							</li>
 							<li class=" tsd-kind-object-literal tsd-parent-kind-module">
 								<a href="../modules/gram_identity.html#alphabets-1" class="tsd-kind-icon">alphabets</a>
@@ -181,6 +221,9 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-module root">
+						<a href="../modules/gram_ops.html" class="tsd-kind-icon">gram-<wbr>ops</a>
+					</li>
 					<li class=" tsd-kind-module root">
 						<a href="../modules/gram_parse.html" class="tsd-kind-icon">gram-<wbr>parse</a>
 					</li>
