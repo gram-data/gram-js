@@ -1,4 +1,4 @@
-import { builder } from '@gram-data/gram-builder';
+import * as builder from '@gram-data/gram-builder';
 import { valueOf } from '../src';
 
 describe('Gram records to JS objects', () => {

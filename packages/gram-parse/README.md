@@ -1,4 +1,4 @@
-From text literal `(a)-->(b)` to an gram AST. 
+From text literal `(a)-->(b)` to a gram AST. 
 
 ## How to gram-parse
 

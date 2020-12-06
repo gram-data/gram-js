@@ -3,7 +3,7 @@
 A CLI for processing Gram text literal files. 
 
 ``` bash
-→ ./bin/cli.js --help
+→ gram --help
 Usage: gram [options] [path | glob ...]
 
   undefined

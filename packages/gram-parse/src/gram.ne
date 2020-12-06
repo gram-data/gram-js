@@ -2,7 +2,7 @@
 
 @{% 
 import moo from 'moo';
-import {builder as g} from '@gram-data/gram-builder';
+import * as g from '@gram-data/gram-builder';
 import {tokens} from '@gram-data/gram-ast';
 
 let lexer = moo.compile({

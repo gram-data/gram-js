@@ -20,6 +20,6 @@ const ast = edge([left, right], 'right');
 
 ## Next Steps
 
-- Transform to js objects using [[gram-value]]
 - Write back to a string using [[gram-stringify]]
 - Introspect the AST using [[gram-ast]]
+- Write your own [unified](https://github.com/unifiedjs/unified#plugin) plugin for processing the AST

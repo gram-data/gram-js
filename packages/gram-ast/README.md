@@ -1,4 +1,4 @@
-`(gram)-->(ast)`
+`()-[define]->(ast)`
 
 Gram abstract syntax tree definitions, tokenizing regexes, and utilities like type guards.
 
@@ -14,7 +14,7 @@ npm install @gram-data/gram-ast
 
 ```TypeScript
 import { isGramSeq, isGramNode, isGramEdge } from '@gram-data/gram-ast';
-import { toAST } from '@gram-data/gram-parse';  // to produce an AST from text
+import { toAST } from '@gram-data/gram-parse';  
 
 const src = '(a)-->(b)';
 const parsed = toAST(src);
@@ -58,9 +58,9 @@ A `gram` path is either an empty path, or the composition of two other paths.
 The data structure of a path is like a list which remembers how it was assembled.
 The list elements are other paths.
 
-Each path has its own identity, qualifying labels and a data record.
+Each path has its own identity, labels and a data record.
 
-## [record](../interfaces/gram_ast.gramrecord-1.html)
+### [record](../interfaces/gram_ast.gramrecord-1.html)
 
 In the AST, records are a multimap presented as an _array_ of name/value
 properties. That means a property name _may_ appear more than once, with
@@ -75,6 +75,6 @@ multimapped properties:
 
 ## Next Steps
 
+- Learn more about parsing with [[gram-ast]]
 - Transform to js objects using [[gram-value]]
 - Serialize back to text using [[gram-stringify]]
-- Write your own [unified](https://github.com/unifiedjs/unified#plugin) plugin for processing the AST

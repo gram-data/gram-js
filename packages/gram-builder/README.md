@@ -1,4 +1,6 @@
-From nothing to a valid `gram` AST.
+`()-[build]->(ast)`
+
+Build valid `gram` AST.
 
 ## How to gram-builder
 
@@ -20,6 +22,6 @@ const ast = edge([left, right], 'right');
 
 ## Next Steps
 
-- Enrich properties as js objects using [[gram-value]]
+- Enrich record properties with js objects using [[gram-value]]
 - Serializes to a string using [[gram-stringify]]
 - Introspect the AST using [[gram-ast]]

@@ -1,4 +1,6 @@
-Utility operations for extracting path features.
+`(ast)-[ops]->(features)`
+
+Utility operations for extracting path features from `gram` AST.
 
 ## How to gram-ops
 
@@ -36,11 +38,9 @@ Extract an edge list:
 import { nodes } from '@gram-data/gram-ops';
 
 const es:GramPath[] = edges(path); 
-console.log(ns.map(n => stringify(n)).join()); // (a),(b)
 ```
 
 ## Next Steps
 
-- Transform to js objects using [[gram-value]]
 - Write back to a string using [[gram-stringify]]
 - Introspect the AST using [[gram-ast]]

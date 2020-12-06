@@ -1,5 +1,4 @@
-import { builder as g } from '@gram-data/gram-builder';
-// import {Relation} from '@gram-data/gram-ast';
+import * as g from '@gram-data/gram-builder';
 import { stringify } from '../src';
 
 // const inspect = require('unist-util-inspect');

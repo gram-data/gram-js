@@ -9,7 +9,7 @@ import {
   isOctalLiteral,
   isDateLiteral,
   isWellKnownTextLiteral,
-} from '../src/gram-types';
+} from '../src/';
 
 describe('gram ast boolean literals', () => {
   it('are a type with value', () => {

@@ -97,11 +97,33 @@
 		<div class="col-7 offset-3 col-content">
 			<h1>Package gram-identity</h1>
 			<section class="tsd-panel tsd-comment"><div class="tsd-comment tsd-typography tsd-comment-text">
-					<a href="#gram-identity" id="gram-identity" style="color: inherit; text-decoration: none;">
-						<h1>Gram Identity</h1>
+					<p><code>(ast)-[identify]-&gt;(ast)</code></p>
+					<p>Collection of identity generating functions and an AST
+						processing plugin which applies identity to any paths
+					which have none. </p>
+					<a href="#how-to-gram-identity" id="how-to-gram-identity" style="color: inherit; text-decoration: none;">
+						<h2>How to gram-identity</h2>
 					</a>
-					<p>Utilities for establishing or transforming the identity
-					of elements in a Gram AST.</p>
+					<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+						<h3>Install:</h3>
+					</a>
+					<pre><code class="language-bash">npm install @gram-data/gram-builder</code></pre>
+					<a href="#build-an-ast" id="build-an-ast" style="color: inherit; text-decoration: none;">
+						<h3>Build an AST:</h3>
+					</a>
+					<pre><code class="language-TypeScript"><span class="hljs-keyword">import</span> { node, edge } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@gram-data/gram-builder&#x27;</span>;
+
+<span class="hljs-keyword">const</span> left = node(<span class="hljs-string">&#x27;a&#x27;</span>);
+<span class="hljs-keyword">const</span> right = node(<span class="hljs-string">&#x27;b&#x27;</span>);
+<span class="hljs-keyword">const</span> ast = edge([left, right], <span class="hljs-string">&#x27;right&#x27;</span>);</code></pre>
+					<a href="#next-steps" id="next-steps" style="color: inherit; text-decoration: none;">
+						<h2>Next Steps</h2>
+					</a>
+					<ul>
+						<li>Enrich record properties with js objects using <a href="gram_value.html">gram-value</a></li>
+						<li>Serializes to a string using <a href="gram_stringify.html">gram-stringify</a></li>
+						<li>Introspect the AST using <a href="gram_ast.html">gram-ast</a></li>
+					</ul>
 			</div></section>
 			<section class="tsd-panel-group tsd-index-group">
 				<section class="tsd-panel tsd-index-panel">

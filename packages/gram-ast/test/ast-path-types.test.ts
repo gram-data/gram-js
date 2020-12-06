@@ -13,7 +13,7 @@ import {
   isOctalLiteral,
   isDateLiteral,
   isWellKnownTextLiteral,
-} from '../src/gram-types';
+} from '../src/';
 
 describe('gram empty path', () => {
   it('is entirely empty', () => {
