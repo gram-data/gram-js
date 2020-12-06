@@ -144,7 +144,7 @@
 					<pre><code class="language-TypeScript"><span class="hljs-keyword">interface</span> GramPath <span class="hljs-keyword">extends</span> UnistParent {
   <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;path&#x27;</span>;
   id?: <span class="hljs-built_in">string</span>;
-  kind?: RelationshipKind;
+  kind?: PathKind;
   labels?: <span class="hljs-built_in">string</span>[];
   record?: GramRecord;
   children: [] | [GramPath] | [GramPath, GramPath];
@@ -193,8 +193,8 @@
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ast.html#integerliteral" class="tsd-kind-icon">IntegerLiteral</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ast.html#measurementliteral" class="tsd-kind-icon">MeasurementLiteral</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ast.html#octalliteral" class="tsd-kind-icon">OctalLiteral</a></li>
-								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ast.html#orientedkind" class="tsd-kind-icon">OrientedKind</a></li>
-								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ast.html#relationshipkind" class="tsd-kind-icon">RelationshipKind</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ast.html#RelationshipKind" class="tsd-kind-icon">RelationshipKind</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ast.html#PathKind" class="tsd-kind-icon">PathKind</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ast.html#stringliteral" class="tsd-kind-icon">StringLiteral</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ast.html#taggedliteral" class="tsd-kind-icon">TaggedLiteral</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_ast.html#timeintervalliteral" class="tsd-kind-icon">TimeIntervalLiteral</a></li>
@@ -262,8 +262,8 @@
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="gram_ast.html#grampropertymap-1" class="tsd-kind-icon">GramPropertyMap</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="gram_ast.html#gramrecord-1" class="tsd-kind-icon">GramRecord</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="gram_ast.html#gramrecordvalue-1" class="tsd-kind-icon">GramRecordValue</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="gram_ast.html#orientedkind-1" class="tsd-kind-icon">OrientedKind</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="gram_ast.html#relationshipkind-1" class="tsd-kind-icon">RelationshipKind</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="gram_ast.html#RelationshipKind-1" class="tsd-kind-icon">RelationshipKind</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="gram_ast.html#PathKind-1" class="tsd-kind-icon">PathKind</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -468,14 +468,14 @@
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
-					<a name="orientedkind" class="tsd-anchor"></a>
+					<a name="RelationshipKind" class="tsd-anchor"></a>
 					<h3>Oriented<wbr>Kind</h3>
 					<div class="tsd-signature tsd-kind-icon">Oriented<wbr>Kind<span class="tsd-signature-symbol">:</span></div>
 					<aside class="tsd-sources">
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
-					<a name="relationshipkind" class="tsd-anchor"></a>
+					<a name="PathKind" class="tsd-anchor"></a>
 					<h3>Relationship<wbr>Kind</h3>
 					<div class="tsd-signature tsd-kind-icon">Relationship<wbr>Kind<span class="tsd-signature-symbol">:</span></div>
 					<aside class="tsd-sources">
@@ -778,7 +778,7 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
-					<a name="orientedkind-1" class="tsd-anchor"></a>
+					<a name="RelationshipKind-1" class="tsd-anchor"></a>
 					<h3>Oriented<wbr>Kind</h3>
 					<div class="tsd-signature tsd-kind-icon">Oriented<wbr>Kind<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"left"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"right"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"either"</span></div>
 					<aside class="tsd-sources">
@@ -801,9 +801,9 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
-					<a name="relationshipkind-1" class="tsd-anchor"></a>
+					<a name="PathKind-1" class="tsd-anchor"></a>
 					<h3>Relationship<wbr>Kind</h3>
-					<div class="tsd-signature tsd-kind-icon">Relationship<wbr>Kind<span class="tsd-signature-symbol">:</span> <a href="gram_ast.html#orientedkind" class="tsd-signature-type">OrientedKind</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"pair"</span></div>
+					<div class="tsd-signature tsd-kind-icon">Relationship<wbr>Kind<span class="tsd-signature-symbol">:</span> <a href="gram_ast.html#RelationshipKind" class="tsd-signature-type">RelationshipKind</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"pair"</span></div>
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in packages/gram-ast/src/gram-types.ts:225</li>
@@ -811,7 +811,7 @@
 					</aside>
 					<div class="tsd-comment tsd-typography tsd-comment-shorttext">
 						<div class="lead">
-							<p>RelationshipKind describes the kind of
+							<p>PathKind describes the kind of
 							relationship between composed paths.</p>
 						</div>
 						</div><div class="tsd-comment tsd-typography tsd-comment-text">
@@ -1894,10 +1894,10 @@
 								<a href="gram_ast.html#octalliteral" class="tsd-kind-icon">Octal<wbr>Literal</a>
 							</li>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
-								<a href="gram_ast.html#orientedkind" class="tsd-kind-icon">Oriented<wbr>Kind</a>
+								<a href="gram_ast.html#RelationshipKind" class="tsd-kind-icon">Oriented<wbr>Kind</a>
 							</li>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
-								<a href="gram_ast.html#relationshipkind" class="tsd-kind-icon">Relationship<wbr>Kind</a>
+								<a href="gram_ast.html#PathKind" class="tsd-kind-icon">Relationship<wbr>Kind</a>
 							</li>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
 								<a href="gram_ast.html#stringliteral" class="tsd-kind-icon">String<wbr>Literal</a>
@@ -2071,10 +2071,10 @@
 								<a href="gram_ast.html#gramrecordvalue-1" class="tsd-kind-icon">Gram<wbr>Record<wbr>Value</a>
 							</li>
 							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-								<a href="gram_ast.html#orientedkind-1" class="tsd-kind-icon">Oriented<wbr>Kind</a>
+								<a href="gram_ast.html#RelationshipKind-1" class="tsd-kind-icon">Oriented<wbr>Kind</a>
 							</li>
 							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-								<a href="gram_ast.html#relationshipkind-1" class="tsd-kind-icon">Relationship<wbr>Kind</a>
+								<a href="gram_ast.html#PathKind-1" class="tsd-kind-icon">Relationship<wbr>Kind</a>
 							</li>
 							<li class=" tsd-kind-variable tsd-parent-kind-module">
 								<a href="gram_ast.html#empty_path_id-1" class="tsd-kind-icon">EMPTY_<wbr>PATH_<wbr>ID</a>

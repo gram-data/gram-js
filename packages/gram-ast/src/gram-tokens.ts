@@ -17,6 +17,5 @@ const checkIdentifierRegex = new RegExp('^' + identifier.source + '$');
  * Checks whether the given string is a valid identifier.
  *
  */
-
 export const isValidIdentifier = (s?: string) =>
   s && checkIdentifierRegex.test(s);

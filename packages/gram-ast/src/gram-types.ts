@@ -1,7 +1,6 @@
 /**
  * # Gram AST Types
  *
- *
  * References:
  *
  * - [unist](https://github.com/syntax-tree/unist) - Universal Synax Tree
@@ -16,7 +15,7 @@ import {
 } from 'unist';
 
 /**
- * A GramSeq is a graph expressed as a sequence of paths.
+ * A GramSeq is a sequence of paths.
  *
  */
 export interface GramSeq extends UnistParent {
@@ -40,7 +39,7 @@ export const isGramSeq = (o: any): o is GramSeq => !!o.type && o.type === 'seq';
 
 /**
  * GramPath is composed of nodes, edges and other paths that have been composed
- * into a path expression.
+ * together.
  *
  */
 export interface GramPath extends UnistParent {
@@ -59,7 +58,7 @@ export interface GramPath extends UnistParent {
   /**
    * The kind of relationship between the path members.
    */
-  kind?: RelationshipKind;
+  kind?: PathKind;
 
   /**
    * Labels are content.
@@ -91,10 +90,14 @@ export interface GramPath extends UnistParent {
 export const isGramPath = (o: any): o is GramPath =>
   !!o.type && o.type === 'path';
 
+/**
+ * Constant identity for empty paths: `ø`.
+ */
 export const EMPTY_PATH_ID = 'ø';
 
 /**
- * A GramEmptyPath is an empty path expression which contains no sub-paths and has no identity.
+ * A GramEmptyPath is an empty path composition which contains 
+ * no sub-paths and has a unique constant identity {@link EMPTY_PATH_ID}.
  *
  */
 export interface GramEmptyPath extends GramPath {
@@ -189,8 +192,7 @@ export const isGramEdge = (o: any): o is GramEdge =>
   o.children.every(child => isGramNode(child));
 
 /**
- * Kind of path which is oriented
- * for navigation.
+ * Kind of path which forms a graph relationship.
  *
  * One of:
  *
@@ -199,30 +201,29 @@ export const isGramEdge = (o: any): o is GramEdge =>
  * - either `(a)--(b)`
  *
  */
-export type OrientedKind = 'left' | 'right' | 'either';
+export type RelationshipKind = 'left' | 'right' | 'either';
 
 /**
- * RelationshipKind describes the kind of
- * relationship between composed paths.
- *
- * Classically this is the Orientation of
- * the edge between two nodes.
- *
- * Nodes can also be composed into a simple ordered
- * pair, which does not imply navigability.
- * Pairs enable compound paths to be assembled
- * which do not follow a linear flow.
- *
- * For example, this is a single path which
- * pairs two adjacent edges that coincide at `(a)`:
- * `(a)-->(b),(a)-->(c)
+ * Kind of path which combines two paths together 
+ * without implying any semantics. 
+ * 
+ * One of:
+ * 
+ * - pair  `(a),(b)`
+ * 
+ */
+export type CombinationKind = 'pair';
+
+/**
+ * PathKind describes the nature of the
+ * path composition. 
  *
  * One of:
  *
- * - Orientation
- * - pair         `[a,b]`
+ * - RelationshipKind: 'left', 'right', 'either'
+ * - CombinationKind:  `pair`
  */
-export type RelationshipKind = OrientedKind | 'pair';
+export type PathKind = RelationshipKind | CombinationKind;
 
 export type GramPathlike = GramPath | GramNode | GramEdge;
 

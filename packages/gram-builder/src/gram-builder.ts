@@ -29,8 +29,8 @@ import {
   DateLiteral,
   TimeLiteral,
   DurationLiteral,
+  PathKind,
   RelationshipKind,
-  OrientedKind,
 } from '@gram-data/gram-ast';
 
 export type Children<T> = T | T[] | (() => T | T[]);
@@ -77,7 +77,7 @@ export interface PathAttributes {
   id?: string;
   labels?: string[];
   record?: GramRecord;
-  kind?: RelationshipKind;
+  kind?: PathKind;
 }
 
 /**
@@ -88,7 +88,7 @@ export interface PathAttributes {
  * @param baseID the baseID from which path expressions will derive new IDs
  */
 export const listToPath = (
-  kind: RelationshipKind = 'pair',
+  kind: PathKind = 'pair',
   pathlist: GramPath[]
 ): GramPath => {
   if (pathlist.length > 1) {
@@ -210,7 +210,7 @@ export const node = (
  */
 export const edge = (
   children: [GramNode, GramNode],
-  kind: OrientedKind,
+  kind: RelationshipKind,
   id?: string,
   labels?: string[],
   record?: GramRecord
@@ -253,7 +253,7 @@ export const edge = (
  * @param record
  */
 export const path = (
-  kind: RelationshipKind,
+  kind: PathKind,
   members: [GramPath, GramPath],
   id?: string,
   labels?: string[],
