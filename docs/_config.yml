@@ -34,7 +34,7 @@ kramdown:
 social_links:
   twitter: akollegger
   github: gram-data
-  stackoverflow: gram-data
+  stackoverflow: gram
   keybase: akollegger
 
 plugins:

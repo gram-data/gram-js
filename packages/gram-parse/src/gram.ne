@@ -49,21 +49,16 @@ let lexer = moo.compile({
 
 # Gram -> (Path | Comment):*
 
+# GramSeq is a sequence of paths
 GramSeq -> (Path _  {% ([pp]) => pp %}):+ EOL:? {% ([pp]) => g.seq( g.flatten(pp) ) %}
-# PathSequence -> (Path _  {% ([pp]) => pp %}):+ EOL:? {% ([pp]) => g.seq( g.flatten(pp) ) %}
-# PathSequence -> Path (_ "," _  Path {% ([,,,p]) => p %}):* EOL:? {% ([p, pp]) => g.seq( [p, ...g.flatten(pp)] ) %}
-# PathSequence -> (PathSequence _ {% ([pp]) => pp %}):+ EOL:? {% ([pp]) => g.seq( g.flatten(pp) ) %}
 
-# PathPair ->
-#   Path _ "," _ PathPair
-#     {% ([np,,es,,ep]) => g.cons([np,ep], {kind:'pair', id:es.id, labels:es.labels, record:es.record} ) %}
-#   | Path {% id %}
-
+# Paths are a generalization of nodes and edges
 Path ->
     NodePattern     {% id %}
   | PathComposition {% id %}
   | PathPair        {% id %}
 
+# NodePattern is cypher-like (node1)-[edge]->(node2)
 NodePattern ->
     Node _ Edge _ NodePattern
       {% ([np,,es,,ep]) => g.cons([np,ep], {kind:es.kind, id:es.id, labels:es.labels, record:es.record} ) %}
