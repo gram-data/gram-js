@@ -469,17 +469,19 @@ describe('tagged date literal values', () => {
     const expectedValue = {
       year: '2020',
       month: '07',
-      date: '04',
+      dayOfMonth: '04',
     };
+    const expectedDate = new Date(`${expectedValue.year}-${expectedValue.month}-${expectedValue.dayOfMonth}`)
     const dateLiteral = builder.date(
-      `${expectedValue.year}-${expectedValue.month}-${expectedValue.date}`
+      `${expectedValue.year}-${expectedValue.month}-${expectedValue.dayOfMonth}`
     );
     const receivedValue = valueOfDate(dateLiteral);
     expect(receivedValue.getFullYear()).toBe(
       Number.parseInt(expectedValue.year)
     );
-    expect(receivedValue.getMonth()).toBe(Number.parseInt(expectedValue.month));
-    expect(receivedValue.getDate()).toBe(Number.parseInt(expectedValue.date));
+    expect(receivedValue.getMonth()).toBe(Number.parseInt(expectedValue.month) - 1); // months start at 0
+    expect(receivedValue.getDate()).toBe(Number.parseInt(expectedValue.dayOfMonth));
+    expect(receivedValue).toStrictEqual(expectedDate);
   });
   it('converts {type:"tagged", tag:"date", value:"2020"} to a Date', () => {
     const expectedValue = {

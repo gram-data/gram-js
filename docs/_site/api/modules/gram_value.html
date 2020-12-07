@@ -128,6 +128,7 @@
 						<section class="tsd-index-section ">
 							<h3>References</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#literalvalueevaluator" class="tsd-kind-icon">LiteralValueEvaluator</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#iso8601duration" class="tsd-kind-icon">iso8601Duration</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#iso8601localtime" class="tsd-kind-icon">iso8601LocalTime</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="gram_value.html#iso8601ordinaldate" class="tsd-kind-icon">iso8601OrdinalDate</a></li>
@@ -159,6 +160,18 @@
 								<li class="tsd-kind-class tsd-parent-kind-module tsd-is-not-exported"><a href="../classes/gram_value.invalidasterror.html" class="tsd-kind-icon">InvalidAstError</a></li>
 							</ul>
 						</section>
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported"><a href="../interfaces/gram_value.valuepluginsettings.html" class="tsd-kind-icon">ValuePluginSettings</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="gram_value.html#literalvalueevaluator-1" class="tsd-kind-icon">LiteralValueEvaluator</a></li>
+							</ul>
+						</section>
 						<section class="tsd-index-section ">
 							<h3>Variables</h3>
 							<ul class="tsd-index-list">
@@ -178,12 +191,14 @@
 								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="gram_value.html#iso8601year-1" class="tsd-kind-icon">iso8601Year</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="gram_value.html#iso8601yearmonth-1" class="tsd-kind-icon">iso8601YearMonth</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="gram_value.html#iso8601yearmonthday-1" class="tsd-kind-icon">iso8601YearMonthDay</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported"><a href="gram_value.html#visit" class="tsd-kind-icon">visit</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="gram_value.html#assertnever" class="tsd-kind-icon">assertNever</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_value.html#gramvalueplugin" class="tsd-kind-icon">gramValuePlugin</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_value.html#valueof-1" class="tsd-kind-icon">valueOf</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_value.html#valueofboolean-1" class="tsd-kind-icon">valueOfBoolean</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_value.html#valueofdate-1" class="tsd-kind-icon">valueOfDate</a></li>
@@ -199,11 +214,24 @@
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="gram_value.html#valueoftime-1" class="tsd-kind-icon">valueOfTime</a></li>
 							</ul>
 						</section>
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Object literals</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported"><a href="gram_value.html#defaultsettings" class="tsd-kind-icon">defaultSettings</a></li>
+							</ul>
+						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>References</h2>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="literalvalueevaluator" class="tsd-anchor"></a>
+					<h3>Literal<wbr>Value<wbr>Evaluator</h3>
+					<div class="tsd-signature tsd-kind-icon">Literal<wbr>Value<wbr>Evaluator<span class="tsd-signature-symbol">:</span></div>
+					<aside class="tsd-sources">
+					</aside>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
 					<a name="iso8601duration" class="tsd-anchor"></a>
 					<h3>iso8601<wbr>Duration</h3>
@@ -367,6 +395,45 @@
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="literalvalueevaluator-1" class="tsd-anchor"></a>
+					<h3>Literal<wbr>Value<wbr>Evaluator</h3>
+					<div class="tsd-signature tsd-kind-icon">Literal<wbr>Value<wbr>Evaluator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in packages/gram-value/src/gram-value.ts:51</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography tsd-comment-shorttext">
+						<div class="lead">
+							<p>Type of function used to evaluate text literal values.</p>
+						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>ast<span class="tsd-signature-symbol">: </span><a href="gram_ast.html#gramliteral" class="tsd-signature-type">GramLiteral</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>ast: <a href="gram_ast.html#gramliteral" class="tsd-signature-type">GramLiteral</a></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Variables</h2>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
 					<a name="millis_in_an_hour" class="tsd-anchor"></a>
@@ -374,7 +441,7 @@
 					<div class="tsd-signature tsd-kind-icon">MILLIS_<wbr>IN_<wbr>AN_<wbr>HOUR<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = MILLIS_IN_A_MINUTE * 60</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in packages/gram-value/src/gram-value.ts:131</li>
+							<li>Defined in packages/gram-value/src/gram-value.ts:153</li>
 						</ul>
 					</aside>
 				</section>
@@ -384,7 +451,7 @@
 					<div class="tsd-signature tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_DAY<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = MILLIS_IN_AN_HOUR * 24</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in packages/gram-value/src/gram-value.ts:132</li>
+							<li>Defined in packages/gram-value/src/gram-value.ts:154</li>
 						</ul>
 					</aside>
 				</section>
@@ -394,7 +461,7 @@
 					<div class="tsd-signature tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_MINUTE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = MILLIS_IN_A_SECOND * 60</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in packages/gram-value/src/gram-value.ts:130</li>
+							<li>Defined in packages/gram-value/src/gram-value.ts:152</li>
 						</ul>
 					</aside>
 				</section>
@@ -404,7 +471,7 @@
 					<div class="tsd-signature tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_MONTH<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = MILLIS_IN_A_DAY * 30</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in packages/gram-value/src/gram-value.ts:133</li>
+							<li>Defined in packages/gram-value/src/gram-value.ts:155</li>
 						</ul>
 					</aside>
 				</section>
@@ -414,7 +481,7 @@
 					<div class="tsd-signature tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_SECOND<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">1000</span><span class="tsd-signature-symbol"> = 1000</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in packages/gram-value/src/gram-value.ts:129</li>
+							<li>Defined in packages/gram-value/src/gram-value.ts:151</li>
 						</ul>
 					</aside>
 				</section>
@@ -424,7 +491,7 @@
 					<div class="tsd-signature tsd-kind-icon">MILLIS_<wbr>IN_<wbr><wbr>A_YEAR<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = MILLIS_IN_A_DAY * 365</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in packages/gram-value/src/gram-value.ts:134</li>
+							<li>Defined in packages/gram-value/src/gram-value.ts:156</li>
 						</ul>
 					</aside>
 				</section>
@@ -528,6 +595,16 @@
 						</ul>
 					</aside>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+					<a name="visit" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> visit</h3>
+					<div class="tsd-signature tsd-kind-icon">visit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> = require(&#x27;unist-util-visit&#x27;)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in packages/gram-value/src/gram-value-plugin.ts:7</li>
+						</ul>
+					</aside>
+				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
@@ -541,7 +618,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-value/src/gram-value.ts:60</li>
+									<li>Defined in packages/gram-value/src/gram-value.ts:72</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -555,22 +632,58 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="valueof-1" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> value<wbr>Of</h3>
+					<a name="gramvalueplugin" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> gram<wbr>Value<wbr>Plugin</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">value<wbr>Of<span class="tsd-signature-symbol">(</span>recordValue<span class="tsd-signature-symbol">: </span><a href="gram_ast.html#gramrecordvalue" class="tsd-signature-type">GramRecordValue</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">gram<wbr>Value<wbr>Plugin<span class="tsd-signature-symbol">(</span>settings<span class="tsd-signature-symbol">: </span><a href="../interfaces/gram_value.valuepluginsettings.html" class="tsd-signature-type">ValuePluginSettings</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Transformer</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-value/src/gram-value.ts:47</li>
+									<li>Defined in packages/gram-value/src/gram-value-plugin.ts:17</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
+									<h5>settings: <a href="../interfaces/gram_value.valuepluginsettings.html" class="tsd-signature-type">ValuePluginSettings</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Transformer</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="valueof-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> value<wbr>Of</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">value<wbr>Of<span class="tsd-signature-symbol">(</span>recordValue<span class="tsd-signature-symbol">: </span><a href="gram_ast.html#gramrecordvalue" class="tsd-signature-type">GramRecordValue</a>, literalValueEvaluator<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">valueOfLiteral</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in packages/gram-value/src/gram-value.ts:59</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
+								<div class="lead">
+									<p>Evaluates data structures and text literal values, returning
+									native objects and primitive values.</p>
+								</div>
+								</div><div class="tsd-comment tsd-typography tsd-comment-tags">
+								<dl class="tsd-comment-tags"><dt>see</dt>
+									<dd><p><a href="gram_value.html#valueofliteral"><code>valueOfLiteral</code></a> for default literal value evaluator</p>
+								</dd></dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
 									<h5>recordValue: <a href="gram_ast.html#gramrecordvalue" class="tsd-signature-type">GramRecordValue</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> literalValueEvaluator: <span class="tsd-signature-type">valueOfLiteral</span><span class="tsd-signature-symbol"> = valueOfLiteral</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -587,7 +700,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-value/src/gram-value.ts:86</li>
+									<li>Defined in packages/gram-value/src/gram-value.ts:108</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -610,7 +723,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-value/src/gram-value.ts:103</li>
+									<li>Defined in packages/gram-value/src/gram-value.ts:125</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -633,7 +746,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-value/src/gram-value.ts:221</li>
+									<li>Defined in packages/gram-value/src/gram-value.ts:243</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -656,7 +769,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-value/src/gram-value.ts:181</li>
+									<li>Defined in packages/gram-value/src/gram-value.ts:203</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -690,7 +803,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-value/src/gram-value.ts:227</li>
+									<li>Defined in packages/gram-value/src/gram-value.ts:249</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -713,7 +826,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-value/src/gram-value.ts:209</li>
+									<li>Defined in packages/gram-value/src/gram-value.ts:231</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -736,7 +849,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-value/src/gram-value.ts:63</li>
+									<li>Defined in packages/gram-value/src/gram-value.ts:76</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -759,7 +872,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-value/src/gram-value.ts:215</li>
+									<li>Defined in packages/gram-value/src/gram-value.ts:237</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -782,7 +895,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-value/src/gram-value.ts:233</li>
+									<li>Defined in packages/gram-value/src/gram-value.ts:255</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -805,7 +918,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-value/src/gram-value.ts:89</li>
+									<li>Defined in packages/gram-value/src/gram-value.ts:111</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -822,19 +935,19 @@
 					<a name="valueoftaggedliteral-1" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> value<wbr>OfTagged<wbr>Literal</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">value<wbr>OfTagged<wbr>Literal<span class="tsd-signature-symbol">(</span>ast<span class="tsd-signature-symbol">: </span><a href="../interfaces/gram_ast.taggedliteral.html" class="tsd-signature-type">TaggedLiteral</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						<li class="tsd-signature tsd-kind-icon">value<wbr>OfTagged<wbr>Literal<span class="tsd-signature-symbol">(</span>ast<span class="tsd-signature-symbol">: </span><a href="gram_ast.html#taggedliteral" class="tsd-signature-type">TaggedLiteral</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-value/src/gram-value.ts:96</li>
+									<li>Defined in packages/gram-value/src/gram-value.ts:118</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>ast: <a href="../interfaces/gram_ast.taggedliteral.html" class="tsd-signature-type">TaggedLiteral</a></h5>
+									<h5>ast: <a href="gram_ast.html#taggedliteral" class="tsd-signature-type">TaggedLiteral</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -851,7 +964,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-value/src/gram-value.ts:141</li>
+									<li>Defined in packages/gram-value/src/gram-value.ts:163</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -872,6 +985,29 @@
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Date</span></h4>
 						</li>
 					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+				<h2>Object literals</h2>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+					<a name="defaultsettings" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> default<wbr>Settings</h3>
+					<div class="tsd-signature tsd-kind-icon">default<wbr>Settings<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in packages/gram-value/src/gram-value-plugin.ts:13</li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="defaultsettings.literalvalueevaluator-2" class="tsd-anchor"></a>
+						<h3>literal<wbr>Value<wbr>Evaluator</h3>
+						<div class="tsd-signature tsd-kind-icon">literal<wbr>Value<wbr>Evaluator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">valueOfLiteral</span><span class="tsd-signature-symbol"> = valueOfLiteral</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in packages/gram-value/src/gram-value-plugin.ts:14</li>
+							</ul>
+						</aside>
+					</section>
 				</section>
 			</section>
 			<!--{&quot;options&quot;:&quot;/Users/akollegger/Developer/gram-data/gram-js&quot;,&quot;tsconfig&quot;:&quot;/Users/akollegger/Developer/gram-data/gram-js&quot;,&quot;inputFiles&quot;:[&quot;./readme.md&quot;,&quot;./packages/gram-ast/src&quot;,&quot;./packages/gram-builder/src&quot;,&quot;./packages/gram-identity/src&quot;,&quot;./packages/gram-ops/src&quot;,&quot;./packages/gram-parse/src&quot;,&quot;./packages/gram-preset-basic/src&quot;,&quot;./packages/gram-stringify/src&quot;,&quot;./packages/gram-value/src&quot;],&quot;mode&quot;:1,&quot;includeDeclarations&quot;:false,&quot;entryPoint&quot;:&quot;&quot;,&quot;exclude&quot;:[&quot;*.spec.ts&quot;],&quot;externalPattern&quot;:[],&quot;excludeExternals&quot;:false,&quot;excludeNotExported&quot;:false,&quot;excludeNotDocumented&quot;:false,&quot;excludePrivate&quot;:false,&quot;excludeProtected&quot;:false,&quot;ignoreCompilerErrors&quot;:true,&quot;disableSources&quot;:false,&quot;includes&quot;:&quot;&quot;,&quot;media&quot;:&quot;&quot;,&quot;out&quot;:&quot;docs/api&quot;,&quot;json&quot;:&quot;&quot;,&quot;theme&quot;:&quot;node_modules/typedoc-neo-theme/bin/default&quot;,&quot;name&quot;:&quot;gram.js API&quot;,&quot;includeVersion&quot;:false,&quot;excludeTags&quot;:[],&quot;readme&quot;:&quot;./readme.md&quot;,&quot;defaultCategory&quot;:&quot;Other&quot;,&quot;categoryOrder&quot;:[],&quot;categorizeByGroup&quot;:true,&quot;gitRevision&quot;:&quot;&quot;,&quot;gitRemote&quot;:&quot;origin&quot;,&quot;gaID&quot;:&quot;&quot;,&quot;gaSite&quot;:&quot;auto&quot;,&quot;hideGenerator&quot;:true,&quot;toc&quot;:[],&quot;disableOutputCheck&quot;:false,&quot;help&quot;:false,&quot;version&quot;:false,&quot;plugin&quot;:[],&quot;logger&quot;:&quot;console&quot;,&quot;listInvalidSymbolLinks&quot;:false,&quot;external-modulemap&quot;:&quot;.*packages/([^/]+)/src/.*&quot;,&quot;links&quot;:[{&quot;label&quot;:&quot;Guides&quot;,&quot;url&quot;:&quot;https://gram-data.github.io/gram-js/guides&quot;}]}-->
@@ -902,6 +1038,9 @@
 					<li class="current tsd-kind-module root">
 						<a href="gram_value.html" class="tsd-kind-icon">gram-<wbr>value</a>
 						<ul>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="gram_value.html#literalvalueevaluator" class="tsd-kind-icon">Literal<wbr>Value<wbr>Evaluator</a>
+							</li>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
 								<a href="gram_value.html#iso8601duration" class="tsd-kind-icon">iso8601<wbr>Duration</a>
 							</li>
@@ -974,6 +1113,12 @@
 							<li class=" tsd-kind-class tsd-parent-kind-module tsd-is-not-exported">
 								<a href="../classes/gram_value.invalidasterror.html" class="tsd-kind-icon">Invalid<wbr>Ast<wbr>Error</a>
 							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported">
+								<a href="../interfaces/gram_value.valuepluginsettings.html" class="tsd-kind-icon">Value<wbr>Plugin<wbr>Settings</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+								<a href="gram_value.html#literalvalueevaluator-1" class="tsd-kind-icon">Literal<wbr>Value<wbr>Evaluator</a>
+							</li>
 							<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
 								<a href="gram_value.html#millis_in_an_hour" class="tsd-kind-icon">MILLIS_<wbr>IN_<wbr>AN_<wbr>HOUR</a>
 							</li>
@@ -1022,8 +1167,14 @@
 							<li class=" tsd-kind-variable tsd-parent-kind-module">
 								<a href="gram_value.html#iso8601yearmonthday-1" class="tsd-kind-icon">iso8601<wbr>Year<wbr>Month<wbr>Day</a>
 							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
+								<a href="gram_value.html#visit" class="tsd-kind-icon">visit</a>
+							</li>
 							<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
 								<a href="gram_value.html#assertnever" class="tsd-kind-icon">assert<wbr>Never</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="gram_value.html#gramvalueplugin" class="tsd-kind-icon">gram<wbr>Value<wbr>Plugin</a>
 							</li>
 							<li class=" tsd-kind-function tsd-parent-kind-module">
 								<a href="gram_value.html#valueof-1" class="tsd-kind-icon">value<wbr>Of</a>
@@ -1063,6 +1214,9 @@
 							</li>
 							<li class=" tsd-kind-function tsd-parent-kind-module">
 								<a href="gram_value.html#valueoftime-1" class="tsd-kind-icon">value<wbr>OfTime</a>
+							</li>
+							<li class=" tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+								<a href="gram_value.html#defaultsettings" class="tsd-kind-icon">default<wbr>Settings</a>
 							</li>
 						</ul>
 					</li>

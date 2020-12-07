@@ -193,7 +193,7 @@
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/gram_ast.measurementliteral.html" class="tsd-kind-icon">MeasurementLiteral</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/gram_ast.octalliteral.html" class="tsd-kind-icon">OctalLiteral</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/gram_ast.stringliteral.html" class="tsd-kind-icon">StringLiteral</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/gram_ast.taggedliteral.html" class="tsd-kind-icon">TaggedLiteral</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/gram_ast.taggedtextliteral.html" class="tsd-kind-icon">TaggedTextLiteral</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported"><a href="../interfaces/gram_ast.textliteral.html" class="tsd-kind-icon">TextLiteral</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/gram_ast.timeintervalliteral.html" class="tsd-kind-icon">TimeIntervalLiteral</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/gram_ast.timeliteral.html" class="tsd-kind-icon">TimeLiteral</a></li>
@@ -212,6 +212,7 @@
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="gram_ast.html#gramrecordvalue" class="tsd-kind-icon">GramRecordValue</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="gram_ast.html#pathkind" class="tsd-kind-icon">PathKind</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="gram_ast.html#relationshipkind" class="tsd-kind-icon">RelationshipKind</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="gram_ast.html#taggedliteral" class="tsd-kind-icon">TaggedLiteral</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -292,7 +293,7 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
 					<a name="gramliteral" class="tsd-anchor"></a>
 					<h3>Gram<wbr>Literal</h3>
-					<div class="tsd-signature tsd-kind-icon">Gram<wbr>Literal<span class="tsd-signature-symbol">:</span> <a href="../interfaces/gram_ast.booleanliteral.html" class="tsd-signature-type">BooleanLiteral</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.stringliteral.html" class="tsd-signature-type">StringLiteral</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.taggedliteral.html" class="tsd-signature-type">TaggedLiteral</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.integerliteral.html" class="tsd-signature-type">IntegerLiteral</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.measurementliteral.html" class="tsd-signature-type">MeasurementLiteral</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.decimalliteral.html" class="tsd-signature-type">DecimalLiteral</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.hexadecimalliteral.html" class="tsd-signature-type">HexadecimalLiteral</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.octalliteral.html" class="tsd-signature-type">OctalLiteral</a></div>
+					<div class="tsd-signature tsd-kind-icon">Gram<wbr>Literal<span class="tsd-signature-symbol">:</span> <a href="../interfaces/gram_ast.booleanliteral.html" class="tsd-signature-type">BooleanLiteral</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.stringliteral.html" class="tsd-signature-type">StringLiteral</a><span class="tsd-signature-symbol"> | </span><a href="gram_ast.html#taggedliteral" class="tsd-signature-type">TaggedLiteral</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.integerliteral.html" class="tsd-signature-type">IntegerLiteral</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.measurementliteral.html" class="tsd-signature-type">MeasurementLiteral</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.decimalliteral.html" class="tsd-signature-type">DecimalLiteral</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.hexadecimalliteral.html" class="tsd-signature-type">HexadecimalLiteral</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.octalliteral.html" class="tsd-signature-type">OctalLiteral</a></div>
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in packages/gram-ast/src/index.ts:297</li>
@@ -425,6 +426,16 @@
 							<li>either <code>(a)--(b)</code></li>
 						</ul>
 					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="taggedliteral" class="tsd-anchor"></a>
+					<h3>Tagged<wbr>Literal</h3>
+					<div class="tsd-signature tsd-kind-icon">Tagged<wbr>Literal<span class="tsd-signature-symbol">:</span> <a href="../interfaces/gram_ast.dateliteral.html" class="tsd-signature-type">DateLiteral</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.timeliteral.html" class="tsd-signature-type">TimeLiteral</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.datetimeliteral.html" class="tsd-signature-type">DateTimeLiteral</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.timeintervalliteral.html" class="tsd-signature-type">TimeIntervalLiteral</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.durationliteral.html" class="tsd-signature-type">DurationLiteral</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.wellknowntextliteral.html" class="tsd-signature-type">WellKnownTextLiteral</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/gram_ast.uriliteral.html" class="tsd-signature-type">UriLiteral</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in packages/gram-ast/src/index.ts:447</li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -620,7 +631,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-ast/src/index.ts:488</li>
+									<li>Defined in packages/gram-ast/src/index.ts:504</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -655,7 +666,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-ast/src/index.ts:527</li>
+									<li>Defined in packages/gram-ast/src/index.ts:543</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -690,7 +701,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-ast/src/index.ts:434</li>
+									<li>Defined in packages/gram-ast/src/index.ts:384</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -723,7 +734,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-ast/src/index.ts:550</li>
+									<li>Defined in packages/gram-ast/src/index.ts:566</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -1013,7 +1024,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-ast/src/index.ts:451</li>
+									<li>Defined in packages/gram-ast/src/index.ts:401</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -1046,7 +1057,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-ast/src/index.ts:398</li>
+									<li>Defined in packages/gram-ast/src/index.ts:367</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -1112,7 +1123,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-ast/src/index.ts:418</li>
+									<li>Defined in packages/gram-ast/src/index.ts:440</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -1145,7 +1156,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-ast/src/index.ts:469</li>
+									<li>Defined in packages/gram-ast/src/index.ts:419</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -1211,12 +1222,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-ast/src/index.ts:382</li>
+									<li>Defined in packages/gram-ast/src/index.ts:485</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
 								<div class="lead">
-									<p>Type guard for GramSeq.</p>
+									<p>Type guard for TaggedTextLiteral.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1244,7 +1255,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-ast/src/index.ts:576</li>
+									<li>Defined in packages/gram-ast/src/index.ts:592</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -1279,7 +1290,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-ast/src/index.ts:507</li>
+									<li>Defined in packages/gram-ast/src/index.ts:523</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -1314,7 +1325,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-ast/src/index.ts:630</li>
+									<li>Defined in packages/gram-ast/src/index.ts:646</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -1382,7 +1393,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in packages/gram-ast/src/index.ts:598</li>
+									<li>Defined in packages/gram-ast/src/index.ts:614</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography tsd-comment-shorttext">
@@ -1465,7 +1476,7 @@
 								<a href="../interfaces/gram_ast.stringliteral.html" class="tsd-kind-icon">String<wbr>Literal</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-module">
-								<a href="../interfaces/gram_ast.taggedliteral.html" class="tsd-kind-icon">Tagged<wbr>Literal</a>
+								<a href="../interfaces/gram_ast.taggedtextliteral.html" class="tsd-kind-icon">Tagged<wbr>Text<wbr>Literal</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported">
 								<a href="../interfaces/gram_ast.textliteral.html" class="tsd-kind-icon">Text<wbr>Literal</a>
@@ -1505,6 +1516,9 @@
 							</li>
 							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 								<a href="gram_ast.html#relationshipkind" class="tsd-kind-icon">Relationship<wbr>Kind</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+								<a href="gram_ast.html#taggedliteral" class="tsd-kind-icon">Tagged<wbr>Literal</a>
 							</li>
 							<li class=" tsd-kind-variable tsd-parent-kind-module">
 								<a href="gram_ast.html#empty_path_id" class="tsd-kind-icon">EMPTY_<wbr>PATH_<wbr>ID</a>

@@ -350,37 +350,6 @@ export interface StringLiteral extends TextLiteral {
 export const isStringLiteral = (o: any): o is TextLiteral =>
   !!o.type && !!o.value && o.type === 'string';
 
-/**
- * Represents a string value with a format indicated by a "tag".
- *
- * Some well-known tags:
- * - "md`# Hello World`"
- * - "html`<h1>Hello World</h1>`"
- * - "date`2020-07-14`"
- * - "time`17:35:42`"
- * - "uri`https://gram-data.github.io`"
- * - "wkt`POINT(-83.123 42.123)"
- *
- * @see {@link DateLiteral}
- * @see {@link GeospatialLiteral}
- * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals | Wikipedia Template literals}
- */
-export interface TaggedLiteral extends TextLiteral {
-  type: 'tagged';
-
-  /**
-   * The tag prefix of the string value.
-   */
-  tag: string;
-}
-
-/**
- * Type guard for GramSeq.
- *
- * @param o any object
- */
-export const isTaggedLiteral = (o: any): o is TextLiteral =>
-  !!o.type && !!o.value && !!o.tag && o.type === 'tagged';
 
 /**
  * Represents an integer number, like 235276234.
@@ -398,25 +367,6 @@ export interface IntegerLiteral extends TextLiteral {
 export const isIntegerLiteral = (o: any): o is IntegerLiteral =>
   !!o.type && !!o.value && o.type === 'integer';
 
-/**
- * Represents a decimal with units, like 12.4px or 42.0mm
- */
-export interface MeasurementLiteral extends TextLiteral {
-  type: 'measurement';
-
-  /**
-   * The unit suffix of the decimal value.
-   */
-  unit: string;
-}
-
-/**
- * Type guard for MeasurementLiteral.
- *
- * @param o any object
- */
-export const isMeasurementLiteral = (o: any): o is MeasurementLiteral =>
-  !!o.type && !!o.value && !!o.unit && o.type === 'measurement';
 
 /**
  * Represents an decimal number, like 3.1495.
@@ -469,12 +419,78 @@ export interface OctalLiteral extends TextLiteral {
 export const isOctalLiteral = (o: any): o is OctalLiteral =>
   !!o.type && !!o.value && o.type === 'octal';
 
+
+/**
+ * Represents a decimal with units, like 12.4px or 42.0mm
+ */
+export interface MeasurementLiteral extends TextLiteral {
+  type: 'measurement';
+
+  /**
+   * The unit suffix of the decimal value.
+   */
+  unit: string;
+}
+
+/**
+ * Type guard for MeasurementLiteral.
+ *
+ * @param o any object
+ */
+export const isMeasurementLiteral = (o: any): o is MeasurementLiteral =>
+  !!o.type && !!o.value && !!o.unit && o.type === 'measurement';
+
+
+///////////////////////////////////////
+// Tagged text literals
+
+export type TaggedLiteral =
+  DateLiteral |
+  TimeLiteral |
+  DateTimeLiteral |
+  TimeIntervalLiteral |
+  DurationLiteral |
+  WellKnownTextLiteral |
+  UriLiteral
+  ;
+/**
+ * Represents a string value with a format indicated by a "tag".
+ *
+ * Some well-known tags:
+ * - "md`# Hello World`"
+ * - "html`<h1>Hello World</h1>`"
+ * - "date`2020-07-14`"
+ * - "time`17:35:42`"
+ * - "uri`https://gram-data.github.io`"
+ * - "wkt`POINT(-83.123 42.123)"
+ *
+ * @see {@link DateLiteral}
+ * @see {@link GeospatialLiteral}
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals | Wikipedia Template literals}
+ */
+export interface TaggedTextLiteral extends TextLiteral {
+  type: 'tagged';
+
+  /**
+   * The tag prefix of the string value.
+   */
+  tag: string;
+}
+
+/**
+ * Type guard for TaggedTextLiteral.
+ *
+ * @param o any object
+ */
+export const isTaggedLiteral = (o: any): o is TaggedTextLiteral =>
+  !!o.type && !!o.value && !!o.tag && o.type === 'tagged';
+
 /**
  * Represents an ISO8601 calendar date, like `2020-02-02`.
  * 
  * @see {@link https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates | Wikipedia ISO8601 Caelndar dates}
  */
-export interface DateLiteral extends TaggedLiteral {
+export interface DateLiteral extends TaggedTextLiteral {
   tag: 'date';
 }
 
@@ -493,7 +509,7 @@ export const isDateLiteral = (o: any): o is DateLiteral =>
  * 
  * @see {@link https://en.wikipedia.org/wiki/ISO_8601#Times | Wikipedia ISO8601 Times}
  */
-export interface TimeLiteral extends TaggedLiteral {
+export interface TimeLiteral extends TaggedTextLiteral {
   tag: 'time';
 }
 
@@ -504,7 +520,7 @@ export interface TimeLiteral extends TaggedLiteral {
  *
  * @param o any object
  */
-export const isTimeLiteral = (o: any): o is TimeLiteral =>
+export const isTimeLiteral = (o: any): o is TaggedTextLiteral =>
   !!o.type && !!o.value && !!o.tag && o.type === 'tagged' && o.tag === 'time';
 
 /**
@@ -513,7 +529,7 @@ export const isTimeLiteral = (o: any): o is TimeLiteral =>
  *
  * @see {@link https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations | Wikipedia ISO8601 Date and time}
  */
-export interface DateTimeLiteral extends TaggedLiteral {
+export interface DateTimeLiteral extends TaggedTextLiteral {
   tag: 'datetime';
 }
 
@@ -536,7 +552,7 @@ export const isDateTimeLiteral = (o: any): o is DateTimeLiteral =>
  *
  * @see {@link https://en.wikipedia.org/wiki/ISO_8601#Durations | Wikipedia ISO8601 Durations}
  */
-export interface DurationLiteral extends TaggedLiteral {
+export interface DurationLiteral extends TaggedTextLiteral {
   tag: 'duration';
 }
 
@@ -562,7 +578,7 @@ export const isDuration = (o: any): o is DurationLiteral =>
  * @see {@link https://en.wikipedia.org/wiki/ISO_8601#Time_intervals | Wikipedia ISO8601 Time_intervals}
  * @see {@link https://en.wikipedia.org/wiki/ISO_8601#Repeating_intervals | Wikipedia ISO8601 Repeating_intervals}
  */
-export interface TimeIntervalLiteral extends TaggedLiteral {
+export interface TimeIntervalLiteral extends TaggedTextLiteral {
   tag: 'interval';
 }
 
@@ -586,7 +602,7 @@ export const isTimeInterval = (o: any): o is TimeIntervalLiteral =>
  * @see {@link http://docs.opengeospatial.org/is/18-010r7/18-010r7.html | Opengeospatial WKT}
  * @see {@link https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry | Wikipedia Well-known text geometry}
  */
-export interface WellKnownTextLiteral extends TaggedLiteral {
+export interface WellKnownTextLiteral extends TaggedTextLiteral {
   tag: 'wkt';
 }
 
@@ -618,7 +634,7 @@ export const isWellKnownTextLiteral = (o: any): o is WellKnownTextLiteral =>
  * ### `http(s)`
  *
  */
-export interface UriLiteral extends TaggedLiteral {
+export interface UriLiteral extends TaggedTextLiteral {
   tag: 'uri';
 }
 

@@ -44,11 +44,23 @@ class InvalidAstError extends Error {
   }
 }
 
-export const valueOf = (recordValue: GramRecordValue): any => {
+/**
+ * Type of function used to evaluate text literal values.
+ * 
+ */
+export type LiteralValueEvaluator = (ast: GramLiteral) => any
+
+/**
+ * Evaluates data structures and text literal values, returning
+ * native objects and primitive values.
+ * 
+ * @see {@linkcode valueOfLiteral} for default literal value evaluator
+ */
+export const valueOf = (recordValue: GramRecordValue, literalValueEvaluator = valueOfLiteral): any => {
   if (isGramLiteralArray(recordValue)) {
     return recordValue.map((v: GramLiteral) => valueOf(v));
   } else if (isLiteral(recordValue)) {
-    return valueOfLiteral(recordValue as GramLiteral);
+    return literalValueEvaluator(recordValue as GramLiteral);
   } else if (isGramRecord(recordValue)) {
     return recordValue.reduce((acc, property) => {
       acc[property.name] = valueOf(property.value);
@@ -60,6 +72,7 @@ export const valueOf = (recordValue: GramRecordValue): any => {
 function assertNever(x: never): never {
   throw new Error('Unexpected object: ' + x);
 }
+
 export const valueOfLiteral = (ast: GramLiteral): any => {
   switch (ast.type) {
     case 'boolean':
@@ -75,7 +88,16 @@ export const valueOfLiteral = (ast: GramLiteral): any => {
     case 'octal':
       return valueOfOctal(ast);
     case 'tagged':
-      return 'tag, you are it!';
+      switch (ast.tag) {
+        case 'date':     return valueOfDate(ast);
+        case 'time':     return valueOfTime(ast);
+        case 'datetime': return 'TODO';
+        case 'interval': return 'TODO';
+        case 'duration': return 'TODO';
+        case 'uri':      return ast.value;
+        case 'wkt':      return 'TODO'; 
+        default: assertNever(ast);
+      }
     case 'measurement':
       return 'measure by measure';
     default:
@@ -104,18 +126,18 @@ export const valueOfDate = (ast: DateLiteral) => {
   if (ast.value) {
     let extracted = iso8601YearMonthDay.exec(ast.value);
     if (extracted) {
-      return new Date(
+      return new Date(Date.UTC(
         Number.parseInt(extracted[1]),
-        Number.parseInt(extracted[3]),
+        Number.parseInt(extracted[3]) -1,
         Number.parseInt(extracted[4])
-      );
+      ));
     }
     extracted = iso8601YearMonth.exec(ast.value);
     if (extracted) {
-      return new Date(
+      return new Date(Date.UTC(
         Number.parseInt(extracted[1]),
         Number.parseInt(extracted[2])
-      );
+      ));
     }
     extracted = iso8601Year.exec(ast.value);
     if (extracted) {

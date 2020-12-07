@@ -14,7 +14,6 @@ import {
   GramRecordValue,
   BooleanLiteral,
   StringLiteral,
-  TaggedLiteral,
   IntegerLiteral,
   DecimalLiteral,
   HexadecimalLiteral,
@@ -31,6 +30,7 @@ import {
   DurationLiteral,
   PathKind,
   RelationshipKind,
+  TaggedTextLiteral,
 } from '@gram-data/gram-ast';
 
 export type Children<T> = T | T[] | (() => T | T[]);
@@ -334,7 +334,7 @@ export const string = (value: string): StringLiteral => ({
   value,
 });
 
-export const tagged = (tag: string, value: string): TaggedLiteral => ({
+export const tagged = (tag: string, value: string): TaggedTextLiteral => ({
   type: 'tagged',
   value,
   tag,

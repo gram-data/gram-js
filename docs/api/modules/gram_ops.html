@@ -97,7 +97,8 @@
 		<div class="col-7 offset-3 col-content">
 			<h1>Package gram-ops</h1>
 			<section class="tsd-panel tsd-comment"><div class="tsd-comment tsd-typography tsd-comment-text">
-					<p>Utility operations for extracting path features.</p>
+					<p><code>(ast)-[ops]-&gt;(features)</code></p>
+					<p>Utility operations for extracting path features from <code>gram</code> AST.</p>
 					<a href="#how-to-gram-ops" id="how-to-gram-ops" style="color: inherit; text-decoration: none;">
 						<h2>How to gram-ops</h2>
 					</a>
@@ -124,13 +125,11 @@
 					<p>Extract an edge list:</p>
 					<pre><code class="language-TypeScript"><span class="hljs-keyword">import</span> { nodes } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@gram-data/gram-ops&#x27;</span>;
 
-<span class="hljs-keyword">const</span> es:GramPath[] = edges(path); 
-<span class="hljs-built_in">console</span>.log(ns.map(<span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> stringify(n)).join()); <span class="hljs-comment">// (a),(b)</span></code></pre>
+<span class="hljs-keyword">const</span> es:GramPath[] = edges(path); </code></pre>
 					<a href="#next-steps" id="next-steps" style="color: inherit; text-decoration: none;">
 						<h2>Next Steps</h2>
 					</a>
 					<ul>
-						<li>Transform to js objects using <a href="gram_value.html">gram-value</a></li>
 						<li>Write back to a string using <a href="gram_stringify.html">gram-stringify</a></li>
 						<li>Introspect the AST using <a href="gram_ast.html">gram-ast</a></li>
 					</ul>

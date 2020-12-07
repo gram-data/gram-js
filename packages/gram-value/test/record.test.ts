@@ -1,7 +1,7 @@
 import * as builder from '@gram-data/gram-builder';
 import { valueOf } from '../src';
 
-describe('Gram records to JS objects', () => {
+describe('valueOf() evaluates AST text literals', () => {
   it('converts {k:"hello"}', () => {
     const literalValue = 'hello';
     const expectedObject = {
@@ -54,6 +54,22 @@ describe('Gram records to JS objects', () => {
     expect(jsObject).toStrictEqual(expectedObject);
   });
 
+  it('converts {k:date`2020-12-02`}', () => {
+    const literalValue = "2020-12-02";
+    const evaluatedValue = new Date(literalValue);
+    const expectedObject = {
+      k: evaluatedValue,
+    };
+    const propertyMap = {
+      k: builder.date(literalValue),
+    };
+    const record = builder.mapToRecord(propertyMap);
+    const jsObject = valueOf(record);
+    expect(jsObject).toStrictEqual(expectedObject);
+  });
+});
+
+describe('valueOf() evaluates data structures', () => {
   it('converts arrays of integer literals to an integer array', () => {
     const literalValues = [1, 2, 3, 4, 5];
     const expectedObject = {
