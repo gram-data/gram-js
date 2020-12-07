@@ -5,7 +5,7 @@
     "neo4j",
     "gram"
   ],
-  "version": "0.2.17",
+  "version": "0.2.18",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -48,7 +48,7 @@
   "author": "Andreas Kollegger",
   "module": "dist/gram-identity.esm.js",
   "devDependencies": {
-    "@gram-data/gram-parse": "^0.2.17",
+    "@gram-data/gram-parse": "^0.2.18",
     "@types/jest": "^26.0.15",
     "@types/shortid": "^0.0.29",
     "@types/unist": "^2.0.3",
@@ -65,7 +65,7 @@
     "unist-util-inspect": "^6.0.1"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.2.15",
+    "@gram-data/gram-ast": "^0.2.18",
     "nanoid": "^3.1.18",
     "unified": "^9.2.0",
     "unist-util-visit": "^2.0.3",
