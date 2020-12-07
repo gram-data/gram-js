@@ -2,6 +2,4 @@
 name: gram-parse
 ---
 
-# Gram Parse
-
-From text to AST.
+Parse text into an AST.

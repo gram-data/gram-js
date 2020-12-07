@@ -2,7 +2,4 @@
 name: gram-builder
 ---
 
-# Gram Builder
-
-Build asts.
-
+Build valid gram AST.
