@@ -8,13 +8,13 @@
     "unified",
     "ast"
   ],
-  "version": "0.2.18",
+  "version": "0.3.0-alpha.0",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/gram-data/gram-js.git"
   },
-  "homepage": "https://github.com/gram-data/gram-js/tree/main/packages/gram-ast#readme",
+  "homepage": "https://gram-data.github.io/gram-js/api/modules/gram-ast",
   "main": "dist/index.js",
   "unpkg": "dist/gram-ast.umd.production.min.js",
   "module": "dist/gram-ast.esm.js",
