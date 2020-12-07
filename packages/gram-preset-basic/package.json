@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "@gram-data/gram-identity": "^0.2.17",
-    "@gram-data/gram-parse": "^0.2.17"
+    "@gram-data/gram-parse": "^0.2.17",
+    "@gram-data/gram-value": "^0.2.15"
   }
 }

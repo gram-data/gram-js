@@ -20,21 +20,36 @@ const testCompilerPlugin = function(this: any) {
 };
 
 const expectAllPathlikeElementsToHaveId = () => {
-    return (tree:UnistNode) => {
-      // console.log(inspect(tree));
-      visit(tree, 'path', (element:UnistNode) => {
-        if (element) {
-          expect(element.id).toBeDefined();
-        }
-      });
-    };
+  return (tree:UnistNode) => {
+    // console.log(inspect(tree));
+    visit(tree, 'path', (element:UnistNode) => {
+      if (element) {
+        expect(element.id).toBeDefined();
+      }
+    });
   };
+};
+
+
+const expectEvaluationOfElementsWithValue = () => {
+  return (tree:UnistNode) => {
+    // console.log(inspect(tree));
+    visit(tree, 'path', (element:UnistNode) => {
+      if (element && element.value) {
+        expect(element.data).toBeDefined();
+        expect(element.data!.value).toBeDefined();
+      }
+    });
+  };
+};
 
 const gramProcessor = unified()
   .use(gramParserPlugin)
   .use(gramPresetBasic)
   .use(testCompilerPlugin)
-  .use(expectAllPathlikeElementsToHaveId);
+  .use(expectAllPathlikeElementsToHaveId)
+  .use(expectEvaluationOfElementsWithValue)
+  ;
 
 describe('gram-preset-basic', () => {
     it('adds identity to a plain node "()" ', () => {
@@ -57,6 +72,11 @@ describe('gram-preset-basic', () => {
         const processed = gramProcessor.process(src);
         expect(processed).toBeDefined();
     });
+    it('evaluates integer text literals as integers', () => {
+      const src = `({x:42})`;
+      const processed = gramProcessor.process(src);
+      expect(processed).toBeDefined();
+    })
 });
 
 
