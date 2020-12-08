@@ -626,13 +626,39 @@ export const isWellKnownTextLiteral = (o: any): o is WellKnownTextLiteral =>
  * > protocol-independent way.
  *
  * ```
- * uri`geo:48.198634,16.371648`
+ * uri`geo:39.282495,-76.594709`
  * ```
  *
  * @see {@link https://tools.ietf.org/html/rfc5870 | IETF RFC5870 }
+ * 
+ * ### `plus`
+ *
+ * > A 'plus' URI identifies a physical location encoded as
+ * > Open Location Code, a "plus code".
+ *
+ * ```
+ * uri`plus:7CJ4+W4 Baltimore, MD`
+ * ```
+ *
+ * @see {@link https://github.com/google/open-location-code | Open Location Code }
+ * 
+ * ### `h3`
+ *
+ * > An 'h3' URI identifies a physical location encoded using
+ * > the H3 geospatial indexing system, a multi-precision hexagonal 
+ * > tiling of the sphere indexed with hierarchical linear indexes.
+ *
+ * ```
+ * uri`h3:8c2aa8c76b11bff`
+ * ```
+ *
+ * @see {@link https://h3geo.org | H3 }
  *
  * ### `http(s)`
  *
+ * > Hopefully This Thing Presents Sensibly, a popular scheme used
+ * >on the interwebs.
+ *  
  */
 export interface UriLiteral extends TaggedTextLiteral {
   tag: 'uri';

@@ -2,23 +2,25 @@
 
 <html lang="en">
 <head>
-  <title>Gram Guides</title>
+  <title>Introduction</title>
   <meta name="description" content="Gram is a textual format for data graphs.">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Gram Guides | gram.js</title>
+<title>Introduction | gram.js</title>
 <meta name="generator" content="Jekyll v3.9.0" />
-<meta property="og:title" content="Gram Guides" />
+<meta property="og:title" content="Introduction" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Gram is a textual format for data graphs." />
-<meta property="og:description" content="Gram is a textual format for data graphs." />
-<link rel="canonical" href="http://localhost:4000/guides/" />
-<meta property="og:url" content="http://localhost:4000/guides/" />
+<meta name="description" content="Gram is a textual format for data that is expressive, streamable and composable." />
+<meta property="og:description" content="Gram is a textual format for data that is expressive, streamable and composable." />
+<link rel="canonical" href="http://localhost:4000/guides/introduction/" />
+<meta property="og:url" content="http://localhost:4000/guides/introduction/" />
 <meta property="og:site_name" content="gram.js" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-12-07T16:33:48+01:00" />
 <script type="application/ld+json">
-{"@type":"WebPage","description":"Gram is a textual format for data graphs.","headline":"Gram Guides","url":"http://localhost:4000/guides/","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/guides/introduction/"},"description":"Gram is a textual format for data that is expressive, streamable and composable.","headline":"Introduction","dateModified":"2020-12-07T16:33:48+01:00","url":"http://localhost:4000/guides/introduction/","datePublished":"2020-12-07T16:33:48+01:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/site.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="gram.js" /><link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
@@ -161,7 +163,7 @@
       <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
          <a href="/guides/introduction/" 
             
-               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
+               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:border-blue-500 lg:hover:border-green-500"
             
          >
          <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">Introduction</span>
@@ -184,12 +186,52 @@
    <div class="w-full lg:w-4/5 p-8 mt-6 lg:mt-0 text-gray-900 leading-normal bg-white border border-gray-400 border-rounded">
       <!--Title-->
       <div class="font-sans">
-         <h1 class="font-sans break-normal text-gray-900 pt-6 pb-2 text-xl">Gram Guides</h1>
+         <h1 class="font-sans break-normal text-gray-900 pt-6 pb-2 text-xl">Introduction</h1>
          <hr class="border-b border-gray-400">
       </div>
       <!--Page Content-->
       <div class="prose max-w-none">
-         
+         <p>Gram is a textual format for data that is expressive, streamable and composable.</p>
+
+<p>Named values are arranged into records, qualified with labels, given identity, and organized into patterns.</p>
+
+<h2 id="invaluable-values">Invaluable values</h2>
+
+<p>Gram offers a rich set of value types. Foundational values like <code class="language-plaintext highlighter-rouge">string</code> can be prepended with a tag to 
+indicate the string interpretation. Similarly <code class="language-plaintext highlighter-rouge">integers</code> or <code class="language-plaintext highlighter-rouge">decimals</code> can have a unit appended. No more
+guessing whether a height is pixels or meters.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">({</span>
+  <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Gram</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">stars</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+  <span class="na">since</span><span class="p">:</span> <span class="nx">date</span><span class="s2">`2020-06-06`</span><span class="p">,</span>
+  <span class="na">height</span><span class="p">:</span> <span class="mi">190</span><span class="nx">cm</span>
+<span class="p">})</span>
+</code></pre></div></div>
+<h2 id="familiar-semi-structured-data-records">Familiar, semi-structured data records</h2>
+
+<p>Like JSON, data in gr</p>
+
+<p>A property record:</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="nx">g</span><span class="p">:</span><span class="nx">Format</span><span class="p">:</span><span class="nx">Data</span> <span class="p">{</span>
+  <span class="nl">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Gram</span><span class="dl">"</span><span class="p">,</span>
+  <span class="nx">stars</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+  <span class="nx">since</span><span class="p">:</span> <span class="nx">date</span><span class="s2">`2020-06-06`</span><span class="p">,</span>
+  <span class="nx">height</span><span class="p">:</span> <span class="mi">190</span><span class="nx">cm</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>##</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(a)--&gt;(b)--&gt;(c)
+</code></pre></div></div>
+
+<hr />
+<h3 id="footnotes"><em>Footnotes</em></h3>
+
+<ul>
+  <li><a href="https://en.wikipedia.org/wiki/Semi-structured_data">Semi-structured data</a></li>
+</ul>
 
       </div>
       <!--/ Page Content-->
@@ -198,7 +240,7 @@
    <!-- page footer -->
    <div class="w-full container mx-auto items-center justify-between mt-0 py-4">
       <div class="float-right lg:content-center lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 z-20" id="nav-content">
-         <a href="https://github.com/gram-data/gram-js/tree/main/docs/">
+         <a href="https://github.com/gram-data/gram-js/tree/main/docs/_guides/introduction.md">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current inline-block text-gray-500 h-5 w-5">
                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
             </svg>
