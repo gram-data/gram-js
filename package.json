@@ -19,24 +19,24 @@
   },
   "devDependencies": {
     "@strictsoftware/typedoc-plugin-monorepo": "^0.3.1",
-    "@typescript-eslint/parser": "^4.8.2",
+    "@typescript-eslint/parser": "^4.9.1",
     "cheerio": "^1.0.0-rc.3",
-    "eslint": "^7.14.0",
-    "eslint-config-prettier": "^6.15.0",
-    "fast-check": "^2.7.0",
+    "eslint": "^7.15.0",
+    "eslint-config-prettier": "^7.0.0",
+    "fast-check": "^2.8.0",
     "fp-ts-laws": "^0.3.0",
     "lerna": "^3.22.1",
     "lerna-update-wizard": "^0.17.8",
     "npm-run-all": "^4.1.5",
     "parse5": "^6.0.1",
-    "prettier": "^2.2.0",
+    "prettier": "^2.2.1",
     "shx": "^0.3.3",
     "typedoc": "^0.19.2",
     "typedoc-neo-theme": "^1.0.10",
     "typescript": "^4.1.2"
   },
   "dependencies": {
-    "fp-ts": "^2.9.0",
+    "fp-ts": "^2.9.1",
     "power-radix": "^2.5.6"
   }
 }
