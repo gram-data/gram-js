@@ -3,6 +3,8 @@ layout: default
 ---
   
 <div class="w-full mt-16 p-8 leading-normal bg-gray-800">
+
+  <svg class="absolute top-0 right-0" width="800" height="400" id="graph"></svg>
   <div class="container mx-auto">
     <h1 class="font-serif text-white text-6xl">gram</h1>
     <h2 class="font-mono text-white text-3xl mb-16 -mt-2">(text)-->(data)</h2>
@@ -15,3 +17,17 @@ npm install @gram-data/gram-parse @gram-data/gram-stringify</pre>
 <div class="container w-full mx-auto">
   {{ content }}
 </div>
+
+<script src="https://d3js.org/d3.v6.min.js"></script>
+
+<script src="{{ "/assets/scripts/d3-gram.umd.production.min.js" | relative_url }}"></script>
+<script src="{{ "/assets/scripts/graph-viz.js" | relative_url }}"></script>
+
+<script>
+  window.onload = function () {
+    console.log(gram);
+    var svg = document.getElementById('graph');
+    drawGraph("(a:Aye)-->(b:Bee)-->(c:Cee)-->(a),(a)-->(d),(a)-->(e)", svg);
+  }
+  
+</script>

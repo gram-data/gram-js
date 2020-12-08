@@ -14,6 +14,7 @@
     "docs": "run-s docs:**",
     "docs:api": "typedoc",
     "docs:railroad": "lerna run railroad --scope @gram-data/gram-parse && node ./scripts/railroad-guide.js",
+    "docs:scripts": "npx shx cp './packages/*/dist/*.umd.development.js' docs/assets/scripts",
     "bump:dev": "lerna version --force-publish prerelease"
   },
   "devDependencies": {

@@ -31,7 +31,7 @@
   <meta name="theme-color" content="#ffffff">
 
 </head>
-<body class="bg-gray-100 tracking-wider tracking-normal">
+<body class="bg-gray-100 tracking-normal">
 <nav id="header" class="fixed w-full z-10 top-0 bg-white border-b border-gray-400">
 
   <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-4">
@@ -40,8 +40,8 @@
          gram.js
         </a>
         &nbsp;
-        <a class="text-gray-600 p-1 text-base no-underline hover:no-underline font-neo4j font-thin text-xl pb-2"  href="https://github.com/gram-data/gram-js/releases/tag/v0.3.2"> 
-         v0.3.2
+        <a class="text-gray-600 p-1 text-base no-underline hover:no-underline font-neo4j font-thin text-xl pb-2"  href="https://github.com/gram-data/gram-js/releases/tag/v0.3.3"> 
+         v0.3.3
         </a>
      </div>
      
@@ -127,6 +127,8 @@
 </script>
 <main class="page-content" aria-label="Content">
       <div class="w-full mt-16 p-8 leading-normal bg-gray-800">
+
+  <svg class="absolute top-0 right-0" width="800" height="400" id="graph"></svg>
   <div class="container mx-auto">
     <h1 class="font-serif text-white text-6xl">gram</h1>
     <h2 class="font-mono text-white text-3xl mb-16 -mt-2">(text)-->(data)</h2>
@@ -256,6 +258,20 @@ npm install @gram-data/gram-parse @gram-data/gram-stringify</pre>
 </div></div>
 
 </div>
+
+<script src="https://d3js.org/d3.v6.min.js"></script>
+
+<script src="/assets/scripts/d3-gram.umd.production.min.js"></script>
+<script src="/assets/scripts/graph-viz.js"></script>
+
+<script>
+  window.onload = function () {
+    console.log(gram);
+    var svg = document.getElementById('graph');
+    drawGraph("(a:Aye)-->(b:Bee)-->(c:Cee)-->(a),(a)-->(d),(a)-->(e)", svg);
+  }
+  
+</script>
     </main><footer class="bg-white border-t border-gray-400 shadow">
   <div class="container mx-auto flex flex-wrap items-center justify-between p-8">
      <div class="w-3/4 mx-auto flex flex-grow flex-wrap">
