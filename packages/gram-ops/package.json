@@ -5,7 +5,7 @@
     "neo4j",
     "gram"
   ],
-  "version": "0.3.0-alpha.0",
+  "version": "0.3.1",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -63,8 +63,8 @@
     "unist-util-inspect": "^6.0.1"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.3.0-alpha.0",
-    "@gram-data/gram-builder": "^0.3.0-alpha.0",
+    "@gram-data/gram-ast": "^0.3.1",
+    "@gram-data/gram-builder": "^0.3.1",
     "fp-ts": "^2.9.0"
   },
   "publishConfig": {
