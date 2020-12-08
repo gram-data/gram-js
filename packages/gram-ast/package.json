@@ -1,5 +1,6 @@
 {
   "name": "@gram-data/gram-ast",
+  "description": "AST definitions for gram data graphs",
   "author": "Andreas Kollegger",
   "keywords": [
     "graph",

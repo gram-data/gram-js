@@ -1,5 +1,6 @@
 {
   "name": "@gram-data/gram-value",
+  "description": "Enrich gram data graphs with js objects and primitives",
   "keywords": [
     "graph",
     "neo4j",

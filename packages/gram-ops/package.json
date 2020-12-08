@@ -1,5 +1,6 @@
 {
   "name": "@gram-data/gram-ops",
+  "description": "gram data graph operations",
   "keywords": [
     "graph",
     "neo4j",

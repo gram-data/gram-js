@@ -1,5 +1,6 @@
 {
   "name": "@gram-data/gram-builder",
+  "description": "AST builder for gram data graph format",
   "keywords": [
     "graph",
     "neo4j",

@@ -1,5 +1,6 @@
 {
   "name": "@gram-data/gram-lint",
+  "description": "CLI tool for gram files",
   "keywords": [
     "graph",
     "neo4j",

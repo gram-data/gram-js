@@ -1,5 +1,6 @@
 {
   "name": "@gram-data/gram-parse",
+  "description": "parse text into gram data graphs",
   "keywords": [
     "graph",
     "neo4j",

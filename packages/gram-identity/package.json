@@ -1,5 +1,6 @@
 {
   "name": "@gram-data/gram-identity",
+  "description": "identity generators for gram data graphs",
   "keywords": [
     "graph",
     "neo4j",
