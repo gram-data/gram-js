@@ -1,8 +1,7 @@
 {
   "version": "0.3.2",
   "packages": [
-    "packages/*",
-    "demo"
+    "packages/*"
   ],
   "npmClient": "npm"
 }
