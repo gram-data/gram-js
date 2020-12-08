@@ -9,22 +9,33 @@
     <pre id="ast">parsed AST should appear here</pre>
 
     <p>To prettified gram:</p>
-    <pre id="target">(you)-[:GREET {message:"hello"}]->(world)</pre>
+    <pre id="target">stringified gram should appear here</pre>
 
 
     <script src="./gram-stringify.umd.development.js"></script>
     <script>
       window.onload = function () {
+        var edge = {
+            type: 'path',
+            id: 'g',
+            labels: [ 'GREET' ],
+            record: [
+              {
+                type: 'property',
+                name: 'message',
+                value: { type: 'string', value: 'hello' }
+              }
+            ],
+            kind: 'right',
+            children: [
+              { type: 'path', id: 'you', children: [] },
+              { type: 'path', id: 'world', children: [] }
+            ]
+          }
         var ast = {"type":"seq",
-          "children":[
-            {"type":"edge","id":"g","labels":["GREET"],"record":{"message":{"type":"string","value":"hello"}},
-              "children":[
-                {"type":"node","id":"you","children":[]},
-                {"type":"node","id":"world","children":[]}
-              ],
-              "relation":"right"}]};
+          "children":[ edge ]};
         document.getElementById("ast").textContent = JSON.stringify(ast,null,2);
-        var target = gram.stringify.toString(ast);
+        var target = gram.stringify(edge);
         document.getElementById('target').textContent = target;
       }
     </script>

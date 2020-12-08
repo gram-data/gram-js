@@ -16,6 +16,7 @@
   },
   "homepage": "https://gram-data.github.io/gram-js/api/modules/gram-ast",
   "main": "dist/index.js",
+  "browser": "dist/gram-ast.umd.production.min.js",
   "unpkg": "dist/gram-ast.umd.production.min.js",
   "module": "dist/gram-ast.esm.js",
   "typings": "dist/index.d.ts",

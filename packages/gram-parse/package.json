@@ -15,6 +15,7 @@
   },
   "homepage": "https://gram-data.github.io/gram-js/api/modules/gram-parse",
   "main": "dist/index.js",
+  "browser": "dist/gram-parse.umd.development.min.js",
   "unpkg": "dist/gram-parse.umd.production.min.js",
   "module": "dist/gram-parse.esm.js",
   "typings": "dist/index.d.ts",

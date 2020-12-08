@@ -12,8 +12,6 @@
     "url": "https://github.com/gram-data/gram-js.git"
   },
   "homepage": "https://gram-data.github.io/gram-js/api/modules/gram-ops",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
@@ -46,7 +44,6 @@
     "trailingComma": "es5"
   },
   "author": "Andreas Kollegger",
-  "module": "dist/gram-ops.esm.js",
   "devDependencies": {
     "@types/jest": "^26.0.15",
     "@types/unist": "^2.0.3",

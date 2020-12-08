@@ -13,6 +13,9 @@
   },
   "homepage": "https://gram-data.github.io/gram-js/api/modules/gram-builder",
   "main": "dist/index.js",
+  "browser": "dist/gram-builder.umd.production.min.js",
+  "unpkg": "dist/gram-builder.umd.production.min.js",
+  "module": "dist/gram-builder.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
@@ -46,7 +49,6 @@
     "trailingComma": "es5"
   },
   "author": "Andreas Kollegger",
-  "module": "dist/gram-builder.esm.js",
   "devDependencies": {
     "@types/chalk": "^2.2.0",
     "@types/jest": "^26.0.15",

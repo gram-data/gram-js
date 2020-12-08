@@ -1,0 +1,30 @@
+<html>
+  <head>
+
+  </head>
+  <body>
+    <h1>gram-demo</h1>
+
+    <p>From gram source:</p>
+    <pre id="src">(you)-[:GREET {message:"hello"}]->(world)</pre>
+
+    <p>To parsed AST:</p>
+    <pre id="ast">parsed AST should appear here</pre>
+
+    <p>Back to a string:</p>
+    <pre id="stringified">stringified AST should appear here</pre>
+
+    <script src="./dist/gram-parse.umd.development.js"></script>
+    <script src="./dist/gram-stringify.umd.development.js"></script>
+
+    <script>
+      window.onload = function () {
+        console.log(gram);
+        var src = document.getElementById('src').textContent;
+        var ast = gram.parse.toAST(src)
+        document.getElementById("ast").textContent = JSON.stringify(ast,null,2);
+        document.getElementById("stringified").textContent = gram.stringify.toGram(ast);
+      }
+    </script>
+  </body>
+</html>

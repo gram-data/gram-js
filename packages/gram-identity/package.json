@@ -12,7 +12,11 @@
     "url": "https://github.com/gram-data/gram-js.git"
   },
   "homepage": "https://gram-data.github.io/gram-js/api/modules/gram-identity",
+  "author": "Andreas Kollegger",
   "main": "dist/index.js",
+  "browser": "dist/gram-identity.umd.production.min.js",
+  "unpkg": "dist/gram-identity.umd.production.min.js",
+  "module": "dist/gram-identity.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
@@ -45,8 +49,6 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "author": "Andreas Kollegger",
-  "module": "dist/gram-identity.esm.js",
   "devDependencies": {
     "@gram-data/gram-parse": "^0.3.1",
     "@types/jest": "^26.0.15",

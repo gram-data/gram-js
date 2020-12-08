@@ -13,6 +13,9 @@
   },
   "homepage": "https://gram-data.github.io/gram-js/api/modules/gram-value",
   "main": "dist/index.js",
+  "browser": "dist/gram-value.umd.production.min.js",
+  "unpkg": "dist/gram-value.umd.production.min.js",
+  "module": "dist/gram-value.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
@@ -46,7 +49,6 @@
     "trailingComma": "es5"
   },
   "author": "Andreas Kollegger",
-  "module": "dist/gram-value.esm.js",
   "devDependencies": {
     "@gram-data/gram-builder": "^0.3.1",
     "@gram-data/gram-parse": "^0.3.1",

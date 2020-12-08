@@ -1,0 +1,17 @@
+{
+  "name": "gram-demo",
+  "version": "1.0.0",
+  "scripts": {
+    "serve": "serve ./public/",
+    "parcel": "parcel ./public/index.html --open",
+    "build": "npx shx cp '../packages/*/dist/*.umd.development.js' public/dist"
+  },
+  "author": "Andreas Kollegger",
+  "license": "ISC",
+  "devDependencies": {
+    "gram-ast": "file:../packages/gram-ast",
+    "parcel-bundler": "^1.12.4",
+    "serve": "^11.3.2",
+    "shx": "^0.3.3"
+  }
+}
