@@ -5,7 +5,7 @@
     "neo4j",
     "gram"
   ],
-  "version": "0.3.2",
+  "version": "0.3.3",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -50,7 +50,7 @@
     "trailingComma": "es5"
   },
   "devDependencies": {
-    "@gram-data/gram-parse": "^0.3.2",
+    "@gram-data/gram-parse": "^0.3.3",
     "@types/jest": "^26.0.15",
     "@types/shortid": "^0.0.29",
     "@types/unist": "^2.0.3",

@@ -5,7 +5,7 @@
     "neo4j",
     "gram"
   ],
-  "version": "0.3.2",
+  "version": "0.3.3",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -51,7 +51,7 @@
   "author": "Andreas Kollegger",
   "devDependencies": {
     "@gram-data/gram-builder": "^0.3.2",
-    "@gram-data/gram-parse": "^0.3.2",
+    "@gram-data/gram-parse": "^0.3.3",
     "@types/jest": "^26.0.16",
     "@types/unist": "^2.0.3",
     "@typescript-eslint/parser": "^4.9.0",
