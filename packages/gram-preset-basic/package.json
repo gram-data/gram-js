@@ -1,6 +1,6 @@
 {
   "name": "@gram-data/gram-preset-basic",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Gram preset with sensible default processing",
   "keywords": [
     "gram",
@@ -45,8 +45,8 @@
     "unist-util-visit": "^2.0.3"
   },
   "dependencies": {
-    "@gram-data/gram-identity": "^0.3.3",
-    "@gram-data/gram-parse": "^0.3.3",
-    "@gram-data/gram-value": "^0.3.3"
+    "@gram-data/gram-identity": "^0.3.4",
+    "@gram-data/gram-parse": "^0.3.4",
+    "@gram-data/gram-value": "^0.3.4"
   }
 }
