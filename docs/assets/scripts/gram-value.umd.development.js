@@ -219,17 +219,26 @@
       literalValueEvaluator = valueOfLiteral;
     }
 
-    if (isGramLiteralArray(recordValue)) {
-      return recordValue.map(function (v) {
-        return valueOf(v);
-      });
-    } else if (isLiteral(recordValue)) {
-      return literalValueEvaluator(recordValue);
-    } else if (isGramRecord(recordValue)) {
+    if (isGramRecord(recordValue)) {
       return recordValue.reduce(function (acc, property) {
         acc[property.name] = valueOf(property.value);
         return acc;
       }, {});
+    } else {
+      if (isGramLiteralArray(recordValue)) {
+        return recordValue.map(function (v) {
+          return valueOf(v);
+        });
+      } else if (isLiteral(recordValue)) {
+        return literalValueEvaluator(recordValue);
+      } else if (typeof recordValue === 'object') {
+        return Object.entries(recordValue).reduce(function (acc, _ref) {
+          var k = _ref[0],
+              v = _ref[1];
+          acc[k] = valueOf(v);
+          return acc;
+        }, {});
+      }
     }
   };
 
@@ -281,7 +290,7 @@
             return 'TODO';
 
           default:
-            assertNever(ast);
+            return 'TODO';
         }
 
       case 'measurement':

@@ -124,8 +124,12 @@
     } else if (isLiteral(v)) {
       return toStringLiteral(v);
     } else {
-      return recordToString(v);
+      return objectToString(v);
     }
+  };
+
+  var propertyToString = function propertyToString(property) {
+    return property.name + ":" + toStringValue(property.value);
   };
 
   var recordToString = function recordToString(record) {
@@ -135,11 +139,15 @@
     return "{" + fields.join('') + "}";
   };
 
-  var recordMapToString = function recordMapToString(record) {
-    var fields = Object.entries(record).map(function (_ref, i) {
+  var arrayToString = function arrayToString(xs) {
+    return "[" + xs.map(stringify).join(',') + "]";
+  };
+
+  var objectToString = function objectToString(o) {
+    var fields = Object.entries(o).map(function (_ref, i) {
       var name = _ref[0],
           value = _ref[1];
-      return "" + (i > 0 ? ',' : '') + name + ":" + toStringValue(value);
+      return "" + (i > 0 ? ',' : '') + name + ":" + stringify(value);
     });
     return "{" + fields.join('') + "}";
   };
@@ -190,7 +198,15 @@
 
   var stringify = function stringify(ast) {
     if (Array.isArray(ast)) {
-      return ast.map(stringify).join(' ');
+      if (ast.length > 0) {
+        var element = ast[0];
+
+        if (isGramPath(element)) {
+          return ast.map(stringify).join(' ');
+        } else {
+          return arrayToString(ast);
+        }
+      } else return '[]';
     } else if (ast.type !== undefined) {
       switch (ast.type) {
         case 'path':
@@ -198,9 +214,19 @@
 
         case 'seq':
           return stringify(ast.children);
+
+        case 'property':
+          return propertyToString(ast);
+
+        default:
+          if (isLiteral(ast)) {
+            return toStringLiteral(ast);
+          }
+
+          return objectToString(ast);
       }
     } else if (typeof ast === 'object') {
-      return recordMapToString(ast);
+      return objectToString(ast);
     }
 
     throw new Error("Can't stringify <" + ast + ">");

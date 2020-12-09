@@ -423,232 +423,36 @@
     return result
   }
 
-  var global$1 = (typeof global !== "undefined" ? global :
-              typeof self !== "undefined" ? self :
-              typeof window !== "undefined" ? window : {});
-
-  // shim for using process in browser
-  // based off https://github.com/defunctzombie/node-process/blob/master/browser.js
-
-  function defaultSetTimout() {
-      throw new Error('setTimeout has not been defined');
-  }
-  function defaultClearTimeout () {
-      throw new Error('clearTimeout has not been defined');
-  }
-  var cachedSetTimeout = defaultSetTimout;
-  var cachedClearTimeout = defaultClearTimeout;
-  if (typeof global$1.setTimeout === 'function') {
-      cachedSetTimeout = setTimeout;
-  }
-  if (typeof global$1.clearTimeout === 'function') {
-      cachedClearTimeout = clearTimeout;
-  }
-
-  function runTimeout(fun) {
-      if (cachedSetTimeout === setTimeout) {
-          //normal enviroments in sane situations
-          return setTimeout(fun, 0);
-      }
-      // if setTimeout wasn't available but was latter defined
-      if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-          cachedSetTimeout = setTimeout;
-          return setTimeout(fun, 0);
-      }
-      try {
-          // when when somebody has screwed with setTimeout but no I.E. maddness
-          return cachedSetTimeout(fun, 0);
-      } catch(e){
-          try {
-              // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-              return cachedSetTimeout.call(null, fun, 0);
-          } catch(e){
-              // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-              return cachedSetTimeout.call(this, fun, 0);
-          }
-      }
-
-
-  }
-  function runClearTimeout(marker) {
-      if (cachedClearTimeout === clearTimeout) {
-          //normal enviroments in sane situations
-          return clearTimeout(marker);
-      }
-      // if clearTimeout wasn't available but was latter defined
-      if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-          cachedClearTimeout = clearTimeout;
-          return clearTimeout(marker);
-      }
-      try {
-          // when when somebody has screwed with setTimeout but no I.E. maddness
-          return cachedClearTimeout(marker);
-      } catch (e){
-          try {
-              // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-              return cachedClearTimeout.call(null, marker);
-          } catch (e){
-              // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-              // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-              return cachedClearTimeout.call(this, marker);
-          }
-      }
-
-
-
-  }
-  var queue = [];
-  var draining = false;
-  var currentQueue;
-  var queueIndex = -1;
-
-  function cleanUpNextTick() {
-      if (!draining || !currentQueue) {
-          return;
-      }
-      draining = false;
-      if (currentQueue.length) {
-          queue = currentQueue.concat(queue);
-      } else {
-          queueIndex = -1;
-      }
-      if (queue.length) {
-          drainQueue();
-      }
-  }
-
-  function drainQueue() {
-      if (draining) {
-          return;
-      }
-      var timeout = runTimeout(cleanUpNextTick);
-      draining = true;
-
-      var len = queue.length;
-      while(len) {
-          currentQueue = queue;
-          queue = [];
-          while (++queueIndex < len) {
-              if (currentQueue) {
-                  currentQueue[queueIndex].run();
-              }
-          }
-          queueIndex = -1;
-          len = queue.length;
-      }
-      currentQueue = null;
-      draining = false;
-      runClearTimeout(timeout);
-  }
-  function nextTick(fun) {
-      var args = new Array(arguments.length - 1);
-      if (arguments.length > 1) {
-          for (var i = 1; i < arguments.length; i++) {
-              args[i - 1] = arguments[i];
-          }
-      }
-      queue.push(new Item(fun, args));
-      if (queue.length === 1 && !draining) {
-          runTimeout(drainQueue);
-      }
-  }
-  // v8 likes predictible objects
-  function Item(fun, array) {
-      this.fun = fun;
-      this.array = array;
-  }
-  Item.prototype.run = function () {
-      this.fun.apply(null, this.array);
-  };
-  var title = 'browser';
-  var platform = 'browser';
-  var browser = true;
-  var env = {};
-  var argv = [];
-  var version = ''; // empty string to avoid regexp issues
-  var versions = {};
-  var release = {};
-  var config = {};
-
-  function noop() {}
-
-  var on = noop;
-  var addListener = noop;
-  var once = noop;
-  var off = noop;
-  var removeListener = noop;
-  var removeAllListeners = noop;
-  var emit = noop;
-
-  function binding(name) {
-      throw new Error('process.binding is not supported');
-  }
-
-  function cwd () { return '/' }
-  function chdir (dir) {
-      throw new Error('process.chdir is not supported');
-  }function umask() { return 0; }
-
-  // from https://github.com/kumavis/browser-process-hrtime/blob/master/index.js
-  var performance = global$1.performance || {};
-  var performanceNow =
-    performance.now        ||
-    performance.mozNow     ||
-    performance.msNow      ||
-    performance.oNow       ||
-    performance.webkitNow  ||
-    function(){ return (new Date()).getTime() };
-
-  // generate timestamp or delta
-  // see http://nodejs.org/api/process.html#process_process_hrtime
-  function hrtime(previousTimestamp){
-    var clocktime = performanceNow.call(performance)*1e-3;
-    var seconds = Math.floor(clocktime);
-    var nanoseconds = Math.floor((clocktime%1)*1e9);
-    if (previousTimestamp) {
-      seconds = seconds - previousTimestamp[0];
-      nanoseconds = nanoseconds - previousTimestamp[1];
-      if (nanoseconds<0) {
-        seconds--;
-        nanoseconds += 1e9;
-      }
-    }
-    return [seconds,nanoseconds]
-  }
-
-  var startTime = new Date();
-  function uptime() {
-    var currentTime = new Date();
-    var dif = currentTime - startTime;
-    return dif / 1000;
-  }
-
-  var process = {
-    nextTick: nextTick,
-    title: title,
-    browser: browser,
-    env: env,
-    argv: argv,
-    version: version,
-    versions: versions,
-    on: on,
-    addListener: addListener,
-    once: once,
-    off: off,
-    removeListener: removeListener,
-    removeAllListeners: removeAllListeners,
-    emit: emit,
-    binding: binding,
-    cwd: cwd,
-    chdir: chdir,
-    umask: umask,
-    hrtime: hrtime,
-    platform: platform,
-    release: release,
-    config: config,
-    uptime: uptime
-  };
-
+  // A derivative work based on:
+  // <https://github.com/browserify/path-browserify>.
+  // Which is licensed:
+  //
+  // MIT License
+  //
+  // Copyright (c) 2013 James Halliday
+  //
+  // Permission is hereby granted, free of charge, to any person obtaining a copy of
+  // this software and associated documentation files (the "Software"), to deal in
+  // the Software without restriction, including without limitation the rights to
+  // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+  // the Software, and to permit persons to whom the Software is furnished to do so,
+  // subject to the following conditions:
+  //
+  // The above copyright notice and this permission notice shall be included in all
+  // copies or substantial portions of the Software.
+  //
+  // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+  // FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+  // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+  // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  // A derivative work based on:
+  //
+  // Parts of that are extracted from Node’s internal `path` module:
+  // <https://github.com/nodejs/node/blob/master/lib/path.js>.
+  // Which is licensed:
+  //
   // Copyright Joyent, Inc. and other Node contributors.
   //
   // Permission is hereby granted, free of charge, to any person obtaining a
@@ -670,265 +474,386 @@
   // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
   // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-  // resolves . and .. elements in a path array with directory names there
-  // must be no slashes, empty elements, or device names (c:\) in the array
-  // (so also no leading and trailing slashes - it does not distinguish
-  // relative and absolute paths)
-  function normalizeArray(parts, allowAboveRoot) {
-    // if the path tries to go above the root, `up` ends up > 0
-    var up = 0;
-    for (var i = parts.length - 1; i >= 0; i--) {
-      var last = parts[i];
-      if (last === '.') {
-        parts.splice(i, 1);
-      } else if (last === '..') {
-        parts.splice(i, 1);
-        up++;
-      } else if (up) {
-        parts.splice(i, 1);
-        up--;
-      }
-    }
-
-    // if the path is allowed to go above the root, restore leading ..s
-    if (allowAboveRoot) {
-      for (; up--; up) {
-        parts.unshift('..');
-      }
-    }
-
-    return parts;
-  }
-
-  // Split a filename into [root, dir, basename, ext], unix version
-  // 'root' is just a slash, or nothing.
-  var splitPathRe =
-      /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
-  var splitPath = function(filename) {
-    return splitPathRe.exec(filename).slice(1);
-  };
-
-  // path.resolve([from ...], to)
-  // posix version
-  function resolve() {
-    var resolvedPath = '',
-        resolvedAbsolute = false;
-
-    for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
-      var path = (i >= 0) ? arguments[i] : '/';
-
-      // Skip empty and invalid entries
-      if (typeof path !== 'string') {
-        throw new TypeError('Arguments to path.resolve must be strings');
-      } else if (!path) {
-        continue;
-      }
-
-      resolvedPath = path + '/' + resolvedPath;
-      resolvedAbsolute = path.charAt(0) === '/';
-    }
-
-    // At this point the path should be resolved to a full absolute path, but
-    // handle relative paths to be safe (might happen when process.cwd() fails)
-
-    // Normalize the path
-    resolvedPath = normalizeArray(filter(resolvedPath.split('/'), function(p) {
-      return !!p;
-    }), !resolvedAbsolute).join('/');
-
-    return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
-  }
-  // path.normalize(path)
-  // posix version
-  function normalize(path) {
-    var isPathAbsolute = isAbsolute(path),
-        trailingSlash = substr(path, -1) === '/';
-
-    // Normalize the path
-    path = normalizeArray(filter(path.split('/'), function(p) {
-      return !!p;
-    }), !isPathAbsolute).join('/');
-
-    if (!path && !isPathAbsolute) {
-      path = '.';
-    }
-    if (path && trailingSlash) {
-      path += '/';
-    }
-
-    return (isPathAbsolute ? '/' : '') + path;
-  }
-  // posix version
-  function isAbsolute(path) {
-    return path.charAt(0) === '/';
-  }
-
-  // posix version
-  function join() {
-    var paths = Array.prototype.slice.call(arguments, 0);
-    return normalize(filter(paths, function(p, index) {
-      if (typeof p !== 'string') {
-        throw new TypeError('Arguments to path.join must be strings');
-      }
-      return p;
-    }).join('/'));
-  }
-
-
-  // path.relative(from, to)
-  // posix version
-  function relative(from, to) {
-    from = resolve(from).substr(1);
-    to = resolve(to).substr(1);
-
-    function trim(arr) {
-      var start = 0;
-      for (; start < arr.length; start++) {
-        if (arr[start] !== '') break;
-      }
-
-      var end = arr.length - 1;
-      for (; end >= 0; end--) {
-        if (arr[end] !== '') break;
-      }
-
-      if (start > end) return [];
-      return arr.slice(start, end - start + 1);
-    }
-
-    var fromParts = trim(from.split('/'));
-    var toParts = trim(to.split('/'));
-
-    var length = Math.min(fromParts.length, toParts.length);
-    var samePartsLength = length;
-    for (var i = 0; i < length; i++) {
-      if (fromParts[i] !== toParts[i]) {
-        samePartsLength = i;
-        break;
-      }
-    }
-
-    var outputParts = [];
-    for (var i = samePartsLength; i < fromParts.length; i++) {
-      outputParts.push('..');
-    }
-
-    outputParts = outputParts.concat(toParts.slice(samePartsLength));
-
-    return outputParts.join('/');
-  }
-
+  var basename_1 = basename;
+  var dirname_1 = dirname;
+  var extname_1 = extname;
+  var join_1 = join;
   var sep = '/';
-  var delimiter = ':';
-
-  function dirname(path) {
-    var result = splitPath(path),
-        root = result[0],
-        dir = result[1];
-
-    if (!root && !dir) {
-      // No dirname whatsoever
-      return '.';
-    }
-
-    if (dir) {
-      // It has a dirname, strip trailing slash
-      dir = dir.substr(0, dir.length - 1);
-    }
-
-    return root + dir;
-  }
 
   function basename(path, ext) {
-    var f = splitPath(path)[2];
-    // TODO: make this comparison case-insensitive on windows?
-    if (ext && f.substr(-1 * ext.length) === ext) {
-      f = f.substr(0, f.length - ext.length);
+    var start = 0;
+    var end = -1;
+    var index;
+    var firstNonSlashEnd;
+    var seenNonSlash;
+    var extIndex;
+
+    if (ext !== undefined && typeof ext !== 'string') {
+      throw new TypeError('"ext" argument must be a string')
     }
-    return f;
+
+    assertPath(path);
+    index = path.length;
+
+    if (ext === undefined || !ext.length || ext.length > path.length) {
+      while (index--) {
+        if (path.charCodeAt(index) === 47 /* `/` */) {
+          // If we reached a path separator that was not part of a set of path
+          // separators at the end of the string, stop now.
+          if (seenNonSlash) {
+            start = index + 1;
+            break
+          }
+        } else if (end < 0) {
+          // We saw the first non-path separator, mark this as the end of our
+          // path component.
+          seenNonSlash = true;
+          end = index + 1;
+        }
+      }
+
+      return end < 0 ? '' : path.slice(start, end)
+    }
+
+    if (ext === path) {
+      return ''
+    }
+
+    firstNonSlashEnd = -1;
+    extIndex = ext.length - 1;
+
+    while (index--) {
+      if (path.charCodeAt(index) === 47 /* `/` */) {
+        // If we reached a path separator that was not part of a set of path
+        // separators at the end of the string, stop now.
+        if (seenNonSlash) {
+          start = index + 1;
+          break
+        }
+      } else {
+        if (firstNonSlashEnd < 0) {
+          // We saw the first non-path separator, remember this index in case
+          // we need it if the extension ends up not matching.
+          seenNonSlash = true;
+          firstNonSlashEnd = index + 1;
+        }
+
+        if (extIndex > -1) {
+          // Try to match the explicit extension.
+          if (path.charCodeAt(index) === ext.charCodeAt(extIndex--)) {
+            if (extIndex < 0) {
+              // We matched the extension, so mark this as the end of our path
+              // component
+              end = index;
+            }
+          } else {
+            // Extension does not match, so our result is the entire path
+            // component
+            extIndex = -1;
+            end = firstNonSlashEnd;
+          }
+        }
+      }
+    }
+
+    if (start === end) {
+      end = firstNonSlashEnd;
+    } else if (end < 0) {
+      end = path.length;
+    }
+
+    return path.slice(start, end)
   }
 
+  function dirname(path) {
+    var end;
+    var unmatchedSlash;
+    var index;
+
+    assertPath(path);
+
+    if (!path.length) {
+      return '.'
+    }
+
+    end = -1;
+    index = path.length;
+
+    // Prefix `--` is important to not run on `0`.
+    while (--index) {
+      if (path.charCodeAt(index) === 47 /* `/` */) {
+        if (unmatchedSlash) {
+          end = index;
+          break
+        }
+      } else if (!unmatchedSlash) {
+        // We saw the first non-path separator
+        unmatchedSlash = true;
+      }
+    }
+
+    return end < 0
+      ? path.charCodeAt(0) === 47 /* `/` */
+        ? '/'
+        : '.'
+      : end === 1 && path.charCodeAt(0) === 47 /* `/` */
+      ? '//'
+      : path.slice(0, end)
+  }
 
   function extname(path) {
-    return splitPath(path)[3];
+    var startDot = -1;
+    var startPart = 0;
+    var end = -1;
+    // Track the state of characters (if any) we see before our first dot and
+    // after any path separator we find.
+    var preDotState = 0;
+    var unmatchedSlash;
+    var code;
+    var index;
+
+    assertPath(path);
+
+    index = path.length;
+
+    while (index--) {
+      code = path.charCodeAt(index);
+
+      if (code === 47 /* `/` */) {
+        // If we reached a path separator that was not part of a set of path
+        // separators at the end of the string, stop now.
+        if (unmatchedSlash) {
+          startPart = index + 1;
+          break
+        }
+
+        continue
+      }
+
+      if (end < 0) {
+        // We saw the first non-path separator, mark this as the end of our
+        // extension.
+        unmatchedSlash = true;
+        end = index + 1;
+      }
+
+      if (code === 46 /* `.` */) {
+        // If this is our first dot, mark it as the start of our extension.
+        if (startDot < 0) {
+          startDot = index;
+        } else if (preDotState !== 1) {
+          preDotState = 1;
+        }
+      } else if (startDot > -1) {
+        // We saw a non-dot and non-path separator before our dot, so we should
+        // have a good chance at having a non-empty extension.
+        preDotState = -1;
+      }
+    }
+
+    if (
+      startDot < 0 ||
+      end < 0 ||
+      // We saw a non-dot character immediately before the dot.
+      preDotState === 0 ||
+      // The (right-most) trimmed path component is exactly `..`.
+      (preDotState === 1 && startDot === end - 1 && startDot === startPart + 1)
+    ) {
+      return ''
+    }
+
+    return path.slice(startDot, end)
   }
-  var path = {
-    extname: extname,
-    basename: basename,
-    dirname: dirname,
-    sep: sep,
-    delimiter: delimiter,
-    relative: relative,
-    join: join,
-    isAbsolute: isAbsolute,
-    normalize: normalize,
-    resolve: resolve
+
+  function join() {
+    var index = -1;
+    var joined;
+
+    while (++index < arguments.length) {
+      assertPath(arguments[index]);
+
+      if (arguments[index]) {
+        joined =
+          joined === undefined
+            ? arguments[index]
+            : joined + '/' + arguments[index];
+      }
+    }
+
+    return joined === undefined ? '.' : normalize(joined)
+  }
+
+  // Note: `normalize` is not exposed as `path.normalize`, so some code is
+  // manually removed from it.
+  function normalize(path) {
+    var absolute;
+    var value;
+
+    assertPath(path);
+
+    absolute = path.charCodeAt(0) === 47; /* `/` */
+
+    // Normalize the path according to POSIX rules.
+    value = normalizeString(path, !absolute);
+
+    if (!value.length && !absolute) {
+      value = '.';
+    }
+
+    if (value.length && path.charCodeAt(path.length - 1) === 47 /* / */) {
+      value += '/';
+    }
+
+    return absolute ? '/' + value : value
+  }
+
+  // Resolve `.` and `..` elements in a path with directory names.
+  function normalizeString(path, allowAboveRoot) {
+    var result = '';
+    var lastSegmentLength = 0;
+    var lastSlash = -1;
+    var dots = 0;
+    var index = -1;
+    var code;
+    var lastSlashIndex;
+
+    while (++index <= path.length) {
+      if (index < path.length) {
+        code = path.charCodeAt(index);
+      } else if (code === 47 /* `/` */) {
+        break
+      } else {
+        code = 47; /* `/` */
+      }
+
+      if (code === 47 /* `/` */) {
+        if (lastSlash === index - 1 || dots === 1) ; else if (lastSlash !== index - 1 && dots === 2) {
+          if (
+            result.length < 2 ||
+            lastSegmentLength !== 2 ||
+            result.charCodeAt(result.length - 1) !== 46 /* `.` */ ||
+            result.charCodeAt(result.length - 2) !== 46 /* `.` */
+          ) {
+            if (result.length > 2) {
+              lastSlashIndex = result.lastIndexOf('/');
+
+              /* istanbul ignore else - No clue how to cover it. */
+              if (lastSlashIndex !== result.length - 1) {
+                if (lastSlashIndex < 0) {
+                  result = '';
+                  lastSegmentLength = 0;
+                } else {
+                  result = result.slice(0, lastSlashIndex);
+                  lastSegmentLength = result.length - 1 - result.lastIndexOf('/');
+                }
+
+                lastSlash = index;
+                dots = 0;
+                continue
+              }
+            } else if (result.length) {
+              result = '';
+              lastSegmentLength = 0;
+              lastSlash = index;
+              dots = 0;
+              continue
+            }
+          }
+
+          if (allowAboveRoot) {
+            result = result.length ? result + '/..' : '..';
+            lastSegmentLength = 2;
+          }
+        } else {
+          if (result.length) {
+            result += '/' + path.slice(lastSlash + 1, index);
+          } else {
+            result = path.slice(lastSlash + 1, index);
+          }
+
+          lastSegmentLength = index - lastSlash - 1;
+        }
+
+        lastSlash = index;
+        dots = 0;
+      } else if (code === 46 /* `.` */ && dots > -1) {
+        dots++;
+      } else {
+        dots = -1;
+      }
+    }
+
+    return result
+  }
+
+  function assertPath(path) {
+    if (typeof path !== 'string') {
+      throw new TypeError(
+        'Path must be a string. Received ' + JSON.stringify(path)
+      )
+    }
+  }
+
+  var minpath_browser = {
+  	basename: basename_1,
+  	dirname: dirname_1,
+  	extname: extname_1,
+  	join: join_1,
+  	sep: sep
   };
-  function filter (xs, f) {
-      if (xs.filter) return xs.filter(f);
-      var res = [];
-      for (var i = 0; i < xs.length; i++) {
-          if (f(xs[i], i, xs)) res.push(xs[i]);
-      }
-      return res;
+
+  // Somewhat based on:
+  // <https://github.com/defunctzombie/node-process/blob/master/browser.js>.
+  // But I don’t think one tiny line of code can be copyrighted. 😅
+  var cwd_1 = cwd;
+
+  function cwd() {
+    return '/'
   }
 
-  // String.prototype.substr - negative index don't work in IE8
-  var substr = 'ab'.substr(-1) === 'b' ?
-      function (str, start, len) { return str.substr(start, len) } :
-      function (str, start, len) {
-          if (start < 0) start = str.length + start;
-          return str.substr(start, len);
-      }
-  ;
-
-  function replaceExt(npath, ext) {
-    if (typeof npath !== 'string') {
-      return npath;
-    }
-
-    if (npath.length === 0) {
-      return npath;
-    }
-
-    var nFileName = path.basename(npath, path.extname(npath)) + ext;
-    return path.join(path.dirname(npath), nFileName);
-  }
-
-  var replaceExt_1 = replaceExt;
+  var minproc_browser = {
+  	cwd: cwd_1
+  };
 
   var core = VFile;
 
   var own$1 = {}.hasOwnProperty;
-  var proto$1 = VFile.prototype;
 
   // Order of setting (least specific to most), we need this because otherwise
   // `{stem: 'a', path: '~/b.js'}` would throw, as a path is needed before a
   // stem can be set.
   var order = ['history', 'path', 'basename', 'stem', 'extname', 'dirname'];
 
-  proto$1.toString = toString;
+  VFile.prototype.toString = toString;
 
   // Access full path (`~/index.min.js`).
-  Object.defineProperty(proto$1, 'path', {get: getPath, set: setPath});
+  Object.defineProperty(VFile.prototype, 'path', {get: getPath, set: setPath});
 
   // Access parent path (`~`).
-  Object.defineProperty(proto$1, 'dirname', {get: getDirname, set: setDirname});
+  Object.defineProperty(VFile.prototype, 'dirname', {
+    get: getDirname,
+    set: setDirname
+  });
 
   // Access basename (`index.min.js`).
-  Object.defineProperty(proto$1, 'basename', {get: getBasename, set: setBasename});
+  Object.defineProperty(VFile.prototype, 'basename', {
+    get: getBasename,
+    set: setBasename
+  });
 
   // Access extname (`.js`).
-  Object.defineProperty(proto$1, 'extname', {get: getExtname, set: setExtname});
+  Object.defineProperty(VFile.prototype, 'extname', {
+    get: getExtname,
+    set: setExtname
+  });
 
   // Access stem (`index.min`).
-  Object.defineProperty(proto$1, 'stem', {get: getStem, set: setStem});
+  Object.defineProperty(VFile.prototype, 'stem', {get: getStem, set: setStem});
 
   // Construct a new file.
   function VFile(options) {
     var prop;
     var index;
-    var length;
 
     if (!options) {
       options = {};
@@ -945,13 +870,12 @@
     this.data = {};
     this.messages = [];
     this.history = [];
-    this.cwd = process.cwd();
+    this.cwd = minproc_browser.cwd();
 
     // Set path related properties in the correct order.
     index = -1;
-    length = order.length;
 
-    while (++index < length) {
+    while (++index < order.length) {
       prop = order[index];
 
       if (own$1.call(options, prop)) {
@@ -961,7 +885,7 @@
 
     // Set non-path related properties.
     for (prop in options) {
-      if (order.indexOf(prop) === -1) {
+      if (order.indexOf(prop) < 0) {
         this[prop] = options[prop];
       }
     }
@@ -974,76 +898,73 @@
   function setPath(path) {
     assertNonEmpty(path, 'path');
 
-    if (path !== this.path) {
+    if (this.path !== path) {
       this.history.push(path);
     }
   }
 
   function getDirname() {
-    return typeof this.path === 'string' ? path.dirname(this.path) : undefined
+    return typeof this.path === 'string' ? minpath_browser.dirname(this.path) : undefined
   }
 
   function setDirname(dirname) {
-    assertPath(this.path, 'dirname');
-    this.path = path.join(dirname || '', this.basename);
+    assertPath$1(this.path, 'dirname');
+    this.path = minpath_browser.join(dirname || '', this.basename);
   }
 
   function getBasename() {
-    return typeof this.path === 'string' ? path.basename(this.path) : undefined
+    return typeof this.path === 'string' ? minpath_browser.basename(this.path) : undefined
   }
 
   function setBasename(basename) {
     assertNonEmpty(basename, 'basename');
     assertPart(basename, 'basename');
-    this.path = path.join(this.dirname || '', basename);
+    this.path = minpath_browser.join(this.dirname || '', basename);
   }
 
   function getExtname() {
-    return typeof this.path === 'string' ? path.extname(this.path) : undefined
+    return typeof this.path === 'string' ? minpath_browser.extname(this.path) : undefined
   }
 
   function setExtname(extname) {
-    var ext = extname || '';
+    assertPart(extname, 'extname');
+    assertPath$1(this.path, 'extname');
 
-    assertPart(ext, 'extname');
-    assertPath(this.path, 'extname');
-
-    if (ext) {
-      if (ext.charAt(0) !== '.') {
+    if (extname) {
+      if (extname.charCodeAt(0) !== 46 /* `.` */) {
         throw new Error('`extname` must start with `.`')
       }
 
-      if (ext.indexOf('.', 1) !== -1) {
+      if (extname.indexOf('.', 1) > -1) {
         throw new Error('`extname` cannot contain multiple dots')
       }
     }
 
-    this.path = replaceExt_1(this.path, ext);
+    this.path = minpath_browser.join(this.dirname, this.stem + (extname || ''));
   }
 
   function getStem() {
     return typeof this.path === 'string'
-      ? path.basename(this.path, this.extname)
+      ? minpath_browser.basename(this.path, this.extname)
       : undefined
   }
 
   function setStem(stem) {
     assertNonEmpty(stem, 'stem');
     assertPart(stem, 'stem');
-    this.path = path.join(this.dirname || '', stem + (this.extname || ''));
+    this.path = minpath_browser.join(this.dirname || '', stem + (this.extname || ''));
   }
 
   // Get the value of the file.
   function toString(encoding) {
-    var value = this.contents || '';
-    return isBuffer(value) ? value.toString(encoding) : String(value)
+    return (this.contents || '').toString(encoding)
   }
 
-  // Assert that `part` is not a path (i.e., does not contain `path.sep`).
+  // Assert that `part` is not a path (i.e., does not contain `p.sep`).
   function assertPart(part, name) {
-    if (part.indexOf(path.sep) !== -1) {
+    if (part && part.indexOf(minpath_browser.sep) > -1) {
       throw new Error(
-        '`' + name + '` cannot be a path: did not expect `' + path.sep + '`'
+        '`' + name + '` cannot be a path: did not expect `' + minpath_browser.sep + '`'
       )
     }
   }
@@ -1056,29 +977,26 @@
   }
 
   // Assert `path` exists.
-  function assertPath(path, name) {
+  function assertPath$1(path, name) {
     if (!path) {
       throw new Error('Setting `' + name + '` requires `path` to be set too')
     }
   }
 
-  var vfile = core;
+  var lib = core;
 
-  var proto$2 = core.prototype;
-
-  proto$2.message = message;
-  proto$2.info = info;
-  proto$2.fail = fail;
+  core.prototype.message = message;
+  core.prototype.info = info;
+  core.prototype.fail = fail;
 
   // Create a message with `reason` at `position`.
   // When an error is passed in as `reason`, copies the stack.
   function message(reason, position, origin) {
-    var filePath = this.path;
     var message = new vfileMessage(reason, position, origin);
 
-    if (filePath) {
-      message.name = filePath + ':' + message.name;
-      message.file = filePath;
+    if (this.path) {
+      message.name = this.path + ':' + message.name;
+      message.file = this.path;
     }
 
     message.fatal = false;
@@ -1106,6 +1024,8 @@
 
     return message
   }
+
+  var vfile = lib;
 
   // Expose a frozen processor.
   var unified_1 = unified().freeze();
@@ -3021,7 +2941,7 @@
    */
 
 
-  var path$1 = function path(kind, members, id, labels, record) {
+  var path = function path(kind, members, id, labels, record) {
     return _extends$1({
       type: 'path',
       kind: kind,
@@ -3045,7 +2965,7 @@
 
 
   var pair = function pair(members, id, labels, record) {
-    return path$1('pair', members, id, labels, record);
+    return path('pair', members, id, labels, record);
   };
 
   var property = function property(name, value) {
