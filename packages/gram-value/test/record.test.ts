@@ -104,9 +104,11 @@ describe('valueOf() evaluates data structures', () => {
       },
     };
     const record = [
-      builder.property('k', [
-        builder.property('k2', builder.integer(literalValue)),
-      ]),
+      builder.property('k', 
+        {
+          'k2': builder.integer(literalValue),
+        }
+      ),
     ];
     const jsObject = valueOf(record);
     expect(jsObject).toStrictEqual(expectedObject);

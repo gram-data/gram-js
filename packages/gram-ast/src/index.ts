@@ -222,7 +222,7 @@ export type GramPathlike = GramPath | GramNode | GramEdge;
  * GramRecordValue is a union of literals, literal arrays and nested records.
  * This forms a familiar OO-style structure.
  */
-export type GramRecordValue = GramLiteral | GramLiteral[] | GramRecord;
+export type GramRecordValue = GramLiteral | GramLiteral[] | GramPropertyMap;
 
 /**
  * A GramRecord is an array of name/value pairs, or simply GramProperty[].
@@ -242,7 +242,7 @@ export type GramRecord = GramProperty[];
  *
  * @param v any GramRecordValue
  */
-export const isGramRecord = (v: GramRecordValue): v is GramRecord =>
+export const isGramRecord = (v: any): v is GramRecord =>
   Array.isArray(v) && isGramProperty(v[0]);
 
 export const isGramLiteralArray = (v: GramRecordValue): v is GramLiteral[] =>
@@ -297,7 +297,7 @@ interface TextLiteral extends UnistLiteral {
 export type GramLiteral =
   | BooleanLiteral
   | StringLiteral
-  | TaggedLiteral
+  | TaggedTextLiteral
   | IntegerLiteral
   | MeasurementLiteral
   | DecimalLiteral
@@ -309,7 +309,7 @@ export type GramLiteral =
  *
  * @param o any object
  */
-export const isLiteral = (o: any): o is TextLiteral =>
+export const isLiteral = (o: any): o is GramLiteral =>
   !!o.type && !!o.value && o.type !== 'property';
 
 /**
@@ -482,7 +482,7 @@ export interface TaggedTextLiteral extends TextLiteral {
  *
  * @param o any object
  */
-export const isTaggedLiteral = (o: any): o is TaggedTextLiteral =>
+export const isTaggedLiteral = (o: any): o is TaggedLiteral =>
   !!o.type && !!o.value && !!o.tag && o.type === 'tagged';
 
 /**

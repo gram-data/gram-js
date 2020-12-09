@@ -1,7 +1,6 @@
 import {
   BooleanLiteral,
   StringLiteral,
-  TaggedLiteral,
   DateLiteral,
   IntegerLiteral,
   MeasurementLiteral,
@@ -15,6 +14,8 @@ import {
   isGramLiteralArray,
   isLiteral,
   isGramRecord,
+  GramRecord,
+  TaggedTextLiteral
 } from '@gram-data/gram-ast';
 
 import {
@@ -56,16 +57,20 @@ export type LiteralValueEvaluator = (ast: GramLiteral) => any
  * 
  * @see {@linkcode valueOfLiteral} for default literal value evaluator
  */
-export const valueOf = (recordValue: GramRecordValue, literalValueEvaluator = valueOfLiteral): any => {
-  if (isGramLiteralArray(recordValue)) {
-    return recordValue.map((v: GramLiteral) => valueOf(v));
-  } else if (isLiteral(recordValue)) {
-    return literalValueEvaluator(recordValue as GramLiteral);
-  } else if (isGramRecord(recordValue)) {
+export const valueOf = (recordValue: GramRecordValue | GramRecord, literalValueEvaluator = valueOfLiteral): any => {
+  if (isGramRecord(recordValue)) {
     return recordValue.reduce((acc, property) => {
       acc[property.name] = valueOf(property.value);
       return acc;
     }, {} as { [key: string]: any });
+  } else {
+    if (isGramLiteralArray(recordValue)) {
+      return recordValue.map((v: GramLiteral) => valueOf(v));
+    } else if (isLiteral(recordValue)) {
+      return literalValueEvaluator(recordValue as GramLiteral);
+    } else if (typeof recordValue === 'object') {
+      return Object.entries(recordValue).reduce((acc, [k,v]) => {acc[k] = valueOf(v); return acc }, {} as { [key: string]: any });
+    }
   }
 };
 
@@ -89,14 +94,14 @@ export const valueOfLiteral = (ast: GramLiteral): any => {
       return valueOfOctal(ast);
     case 'tagged':
       switch (ast.tag) {
-        case 'date':     return valueOfDate(ast);
-        case 'time':     return valueOfTime(ast);
+        case 'date':     return valueOfDate(ast as DateLiteral);
+        case 'time':     return valueOfTime(ast as TimeLiteral);
         case 'datetime': return 'TODO';
         case 'interval': return 'TODO';
         case 'duration': return 'TODO';
         case 'uri':      return ast.value;
         case 'wkt':      return 'TODO'; 
-        default: assertNever(ast);
+        default: return 'TODO';
       }
     case 'measurement':
       return 'measure by measure';
@@ -115,7 +120,7 @@ export const valueOfString = (ast: StringLiteral) => {
   throw new InvalidAstError(ast);
 };
 
-export const valueOfTaggedLiteral = (ast: TaggedLiteral) => {
+export const valueOfTaggedLiteral = (ast: TaggedTextLiteral) => {
   if (ast.value) {
     return ast.value;
   }

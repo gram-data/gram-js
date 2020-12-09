@@ -60,8 +60,7 @@ describe('gram stringify fully specified edges with nodes', () => {
       [g.node('you'), g.node('world')], 'right', 
       undefined, ['GREET'], 
       g.mapToRecord({message:g.string('hello')}));
-    console.log(inspect(p));
-    console.dir(p.record);
+    // console.log(inspect(p));
     expect(stringify(p)).toBe('(you)-[:GREET {message:`hello`}]->(world)');
   });
 });

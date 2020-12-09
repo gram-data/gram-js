@@ -132,9 +132,8 @@
   <div class="container mx-auto">
     <h1 class="font-serif text-white text-6xl">gram</h1>
     <h2 class="font-mono text-white text-3xl mb-16 -mt-2">(text)-->(data)</h2>
-    <p class="text-white mb-0">parse, use, view data graphs</p>
-    <pre class="bg-white rounded pl-2 mt-8 mb-0 w-2/3">
-npm install @gram-data/gram-parse @gram-data/gram-stringify</pre>
+    <p class="text-white mb-0">a textual format for data graphs</p>
+    <pre class="bg-white rounded pl-2 mt-8 mb-0 w-2/3">(a:Text)-->(b:Ast)-->(c:Data)-->(a), (c)-->(d3), (c)-->(neo4j)</pre>
   </div>
 </div>
 
@@ -268,7 +267,7 @@ npm install @gram-data/gram-parse @gram-data/gram-stringify</pre>
   window.onload = function () {
     console.log(gram);
     var svg = document.getElementById('graph');
-    drawGraph("(a:Aye)-->(b:Bee)-->(c:Cee)-->(a),(a)-->(d),(a)-->(e)", svg);
+    drawGraph("(a:Text)-->(b:Ast)-->(c:Data)-->(a),(c)-->(d3),(c)-->(neo4j)", svg);
   }
   
 </script>

@@ -8,11 +8,10 @@ import {
   isLiteral,
   isGramNode,
   isGramEdge,
-  GramSeq,
   isGramEmptyPath,
   isGramLiteralArray,
-  GramPropertyMap,
   GramLiteral,
+  isGramPath,
 } from '@gram-data/gram-ast';
 
 const isEmpty = (o: any) => Object.keys(o).length === 0;
@@ -45,9 +44,11 @@ const toStringValue = (v: GramRecordValue) => {
   } else if (isLiteral(v)) {
     return toStringLiteral(v);
   } else {
-    return recordToString(v);
+    return objectToString(v);
   }
 };
+
+const propertyToString = (property: GramProperty) => (`${property.name}:${toStringValue(property.value)}`)
 
 const recordToString = (record: GramRecord): string => {
   const fields = record.map(
@@ -57,10 +58,12 @@ const recordToString = (record: GramRecord): string => {
   return `{${fields.join('')}}`;
 };
 
-const recordMapToString = (record: GramPropertyMap): string => {
-  const fields = Object.entries(record).map(
+const arrayToString = (xs:any[]): string => `[${xs.map(stringify).join(',')}]`;
+
+const objectToString = (o: { [key:string]:any }): string => {
+  const fields = Object.entries(o).map(
     ([name, value], i: number) =>
-      `${i > 0 ? ',' : ''}${name}:${toStringValue(value)}`
+      `${i > 0 ? ',' : ''}${name}:${stringify(value)}`
   );
   return `{${fields.join('')}}`;
 };
@@ -155,20 +158,32 @@ const pathToString = (ast?: GramPath): string => {
   return pathExpression;
 };
 
-export const stringify = (
-  ast: GramPath | GramSeq | GramPath[] | GramPropertyMap
-): string => {
+export const stringify = ( ast: any | any[] ): string => {
   if (Array.isArray(ast)) {
-    return ast.map(stringify).join(' ');
+    if (ast.length > 0) {
+      const element = ast[0];
+      if (isGramPath(element)) {
+        return ast.map(stringify).join(' ');
+      } else {
+        return arrayToString(ast);
+      }
+    } else return '[]';
   } else if (ast.type !== undefined) {
     switch (ast.type) {
       case 'path':
         return pathToString(ast as GramPath);
       case 'seq':
         return stringify(ast.children as GramPath[]);
+      case 'property':
+        return propertyToString(ast);
+      default:
+        if (isLiteral(ast)) {
+          return toStringLiteral(ast);
+        } 
+        return objectToString(ast);
     }
   } else if (typeof ast === 'object') {
-    return recordMapToString(ast);
+    return objectToString(ast);
   }
 
   throw new Error(`Can't stringify <${ast}>`);
