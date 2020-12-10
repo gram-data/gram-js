@@ -50,7 +50,7 @@ let lexer = moo.compile({
 # Gram -> (Path | Comment):*
 
 # GramSeq is a sequence of paths
-GramSeq -> (Path _  {% ([pp]) => pp %}):+ EOL:? {% ([pp]) => g.seq( g.flatten(pp) ) %}
+GramSeq -> _ (Path {% ([pp]) => pp %}):+ {% ([,pp]) => g.seq( g.flatten(pp) ) %}
 
 # Paths are a generalization of nodes and edges
 Path ->
@@ -61,36 +61,36 @@ Path ->
 # NodePattern is cypher-like (node1)-[edge]->(node2)
 NodePattern ->
     Node _ Edge _ NodePattern
-      {% ([np,,es,,ep]) => g.cons([np,ep], {kind:es.kind, id:es.id, labels:es.labels, record:es.record} ) %}
+      {% ([n,,es,,np]) => g.cons([n,np], {kind:es.kind, id:es.id, labels:es.labels, record:es.record} ) %}
   | Node {% id %}
 
 Node ->
-  "(" _ Attributes _ ")" 
-    {% ([,,attrs]) => g.node(attrs.id, attrs.labels, attrs.record)  %}
+  "(" _ Attributes:? ")" _
+    {% ([,,attrs]) => attrs ? g.node(attrs.id, attrs.labels, attrs.record) : g.node() %}
 
 Edge ->
-    "-[" _ Attributes "]->"   
+    "-[" _ Attributes:? "]->" _  
               {% ([,,attrs]) => ({kind:'right', ...attrs}) %}
-  | "-[" _ Attributes "]-"    
+  | "-[" _ Attributes:? "]-" _   
               {% ([,,attrs]) => ({kind:'either', ...attrs}) %}
-  | "<-[" _ Attributes "]-"   
+  | "<-[" _ Attributes:? "]-" _  
               {% ([,,attrs]) => ({kind:'left', ...attrs}) %}
-  | "-[]->"   {% () => ({kind:'right'}) %}
-  | "-[]-"    {% () => ({kind:'either'}) %}
-  | "<-[]-"   {% () => ({kind:'left'}) %}
-  | "-->"     {% () => ({kind:'right'}) %}
-  | "--"      {% () => ({kind:'either'}) %}
-  | "<--"     {% () => ({kind:'left'}) %}
+  | "-[]->" _ {% () => ({kind:'right'}) %}
+  | "-[]-"  _ {% () => ({kind:'either'}) %}
+  | "<-[]-" _ {% () => ({kind:'left'}) %}
+  | "-->"   _ {% () => ({kind:'right'}) %}
+  | "--"    _ {% () => ({kind:'either'}) %}
+  | "<--"   _ {% () => ({kind:'left'}) %}
 
 PathComposition -> 
-    PathPoint    {% id %}
+    PathPoint       {% id %}
   | PathAnnotation  {% id %}
   | PathExpression  {% id %}
 
 PathPoint ->
-  "[" _ Attributes _ "]"
+  "[" _ Attributes:? "]" _
     {% ([,,attr]) => {
-      if ( (attr.id || attr.labels || attr.record) && attr.id !== 'ø' ) {
+      if ( attr && (attr.id || attr.labels || attr.record) && attr.id !== 'ø' ) {
         // console.log(attr);
         return g.node(attr.id, attr.labels, attr.record)
       } else {
@@ -100,33 +100,38 @@ PathPoint ->
     %}
 
 PathAnnotation ->
-  "[" _ Attributes _ Path "]"
-    {% ([,,attr,,lhs]) => {
+  "[" _ Attributes:? Path "]" _
+    {% ([,,attr,lhs]) => {
       // console.log('annotate()', lhs)
-      return g.cons( [lhs], {id:attr.id, labels:attr.labels, record:attr.record}) 
+      return g.cons( [lhs], attr ? {id:attr.id, labels:attr.labels, record:attr.record} : {}) 
     }
     %}
 
 PathExpression -> 
-  "[" _ Attributes _ Kind:? _ Path _ Path _ "]"
-    # with both optional, rhs will match first
-    {% ([,,attrs,,kind,,lhs,,rhs]) => {
+  "[" _ Attributes:? Kind:? Path Path "]" _
+    {% ([,,attrs,kind,lhs,rhs]) => {
       return g.cons( [lhs,rhs], {kind, id:attrs.id, labels:attrs.labels, record:attrs.record}) 
     }
     %}
 
 PathPair ->
-  (NodePattern | PathComposition) _ "," _ Path
-    {% ([lp,,,,rp]) => g.pair([lp[0],rp] ) %}
+  (NodePattern | PathComposition) "," _ Path
+    {% ([lp,,,rp]) => g.pair([lp[0],rp] ) %}
 
 Kind ->
-    ","   {% () => ('pair') %}
-  | "-->" {% () => ('right') %}
-  | "--"  {% () => ('either') %}
-  | "<--" {% () => ('left') %}
+    ","   _ {% () => ('pair') %}
+  | "-->" _ {% () => ('right') %}
+  | "--"  _ {% () => ('either') %}
+  | "<--" _ {% () => ('left') %}
 
-Attributes ->
-  Identity:? (_ LabelList {% ([,ll]) => ll %}):? (_ Record {% ([,r]) => r %}):? {% ([id,labels,record]) =>  ( {id, labels, record} )  %}
+Attributes -> Identity:? LabelList:? Record:? 
+    {% function (d,_,reject) {
+      const [id,labels,record] = d;
+      if (id || labels || record) {
+        return {id, labels, record}
+      } else return reject;
+    }
+    %}
 
 LabelList -> 
   Label:+ {% ([labels]) => labels %}
@@ -134,32 +139,32 @@ LabelList ->
 Label -> ":" Symbol {% ([,label]) => label %}
 
 Identity -> 
-    %identifier   {% text %}
-  | "ø"           {% text %}
-  | %symbol       {% text %}
-  | %integer      {% text %}
-  | %octal        {% text %}
-  | %hexadecimal  {% text %}
-  | %measurement  {% text %}
-  | %tickedString {% ([t]) => t.text.slice(1,-1) %}
+    %identifier   _ {% text %}
+  | "ø"           _ {% text %}
+  | %symbol       _ {% text %}
+  | %integer      _ {% text %}
+  | %octal        _ {% text %}
+  | %hexadecimal  _ {% text %}
+  | %measurement  _ {% text %}
+  | %tickedString _ {% ([t]) => t.text.slice(1,-1) %}
 
 Symbol -> 
-    %symbol       {% text %}
-  | %tickedString {% ([t]) => t.text.slice(1,-1) %}
+    %symbol       _ {% text %}
+  | %tickedString _ {% ([t]) => t.text.slice(1,-1) %}
 
 Record -> 
-    "{" _ "}" {% empty  %}
-  | "{" _ Property (_ "," _ Property):* _ "}" {% ([,,p,ps]) =>  [p, ...extractPairs(ps)] %}
+    "{" _ "}" _ {% empty  %}
+  | "{" _ Property ("," _ Property {% ([,,p]) => p %}):* "}" _ {% ([,,p,ps]) =>  [p, ...ps] %}
 
-Property -> Symbol _ ":" _ Value {% ([k,,,,v]) => g.property(k,v) %}
+Property -> Symbol ":" _ Value {% ([k,,,v]) => g.property(k,v) %}
 
 # Key -> Symbol {% id %}
 
 Value -> 
-    StringLiteral   {% id %}
-  | NumericLiteral  {% id %}
-  | %boolean        {% (d) => g.boolean(JSON.parse(d[0].value.toLowerCase())) %}
-  | "[" _ Value (_ "," _ Value):* "]" {% ([,,v,vs]) => ([v, ...extractArray(vs)]) %}
+    StringLiteral _   {% id %}
+  | NumericLiteral _  {% id %}
+  | %boolean _        {% (d) => g.boolean(JSON.parse(d[0].value.toLowerCase())) %}
+  | "[" _ Value ("," _ Value {% ([,,v]) => v %}):* "]" _ {% ([,,v,vs]) => ([v, ...vs]) %}
 
 StringLiteral -> 
     %singleQuotedString {% (d) => g.string(d[0].value) %}
@@ -184,7 +189,7 @@ NumericLiteral ->
 #
 #  Whitespace and comments
 #
-_ -> null | %whitespace {% empty %}
+_ -> %whitespace:? {% empty %}
 
 # Comment -> %lineComment [\n]:? {% empty %}
 Comment -> %lineComment {% empty %}
@@ -197,15 +202,17 @@ const empty = () => null;
 
 const text =([token]:Array<any>):string => token.text;
 
-function extractPairs(pairGroups:Array<any>) {
-    return pairGroups.map((pairGroup:Array<any>) => {
-      return pairGroup[3];
-    })
-}
+/*
+# function extractPairs(pairGroups:Array<any>) {
+#     return pairGroups.map((pairGroup:Array<any>) => {
+#       return pairGroup[3];
+#     })
+# }
 
-function extractArray(valueGroups:Array<any>):Array<any> {
-    return valueGroups.map( (valueGroup) => valueGroup[3]);
-}
+# function extractArray(valueGroups:Array<any>):Array<any> {
+#     return valueGroups.map( (valueGroup) => valueGroup[3]);
+# }
+*/
 
 function separateTagFromString(taggedStringValue:string) {
   let valueParts = taggedStringValue.match(/([^`]+)`(.+)`$/);

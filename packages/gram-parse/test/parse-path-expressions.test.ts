@@ -11,7 +11,7 @@ const show = (ast: Node) => {
   if (DEBUG) console.log(inspect(ast));
 };
 
-describe('parsing path composition', () => {
+describe('parsing composition by path expression (composing two members)', () => {
   it('[e -- () ()] ≅ ()-[e]-(), an edge identified as "e"', () => {
     const edgeId = 'e';
     const src = `[${edgeId} -- () ()]`;

@@ -181,8 +181,13 @@ describe('parsing nodes', () => {
   it.each`
     gram
     ${'({k:`v`})'}
+    ${'({k:`v`} )'}
+    ${'( {k:`v`})'}
     ${'( {k:`v`} )'}
     ${'( { k:`v` } )'}
+    ${'( { k: `v` } )'}
+    ${'( { k : `v` } )'}
+    ${'({k: `v`, l: 2})'}
   `('$gram is tolerant of whitespace', ({ gram }) => {
     const result = toAST(gram);
     expect(result).toBeDefined();

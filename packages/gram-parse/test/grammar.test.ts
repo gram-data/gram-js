@@ -2,14 +2,6 @@ import nearley, { Parser } from 'nearley';
 
 import grammar from '../src/gram-grammar';
 
-// import {
-//   EMPTY_PATH_ID,
-//   isGramNode,
-//   isGramSeq,
-//   isGramPath,
-//   isGramEdge,
-//   isGramEmptyPath,
-// } from '@gram-data/gram-ast';
 import { Node } from 'unist';
 
 let DEBUG = true;

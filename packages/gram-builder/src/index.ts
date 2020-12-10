@@ -224,27 +224,6 @@ export const edge = (
 });
 
 /**
- * Build a path
- *
- * @param children
- * @param id
- * @param labels
- * @param record
- */
-// export const path = (
-//   members: [GramPath] | [GramPath, GramPath],
-//   id?: string,
-//   labels?: string[],
-//   record?: GramRecord
-// ): GramPath => ({
-//   type: 'path',
-//   id,
-//   ...(labels && { labels }),
-//   ...(record && { record }),
-//   children: members,
-// });
-
-/**
  * Build a pair
  *
  * @param children
