@@ -18,7 +18,7 @@
 <meta property="og:url" content="http://localhost:4000/" />
 <meta property="og:site_name" content="gram.js" />
 <script type="application/ld+json">
-{"@type":"WebSite","name":"gram.js","description":"Gram is a textual format for data graphs.","headline":"gram.js","url":"http://localhost:4000/","@context":"https://schema.org"}</script>
+{"headline":"gram.js","description":"Gram is a textual format for data graphs.","url":"http://localhost:4000/","name":"gram.js","@type":"WebSite","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/site.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="gram.js" /><link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
@@ -131,9 +131,9 @@
   <svg class="absolute top-0 right-0" width="800" height="400" id="graph"></svg>
   <div class="container mx-auto">
     <h1 class="font-serif text-white text-6xl">gram</h1>
-    <h2 class="font-mono text-white text-3xl mb-16 -mt-2">(text)-->(data)</h2>
+    <h2 class="font-mono text-white text-3xl mb-16 mt-2">(text)-->(data)</h2>
     <p class="text-white mb-0">a textual format for data graphs</p>
-    <pre class="bg-white rounded pl-2 mt-8 mb-0 w-2/3">(a:Text)-->(b:Ast)-->(c:Data)-->(a), (c)-->(d3), (c)-->(neo4j)</pre>
+    <pre class="bg-white rounded pl-2 mt-8 mb-2 w-full">(a:A)-->(b:B)<--(c:C)-->(a), (c)-->(d), (c)-->(e)</pre>
   </div>
 </div>
 
@@ -142,30 +142,21 @@
 <div class="flex flex-wrap justify-between pt-12"><!--1/3 col per post-->
 <div class="w-full lg:w-1/3 p-6 flex flex-col flex-shrink">
   <div class="flex-1  pt-4 bg-white rounded-t rounded-b-none overflow-hidden shadow-lg">
-    <a href="/guides/gram-builder/" class="flex flex-wrap no-underline hover:no-underline">
-      <p class="w-full text-gray-600 text-xs md:text-sm px-6"></p>
-      <div class="w-full font-bold text-xl text-gray-900 px-6">Gram Builder</div><div class="text-gray-800 text-base px-6 mb-5 hidden md:block">
-        <p>Build valid gram AST.</p>
-
-      </div></a>
-  </div>
-</div><!--1/3 col per post-->
-<div class="w-full lg:w-1/3 p-6 flex flex-col flex-shrink">
-  <div class="flex-1  pt-4 bg-white rounded-t rounded-b-none overflow-hidden shadow-lg">
-    <a href="/guides/gram-parse/" class="flex flex-wrap no-underline hover:no-underline">
-      <p class="w-full text-gray-600 text-xs md:text-sm px-6"></p>
-      <div class="w-full font-bold text-xl text-gray-900 px-6">Gram Parse</div><div class="text-gray-800 text-base px-6 mb-5 hidden md:block">
-        <p>Parse text into an AST.</p>
-
-      </div></a>
-  </div>
-</div><!--1/3 col per post-->
-<div class="w-full lg:w-1/3 p-6 flex flex-col flex-shrink">
-  <div class="flex-1  pt-4 bg-white rounded-t rounded-b-none overflow-hidden shadow-lg">
     <a href="/guides/introduction/" class="flex flex-wrap no-underline hover:no-underline">
       <p class="w-full text-gray-600 text-xs md:text-sm px-6"></p>
       <div class="w-full font-bold text-xl text-gray-900 px-6">Introduction</div><div class="text-gray-800 text-base px-6 mb-5 hidden md:block">
-        <p>Gram is a textual format for data that is expressive, streamable and composable.</p>
+        <p>Gram is a textual format for data graphs. Named values are packed into records, qualified with labels, given identity, and organized into expressive patterns. It’s <code class="language-plaintext highlighter-rouge">JSON</code> for data graphs!</p>
+
+
+      </div></a>
+  </div>
+</div><!--1/3 col per post-->
+<div class="w-full lg:w-1/3 p-6 flex flex-col flex-shrink">
+  <div class="flex-1  pt-4 bg-white rounded-t rounded-b-none overflow-hidden shadow-lg">
+    <a href="/guides/path-composition/" class="flex flex-wrap no-underline hover:no-underline">
+      <p class="w-full text-gray-600 text-xs md:text-sm px-6"></p>
+      <div class="w-full font-bold text-xl text-gray-900 px-6">Path Composition</div><div class="text-gray-800 text-base px-6 mb-5 hidden md:block">
+        <p>Paths are like self-aware lists – they contain ordered elements <em>and</em> information about themselves.</p>
 
 
       </div></a>
@@ -175,7 +166,7 @@
   <div class="flex-1  pt-4 bg-white rounded-t rounded-b-none overflow-hidden shadow-lg">
     <a href="/guides/railroad/" class="flex flex-wrap no-underline hover:no-underline">
       <p class="w-full text-gray-600 text-xs md:text-sm px-6"></p>
-      <div class="w-full font-bold text-xl text-gray-900 px-6">Railroad</div><div class="text-gray-800 text-base px-6 mb-5 hidden md:block">
+      <div class="w-full font-bold text-xl text-gray-900 px-6">Railroad Diagram</div><div class="text-gray-800 text-base px-6 mb-5 hidden md:block">
         <h1><code>GramSeq</code></h1>
 <div>
 <svg class="railroad-diagram" width="405" height="81" viewBox="0 0 405 81">
@@ -267,7 +258,7 @@
   window.onload = function () {
     console.log(gram);
     var svg = document.getElementById('graph');
-    drawGraph("(a:Text)-->(b:Ast)-->(c:Data)-->(a),(c)-->(d3),(c)-->(neo4j)", svg);
+    drawGraph("(a:A)-->(b:B)<--(c:C)-->(a), (c)-->(d), (c)-->(e)", svg);
   }
   
 </script>

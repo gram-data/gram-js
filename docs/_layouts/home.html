@@ -7,9 +7,9 @@ layout: default
   <svg class="absolute top-0 right-0" width="800" height="400" id="graph"></svg>
   <div class="container mx-auto">
     <h1 class="font-serif text-white text-6xl">gram</h1>
-    <h2 class="font-mono text-white text-3xl mb-16 -mt-2">(text)-->(data)</h2>
+    <h2 class="font-mono text-white text-3xl mb-16 mt-2">(text)-->(data)</h2>
     <p class="text-white mb-0">a textual format for data graphs</p>
-    <pre class="bg-white rounded pl-2 mt-8 mb-0 w-2/3">(a:Text)-->(b:Ast)-->(c:Data)-->(a), (c)-->(d3), (c)-->(neo4j)</pre>
+    <pre class="bg-white rounded pl-2 mt-8 mb-2 w-full">(a:A)-->(b:B)<--(c:C)-->(a), (c)-->(d), (c)-->(e)</pre>
   </div>
 </div>
 
@@ -26,7 +26,7 @@ layout: default
   window.onload = function () {
     console.log(gram);
     var svg = document.getElementById('graph');
-    drawGraph("(a:Text)-->(b:Ast)-->(c:Data)-->(a),(c)-->(d3),(c)-->(neo4j)", svg);
+    drawGraph("(a:A)-->(b:B)<--(c:C)-->(a), (c)-->(d), (c)-->(e)", svg);
   }
   
 </script>

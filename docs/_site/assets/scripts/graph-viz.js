@@ -103,6 +103,7 @@ const drawGraph = (gramSrc, svgElement) => {
     center = {x:width/2, y:height/2}
     
   console.log("D3 Graph Loaded:");
+  console.log(width,height,center);
   console.dir(graph);
   
   var simulation = d3.forceSimulation()

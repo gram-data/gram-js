@@ -457,15 +457,13 @@ export type TaggedLiteral =
  * Represents a string value with a format indicated by a "tag".
  *
  * Some well-known tags:
- * - "md`# Hello World`"
- * - "html`<h1>Hello World</h1>`"
- * - "date`2020-07-14`"
- * - "time`17:35:42`"
- * - "uri`https://gram-data.github.io`"
- * - "wkt`POINT(-83.123 42.123)"
+ * - `md\`# Hello World\``
+ * - `html\`<h1>Hello World</h1>\``
+ * - `date\`2020-07-14```
+ * - `time\`17:35:42\``
+ * - `uri\`https://gram-data.github.io\`
+ * - `wkt\`POINT(-83.123 42.123)\``
  *
- * @see {@link DateLiteral}
- * @see {@link GeospatialLiteral}
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals | Wikipedia Template literals}
  */
 export interface TaggedTextLiteral extends TextLiteral {

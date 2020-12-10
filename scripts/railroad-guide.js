@@ -9,7 +9,7 @@ const document = cheerio.load(html);
 const body = document('body');
 
 const header = `---
-name: railroad
+title: Railroad Diagram
 ---
 
 `;
