@@ -2,23 +2,25 @@
 
 <html lang="en">
 <head>
-  <title>DEPRECATED</title>
+  <title>Path Types</title>
   <meta name="description" content="Gram is a textual format for data graphs.">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>DEPRECATED | gram.js</title>
+<title>Path Types | gram.js</title>
 <meta name="generator" content="Jekyll v3.9.0" />
-<meta property="og:title" content="DEPRECATED" />
+<meta property="og:title" content="Path Types" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Gram is a textual format for data graphs." />
-<meta property="og:description" content="Gram is a textual format for data graphs." />
-<link rel="canonical" href="http://localhost:4000/get-started/" />
-<meta property="og:url" content="http://localhost:4000/get-started/" />
+<meta name="description" content="Paths are like self-aware lists – they contain ordered elements and information about themselves." />
+<meta property="og:description" content="Paths are like self-aware lists – they contain ordered elements and information about themselves." />
+<link rel="canonical" href="http://localhost:4000/guides/path-types/" />
+<meta property="og:url" content="http://localhost:4000/guides/path-types/" />
 <meta property="og:site_name" content="gram.js" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-12-10T15:29:33+01:00" />
 <script type="application/ld+json">
-{"headline":"DEPRECATED","description":"Gram is a textual format for data graphs.","url":"http://localhost:4000/get-started/","@type":"WebPage","@context":"https://schema.org"}</script>
+{"headline":"Path Types","dateModified":"2020-12-10T15:29:33+01:00","datePublished":"2020-12-10T15:29:33+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/guides/path-types/"},"description":"Paths are like self-aware lists – they contain ordered elements and information about themselves.","url":"http://localhost:4000/guides/path-types/","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/site.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="gram.js" /><link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
@@ -161,7 +163,7 @@
       <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
          <a href="/guides/path-types/" 
             
-               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
+               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:border-blue-500 lg:hover:border-green-500"
             
          >
          <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">Path Types</span>
@@ -184,212 +186,157 @@
    <div class="w-full lg:w-4/5 p-8 mt-6 lg:mt-0 text-gray-900 leading-normal bg-white border border-gray-400 border-rounded">
       <!--Title-->
       <div class="font-sans">
-         <h1 class="font-sans break-normal text-gray-900 pt-6 pb-2 text-xl">DEPRECATED</h1>
+         <h1 class="font-sans break-normal text-gray-900 pt-6 pb-2 text-xl">Path Types</h1>
          <hr class="border-b border-gray-400">
       </div>
       <!--Page Content-->
       <div class="prose max-w-none">
-         <h1 id="deprecated">DEPRECATED</h1>
+         <p>Paths are like self-aware lists – they contain ordered elements <em>and</em> information about themselves.</p>
 
-<p>This package has broken up into smaller, focused packages.</p>
+<p>The canonical example is <a href="https://en.wikipedia.org/wiki/U.S._Route_66">U.S. Route 66</a>, an historic highway
+popularized in songs, movies and books. The route is both a series of roads connecting locations, and
+a thing-in-itself. Where does information about Route 66 go? On the path itself.</p>
 
-<h1 id="gram-format">gram-format</h1>
+<p>The California segment of Route-66:</p>
 
-<p>This is the Gram data interchange format. Gram is a lightweight data graph.
-This textual representation is easy to read and write.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[ route66inCA:Historic:Highway {established: date`1926-11-26`} 
+    (santaMonica)--&gt;(losAngeles)--&gt;(pasadena)--&gt;
+    (eastPasadena)--&gt;(monrovia)--&gt;(azusa)--&gt;
+    (upland)--&gt;
+]
+</code></pre></div></div>
 
-<h2 id="data-graphs-in-gram">Data Graphs in Gram</h2>
+<h3 id="paths-all-the-way-down-or-up">Paths all the way down (or up)</h3>
 
-<p>Gram data comes in two parts:</p>
+<h2 id="type-definitions">Type Definitions</h2>
+
+<h3 id="paths">Paths</h3>
+
+<p>Paths are either empty or the composition of two paths.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data Path = empty | path (Path) (Path)
+  empty :: Path
+  path :: Path --&gt; Path --&gt; Path
+</code></pre></div></div>
+
+<h3 id="graph-elements">Graph elements</h3>
+
+<p>Graph elements are special cases of a Path.</p>
+
+<p>A Node is a Path of length 0.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>type Node = Path
+node :: Empty --&gt; Empty --&gt; Node
+</code></pre></div></div>
+
+<p>An Edge is a Path of length 1 containing two Nodes.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>type Edge = Path
+edge :: Node --&gt; Node --&gt; Edge
+</code></pre></div></div>
+
+<h3 id="path-sequence">Path sequence</h3>
+
+<p>A Path Sequence is an ordered list of Paths. The elements are composed pairwise to produce the final Path representation. The order of pairing is left-to-right.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>type PathSequence = List Path
+foldPath :: PathSequence --&gt; Path
+</code></pre></div></div>
+
+<h3 id="graphs">Graphs</h3>
+
+<p>The classic graph 𝔾 = (𝕍, 𝔼) is derived from Paths.</p>
+
+<p>In Gram, 𝕍 is an ordered set of nodes. The position of any</p>
+
+<p>𝔼 is a set of edges which compose any two nodes (or the same node twice) from the <code class="language-plaintext highlighter-rouge">NodeSet</code>. The order of appearance within a Path represents a sort of additive history for the graph elements. Record values and labels are merged forward.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>type NodeSet = List Node
+nodes :: Path --&gt; List Node
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>type EdgeSet = List Edge
+edges :: Path --&gt; List Edge
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>type Graph = { nodes :: NodeSet, edges :: EdgeSet, paths :: PathSeq }
+</code></pre></div></div>
+
+<h2 id="path-notation">Path Notation</h2>
+
+<p>Gram uses two complementary notations for paths:</p>
 
 <ol>
-  <li>Records which contain data values</li>
-  <li>Paths which compose records into structures</li>
+  <li>Cypher node patterns: alternating nodes and edges</li>
+  <li>Path composition: two paths composed into a new path</li>
 </ol>
 
-<p>A gram file is a sequence of paths, making it ideal for streaming.</p>
+<p>Both notations can compose the these kinds of paths:</p>
 
-<p>Let’s create some data…</p>
+<table>
+  <tbody>
+    <tr>
+      <td>kind</td>
+      <td>use</td>
+    </tr>
+    <tr>
+      <td>&lt;–</td>
+      <td>oriented to the left</td>
+    </tr>
+    <tr>
+      <td>–&gt;</td>
+      <td>oriented to the right</td>
+    </tr>
+    <tr>
+      <td>——</td>
+      <td>oriented in either direction</td>
+    </tr>
+    <tr>
+      <td>,</td>
+      <td>pairwise association</td>
+    </tr>
+  </tbody>
+</table>
 
-<h3 id="unit-path-an-empty-path">Unit Path, an empty path</h3>
+<table>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td>Empty</td>
+      <td>Node</td>
+      <td>Edge</td>
+      <td>Path</td>
+    </tr>
+    <tr>
+      <td>Cypher path</td>
+      <td> </td>
+      <td><code class="language-plaintext highlighter-rouge">(n)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">(n1)-[e]-&gt;(n2)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">p = ()--&gt;(),()&lt;--()</code></td>
+    </tr>
+    <tr>
+      <td>Path composition</td>
+      <td><code class="language-plaintext highlighter-rouge">[ø]</code></td>
+      <td><code class="language-plaintext highlighter-rouge">[n ø ø]</code></td>
+      <td><code class="language-plaintext highlighter-rouge">[e --&gt; n1 n2]</code></td>
+      <td><code class="language-plaintext highlighter-rouge">[p , p1 p2]</code></td>
+    </tr>
+  </tbody>
+</table>
 
-<p>The smallest amount of data is no data, put in a container so we know
-it is there. An empty path is infinite nothingness.</p>
+<p>Cypher path notation is easier to read. Path composition is harder to read. The notation can be mixed to annotate information about a cypher path. These three notations are equivalent:</p>
 
-<p>Empty path constructions:</p>
+<p>Cypher path	p = (n1)-[e1]-&gt;(n2)&lt;-[e2]-(n3)
+Path composition	[p [e1 –&gt; n1 [e2 &lt;– n2 n3] ] ]
+Mixed notation	[p (n1)-[e1]-&gt;(n2)&lt;-[e2]-(n3)]</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[]
-[] + [] = []
-[ [] [] ] = []
-</code></pre></div></div>
+<hr />
 
-<p>As a special case, a single nest path implies composition with an empty path:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[ [] ] = [ [] [] ] = []
-</code></pre></div></div>
-
-<p>Identity:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>identityof [] = undefined || all the same?
-</code></pre></div></div>
-
-<h3 id="nodes-a-named-path-of-length-0">Nodes, a named path of length 0</h3>
-
-<p>When given a name, a path can be identified and described and discussed. 
-The smallest named path has a special name in graphs. It is called a Node.</p>
-
-<p>To help identify Nodes they can use special notation using parenthesis.</p>
-
-<p>Node constructions:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[n]
-(n) =~ [n]
-() != []
-</code></pre></div></div>
-
-<p>The empty parenthesis expression is <em>not</em> an empty path. Nodes always
-have identity. The identity is simply unknown. Implementations may
-invent an identity, but must guarantee that it is unique across all paths.</p>
-
-<p>Node compositions with units:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(n) + []   =~ [ + n _ ]  =~ [n] =~ (n)
-[]  + (n)  =~ [ + _ n ]  =~ [n] =~ (n)
-</code></pre></div></div>
-
-<p>Identity:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>identityof (n) =~ n
-identityof ()  =~ &lt;auto&gt;
-</code></pre></div></div>
-
-<h3 id="edges-named-paths-of-length-1">Edges, named paths of length 1</h3>
-
-<p>Nodes can be composed together to create a new path called an Edge.</p>
-
-<p>Edge construction:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>e = (n) + (n)  =~ [e + n n ]
-e = (n1) + (n2) =~ [e + n1 n2]
-</code></pre></div></div>
-
-<p>That <code class="language-plaintext highlighter-rouge">+</code> is a placeholder for any path composition operator. 
-Edges use operators that define the navigability of the path.</p>
-
-<p>Edge operators:</p>
-<ul>
-  <li><code class="language-plaintext highlighter-rouge">--&gt;</code> right association</li>
-  <li><code class="language-plaintext highlighter-rouge">&lt;--</code> left association</li>
-  <li><code class="language-plaintext highlighter-rouge">--</code> either direction</li>
-</ul>
-
-<p>The edge operators can include the name of the edge.</p>
-
-<p>Identity:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>e =~ ()--&gt;() =~ ()-[e]-&gt;() =~ [e --&gt; () ()]
-
-</code></pre></div></div>
-
-<h3 id="paths-general-composition">Paths, general composition</h3>
-
-<p>Paths generalize nodes and edges, allowing composition of any path-like
-structure into larger structures. By using binary composition, this
-forms a tree-like nesting of paths within paths.</p>
-
-<p>Path construction:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>p =~ (1)--&gt;(2)&lt;--(3) =~ [p --&gt;  (1) [e &lt;-- (2) (3)] ] =~ [p &lt;-- [e --&gt; (1) (2)] (3) ] ]
-</code></pre></div></div>
-
-<p>Paths can use any of the navigability operators used by edges,
-and also a special ‘pair’ operator which associates two
-path-like elements without explicitly connecting them.</p>
-
-<p>Path composition without an explicit operator implies the <code class="language-plaintext highlighter-rouge">,</code> pair operator:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>p =~ [p [p1] [p2]] =~ [p , [p1] [p2] ]
-</code></pre></div></div>
-
-<p>Identitity:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>identityof [p + n n2] =~ p
-identityof [  + n n ] =~ &lt;auto&gt;
-</code></pre></div></div>
-
-<h3 id="sequence-a-list-or-stream-of-paths">Sequence, a list or stream of paths</h3>
-
-<p>Really just a convenience for a path of paths, optimized
-for processing.</p>
-
-<p>Process how? Reduce a sequence to a node list or an edge list. 
-Together, those two lists become a graph.</p>
-
-<p>For fun take different windows of the sequence to see a 
-graph at different points in time.</p>
-
-<h3 id="graphs-a-merged-view-of-all-paths">Graphs, a merged view of all paths</h3>
-
-<p>A graph is a view of all the paths. Mhmm.</p>
-
-<h3 id="records-type-safe-nested-data-values">Records, type-safe nested data values</h3>
-
-<p>JSON-like nested structures:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-  name: 'Andreas',
-  birthDay: date'1969-01-07',
-  height: 184cm
-  nicknames: ['abk']
-}
-</code></pre></div></div>
-
-<h2 id="identifiers-and-symbols">Identifiers and Symbols</h2>
-
-<p>Identifier alphabet:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_@
-</code></pre></div></div>
-
-<p>Identifier regex: <code class="language-plaintext highlighter-rouge">/[0-9a-zA-Z_@]+\b@*/</code></p>
-
-<p>Symbol alphabet:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
-</code></pre></div></div>
-
-<p>Symbol regex: <code class="language-plaintext highlighter-rouge">/[a-zA-Z_][0-9a-zA-Z_]*\b(?!@)/</code></p>
-
-<h3 id="cypher-and-gql-compatibility">Cypher and GQL compatibility</h3>
-
-<p>For compatibility with Cypher and GQL statements, identifiers
-should be restricted to valid symbols.</p>
-
-<h2 id="exploration">Exploration…</h2>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// unary path operations
-[p [u]] =~ [p]
-[p [e]]
-[p (n)]
-[p [p2]]
-[p [p]] =~ [p]
-
-// binary path operations with unit produce the non-unit operand
-(n) =~ (n) . []
-(n) =~ []  . (n)
-[e] =~ [e] . []
-[e] =~ []  . [e]
-[p] =~ [p] . []
-[p] =~ []  . [p]
-
-// binary path operations with non-unit
-[p [e]  . [p2]]  =~ [e]  . [p2]
-[p [e]  . [e] ]  =~ [e]  . [e]
-[p [e]  . (n) ]  =~ [e]  . (n)
-[p (n)  . [p2]]  =~ (n)  . [p2]
-[p (n)  . [e] ]  =~ (n)  . [e]
-[p (n)  . (n) ]  =~ (n)  . (n)   // aka an edge!
-[p [p1] . [p2]]  =~ [p1] . [p2]
-[p [p1] . [e]]   =~ [p1] . [e]
-[p [p1] . (n)    =~ [p1] . (n)
-</code></pre></div></div>
-
-<h1 id="credits">Credits</h1>
-
-<p>Thanks to these project for inspiration:</p>
+<h3 id="footnotes"><em>Footnotes</em></h3>
 
 <ul>
-  <li>The entire <a href="https://unifiedjs.com">unist family</a></li>
-  <li><a href="https://github.com/mike-north/mdast-builder">mdast-builder</a> for how to make a builder</li>
+  <li><a href="https://en.wikipedia.org/wiki/Thing-in-itself">Thing-in-itself</a> (misused here) is a deepr notion about existence and observation.</li>
+  <li><a href="https://mostly-adequate.gitbooks.io/mostly-adequate-guide/content/ch07.html">Mostly Adequate guide to Hindley-Milner type system</a></li>
+  <li><a href="https://neo4j.com/docs/cypher-manual/current/syntax/patterns/#cypher-pattern-related-nodes">Cypher data patterns</a>
+innovated the ascii-art representation of round graph nodes <code class="language-plaintext highlighter-rouge">(a)</code> and interrupted arrows <code class="language-plaintext highlighter-rouge">-[e]-&gt;</code> for graph relationships.</li>
 </ul>
 
       </div>
@@ -399,7 +346,7 @@ should be restricted to valid symbols.</p>
    <!-- page footer -->
    <div class="w-full container mx-auto items-center justify-between mt-0 py-4">
       <div class="float-right lg:content-center lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 z-20" id="nav-content">
-         <a href="https://github.com/gram-data/gram-js/tree/main/docs/">
+         <a href="https://github.com/gram-data/gram-js/tree/main/docs/_guides/path-types.md">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current inline-block text-gray-500 h-5 w-5">
                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
             </svg>
