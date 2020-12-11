@@ -2911,27 +2911,6 @@
     });
   };
   /**
-   * Build a path
-   *
-   * @param children
-   * @param id
-   * @param labels
-   * @param record
-   */
-  // export const path = (
-  //   members: [GramPath] | [GramPath, GramPath],
-  //   id?: string,
-  //   labels?: string[],
-  //   record?: GramRecord
-  // ): GramPath => ({
-  //   type: 'path',
-  //   id,
-  //   ...(labels && { labels }),
-  //   ...(record && { record }),
-  //   children: members,
-  // });
-
-  /**
    * Build a pair
    *
    * @param children
@@ -3117,18 +3096,18 @@
     var token = _ref[0];
     return token.text;
   };
+  /*
+  # function extractPairs(pairGroups:Array<any>) {
+  #     return pairGroups.map((pairGroup:Array<any>) => {
+  #       return pairGroup[3];
+  #     })
+  # }
 
-  function extractPairs(pairGroups) {
-    return pairGroups.map(function (pairGroup) {
-      return pairGroup[3];
-    });
-  }
+  # function extractArray(valueGroups:Array<any>):Array<any> {
+  #     return valueGroups.map( (valueGroup) => valueGroup[3]);
+  # }
+  */
 
-  function extractArray(valueGroups) {
-    return valueGroups.map(function (valueGroup) {
-      return valueGroup[3];
-    });
-  }
 
   function separateTagFromString(taggedStringValue) {
     var valueParts = taggedStringValue.match(/([^`]+)`(.+)`$/);
@@ -3152,7 +3131,7 @@
     Lexer: lexer,
     ParserRules: [{
       name: 'GramSeq$ebnf$1$subexpression$1',
-      symbols: ['Path', '_'],
+      symbols: ['Path'],
       postprocess: function postprocess(_ref2) {
         var pp = _ref2[0];
         return pp;
@@ -3162,7 +3141,7 @@
       symbols: ['GramSeq$ebnf$1$subexpression$1']
     }, {
       name: 'GramSeq$ebnf$1$subexpression$2',
-      symbols: ['Path', '_'],
+      symbols: ['Path'],
       postprocess: function postprocess(_ref3) {
         var pp = _ref3[0];
         return pp;
@@ -3174,20 +3153,10 @@
         return d[0].concat([d[1]]);
       }
     }, {
-      name: 'GramSeq$ebnf$2',
-      symbols: ['EOL'],
-      postprocess: id
-    }, {
-      name: 'GramSeq$ebnf$2',
-      symbols: [],
-      postprocess: function postprocess() {
-        return null;
-      }
-    }, {
       name: 'GramSeq',
-      symbols: ['GramSeq$ebnf$1', 'GramSeq$ebnf$2'],
+      symbols: ['_', 'GramSeq$ebnf$1'],
       postprocess: function postprocess(_ref4) {
-        var pp = _ref4[0];
+        var pp = _ref4[1];
         return seq(flatten(pp));
       }
     }, {
@@ -3206,10 +3175,10 @@
       name: 'NodePattern',
       symbols: ['Node', '_', 'Edge', '_', 'NodePattern'],
       postprocess: function postprocess(_ref5) {
-        var np = _ref5[0],
+        var n = _ref5[0],
             es = _ref5[2],
-            ep = _ref5[4];
-        return cons([np, ep], {
+            np = _ref5[4];
+        return cons([n, np], {
           kind: es.kind,
           id: es.id,
           labels: es.labels,
@@ -3221,23 +3190,43 @@
       symbols: ['Node'],
       postprocess: id
     }, {
+      name: 'Node$ebnf$1',
+      symbols: ['Attributes'],
+      postprocess: id
+    }, {
+      name: 'Node$ebnf$1',
+      symbols: [],
+      postprocess: function postprocess() {
+        return null;
+      }
+    }, {
       name: 'Node',
       symbols: [{
         literal: '('
-      }, '_', 'Attributes', '_', {
+      }, '_', 'Node$ebnf$1', {
         literal: ')'
-      }],
+      }, '_'],
       postprocess: function postprocess(_ref6) {
         var attrs = _ref6[2];
-        return node(attrs.id, attrs.labels, attrs.record);
+        return attrs ? node(attrs.id, attrs.labels, attrs.record) : node();
+      }
+    }, {
+      name: 'Edge$ebnf$1',
+      symbols: ['Attributes'],
+      postprocess: id
+    }, {
+      name: 'Edge$ebnf$1',
+      symbols: [],
+      postprocess: function postprocess() {
+        return null;
       }
     }, {
       name: 'Edge',
       symbols: [{
         literal: '-['
-      }, '_', 'Attributes', {
+      }, '_', 'Edge$ebnf$1', {
         literal: ']->'
-      }],
+      }, '_'],
       postprocess: function postprocess(_ref7) {
         var attrs = _ref7[2];
         return _extends({
@@ -3245,12 +3234,22 @@
         }, attrs);
       }
     }, {
+      name: 'Edge$ebnf$2',
+      symbols: ['Attributes'],
+      postprocess: id
+    }, {
+      name: 'Edge$ebnf$2',
+      symbols: [],
+      postprocess: function postprocess() {
+        return null;
+      }
+    }, {
       name: 'Edge',
       symbols: [{
         literal: '-['
-      }, '_', 'Attributes', {
+      }, '_', 'Edge$ebnf$2', {
         literal: ']-'
-      }],
+      }, '_'],
       postprocess: function postprocess(_ref8) {
         var attrs = _ref8[2];
         return _extends({
@@ -3258,12 +3257,22 @@
         }, attrs);
       }
     }, {
+      name: 'Edge$ebnf$3',
+      symbols: ['Attributes'],
+      postprocess: id
+    }, {
+      name: 'Edge$ebnf$3',
+      symbols: [],
+      postprocess: function postprocess() {
+        return null;
+      }
+    }, {
       name: 'Edge',
       symbols: [{
         literal: '<-['
-      }, '_', 'Attributes', {
+      }, '_', 'Edge$ebnf$3', {
         literal: ']-'
-      }],
+      }, '_'],
       postprocess: function postprocess(_ref9) {
         var attrs = _ref9[2];
         return _extends({
@@ -3274,7 +3283,7 @@
       name: 'Edge',
       symbols: [{
         literal: '-[]->'
-      }],
+      }, '_'],
       postprocess: function postprocess() {
         return {
           kind: 'right'
@@ -3284,7 +3293,7 @@
       name: 'Edge',
       symbols: [{
         literal: '-[]-'
-      }],
+      }, '_'],
       postprocess: function postprocess() {
         return {
           kind: 'either'
@@ -3294,7 +3303,7 @@
       name: 'Edge',
       symbols: [{
         literal: '<-[]-'
-      }],
+      }, '_'],
       postprocess: function postprocess() {
         return {
           kind: 'left'
@@ -3304,7 +3313,7 @@
       name: 'Edge',
       symbols: [{
         literal: '-->'
-      }],
+      }, '_'],
       postprocess: function postprocess() {
         return {
           kind: 'right'
@@ -3314,7 +3323,7 @@
       name: 'Edge',
       symbols: [{
         literal: '--'
-      }],
+      }, '_'],
       postprocess: function postprocess() {
         return {
           kind: 'either'
@@ -3324,7 +3333,7 @@
       name: 'Edge',
       symbols: [{
         literal: '<--'
-      }],
+      }, '_'],
       postprocess: function postprocess() {
         return {
           kind: 'left'
@@ -3343,16 +3352,26 @@
       symbols: ['PathExpression'],
       postprocess: id
     }, {
+      name: 'PathPoint$ebnf$1',
+      symbols: ['Attributes'],
+      postprocess: id
+    }, {
+      name: 'PathPoint$ebnf$1',
+      symbols: [],
+      postprocess: function postprocess() {
+        return null;
+      }
+    }, {
       name: 'PathPoint',
       symbols: [{
         literal: '['
-      }, '_', 'Attributes', '_', {
+      }, '_', 'PathPoint$ebnf$1', {
         literal: ']'
-      }],
+      }, '_'],
       postprocess: function postprocess(_ref10) {
         var attr = _ref10[2];
 
-        if ((attr.id || attr.labels || attr.record) && attr.id !== 'ø') {
+        if (attr && (attr.id || attr.labels || attr.record) && attr.id !== 'ø') {
           // console.log(attr);
           return node(attr.id, attr.labels, attr.record);
         } else {
@@ -3360,25 +3379,35 @@
         }
       }
     }, {
+      name: 'PathAnnotation$ebnf$1',
+      symbols: ['Attributes'],
+      postprocess: id
+    }, {
+      name: 'PathAnnotation$ebnf$1',
+      symbols: [],
+      postprocess: function postprocess() {
+        return null;
+      }
+    }, {
       name: 'PathAnnotation',
       symbols: [{
         literal: '['
-      }, '_', 'Attributes', '_', 'Path', {
+      }, '_', 'PathAnnotation$ebnf$1', 'Path', {
         literal: ']'
-      }],
+      }, '_'],
       postprocess: function postprocess(_ref11) {
         var attr = _ref11[2],
-            lhs = _ref11[4];
+            lhs = _ref11[3];
         // console.log('annotate()', lhs)
-        return cons([lhs], {
+        return cons([lhs], attr ? {
           id: attr.id,
           labels: attr.labels,
           record: attr.record
-        });
+        } : {});
       }
     }, {
       name: 'PathExpression$ebnf$1',
-      symbols: ['Kind'],
+      symbols: ['Attributes'],
       postprocess: id
     }, {
       name: 'PathExpression$ebnf$1',
@@ -3387,17 +3416,27 @@
         return null;
       }
     }, {
+      name: 'PathExpression$ebnf$2',
+      symbols: ['Kind'],
+      postprocess: id
+    }, {
+      name: 'PathExpression$ebnf$2',
+      symbols: [],
+      postprocess: function postprocess() {
+        return null;
+      }
+    }, {
       name: 'PathExpression',
       symbols: [{
         literal: '['
-      }, '_', 'Attributes', '_', 'PathExpression$ebnf$1', '_', 'Path', '_', 'Path', '_', {
+      }, '_', 'PathExpression$ebnf$1', 'PathExpression$ebnf$2', 'Path', 'Path', {
         literal: ']'
-      }],
+      }, '_'],
       postprocess: function postprocess(_ref12) {
         var attrs = _ref12[2],
-            kind = _ref12[4],
-            lhs = _ref12[6],
-            rhs = _ref12[8];
+            kind = _ref12[3],
+            lhs = _ref12[4],
+            rhs = _ref12[5];
         return cons([lhs, rhs], {
           kind: kind,
           id: attrs.id,
@@ -3413,19 +3452,19 @@
       symbols: ['PathComposition']
     }, {
       name: 'PathPair',
-      symbols: ['PathPair$subexpression$1', '_', {
+      symbols: ['PathPair$subexpression$1', {
         literal: ','
       }, '_', 'Path'],
       postprocess: function postprocess(_ref13) {
         var lp = _ref13[0],
-            rp = _ref13[4];
+            rp = _ref13[3];
         return pair([lp[0], rp]);
       }
     }, {
       name: 'Kind',
       symbols: [{
         literal: ','
-      }],
+      }, '_'],
       postprocess: function postprocess() {
         return 'pair';
       }
@@ -3433,7 +3472,7 @@
       name: 'Kind',
       symbols: [{
         literal: '-->'
-      }],
+      }, '_'],
       postprocess: function postprocess() {
         return 'right';
       }
@@ -3441,7 +3480,7 @@
       name: 'Kind',
       symbols: [{
         literal: '--'
-      }],
+      }, '_'],
       postprocess: function postprocess() {
         return 'either';
       }
@@ -3449,7 +3488,7 @@
       name: 'Kind',
       symbols: [{
         literal: '<--'
-      }],
+      }, '_'],
       postprocess: function postprocess() {
         return 'left';
       }
@@ -3464,15 +3503,8 @@
         return null;
       }
     }, {
-      name: 'Attributes$ebnf$2$subexpression$1',
-      symbols: ['_', 'LabelList'],
-      postprocess: function postprocess(_ref14) {
-        var ll = _ref14[1];
-        return ll;
-      }
-    }, {
       name: 'Attributes$ebnf$2',
-      symbols: ['Attributes$ebnf$2$subexpression$1'],
+      symbols: ['LabelList'],
       postprocess: id
     }, {
       name: 'Attributes$ebnf$2',
@@ -3481,15 +3513,8 @@
         return null;
       }
     }, {
-      name: 'Attributes$ebnf$3$subexpression$1',
-      symbols: ['_', 'Record'],
-      postprocess: function postprocess(_ref15) {
-        var r = _ref15[1];
-        return r;
-      }
-    }, {
       name: 'Attributes$ebnf$3',
-      symbols: ['Attributes$ebnf$3$subexpression$1'],
+      symbols: ['Record'],
       postprocess: id
     }, {
       name: 'Attributes$ebnf$3',
@@ -3500,15 +3525,18 @@
     }, {
       name: 'Attributes',
       symbols: ['Attributes$ebnf$1', 'Attributes$ebnf$2', 'Attributes$ebnf$3'],
-      postprocess: function postprocess(_ref16) {
-        var id = _ref16[0],
-            labels = _ref16[1],
-            record = _ref16[2];
-        return {
-          id: id,
-          labels: labels,
-          record: record
-        };
+      postprocess: function postprocess(d, _, reject) {
+        var id = d[0],
+            labels = d[1],
+            record = d[2];
+
+        if (id || labels || record) {
+          return {
+            id: id,
+            labels: labels,
+            record: record
+          };
+        } else return reject;
       }
     }, {
       name: 'LabelList$ebnf$1',
@@ -3522,8 +3550,8 @@
     }, {
       name: 'LabelList',
       symbols: ['LabelList$ebnf$1'],
-      postprocess: function postprocess(_ref17) {
-        var labels = _ref17[0];
+      postprocess: function postprocess(_ref14) {
+        var labels = _ref14[0];
         return labels;
       }
     }, {
@@ -3531,74 +3559,74 @@
       symbols: [{
         literal: ':'
       }, 'Symbol'],
-      postprocess: function postprocess(_ref18) {
-        var label = _ref18[1];
+      postprocess: function postprocess(_ref15) {
+        var label = _ref15[1];
         return label;
       }
     }, {
       name: 'Identity',
       symbols: [/*#__PURE__*/lexer.has('identifier') ? {
         type: 'identifier'
-      } : identifier],
+      } : identifier, '_'],
       postprocess: text
     }, {
       name: 'Identity',
       symbols: [{
         literal: 'ø'
-      }],
+      }, '_'],
       postprocess: text
     }, {
       name: 'Identity',
       symbols: [/*#__PURE__*/lexer.has('symbol') ? {
         type: 'symbol'
-      } : symbol],
+      } : symbol, '_'],
       postprocess: text
     }, {
       name: 'Identity',
       symbols: [/*#__PURE__*/lexer.has('integer') ? {
         type: 'integer'
-      } : integer],
+      } : integer, '_'],
       postprocess: text
     }, {
       name: 'Identity',
       symbols: [/*#__PURE__*/lexer.has('octal') ? {
         type: 'octal'
-      } : octal],
+      } : octal, '_'],
       postprocess: text
     }, {
       name: 'Identity',
       symbols: [/*#__PURE__*/lexer.has('hexadecimal') ? {
         type: 'hexadecimal'
-      } : hexadecimal],
+      } : hexadecimal, '_'],
       postprocess: text
     }, {
       name: 'Identity',
       symbols: [/*#__PURE__*/lexer.has('measurement') ? {
         type: 'measurement'
-      } : measurement],
+      } : measurement, '_'],
       postprocess: text
     }, {
       name: 'Identity',
       symbols: [/*#__PURE__*/lexer.has('tickedString') ? {
         type: 'tickedString'
-      } : tickedString],
-      postprocess: function postprocess(_ref19) {
-        var t = _ref19[0];
+      } : tickedString, '_'],
+      postprocess: function postprocess(_ref16) {
+        var t = _ref16[0];
         return t.text.slice(1, -1);
       }
     }, {
       name: 'Symbol',
       symbols: [/*#__PURE__*/lexer.has('symbol') ? {
         type: 'symbol'
-      } : symbol],
+      } : symbol, '_'],
       postprocess: text
     }, {
       name: 'Symbol',
       symbols: [/*#__PURE__*/lexer.has('tickedString') ? {
         type: 'tickedString'
-      } : tickedString],
-      postprocess: function postprocess(_ref20) {
-        var t = _ref20[0];
+      } : tickedString, '_'],
+      postprocess: function postprocess(_ref17) {
+        var t = _ref17[0];
         return t.text.slice(1, -1);
       }
     }, {
@@ -3607,16 +3635,20 @@
         literal: '{'
       }, '_', {
         literal: '}'
-      }],
+      }, '_'],
       postprocess: empty$1
     }, {
       name: 'Record$ebnf$1',
       symbols: []
     }, {
       name: 'Record$ebnf$1$subexpression$1',
-      symbols: ['_', {
+      symbols: [{
         literal: ','
-      }, '_', 'Property']
+      }, '_', 'Property'],
+      postprocess: function postprocess(_ref18) {
+        var p = _ref18[2];
+        return p;
+      }
     }, {
       name: 'Record$ebnf$1',
       symbols: ['Record$ebnf$1', 'Record$ebnf$1$subexpression$1'],
@@ -3627,37 +3659,37 @@
       name: 'Record',
       symbols: [{
         literal: '{'
-      }, '_', 'Property', 'Record$ebnf$1', '_', {
+      }, '_', 'Property', 'Record$ebnf$1', {
         literal: '}'
-      }],
-      postprocess: function postprocess(_ref21) {
-        var p = _ref21[2],
-            ps = _ref21[3];
-        return [p].concat(extractPairs(ps));
+      }, '_'],
+      postprocess: function postprocess(_ref19) {
+        var p = _ref19[2],
+            ps = _ref19[3];
+        return [p].concat(ps);
       }
     }, {
       name: 'Property',
-      symbols: ['Symbol', '_', {
+      symbols: ['Symbol', {
         literal: ':'
       }, '_', 'Value'],
-      postprocess: function postprocess(_ref22) {
-        var k = _ref22[0],
-            v = _ref22[4];
+      postprocess: function postprocess(_ref20) {
+        var k = _ref20[0],
+            v = _ref20[3];
         return property(k, v);
       }
     }, {
       name: 'Value',
-      symbols: ['StringLiteral'],
+      symbols: ['StringLiteral', '_'],
       postprocess: id
     }, {
       name: 'Value',
-      symbols: ['NumericLiteral'],
+      symbols: ['NumericLiteral', '_'],
       postprocess: id
     }, {
       name: 'Value',
       symbols: [/*#__PURE__*/lexer.has('boolean') ? {
         type: 'boolean'
-      } : boolean],
+      } : boolean, '_'],
       postprocess: function postprocess(d) {
         return _boolean$1(JSON.parse(d[0].value.toLowerCase()));
       }
@@ -3666,9 +3698,13 @@
       symbols: []
     }, {
       name: 'Value$ebnf$1$subexpression$1',
-      symbols: ['_', {
+      symbols: [{
         literal: ','
-      }, '_', 'Value']
+      }, '_', 'Value'],
+      postprocess: function postprocess(_ref21) {
+        var v = _ref21[2];
+        return v;
+      }
     }, {
       name: 'Value$ebnf$1',
       symbols: ['Value$ebnf$1', 'Value$ebnf$1$subexpression$1'],
@@ -3681,11 +3717,11 @@
         literal: '['
       }, '_', 'Value', 'Value$ebnf$1', {
         literal: ']'
-      }],
-      postprocess: function postprocess(_ref23) {
-        var v = _ref23[2],
-            vs = _ref23[3];
-        return [v].concat(extractArray(vs));
+      }, '_'],
+      postprocess: function postprocess(_ref22) {
+        var v = _ref22[2],
+            vs = _ref22[3];
+        return [v].concat(vs);
       }
     }, {
       name: 'StringLiteral',
@@ -3762,13 +3798,20 @@
         return measurement$2(parts.unit, parts.value);
       }
     }, {
-      name: '_',
-      symbols: []
-    }, {
-      name: '_',
+      name: '_$ebnf$1',
       symbols: [/*#__PURE__*/lexer.has('whitespace') ? {
         type: 'whitespace'
       } : whitespace],
+      postprocess: id
+    }, {
+      name: '_$ebnf$1',
+      symbols: [],
+      postprocess: function postprocess() {
+        return null;
+      }
+    }, {
+      name: '_',
+      symbols: ['_$ebnf$1'],
       postprocess: empty$1
     }, {
       name: 'Comment',

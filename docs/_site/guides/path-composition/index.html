@@ -18,9 +18,9 @@
 <meta property="og:url" content="http://localhost:4000/guides/path-composition/" />
 <meta property="og:site_name" content="gram.js" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-12-10T15:29:33+01:00" />
+<meta property="article:published_time" content="2020-12-11T10:58:38+01:00" />
 <script type="application/ld+json">
-{"headline":"Path Composition","dateModified":"2020-12-10T15:29:33+01:00","datePublished":"2020-12-10T15:29:33+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/guides/path-composition/"},"description":"Paths are like self-aware lists – they contain ordered elements and information about themselves.","url":"http://localhost:4000/guides/path-composition/","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"headline":"Path Composition","dateModified":"2020-12-11T10:58:38+01:00","datePublished":"2020-12-11T10:58:38+01:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/guides/path-composition/"},"description":"Paths are like self-aware lists – they contain ordered elements and information about themselves.","url":"http://localhost:4000/guides/path-composition/","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/site.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="gram.js" /><link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
@@ -42,8 +42,8 @@
          gram.js
         </a>
         &nbsp;
-        <a class="text-gray-600 p-1 text-base no-underline hover:no-underline font-neo4j font-thin text-xl pb-2"  href="https://github.com/gram-data/gram-js/releases/tag/v0.3.4"> 
-         v0.3.4
+        <a class="text-gray-600 p-1 text-base no-underline hover:no-underline font-neo4j font-thin text-xl pb-2"  href="https://github.com/gram-data/gram-js/releases/tag/v0.3.5"> 
+         v0.3.5
         </a>
      </div>
      
@@ -199,7 +199,7 @@ a thing-in-itself. Where does information about Route 66 go? On the path itself.
 
 <p>The California segment of Route-66:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[ route66inCA:Historic:Highway {established: date`1926-11-26`} 
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[ route66inCA:Historic:Highway {established: date`1926-11-26`, segment:'CA'} 
     (santaMonica)--&gt;(losAngeles)--&gt;(pasadena)--&gt;
     (eastPasadena)--&gt;(monrovia)--&gt;(azusa)--&gt;
     (upland)--&gt;(sanBernadino)--&gt;(devore)--&gt;
@@ -208,6 +208,8 @@ a thing-in-itself. Where does information about Route 66 go? On the path itself.
 </code></pre></div></div>
 
 <h3 id="paths-all-the-way-down-or-up">Paths all the way down (or up)</h3>
+
+<p>[ route66:Historic:Highway (route66inCA)–&gt;(route66inAZ)–&gt;(route66inIL) ]</p>
 
 <hr />
 
