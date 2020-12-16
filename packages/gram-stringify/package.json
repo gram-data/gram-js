@@ -7,7 +7,7 @@
     "gram",
     "unified"
   ],
-  "version": "0.3.5",
+  "version": "0.3.6",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -52,8 +52,8 @@
   },
   "author": "Andreas Kollegger",
   "devDependencies": {
-    "@gram-data/gram-builder": "^0.3.5",
-    "@gram-data/gram-ops": "^0.3.5",
+    "@gram-data/gram-builder": "^0.3.6",
+    "@gram-data/gram-ops": "^0.3.6",
     "@types/jest": "^26.0.18",
     "@types/unist": "^2.0.3",
     "@typescript-eslint/parser": "^4.9.1",
@@ -70,7 +70,7 @@
     "unist-util-inspect": "^6.0.1"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.3.5",
+    "@gram-data/gram-ast": "^0.3.6",
     "unified": "^9.2.0"
   },
   "gitHead": "ace408982d62d42809cb2597821590ebe5d6fe08",

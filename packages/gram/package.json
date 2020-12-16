@@ -1,6 +1,6 @@
 {
   "name": "@gram-data/gram",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "All inclusive repackaging of individual gram packages.",
   "keywords": [
     "gram",
@@ -29,13 +29,13 @@
     "url": "https://github.com/gram-data/gram-js/issues"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.3.5",
-    "@gram-data/gram-builder": "^0.3.5",
-    "@gram-data/gram-identity": "^0.3.5",
-    "@gram-data/gram-ops": "^0.3.5",
-    "@gram-data/gram-parse": "^0.3.5",
-    "@gram-data/gram-stringify": "^0.3.5",
-    "@gram-data/gram-value": "^0.3.5"
+    "@gram-data/gram-ast": "^0.3.6",
+    "@gram-data/gram-builder": "^0.3.6",
+    "@gram-data/gram-identity": "^0.3.6",
+    "@gram-data/gram-ops": "^0.3.6",
+    "@gram-data/gram-parse": "^0.3.6",
+    "@gram-data/gram-stringify": "^0.3.6",
+    "@gram-data/gram-value": "^0.3.6"
   },
   "devDependencies": {
     "jest": "^26.6.3"
