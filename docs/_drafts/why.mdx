@@ -1,0 +1,102 @@
+---
+title: Why gram?
+---
+
+# Gram - Graphs as paths
+
+Gram is a path-based graph representation. 
+
+Goals:
+
+-  Be able to say something about paths
+-  Be able to process graphs as a stream
+-  Be friendly for humans to write and machines to read
+
+
+## 1. See the Forest Paths
+
+Nodes and edges are powerful for structuring information. Full graphs have interesting features. 
+
+>  Graph theory was invented to <Link href="https://en.wikipedia.org/wiki/Seven_Bridges_of_Königsberg">find a path</Link> 
+>  yet dwells on the pieces of the puzzle rather than the resulting picture.
+
+Until graphs became databases, Paths didn't really need to be concrete. Mathematical graphs are
+  usually lightweight, maybe names on Nodes to give them identity and numbers on Edges to give them "weight".
+
+Thinking about graphs as an information architecture, as used in 
+  the <Link href="https://neo4j.com/developer/graph-database/">Property Graph Model</Link>, both Nodes and 
+  Edges are much richer data records. Missing is being able to say something about entire Paths. 
+
+
+### Path Information - Route 66
+Head west from St.Louis in the USA and you may be traveling along historic Route 66. Nodes
+and Edges could be the towns and roads along the way. Where does
+information about Route 66 itself go? 
+
+This is the canonical use case of a Path as information structure.
+
+### Shared Content
+A delivery truck driver steers a truck which physically contains packages that are owned (though not yet possed)
+  by other people. 
+
+A graph model can happily express all the relationships, smoothly answering questions like, 
+  "where's my stuff?" but requires external knowledge to "get all the stuff" inside the truck without also getting
+  the driver by accident. 
+
+A document model can provide explicit containers for getting stuff in the truck, but optimizes for either 
+  truck-oriented or owner-oriented queries.
+A path model can do both explicitly in the data, without needing a schema or a written guidebook. 
+
+### Decorated Graphs - D3 DG
+D3.js has a lovely force-based network layout. Like many other libraries, the
+  algorithm annotates the graph with position data. Wouldn't it be nice to save
+  position and styling without compromising the domain data in the graph?
+
+Paths could achieve that by following an architectural pattern called an Entity-component-system (ECS),
+  a gift from the world of game development. Just wrap each Node (the entity) in a labeled Path (the system) to provide
+  system-specific information (the component).
+
+
+### Paths all the way down
+
+Nodes combine with Nodes to make Edges, which can be combined to make longer Paths.
+  A sequence of Paths combines everything into larger structures. Every Path combination, 
+  from a single Node to a globe-spanning superstructure with all the intermediary Paths,
+  are complete, valid Graphs. 
+
+## 2. From nodes and edges, to paths
+Gram structures data as property graph paths.
+In practice, that means you can write a graph 
+using Cypher paths like this:
+
+```js
+(a)-[e1]->(b)
+(b)<-[e2]-(c)
+```
+
+The content values of a graph are attached to either nodes or edges:
+
+```js
+(a:Person {name:"Wile E. Coyote"})
+(b:Company {name:"Acme, Inc."})
+(a)-[e1:CUSTOMER_OF]->(b)
+```
+
+In Cypher a path is a name bound to a path expression:
+
+```js
+p = (a)-[e1]->(b)<-[e2]-(c)
+```
+
+Gram adopts the square brackets used by relationships to also delimit a path.
+  This provides room for labels and records to be attached to a path:
+
+```
+[p:TROUBLESOME {accidents:12000} (a)-[e1]->(b)]
+// or just...
+[p:TROUBLESOME {accidents:12000} e1]
+```
+
+## 3. Write in detail, read in volume
+Nodes and edges are wonderful. 
+
