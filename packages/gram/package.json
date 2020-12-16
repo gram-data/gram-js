@@ -1,32 +1,59 @@
 {
-  "name": "@gram-data/gram",
-  "version": "0.3.7",
-  "description": "All inclusive repackaging of individual gram packages.",
-  "keywords": [
-    "gram",
-    "graph",
-    "neo4j"
-  ],
-  "author": "Andreas Kollegger <akollegger@gmail.com>",
-  "homepage": "https://gram-data.github.io/gram-js/",
-  "license": "ISC",
-  "main": "lib/gram.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
+  "name": "gram",
+  "version": "0.1.0",
+  "author": "Andreas Kollegger",
+  "main": "dist/index.js",
+  "module": "dist/gram.esm.js",
+  "browser": "dist/gram.umd.production.min.js",
+  "unpkg": "dist/gram.umd.production.min.js",
+  "typings": "dist/index.d.ts",
+  "license": "MIT",
   "files": [
-    "lib"
+    "dist",
+    "src"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gram-data/gram-js.git"
+  "engines": {
+    "node": ">=10"
   },
   "scripts": {
-    "test": "jest"
+    "start": "tsdx watch",
+    "build": "tsdx build --format umd,esm,cjs --tsconfig tsconfig.build.json",
+    "test": "tsdx test",
+    "lint": "tsdx lint src test",
+    "lint:fix": "tsdx lint --fix src test",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
   },
-  "bugs": {
-    "url": "https://github.com/gram-data/gram-js/issues"
+  "peerDependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "size-limit": [
+    {
+      "path": "dist/gram.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/gram.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^4.9.1",
+    "husky": "^4.3.6",
+    "size-limit": "^4.9.1",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.0.3",
+    "typescript": "^4.1.3"
   },
   "dependencies": {
     "@gram-data/gram-ast": "^0.3.7",
@@ -37,11 +64,7 @@
     "@gram-data/gram-stringify": "^0.3.7",
     "@gram-data/gram-value": "^0.3.7"
   },
-  "devDependencies": {
-    "jest": "^26.6.3"
-  },
   "publishConfig": {
     "access": "public"
-  },
-  "gitHead": "78dbb148f782e601d83e87ee25485142bf3a7ee5"
+  }
 }
