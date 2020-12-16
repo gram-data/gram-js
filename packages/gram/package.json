@@ -1,5 +1,5 @@
 {
-  "name": "gram",
+  "name": "@gram-data/gram",
   "version": "0.1.0",
   "author": "Andreas Kollegger",
   "main": "dist/index.js",
