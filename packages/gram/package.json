@@ -1,0 +1,43 @@
+{
+  "name": "@gram-data/gram",
+  "version": "0.3.5",
+  "description": "All inclusive repackaging of individual gram packages.",
+  "keywords": [
+    "gram",
+    "graph",
+    "neo4j"
+  ],
+  "author": "Andreas Kollegger <akollegger@gmail.com>",
+  "homepage": "https://gram-data.github.io/gram-js/",
+  "license": "ISC",
+  "main": "lib/gram.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gram-data/gram-js.git"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "bugs": {
+    "url": "https://github.com/gram-data/gram-js/issues"
+  },
+  "dependencies": {
+    "@gram-data/gram-ast": "^0.3.5",
+    "@gram-data/gram-builder": "^0.3.5",
+    "@gram-data/gram-identity": "^0.3.5",
+    "@gram-data/gram-ops": "^0.3.5",
+    "@gram-data/gram-parse": "^0.3.5",
+    "@gram-data/gram-stringify": "^0.3.5",
+    "@gram-data/gram-value": "^0.3.5"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}
