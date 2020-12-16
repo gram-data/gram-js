@@ -73,7 +73,7 @@
     "@gram-data/gram-ast": "^0.3.6",
     "unified": "^9.2.0"
   },
-  "gitHead": "ace408982d62d42809cb2597821590ebe5d6fe08",
+  "gitHead": "78dbb148f782e601d83e87ee25485142bf3a7ee5",
   "publishConfig": {
     "access": "public"
   }

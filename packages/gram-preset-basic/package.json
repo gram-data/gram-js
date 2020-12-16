@@ -48,5 +48,6 @@
     "@gram-data/gram-identity": "^0.3.6",
     "@gram-data/gram-parse": "^0.3.6",
     "@gram-data/gram-value": "^0.3.6"
-  }
+  },
+  "gitHead": "78dbb148f782e601d83e87ee25485142bf3a7ee5"
 }
