@@ -15,7 +15,7 @@ import {
   isLiteral,
   isGramRecord,
   GramRecord,
-  TaggedTextLiteral
+  TaggedTextLiteral,
 } from '@gram-data/gram-ast';
 
 import {
@@ -47,17 +47,20 @@ class InvalidAstError extends Error {
 
 /**
  * Type of function used to evaluate text literal values.
- * 
+ *
  */
-export type LiteralValueEvaluator = (ast: GramLiteral) => any
+export type LiteralValueEvaluator = (ast: GramLiteral) => any;
 
 /**
  * Evaluates data structures and text literal values, returning
  * native objects and primitive values.
- * 
+ *
  * @see {@linkcode valueOfLiteral} for default literal value evaluator
  */
-export const valueOf = (recordValue: GramRecordValue | GramRecord, literalValueEvaluator = valueOfLiteral): any => {
+export const valueOf = (
+  recordValue: GramRecordValue | GramRecord,
+  literalValueEvaluator = valueOfLiteral
+): any => {
   if (isGramRecord(recordValue)) {
     return recordValue.reduce((acc, property) => {
       acc[property.name] = valueOf(property.value);
@@ -69,7 +72,10 @@ export const valueOf = (recordValue: GramRecordValue | GramRecord, literalValueE
     } else if (isLiteral(recordValue)) {
       return literalValueEvaluator(recordValue as GramLiteral);
     } else if (typeof recordValue === 'object') {
-      return Object.entries(recordValue).reduce((acc, [k,v]) => {acc[k] = valueOf(v); return acc }, {} as { [key: string]: any });
+      return Object.entries(recordValue).reduce((acc, [k, v]) => {
+        acc[k] = valueOf(v);
+        return acc;
+      }, {} as { [key: string]: any });
     }
   }
 };
@@ -94,14 +100,22 @@ export const valueOfLiteral = (ast: GramLiteral): any => {
       return valueOfOctal(ast);
     case 'tagged':
       switch (ast.tag) {
-        case 'date':     return valueOfDate(ast as DateLiteral);
-        case 'time':     return valueOfTime(ast as TimeLiteral);
-        case 'datetime': return 'TODO';
-        case 'interval': return 'TODO';
-        case 'duration': return 'TODO';
-        case 'uri':      return ast.value;
-        case 'wkt':      return 'TODO'; 
-        default: return 'TODO';
+        case 'date':
+          return valueOfDate(ast as DateLiteral);
+        case 'time':
+          return valueOfTime(ast as TimeLiteral);
+        case 'datetime':
+          return 'TODO';
+        case 'interval':
+          return 'TODO';
+        case 'duration':
+          return 'TODO';
+        case 'uri':
+          return ast.value;
+        case 'wkt':
+          return 'TODO';
+        default:
+          return 'TODO';
       }
     case 'measurement':
       return 'measure by measure';
@@ -131,18 +145,19 @@ export const valueOfDate = (ast: DateLiteral) => {
   if (ast.value) {
     let extracted = iso8601YearMonthDay.exec(ast.value);
     if (extracted) {
-      return new Date(Date.UTC(
-        Number.parseInt(extracted[1]),
-        Number.parseInt(extracted[3]) -1,
-        Number.parseInt(extracted[4])
-      ));
+      return new Date(
+        Date.UTC(
+          Number.parseInt(extracted[1]),
+          Number.parseInt(extracted[3]) - 1,
+          Number.parseInt(extracted[4])
+        )
+      );
     }
     extracted = iso8601YearMonth.exec(ast.value);
     if (extracted) {
-      return new Date(Date.UTC(
-        Number.parseInt(extracted[1]),
-        Number.parseInt(extracted[2])
-      ));
+      return new Date(
+        Date.UTC(Number.parseInt(extracted[1]), Number.parseInt(extracted[2]))
+      );
     }
     extracted = iso8601Year.exec(ast.value);
     if (extracted) {

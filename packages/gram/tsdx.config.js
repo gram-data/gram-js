@@ -2,7 +2,7 @@
 module.exports = {
   rollup(config) {
     if (config.output.format === 'umd') {
-      config.output.name = 'gram.value'
+      config.output.name = 'gram'
       delete config.external;
     }
   

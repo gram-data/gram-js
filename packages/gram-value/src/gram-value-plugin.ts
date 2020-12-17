@@ -7,11 +7,11 @@ import { valueOf, valueOfLiteral, LiteralValueEvaluator } from '.';
 const visit = require('unist-util-visit');
 
 interface ValuePluginSettings {
-  literalValueEvaluator?: LiteralValueEvaluator
+  literalValueEvaluator?: LiteralValueEvaluator;
 }
 
 const defaultSettings = {
-  literalValueEvaluator: valueOfLiteral
+  literalValueEvaluator: valueOfLiteral,
 };
 
 const gramValuePlugin: Plugin<ValuePluginSettings[]> = (
@@ -20,10 +20,11 @@ const gramValuePlugin: Plugin<ValuePluginSettings[]> = (
   const s = { ...defaultSettings, ...settings };
 
   const recordValueEvaluator: Transformer = (tree: UnistNode) => {
-
     visit(tree, (element: UnistNode) => {
       if (isGramPath(element) && element.record) {
-        element.data = Object.assign(element.data || {}, {value: valueOf(element.record, s.literalValueEvaluator)});
+        element.data = Object.assign(element.data || {}, {
+          value: valueOf(element.record, s.literalValueEvaluator),
+        });
       }
     });
   };
