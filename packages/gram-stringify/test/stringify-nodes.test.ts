@@ -28,13 +28,13 @@ describe('gram stringify for basic node patterns', () => {
     expect(stringify(p)).toBe('(:Thing)');
   });
   it('shows a node with record, ({k:"v"}) => "({k:`v`})"', () => {
-    const record = g.mapToRecord({ k: g.string('v') });
+    const record = g.objectToRecord({ k: g.string('v') });
     const p = g.node(undefined, undefined, record);
     // console.log(inspect(p));
     expect(stringify(p)).toBe('({k:`v`})');
   });
   it('shows a fully specified node, (n:Thing {k:"v"}) => "(n:Thing {k:`v`})"', () => {
-    const record = g.mapToRecord({ k: g.string('v') });
+    const record = g.objectToRecord({ k: g.string('v') });
     const p = g.node('n', ['Thing'], record);
     // console.log(inspect(p));
     expect(stringify(p)).toBe('(n:Thing {k:`v`})');

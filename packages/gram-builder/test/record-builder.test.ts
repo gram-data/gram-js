@@ -29,23 +29,20 @@ import {
 describe('gram builder for records', () => {
   it('with boolean values', () => {
     const value = true;
-    const record = g.mapToRecord({ k: g.boolean(value) });
-    const pluckedProperty = g.pluck(record, 'k');
+    const record = g.objectToRecord({ k: g.boolean(value) });
+    const pluckedProperty = record.get('k') as BooleanLiteral;
 
     expect(isGramRecord(record)).toBeTruthy();
-    expect(pluckedProperty.name).toBe('k');
-    expect(isBooleanLiteral(pluckedProperty.value)).toBeTruthy();
-    expect((pluckedProperty.value as BooleanLiteral).value).toBe(String(value));
+    expect(pluckedProperty.value).toBe(String(value));
   });
   it('with string values', () => {
     const value = 'some text';
-    const record = g.mapToRecord({ k: g.string(value) });
-    const pluckedProperty = g.pluck(record, 'k');
+    const record = g.objectToRecord({ k: g.string(value) });
+    const pluckedProperty = record.get('k') as StringLiteral;
 
     expect(isGramRecord(record)).toBeTruthy();
-    expect(pluckedProperty.name).toBe('k');
-    expect(isStringLiteral(pluckedProperty.value)).toBeTruthy();
-    expect((pluckedProperty.value as StringLiteral).value).toBe(String(value));
+    expect(isStringLiteral(pluckedProperty)).toBeTruthy();
+    expect(pluckedProperty.value).toBe(String(value));
   });
   it('with integer values', () => {
     const value = 42;
@@ -123,47 +120,45 @@ describe('gram builder for records', () => {
   });
 });
 
-describe('gram builder.mapToRecord()', () => {
+describe('gram builder.objectToRecord()', () => {
   it('can construct single level, single property, primitive value records', () => {
     const value = 42;
-    const record = g.mapToRecord({ k: g.integer(value) });
-    const pluckedProperty = g.pluck(record, 'k');
+    const record = g.objectToRecord({ k: g.integer(value) });
+    const pluckedProperty = record.get('k') as IntegerLiteral;
 
     expect(isGramRecord(record)).toBeTruthy();
-    expect(pluckedProperty.name).toBe('k');
-    expect(isIntegerLiteral(pluckedProperty.value)).toBeTruthy();
-    expect((pluckedProperty.value as GramLiteral).value).toBe(String(value));
+    expect(isIntegerLiteral(pluckedProperty)).toBeTruthy();
+    expect(pluckedProperty.value).toBe(String(value));
   });
   it('can construct single level, multiple property, primitive value records', () => {
     // {n:1, s:'a', b:true}
-    const record = g.mapToRecord({
+    const record = g.objectToRecord({
       n: g.integer(1),
       s: g.string('a'),
       b: g.boolean(true),
     });
 
     expect(isGramRecord(record)).toBeTruthy();
-    expect(isIntegerLiteral(g.pluck(record, 'n').value)).toBeTruthy();
-    expect(isStringLiteral(g.pluck(record, 's').value)).toBeTruthy();
-    expect(isBooleanLiteral(g.pluck(record, 'b').value)).toBeTruthy();
+    expect(isIntegerLiteral(record.get('n'))).toBeTruthy();
+    expect(isStringLiteral(record.get('s'))).toBeTruthy();
+    expect(isBooleanLiteral(record.get('b'))).toBeTruthy();
   });
   it('can construct single level, single property, array value records', () => {
     const values = [42, 64, 1024];
     // {k:[42,64,1024]}
-    const record = g.mapToRecord({ k: values.map(g.integer) });
-    const pluckedProperty = g.pluck(record, 'k');
+    const record = g.objectToRecord({ k: values.map(g.integer) });
+    const pluckedProperty = record.get('k') as GramLiteral[];
 
     expect(isGramRecord(record)).toBeTruthy();
-    expect(pluckedProperty.name).toBe('k');
-    expect(isGramLiteralArray(pluckedProperty.value)).toBeTruthy();
+    expect(isGramLiteralArray(pluckedProperty)).toBeTruthy();
     expect(
-      (pluckedProperty.value as GramLiteral[]).map((v: GramLiteral) => v.value)
+      pluckedProperty.map((v: GramLiteral) => v.value)
     ).toStrictEqual(expect.arrayContaining(values.map(v => String(v))));
   });
 
   it('can construct two-level, multi-property, primitive value records', () => {
     // {n:1, s:'path s', b:true, m:{s:"path m.s", m:{s:"path m.m.s"}}}
-    const record = g.mapToRecord({
+    const record = g.objectToRecord({
       n: g.integer(1),
       s: g.string('path s'),
       b: g.boolean(true),
@@ -175,12 +170,12 @@ describe('gram builder.mapToRecord()', () => {
       },
     });
     expect(isGramRecord(record)).toBeTruthy();
-    expect(isIntegerLiteral(g.pluck(record, 'n').value)).toBeTruthy();
-    expect(isStringLiteral(g.pluck(record, 's').value)).toBeTruthy();
-    expect(isBooleanLiteral(g.pluck(record, 'b').value)).toBeTruthy();
-    expect(isGramRecord(g.pluck(record, 'm').value)).toBeTruthy();
+    expect(isIntegerLiteral(record.get('n'))).toBeTruthy();
+    expect(isStringLiteral(record.get('s'))).toBeTruthy();
+    expect(isBooleanLiteral(record.get('b'))).toBeTruthy();
+    expect(isGramRecord(record.get('m')!)).toBeTruthy();
     // expect(
-    //   isGramRecord(g.pluck(g.pluck(record, 'm'), 'm').value)
+    //   isGramRecord((record.get('m') as GramRecord)!.get('m'))
     // ).toBeTruthy();
   });
 });

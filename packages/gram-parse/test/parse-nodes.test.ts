@@ -1,6 +1,7 @@
 import { toAST } from '../src';
 import { GramLiteral, isGramNode, isGramSeq } from '@gram-data/gram-ast';
 import { Node } from 'unist';
+import { getLiteral } from '@gram-data/gram-builder/src';
 
 let DEBUG = true;
 
@@ -77,12 +78,13 @@ describe('parsing nodes', () => {
   it('({k:"v"}) with a record', () => {
     const src = `({k:"v"})`;
     const result = toAST(src);
+    const getK = getLiteral('k');
     // show(result);
     expect(result).toBeDefined();
     const firstPath = result.children[0];
     expect(firstPath!.record).toBeDefined();
-    expect(firstPath!.record![0].name).toBe('k');
-    expect((firstPath!.record![0].value as GramLiteral).value).toBe('v');
+    expect(firstPath!.record!.get('k')).toBeDefined();
+    expect(getK(firstPath!.record!)).toBe('v');
   });
 
   it('(a:Aye{k:"v"}) with an id with label and record', () => {
@@ -90,14 +92,15 @@ describe('parsing nodes', () => {
     const labels = ['Aye'];
     const src = `(${nodeId}:${labels.join(':')}{k:"v"})`;
     const result = toAST(src);
+    const getK = getLiteral('k');
     // show(result);
     expect(result).toBeDefined();
     const firstPath = result.children[0];
     expect(firstPath!.id).toBe(nodeId);
     expect(firstPath!.labels).toStrictEqual(expect.arrayContaining(labels));
     expect(firstPath!.record).toBeDefined();
-    expect(firstPath!.record![0].name).toBe('k');
-    expect((firstPath!.record![0].value as GramLiteral).value).toBe('v');
+    expect(firstPath!.record!.get('k')).toBeDefined();
+    expect(getK(firstPath!.record!)).toBe('v');
   });
 
   it.each`

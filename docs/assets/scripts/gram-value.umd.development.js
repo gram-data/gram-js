@@ -123,29 +123,20 @@
     return !!o.type && o.type === 'path';
   };
   /**
-   * A type guard to narrow a GramRecordValue to a GramRecord,
-   * which is a GramProperty[].
+   * A type guard to narrow a GramRecordValue to a GramRecord.
+   *
+   * Warning: this is not a runtime guarantee
    *
    * @param v any GramRecordValue
    */
 
 
   var isGramRecord = function isGramRecord(v) {
-    return Array.isArray(v) && isGramProperty(v[0]);
+    return typeof v == 'object' && v instanceof Map;
   };
 
   var isGramLiteralArray = function isGramLiteralArray(v) {
-    return Array.isArray(v) && isLiteral(v[0]);
-  };
-  /**
-   * Type guard for GramProperty.
-   *
-   * @param o any object
-   */
-
-
-  var isGramProperty = function isGramProperty(o) {
-    return !!o.type && o.type === 'property';
+    return Array.isArray(v) && isGramLiteral(v[0]);
   };
   /**
    * Type guard for GramLiteral.
@@ -154,30 +145,8 @@
    */
 
 
-  var isLiteral = function isLiteral(o) {
+  var isGramLiteral = function isGramLiteral(o) {
     return !!o.type && !!o.value && o.type !== 'property';
-  };
-
-  var visit = /*#__PURE__*/require('unist-util-visit');
-
-  var defaultSettings = {
-    literalValueEvaluator: valueOfLiteral
-  };
-
-  var gramValuePlugin = function gramValuePlugin(settings) {
-    var s = _extends({}, defaultSettings, settings);
-
-    var recordValueEvaluator = function recordValueEvaluator(tree) {
-      visit(tree, function (element) {
-        if (isGramPath(element) && element.record) {
-          element.data = Object.assign(element.data || {}, {
-            value: valueOf(element.record, s.literalValueEvaluator)
-          });
-        }
-      });
-    };
-
-    return recordValueEvaluator;
   };
 
   var iso8601Year = /^([+-]\d{4,}\b|\d{4})$/;
@@ -220,8 +189,10 @@
     }
 
     if (isGramRecord(recordValue)) {
-      return recordValue.reduce(function (acc, property) {
-        acc[property.name] = valueOf(property.value);
+      return Array.from(recordValue).reduce(function (acc, _ref) {
+        var k = _ref[0],
+            v = _ref[1];
+        acc[k] = valueOf(v);
         return acc;
       }, {});
     } else {
@@ -229,12 +200,12 @@
         return recordValue.map(function (v) {
           return valueOf(v);
         });
-      } else if (isLiteral(recordValue)) {
+      } else if (isGramLiteral(recordValue)) {
         return literalValueEvaluator(recordValue);
       } else if (typeof recordValue === 'object') {
-        return Object.entries(recordValue).reduce(function (acc, _ref) {
-          var k = _ref[0],
-              v = _ref[1];
+        return Object.entries(recordValue).reduce(function (acc, _ref2) {
+          var k = _ref2[0],
+              v = _ref2[1];
           acc[k] = valueOf(v);
           return acc;
         }, {});
@@ -432,6 +403,28 @@
     if (ast.value) {
       return Number.parseInt(ast.value, 8);
     } else throw new InvalidAstError(ast);
+  };
+
+  var visit = /*#__PURE__*/require('unist-util-visit');
+
+  var defaultSettings = {
+    literalValueEvaluator: valueOfLiteral
+  };
+
+  var gramValuePlugin = function gramValuePlugin(settings) {
+    var s = _extends({}, defaultSettings, settings);
+
+    var recordValueEvaluator = function recordValueEvaluator(tree) {
+      visit(tree, function (element) {
+        if (isGramPath(element) && element.record) {
+          element.data = Object.assign(element.data || {}, {
+            value: valueOf(element.record, s.literalValueEvaluator)
+          });
+        }
+      });
+    };
+
+    return recordValueEvaluator;
   };
 
   exports.gramValuePlugin = gramValuePlugin;

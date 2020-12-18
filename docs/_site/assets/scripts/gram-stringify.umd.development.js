@@ -70,9 +70,21 @@
       return isGramNode(child);
     });
   };
+  /**
+   * A type guard to narrow a GramRecordValue to a GramRecord.
+   *
+   * Warning: this is not a runtime guarantee
+   *
+   * @param v any GramRecordValue
+   */
+
+
+  var isGramRecord = function isGramRecord(v) {
+    return typeof v == 'object' && v instanceof Map;
+  };
 
   var isGramLiteralArray = function isGramLiteralArray(v) {
-    return Array.isArray(v) && isLiteral(v[0]);
+    return Array.isArray(v) && isGramLiteral(v[0]);
   };
   /**
    * Type guard for GramLiteral.
@@ -81,12 +93,12 @@
    */
 
 
-  var isLiteral = function isLiteral(o) {
+  var isGramLiteral = function isGramLiteral(o) {
     return !!o.type && !!o.value && o.type !== 'property';
   };
 
-  var isEmpty = function isEmpty(o) {
-    return Object.keys(o).length === 0;
+  var isEmpty = function isEmpty(r) {
+    return r.size === 0;
   };
 
   function assertNever(x) {
@@ -121,7 +133,7 @@
       return "[" + v.map(function (l) {
         return toStringLiteral(l);
       }).join(',') + "]";
-    } else if (isLiteral(v)) {
+    } else if (isGramLiteral(v)) {
       return toStringLiteral(v);
     } else {
       return objectToString(v);
@@ -133,8 +145,10 @@
   };
 
   var recordToString = function recordToString(record) {
-    var fields = record.map(function (property, i) {
-      return "" + (i > 0 ? ',' : '') + property.name + ":" + toStringValue(property.value);
+    var fields = Array.from(record, function (_ref, i) {
+      var k = _ref[0],
+          v = _ref[1];
+      return "" + (i > 0 ? ',' : '') + k + ":" + toStringValue(v);
     });
     return "{" + fields.join('') + "}";
   };
@@ -144,9 +158,9 @@
   };
 
   var objectToString = function objectToString(o) {
-    var fields = Object.entries(o).map(function (_ref, i) {
-      var name = _ref[0],
-          value = _ref[1];
+    var fields = Object.entries(o).map(function (_ref2, i) {
+      var name = _ref2[0],
+          value = _ref2[1];
       return "" + (i > 0 ? ',' : '') + name + ":" + stringify(value);
     });
     return "{" + fields.join('') + "}";
@@ -219,14 +233,18 @@
           return propertyToString(ast);
 
         default:
-          if (isLiteral(ast)) {
+          if (isGramLiteral(ast)) {
             return toStringLiteral(ast);
           }
 
           return objectToString(ast);
       }
     } else if (typeof ast === 'object') {
-      return objectToString(ast);
+      if (isGramRecord(ast)) {
+        return recordToString(ast);
+      } else {
+        return objectToString(ast);
+      }
     }
 
     throw new Error("Can't stringify <" + ast + ">");

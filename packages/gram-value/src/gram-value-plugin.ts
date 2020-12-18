@@ -2,7 +2,7 @@ import { Plugin, Transformer } from 'unified';
 import { Node as UnistNode } from 'unist';
 
 import { isGramPath } from '@gram-data/gram-ast';
-import { valueOf, valueOfLiteral, LiteralValueEvaluator } from '.';
+import { valueOf, valueOfLiteral, LiteralValueEvaluator } from './gram-value';
 
 const visit = require('unist-util-visit');
 

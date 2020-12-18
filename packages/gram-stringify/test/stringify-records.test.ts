@@ -1,4 +1,5 @@
-import { GramPropertyMap } from '@gram-data/gram-ast';
+
+import { GramRecord } from '@gram-data/gram-ast/src';
 import * as g from '@gram-data/gram-builder';
 import { stringify } from '../src';
 
@@ -7,33 +8,33 @@ import { stringify } from '../src';
 describe('gram stringify for records', () => {
   it('with boolean values', () => {
     const value = true;
-    const record: GramPropertyMap = { k: g.boolean(value) };
+    const record: GramRecord = g.objectToRecord({ k: g.boolean(value) });
 
     expect(stringify(record)).toBe(`{k:${value}}`);
   });
   it('with string values', () => {
     const value = 'some text';
-    const record: GramPropertyMap = { k: g.string(value) };
+    const record: GramRecord = g.objectToRecord( { k: g.string(value) });
 
     expect(stringify(record)).toBe(`{k:\`${value}\`}`);
   });
   it('with integer values', () => {
     const value = 42;
-    const record = { k: g.integer(value) };
+    const record: GramRecord = g.objectToRecord({ k: g.integer(value) });
 
     expect(stringify(record)).toBe(`{k:${value}}`);
   });
   it('with tagged values', () => {
     const value = 'some text';
     const tag = 'test';
-    const record = { k: g.tagged(tag, value) };
+    const record: GramRecord = g.objectToRecord( { k: g.tagged(tag, value) });
 
     expect(stringify(record)).toBe(`{k:${tag}\`${value}\`}`);
   });
   it('with measurement values', () => {
     const value = 1280;
     const unit = 'px';
-    const record = { k: g.measurement(unit, value) };
+    const record: GramRecord = g.objectToRecord( { k: g.measurement(unit, value) });
 
     expect(stringify(record)).toBe(`{k:${value}${unit}}`);
   });

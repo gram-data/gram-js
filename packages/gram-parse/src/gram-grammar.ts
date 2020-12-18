@@ -453,7 +453,7 @@ const grammar: Grammar = {
         { literal: '}' },
         '_',
       ],
-      postprocess: ([, , p, ps]) => [p, ...ps],
+      postprocess: ([, , p, ps]) => g.propertiesToRecord([p, ...ps]),
     },
     {
       name: 'Property',

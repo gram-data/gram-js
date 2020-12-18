@@ -69,7 +69,8 @@
     "unist-util-size": "^2.0.1"
   },
   "dependencies": {
-    "@gram-data/gram-ast": "^0.3.9-alpha.0"
+    "@gram-data/gram-ast": "^0.3.9-alpha.0",
+    "fp-ts": "^2.9.1"
   },
   "gitHead": "78dbb148f782e601d83e87ee25485142bf3a7ee5",
   "publishConfig": {

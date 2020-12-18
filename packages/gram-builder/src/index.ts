@@ -24,13 +24,14 @@ import {
   isGramNode,
   isGramEmptyPath,
   EMPTY_PATH_ID,
-  GramPropertyMap,
   DateLiteral,
   TimeLiteral,
   DurationLiteral,
   PathKind,
   RelationshipKind,
   TaggedTextLiteral,
+  isGramLiteral,
+  isGramRecord,
 } from '@gram-data/gram-ast';
 
 export type Children<T> = T | T[] | (() => T | T[]);
@@ -262,46 +263,142 @@ export const pair = (
 ): GramPath => path('pair', members, id, labels, record);
 
 /**
- * Reduces an array of GramProperties into a map.
+ * Create a new, empty GramRecord.
+ * 
+ */
+export const emptyRecord = () => new Map<string, GramRecordValue>();
+
+/**
+ * Reduces an array of GramProperties into a GramRecord.
  *
  * @param properties
  */
-export const recordToMap = (properties: GramRecord): GramPropertyMap => {
-  return properties.reduce((acc: GramPropertyMap, p: GramProperty) => {
-    acc[p.name] = p.value;
+export const propertiesToRecord = (properties: GramProperty[]): GramRecord => {
+  return properties.reduce((acc: GramRecord, p: GramProperty) => {
+    acc.set(p.name, p.value);
     return acc;
-  }, {} as GramPropertyMap);
+  }, emptyRecord());
 };
 
 /**
- * Unfolds a property map<string,GramRecordValue> into a property list[GramProperty].
+ * Transforms a plain js object into a GramRecord.
  *
- * @param properties
+ * @param o 
  */
-export const mapToRecord = (properties: GramPropertyMap): GramRecord => {
-  return Object.entries(properties).reduce((acc: GramRecord, [k, v]) => {
-    acc.push(property(k, v));
+export const objectToRecord = (o: any): GramRecord => {
+  return Object.entries(o).reduce((acc: GramRecord, [k, v]) => {
+    acc.set(k, propertyValue(v));
     return acc;
-  }, [] as GramRecord);
+  }, emptyRecord());
 };
 
-export const pluck = (properties: GramRecord, path: string) => {
-  return properties.reduce((acc, prop) => {
-    return prop.name === path ? prop : acc;
-  });
-};
+/**
+ * Extracts the value from a GramLiteral, if available.
+ * 
+ * @param l 
+ */
+export const getValue = (l:GramRecordValue | undefined) => isGramLiteral(l) ? l.value : undefined;
 
+/**
+ * Produces a Lens into a literal value with a GramRecord.
+ * 
+ * @param path 
+ */
+export const getLiteral = (name:string) => {
+  return (v:GramRecord) => {
+    const l = v.get(name);
+    return getValue(l);
+  }
+}
+
+/**
+ * Produces a Lens into a record value with a GramRecord.
+ * 
+ * @param path 
+ */
+export const getRecord = (name:string) => {
+  return (r:GramRecord) => {
+    const v = r.get(name);
+    return (isGramRecord(v)) ? v : undefined;
+  }
+}
+
+/**
+ * Produces a Lens down into nested GramRecords.
+ * 
+ * ### Examples:
+ * 
+ * Descend using either an array of names, or dot notation.
+ * 
+ * ```
+ * const o = g.objectToRecord({a:{b:{c:g.string("value")}}})
+ * 
+ * const getAbc1 = g.getDown(['a','b','c']);
+ * const getAbc2 = g.getDown("a.b.c");
+ * 
+ * expect(getAbc1(o)).toStrictEqual(getAbc2(o));
+ * ```
+ * 
+ * Descend, then apply a function to extract the text value.
+ * 
+ * ```
+ * const o = objectToRecord({a:{b:{c:string("value")}}})
+ * const getAbc = getDown("a.b.c", getValue);
+ *  
+ * expect(getAbc(o)).toBe("value");
+ * ```
+ * 
+ * @param hierarchy array or dot-notation path to descend
+ */
+export const getDown = (hierarchy:string[] | string, f?:(r:GramRecordValue) => any) => {
+  const pathDown = Array.isArray(hierarchy) ? hierarchy : hierarchy.split('.');
+  return (r:GramRecord) => {
+    const bottom = pathDown.reduce( 
+      (acc, name) => isGramRecord(acc) ? acc.get(name) : undefined
+      , r as (GramRecordValue | undefined));
+    return bottom && (f ? f(bottom) : bottom) 
+  }
+}
+
+/**
+ * Builds a GramProperty from a name
+ * @param name 
+ * @param value 
+ */
 export const property = (
   name: string,
-  value: GramRecordValue
+  value: any
 ): GramProperty => {
   const Node: GramProperty = {
     type: 'property',
     name,
-    value,
+    value: (isGramLiteral(value) ? value : propertyValue(value)),
   };
   return Node;
 };
+
+export const propertyValue = (value: any):GramRecordValue => {
+  if (Array.isArray(value)) {
+    return value.map(v => propertyValue(v))
+  } else if (typeof value === 'object') {
+    if (value instanceof Date) {
+      return date(value);
+    } else if (isGramLiteral(value)) {
+      return value;
+    }
+    return objectToRecord(value)
+  } else {
+    switch (typeof value) {
+      case 'string': return string(value);
+      case 'bigint': return decimal(value.toString());
+      case 'boolean': return boolean(value);
+      case 'number': return decimal(value.toString());
+      case 'symbol': return string(value.toString());
+      default:
+        throw new Error(`Unsupported value: ${value}`)
+    }
+  }
+}
 
 export const boolean = (value: boolean): BooleanLiteral => ({
   type: 'boolean',
@@ -406,6 +503,8 @@ export default {
   time,
   duration,
   flatten,
-  recordToMap,
-  mapToRecord,
+  objectToRecord,
+  propertiesToRecord,
+  propertyValue,
+  fromLiteral: getLiteral
 };

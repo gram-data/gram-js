@@ -8,6 +8,9 @@ import {
   BooleanLiteral,
   StringLiteral,
   IntegerLiteral,
+  isBooleanLiteral,
+  isStringLiteral,
+  isIntegerLiteral,
 } from '@gram-data/gram-ast';
 
 import chalk from 'chalk';
@@ -141,7 +144,7 @@ describe('gram cons() can build nodes, which are paths of length 0', () => {
   });
 
   it('with a record as [ {valuable:true}]', () => {
-    const p = g.cons([], { record: [g.property('valuable', g.boolean(true))] });
+    const p = g.cons([], { record: g.propertiesToRecord([g.property('valuable', g.boolean(true))]) });
     // console.log(inspect(p));
     expect(isGramEmptyPath(p)).toBeFalsy();
     expect(isGramNode(p)).toBeTruthy();
@@ -175,15 +178,16 @@ describe('gram node() builder ', () => {
       b: g.string('hello'),
       c: g.integer(42),
     };
-    const p = g.node(undefined, undefined, g.mapToRecord(record));
+    const p = g.node(undefined, undefined, g.objectToRecord(record));
     // console.log(inspect( b:'hello', c:42})", p);
 
     expect(p.record).toBeDefined();
-    if (p.record) {
-      expect((p.record[0].value as BooleanLiteral).type).toBe('boolean');
-      expect((p.record[1].value as StringLiteral).type).toBe('string');
-      expect((p.record[2].value as IntegerLiteral).type).toBe('integer');
-    } else fail('Record expected to be an array of GramProperty');
+    if (p.record !== undefined) {
+      let x = p.record.get('a')
+      expect(isBooleanLiteral((p.record.get('a')))).toBeTruthy();
+      expect(isStringLiteral(p.record.get('b'))).toBeTruthy();
+      expect(isIntegerLiteral(p.record.get('c'))).toBeTruthy();
+    } else fail('Record expected to be Map<String,GramRecordValue>');
   });
 });
 
@@ -311,7 +315,7 @@ describe('gram edge() can build edges', () => {
   });
 
   it('()-[{a:false, b:"hello", c:42}]->()', () => {
-    const record = g.mapToRecord({
+    const record = g.objectToRecord({
       a: g.boolean(false),
       b: g.string('hello'),
       c: g.integer(42),
@@ -325,9 +329,9 @@ describe('gram edge() can build edges', () => {
     );
     expect(p.record).toBeDefined();
     if (p.record) {
-      expect((p.record[0].value as BooleanLiteral).type).toBe('boolean');
-      expect((p.record[1].value as StringLiteral).type).toBe('string');
-      expect((p.record[2].value as IntegerLiteral).type).toBe('integer');
+      expect(isBooleanLiteral(p.record.get('a'))).toBeTruthy();
+      expect(isStringLiteral(p.record.get('b'))).toBeTruthy();
+      expect(isIntegerLiteral(p.record.get('c'))).toBeTruthy();
     } else fail('GramRecord expected on GramEdge');
   });
 });
@@ -372,7 +376,7 @@ describe('gram cons() decorator patterns', () => {
   it('decorate a node with an extra record, as  [{editor:"ABK"} (n)] =~ [{editor:"ABK"} (n) [ø] ]', () => {
     const child = g.node('n');
     const p = g.cons([child], {
-      record: g.mapToRecord({ editor: g.string('ABK') }),
+      record: g.objectToRecord({ editor: g.string('ABK') }),
     });
     // console.log(inspect(p));
     expect(isGramEmptyPath(p)).toBeFalsy();
@@ -483,10 +487,3 @@ describe('gram builder for reducing an array of paths into a tree of composed pa
   });
 });
 
-// describe('gram builder flatten()', () => {
-//   it('flattens an already flat array', () => {
-//     const unflat = [1, 2, 3];
-//     const flattened = g.flatten(unflat);
-//     expect(flattened).toEqual(expect.arrayContaining([1, 2, 3]));
-//   });
-// });

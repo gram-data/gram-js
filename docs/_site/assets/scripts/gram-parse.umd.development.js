@@ -2750,6 +2750,16 @@
   var isGramNode = function isGramNode(o) {
     return isGramPath(o) && o.children && o.children.length === 0 && o.id !== EMPTY_PATH_ID;
   };
+  /**
+   * Type guard for GramLiteral.
+   *
+   * @param o any object
+   */
+
+
+  var isGramLiteral = function isGramLiteral(o) {
+    return !!o.type && !!o.value && o.type !== 'property';
+  };
 
   function _extends$1() {
     _extends$1 = Object.assign || function (target) {
@@ -2781,6 +2791,10 @@
       return [children];
     }
   }
+
+  var dateToYMD = function dateToYMD(d) {
+    return d.toISOString().slice(0, 10);
+  };
   /**
    * Build a path sequence that represents a graph.
    *
@@ -2946,14 +2960,93 @@
   var pair = function pair(members, id, labels, record) {
     return path('pair', members, id, labels, record);
   };
+  /**
+   * Create a new, empty GramRecord.
+   *
+   */
+
+
+  var emptyRecord = function emptyRecord() {
+    return new Map();
+  };
+  /**
+   * Reduces an array of GramProperties into a GramRecord.
+   *
+   * @param properties
+   */
+
+
+  var propertiesToRecord = function propertiesToRecord(properties) {
+    return properties.reduce(function (acc, p) {
+      acc.set(p.name, p.value);
+      return acc;
+    }, emptyRecord());
+  };
+  /**
+   * Transforms a plain js object into a GramRecord.
+   *
+   * @param o
+   */
+
+
+  var objectToRecord = function objectToRecord(o) {
+    return Object.entries(o).reduce(function (acc, _ref) {
+      var k = _ref[0],
+          v = _ref[1];
+      acc.set(k, propertyValue(v));
+      return acc;
+    }, emptyRecord());
+  };
+  /**
+   * Builds a GramProperty from a name
+   * @param name
+   * @param value
+   */
+
 
   var property = function property(name, value) {
     var Node = {
       type: 'property',
       name: name,
-      value: value
+      value: isGramLiteral(value) ? value : propertyValue(value)
     };
     return Node;
+  };
+
+  var propertyValue = function propertyValue(value) {
+    if (Array.isArray(value)) {
+      return value.map(function (v) {
+        return propertyValue(v);
+      });
+    } else if (typeof value === 'object') {
+      if (value instanceof Date) {
+        return date(value);
+      } else if (isGramLiteral(value)) {
+        return value;
+      }
+
+      return objectToRecord(value);
+    } else {
+      switch (typeof value) {
+        case 'string':
+          return string(value);
+
+        case 'bigint':
+          return decimal$2(value.toString());
+
+        case 'boolean':
+          return _boolean$1(value);
+
+        case 'number':
+          return decimal$2(value.toString());
+
+        case 'symbol':
+          return string(value.toString());
+
+        default:
+          throw new Error("Unsupported value: " + value);
+      }
+    }
   };
 
   var _boolean$1 = function _boolean(value) {
@@ -3012,6 +3105,10 @@
       value: String(value),
       unit: unit
     };
+  };
+
+  var date = function date(value) {
+    return tagged('date', value instanceof Date ? dateToYMD(value) : value);
   };
 
   var flatten = function flatten(xs, depth) {
@@ -3665,7 +3762,7 @@
       postprocess: function postprocess(_ref19) {
         var p = _ref19[2],
             ps = _ref19[3];
-        return [p].concat(ps);
+        return propertiesToRecord([p].concat(ps));
       }
     }, {
       name: 'Property',

@@ -222,37 +222,26 @@ export type GramPathlike = GramPath | GramNode | GramEdge;
  * GramRecordValue is a union of literals, literal arrays and nested records.
  * This forms a familiar OO-style structure.
  */
-export type GramRecordValue = GramLiteral | GramLiteral[] | GramPropertyMap;
+export type GramRecordValue = GramLiteral | GramRecord | GramRecordValue[];
 
 /**
- * A GramRecord is an array of name/value pairs, or simply GramProperty[].
+ * A GramRecord is a map of name/value pairs.
  *
- * Using an array preserves the ordering of properties and accepts multiple
- * values per name, behaving as a multimap.
- *
- * For convenience this can be converted to/from a {@link GramPropertyMap}.
-  * 
- * @see {@link https://en.wikipedia.org/wiki/Multimap | Wikipedia Multimap} 
  */
-export type GramRecord = GramProperty[];
+export type GramRecord = Map<string, GramRecordValue>; // { [key: string]: GramRecordValue };
 
 /**
- * A type guard to narrow a GramRecordValue to a GramRecord,
- * which is a GramProperty[].
+ * A type guard to narrow a GramRecordValue to a GramRecord.
  *
+ * Warning: this is not a runtime guarantee
+ * 
  * @param v any GramRecordValue
  */
 export const isGramRecord = (v: any): v is GramRecord =>
-  Array.isArray(v) && isGramProperty(v[0]);
+  (typeof v == 'object') && (v instanceof Map);
 
 export const isGramLiteralArray = (v: GramRecordValue): v is GramLiteral[] =>
-  Array.isArray(v) && isLiteral(v[0]);
-
-/**
- * A utility type for reducing a GramRecord to a key/value map.
- *
- */
-export type GramPropertyMap = { [key: string]: GramRecordValue };
+  Array.isArray(v) && isGramLiteral(v[0]);
 
 /**
  * A GramProperty is a name/value pair.
@@ -309,7 +298,7 @@ export type GramLiteral =
  *
  * @param o any object
  */
-export const isLiteral = (o: any): o is GramLiteral =>
+export const isGramLiteral = (o: any): o is GramLiteral =>
   !!o.type && !!o.value && o.type !== 'property';
 
 /**

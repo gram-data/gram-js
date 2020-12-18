@@ -105,17 +105,18 @@
     });
   };
   /**
-   * A type guard to narrow a GramRecordValue to a GramRecord,
-   * which is a GramProperty[].
+   * A type guard to narrow a GramRecordValue to a GramRecord.
+   *
+   * Warning: this is not a runtime guarantee
    *
    * @param v any GramRecordValue
    */
 
   var isGramRecord = function isGramRecord(v) {
-    return Array.isArray(v) && isGramProperty(v[0]);
+    return typeof v == 'object' && v instanceof Map;
   };
   var isGramLiteralArray = function isGramLiteralArray(v) {
-    return Array.isArray(v) && isLiteral(v[0]);
+    return Array.isArray(v) && isGramLiteral(v[0]);
   };
   /**
    * Type guard for GramProperty.
@@ -132,7 +133,7 @@
    * @param o any object
    */
 
-  var isLiteral = function isLiteral(o) {
+  var isGramLiteral = function isGramLiteral(o) {
     return !!o.type && !!o.value && o.type !== 'property';
   };
   /**
@@ -289,6 +290,7 @@
   exports.isDuration = isDuration;
   exports.isGramEdge = isGramEdge;
   exports.isGramEmptyPath = isGramEmptyPath;
+  exports.isGramLiteral = isGramLiteral;
   exports.isGramLiteralArray = isGramLiteralArray;
   exports.isGramNode = isGramNode;
   exports.isGramPath = isGramPath;
@@ -297,7 +299,6 @@
   exports.isGramSeq = isGramSeq;
   exports.isHexadecimalLiteral = isHexadecimalLiteral;
   exports.isIntegerLiteral = isIntegerLiteral;
-  exports.isLiteral = isLiteral;
   exports.isMeasurementLiteral = isMeasurementLiteral;
   exports.isOctalLiteral = isOctalLiteral;
   exports.isStringLiteral = isStringLiteral;

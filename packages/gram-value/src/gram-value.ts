@@ -12,7 +12,7 @@ import {
   GramRecordValue,
   GramLiteral,
   isGramLiteralArray,
-  isLiteral,
+  isGramLiteral,
   isGramRecord,
   GramRecord,
   TaggedTextLiteral,
@@ -62,14 +62,14 @@ export const valueOf = (
   literalValueEvaluator = valueOfLiteral
 ): any => {
   if (isGramRecord(recordValue)) {
-    return recordValue.reduce((acc, property) => {
-      acc[property.name] = valueOf(property.value);
+    return Array.from(recordValue).reduce((acc, [k, v]) => {
+      acc[k] = valueOf(v);
       return acc;
     }, {} as { [key: string]: any });
   } else {
     if (isGramLiteralArray(recordValue)) {
       return recordValue.map((v: GramLiteral) => valueOf(v));
-    } else if (isLiteral(recordValue)) {
+    } else if (isGramLiteral(recordValue)) {
       return literalValueEvaluator(recordValue as GramLiteral);
     } else if (typeof recordValue === 'object') {
       return Object.entries(recordValue).reduce((acc, [k, v]) => {

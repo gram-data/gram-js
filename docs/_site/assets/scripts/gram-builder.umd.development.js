@@ -57,6 +57,28 @@
   var isGramNode = function isGramNode(o) {
     return isGramPath(o) && o.children && o.children.length === 0 && o.id !== EMPTY_PATH_ID;
   };
+  /**
+   * A type guard to narrow a GramRecordValue to a GramRecord.
+   *
+   * Warning: this is not a runtime guarantee
+   *
+   * @param v any GramRecordValue
+   */
+
+
+  var isGramRecord = function isGramRecord(v) {
+    return typeof v == 'object' && v instanceof Map;
+  };
+  /**
+   * Type guard for GramLiteral.
+   *
+   * @param o any object
+   */
+
+
+  var isGramLiteral = function isGramLiteral(o) {
+    return !!o.type && !!o.value && o.type !== 'property';
+  };
 
   function normalizeChildren(children) {
     if (Array.isArray(children)) {
@@ -285,43 +307,157 @@
     return path('pair', members, id, labels, record);
   };
   /**
-   * Reduces an array of GramProperties into a map.
+   * Create a new, empty GramRecord.
    *
-   * @param properties
    */
 
-  var recordToMap = function recordToMap(properties) {
-    return properties.reduce(function (acc, p) {
-      acc[p.name] = p.value;
-      return acc;
-    }, {});
+  var emptyRecord = function emptyRecord() {
+    return new Map();
   };
   /**
-   * Unfolds a property map<string,GramRecordValue> into a property list[GramProperty].
+   * Reduces an array of GramProperties into a GramRecord.
    *
    * @param properties
    */
 
-  var mapToRecord = function mapToRecord(properties) {
-    return Object.entries(properties).reduce(function (acc, _ref) {
+  var propertiesToRecord = function propertiesToRecord(properties) {
+    return properties.reduce(function (acc, p) {
+      acc.set(p.name, p.value);
+      return acc;
+    }, emptyRecord());
+  };
+  /**
+   * Transforms a plain js object into a GramRecord.
+   *
+   * @param o
+   */
+
+  var objectToRecord = function objectToRecord(o) {
+    return Object.entries(o).reduce(function (acc, _ref) {
       var k = _ref[0],
           v = _ref[1];
-      acc.push(property(k, v));
+      acc.set(k, propertyValue(v));
       return acc;
-    }, []);
+    }, emptyRecord());
   };
-  var pluck = function pluck(properties, path) {
-    return properties.reduce(function (acc, prop) {
-      return prop.name === path ? prop : acc;
-    });
+  /**
+   * Extracts the value from a GramLiteral, if available.
+   *
+   * @param l
+   */
+
+  var getValue = function getValue(l) {
+    return isGramLiteral(l) ? l.value : undefined;
   };
+  /**
+   * Produces a Lens into a literal value with a GramRecord.
+   *
+   * @param path
+   */
+
+  var getLiteral = function getLiteral(name) {
+    return function (v) {
+      var l = v.get(name);
+      return getValue(l);
+    };
+  };
+  /**
+   * Produces a Lens into a record value with a GramRecord.
+   *
+   * @param path
+   */
+
+  var getRecord = function getRecord(name) {
+    return function (r) {
+      var v = r.get(name);
+      return isGramRecord(v) ? v : undefined;
+    };
+  };
+  /**
+   * Produces a Lens down into nested GramRecords.
+   *
+   * ### Examples:
+   *
+   * Descend using either an array of names, or dot notation.
+   *
+   * ```
+   * const o = g.objectToRecord({a:{b:{c:g.string("value")}}})
+   *
+   * const getAbc1 = g.getDown(['a','b','c']);
+   * const getAbc2 = g.getDown("a.b.c");
+   *
+   * expect(getAbc1(o)).toStrictEqual(getAbc2(o));
+   * ```
+   *
+   * Descend, then apply a function to extract the text value.
+   *
+   * ```
+   * const o = objectToRecord({a:{b:{c:string("value")}}})
+   * const getAbc = getDown("a.b.c", getValue);
+   *
+   * expect(getAbc(o)).toBe("value");
+   * ```
+   *
+   * @param hierarchy array or dot-notation path to descend
+   */
+
+  var getDown = function getDown(hierarchy, f) {
+    var pathDown = Array.isArray(hierarchy) ? hierarchy : hierarchy.split('.');
+    return function (r) {
+      var bottom = pathDown.reduce(function (acc, name) {
+        return isGramRecord(acc) ? acc.get(name) : undefined;
+      }, r);
+      return bottom && (f ? f(bottom) : bottom);
+    };
+  };
+  /**
+   * Builds a GramProperty from a name
+   * @param name
+   * @param value
+   */
+
   var property = function property(name, value) {
     var Node = {
       type: 'property',
       name: name,
-      value: value
+      value: isGramLiteral(value) ? value : propertyValue(value)
     };
     return Node;
+  };
+  var propertyValue = function propertyValue(value) {
+    if (Array.isArray(value)) {
+      return value.map(function (v) {
+        return propertyValue(v);
+      });
+    } else if (typeof value === 'object') {
+      if (value instanceof Date) {
+        return date(value);
+      } else if (isGramLiteral(value)) {
+        return value;
+      }
+
+      return objectToRecord(value);
+    } else {
+      switch (typeof value) {
+        case 'string':
+          return string(value);
+
+        case 'bigint':
+          return decimal(value.toString());
+
+        case 'boolean':
+          return _boolean(value);
+
+        case 'number':
+          return decimal(value.toString());
+
+        case 'symbol':
+          return string(value.toString());
+
+        default:
+          throw new Error("Unsupported value: " + value);
+      }
+    }
   };
 
   var _boolean = function _boolean(value) {
@@ -419,8 +555,10 @@
     time: time,
     duration: duration,
     flatten: flatten,
-    recordToMap: recordToMap,
-    mapToRecord: mapToRecord
+    objectToRecord: objectToRecord,
+    propertiesToRecord: propertiesToRecord,
+    propertyValue: propertyValue,
+    fromLiteral: getLiteral
   };
 
   exports.boolean = _boolean;
@@ -432,19 +570,24 @@
   exports.duration = duration;
   exports.edge = edge;
   exports.empty = empty;
+  exports.emptyRecord = emptyRecord;
   exports.flatten = flatten;
+  exports.getDown = getDown;
+  exports.getLiteral = getLiteral;
+  exports.getRecord = getRecord;
+  exports.getValue = getValue;
   exports.hexadecimal = hexadecimal;
   exports.integer = integer;
   exports.listToPath = listToPath;
-  exports.mapToRecord = mapToRecord;
   exports.measurement = measurement;
   exports.node = node;
+  exports.objectToRecord = objectToRecord;
   exports.octal = octal;
   exports.pair = pair;
   exports.path = path;
-  exports.pluck = pluck;
+  exports.propertiesToRecord = propertiesToRecord;
   exports.property = property;
-  exports.recordToMap = recordToMap;
+  exports.propertyValue = propertyValue;
   exports.seq = seq;
   exports.string = string;
   exports.tagged = tagged;

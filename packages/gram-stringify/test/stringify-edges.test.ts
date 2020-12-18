@@ -35,7 +35,7 @@ describe('gram stringify identified edge patterns', () => {
     expect(stringify(p)).toBe('()-[:THEN]-()');
   });
   it('shows an edge with record, ()-[{k:"v"}]-() => "()-[k:`v`]-()"', () => {
-    const record = g.mapToRecord({ k: g.string('v') });
+    const record = g.objectToRecord({ k: g.string('v') });
     const p = g.edge(
       [g.node(), g.node()],
       'either',
@@ -47,7 +47,7 @@ describe('gram stringify identified edge patterns', () => {
     expect(stringify(p)).toBe('()-[{k:`v`}]-()');
   });
   it('shows a fully specified edge, ()-[e:THEN {k:"v"}]-() => "()-[e:THEN k:`v`]-()"', () => {
-    const record = g.mapToRecord({ k: g.string('v') });
+    const record = g.objectToRecord({ k: g.string('v') });
     const p = g.edge([g.node(), g.node()], 'either', 'e', ['THEN'], record);
     // console.log(inspect(p));
     expect(stringify(p)).toBe('()-[e:THEN {k:`v`}]-()');
@@ -59,7 +59,7 @@ describe('gram stringify fully specified edges with nodes', () => {
     const p = g.edge(
       [g.node('you'), g.node('world')], 'right', 
       undefined, ['GREET'], 
-      g.mapToRecord({message:g.string('hello')}));
+      g.objectToRecord({message:g.string('hello')}));
     // console.log(inspect(p));
     expect(stringify(p)).toBe('(you)-[:GREET {message:`hello`}]->(world)');
   });

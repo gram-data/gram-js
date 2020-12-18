@@ -5,16 +5,17 @@ import {
   GramPath,
   GramRecordValue,
   GramProperty,
-  isLiteral,
+  isGramLiteral,
   isGramNode,
   isGramEdge,
   isGramEmptyPath,
   isGramLiteralArray,
   GramLiteral,
   isGramPath,
+  isGramRecord,
 } from '@gram-data/gram-ast';
 
-const isEmpty = (o: any) => Object.keys(o).length === 0;
+const isEmpty = (r: GramRecord) => r.size === 0;
 
 function assertNever(x: never): never {
   throw new Error('Unexpected object: ' + x);
@@ -41,7 +42,7 @@ const toStringLiteral = (l: GramLiteral): string => {
 const toStringValue = (v: GramRecordValue) => {
   if (isGramLiteralArray(v)) {
     return `[${v.map((l: GramLiteral) => toStringLiteral(l)).join(',')}]`;
-  } else if (isLiteral(v)) {
+  } else if (isGramLiteral(v)) {
     return toStringLiteral(v);
   } else {
     return objectToString(v);
@@ -51,9 +52,9 @@ const toStringValue = (v: GramRecordValue) => {
 const propertyToString = (property: GramProperty) => (`${property.name}:${toStringValue(property.value)}`)
 
 const recordToString = (record: GramRecord): string => {
-  const fields = record.map(
-    (property: GramProperty, i: number) =>
-      `${i > 0 ? ',' : ''}${property.name}:${toStringValue(property.value)}`
+  const fields = Array.from(record, 
+    ([k,v], i: number) =>
+      `${i > 0 ? ',' : ''}${k}:${toStringValue(v)}`
   );
   return `{${fields.join('')}}`;
 };
@@ -177,13 +178,17 @@ export const stringify = ( ast: any | any[] ): string => {
       case 'property':
         return propertyToString(ast);
       default:
-        if (isLiteral(ast)) {
+        if (isGramLiteral(ast)) {
           return toStringLiteral(ast);
         } 
         return objectToString(ast);
     }
   } else if (typeof ast === 'object') {
-    return objectToString(ast);
+    if (isGramRecord(ast)) {
+      return recordToString(ast)
+    } else {
+      return objectToString(ast);
+    }
   }
 
   throw new Error(`Can't stringify <${ast}>`);

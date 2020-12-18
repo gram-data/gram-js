@@ -16,6 +16,7 @@ describe("identity generators", () => {
     {name:'nanoid base62', generator: nanoidGenerator(alphabets.base62)},
   ]
   it(`over ${ITERATIONS} iterations`, () => {
+    // @ts-ignore
     generators.forEach( ({name, generator}) => {
       const ids:Set<string> = new Set<string>();
       const fromTo:string[] = [];
@@ -27,7 +28,7 @@ describe("identity generators", () => {
         if (i===0 || i === ITERATIONS) fromTo.push(id);
       }
       const t1 = performance.now();      
-      console.log(`"${name}" generated from ${fromTo.join()} took ${t1-t0} milliseconds`)
+      // console.log(`"${name}" generated from ${fromTo.join()} took ${t1-t0} milliseconds`)
     })
   });
   it('does not yet support unicode alphabets', () => {

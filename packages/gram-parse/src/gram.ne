@@ -154,7 +154,7 @@ Symbol ->
 
 Record -> 
     "{" _ "}" _ {% empty  %}
-  | "{" _ Property ("," _ Property {% ([,,p]) => p %}):* "}" _ {% ([,,p,ps]) =>  [p, ...ps] %}
+  | "{" _ Property ("," _ Property {% ([,,p]) => p %}):* "}" _ {% ([,,p,ps]) =>  g.propertiesToRecord([p, ...ps]) %}
 
 Property -> Symbol ":" _ Value {% ([k,,,v]) => g.property(k,v) %}
 

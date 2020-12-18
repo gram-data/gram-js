@@ -10,7 +10,7 @@ describe('valueOf() evaluates AST text literals', () => {
     const propertyMap = {
       k: builder.string(literalValue),
     };
-    const record = builder.mapToRecord(propertyMap);
+    const record = builder.objectToRecord(propertyMap);
     const jsObject = valueOf(record);
     expect(jsObject).toStrictEqual(expectedObject);
   });
@@ -23,7 +23,7 @@ describe('valueOf() evaluates AST text literals', () => {
     const propertyMap = {
       k: builder.boolean(literalValue),
     };
-    const record = builder.mapToRecord(propertyMap);
+    const record = builder.objectToRecord(propertyMap);
     const jsObject = valueOf(record);
     expect(jsObject).toStrictEqual(expectedObject);
   });
@@ -36,7 +36,7 @@ describe('valueOf() evaluates AST text literals', () => {
     const propertyMap = {
       k: builder.integer(literalValue),
     };
-    const record = builder.mapToRecord(propertyMap);
+    const record = builder.objectToRecord(propertyMap);
     const jsObject = valueOf(record);
     expect(jsObject).toStrictEqual(expectedObject);
   });
@@ -49,7 +49,7 @@ describe('valueOf() evaluates AST text literals', () => {
     const propertyMap = {
       k: builder.decimal(literalValue),
     };
-    const record = builder.mapToRecord(propertyMap);
+    const record = builder.objectToRecord(propertyMap);
     const jsObject = valueOf(record);
     expect(jsObject).toStrictEqual(expectedObject);
   });
@@ -63,7 +63,7 @@ describe('valueOf() evaluates AST text literals', () => {
     const propertyMap = {
       k: builder.date(literalValue),
     };
-    const record = builder.mapToRecord(propertyMap);
+    const record = builder.objectToRecord(propertyMap);
     const jsObject = valueOf(record);
     expect(jsObject).toStrictEqual(expectedObject);
   });
@@ -78,7 +78,7 @@ describe('valueOf() evaluates data structures', () => {
     const propertyMap = {
       k: literalValues.map(builder.integer),
     };
-    const record = builder.mapToRecord(propertyMap);
+    const record = builder.objectToRecord(propertyMap);
     const jsObject = valueOf(record);
     expect(jsObject).toStrictEqual(expectedObject);
   });
@@ -91,7 +91,7 @@ describe('valueOf() evaluates data structures', () => {
     const propertyMap = {
       k: literalValues.map(builder.string),
     };
-    const record = builder.mapToRecord(propertyMap);
+    const record = builder.objectToRecord(propertyMap);
     const jsObject = valueOf(record);
     expect(jsObject).toStrictEqual(expectedObject);
   });
@@ -103,13 +103,12 @@ describe('valueOf() evaluates data structures', () => {
         k2: 1,
       },
     };
-    const record = [
-      builder.property('k', 
-        {
-          'k2': builder.integer(literalValue),
-        }
-      ),
-    ];
+    const propertyMap = {
+      k: {
+        k2: builder.integer(literalValue),
+      }
+    };
+    const record = builder.objectToRecord(propertyMap);
     const jsObject = valueOf(record);
     expect(jsObject).toStrictEqual(expectedObject);
   });
