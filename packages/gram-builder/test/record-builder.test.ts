@@ -174,8 +174,30 @@ describe('gram builder.objectToRecord()', () => {
     expect(isStringLiteral(record.get('s'))).toBeTruthy();
     expect(isBooleanLiteral(record.get('b'))).toBeTruthy();
     expect(isGramRecord(record.get('m')!)).toBeTruthy();
-    // expect(
-    //   isGramRecord((record.get('m') as GramRecord)!.get('m'))
-    // ).toBeTruthy();
+    expect(
+      isGramRecord((record.get('m') as GramRecord)!.get('m'))
+    ).toBeTruthy();
+  });
+
+  it('can build records from plain nested objects', () => {
+    const record = g.objectToRecord({
+      n: 1, // note: plain numbers are decimals
+      s: 'path s',
+      b: true,
+      m: {
+        s: 'path m.s',
+        m: {
+          s: 'path m.m.s',
+        },
+      },
+    });
+    expect(isGramRecord(record)).toBeTruthy();
+    expect(isDecimalLiteral(record.get('n'))).toBeTruthy(); 
+    expect(isStringLiteral(record.get('s'))).toBeTruthy();
+    expect(isBooleanLiteral(record.get('b'))).toBeTruthy();
+    expect(isGramRecord(record.get('m')!)).toBeTruthy();
+    expect(
+      isGramRecord((record.get('m') as GramRecord)!.get('m'))
+    ).toBeTruthy();
   });
 });
