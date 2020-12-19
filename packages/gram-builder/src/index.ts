@@ -264,7 +264,7 @@ export const pair = (
 
 /**
  * Create a new, empty GramRecord.
- * 
+ *
  */
 export const emptyRecord = () => new Map<string, GramRecordValue>();
 
@@ -283,7 +283,7 @@ export const propertiesToRecord = (properties: GramProperty[]): GramRecord => {
 /**
  * Transforms a plain js object into a GramRecord.
  *
- * @param o 
+ * @param o
  */
 export const objectToRecord = (o: any): GramRecord => {
   return Object.entries(o).reduce((acc: GramRecord, [k, v]) => {
@@ -294,111 +294,118 @@ export const objectToRecord = (o: any): GramRecord => {
 
 /**
  * Extracts the value from a GramLiteral, if available.
- * 
- * @param l 
+ *
+ * @param l
  */
-export const getValue = (l:GramRecordValue | undefined) => isGramLiteral(l) ? l.value : undefined;
+export const getValue = (l: GramRecordValue | undefined) =>
+  isGramLiteral(l) ? l.value : undefined;
 
 /**
  * Produces a Lens into a literal value with a GramRecord.
- * 
- * @param path 
+ *
+ * @param path
  */
-export const getLiteral = (name:string) => {
-  return (v:GramRecord) => {
+export const getLiteral = (name: string) => {
+  return (v: GramRecord) => {
     const l = v.get(name);
     return getValue(l);
-  }
-}
+  };
+};
 
 /**
  * Produces a Lens into a record value with a GramRecord.
- * 
- * @param path 
+ *
+ * @param path
  */
-export const getRecord = (name:string) => {
-  return (r:GramRecord) => {
+export const getRecord = (name: string) => {
+  return (r: GramRecord) => {
     const v = r.get(name);
-    return (isGramRecord(v)) ? v : undefined;
-  }
-}
+    return isGramRecord(v) ? v : undefined;
+  };
+};
 
 /**
  * Produces a Lens down into nested GramRecords.
- * 
+ *
  * ### Examples:
- * 
+ *
  * Descend using either an array of names, or dot notation.
- * 
+ *
  * ```
  * const o = g.objectToRecord({a:{b:{c:g.string("value")}}})
- * 
+ *
  * const getAbc1 = g.getDown(['a','b','c']);
  * const getAbc2 = g.getDown("a.b.c");
- * 
+ *
  * expect(getAbc1(o)).toStrictEqual(getAbc2(o));
  * ```
- * 
+ *
  * Descend, then apply a function to extract the text value.
- * 
+ *
  * ```
  * const o = objectToRecord({a:{b:{c:string("value")}}})
  * const getAbc = getDown("a.b.c", getValue);
- *  
+ *
  * expect(getAbc(o)).toBe("value");
  * ```
- * 
+ *
  * @param hierarchy array or dot-notation path to descend
  */
-export const getDown = (hierarchy:string[] | string, f?:(r:GramRecordValue) => any) => {
+export const getDown = (
+  hierarchy: string[] | string,
+  f?: (r: GramRecordValue) => any
+) => {
   const pathDown = Array.isArray(hierarchy) ? hierarchy : hierarchy.split('.');
-  return (r:GramRecord) => {
-    const bottom = pathDown.reduce( 
-      (acc, name) => isGramRecord(acc) ? acc.get(name) : undefined
-      , r as (GramRecordValue | undefined));
-    return bottom && (f ? f(bottom) : bottom) 
-  }
-}
+  return (r: GramRecord) => {
+    const bottom = pathDown.reduce(
+      (acc, name) => (isGramRecord(acc) ? acc.get(name) : undefined),
+      r as GramRecordValue | undefined
+    );
+    return bottom && (f ? f(bottom) : bottom);
+  };
+};
 
 /**
  * Builds a GramProperty from a name
- * @param name 
- * @param value 
+ * @param name
+ * @param value
  */
-export const property = (
-  name: string,
-  value: any
-): GramProperty => {
+export const property = (name: string, value: any): GramProperty => {
   const Node: GramProperty = {
     type: 'property',
     name,
-    value: (isGramLiteral(value) ? value : propertyValue(value)),
+    value: isGramLiteral(value) ? value : propertyValue(value),
   };
   return Node;
 };
 
-export const propertyValue = (value: any):GramRecordValue => {
+export const propertyValue = (value: any): GramRecordValue => {
   if (Array.isArray(value)) {
-    return value.map(v => propertyValue(v))
+    return value.map(v => propertyValue(v));
   } else if (typeof value === 'object') {
     if (value instanceof Date) {
       return date(value);
     } else if (isGramLiteral(value)) {
       return value;
     }
-    return objectToRecord(value)
+    return objectToRecord(value);
   } else {
     switch (typeof value) {
-      case 'string': return string(value);
-      case 'bigint': return decimal(value.toString());
-      case 'boolean': return boolean(value);
-      case 'number': return decimal(value.toString());
-      case 'symbol': return string(value.toString());
+      case 'string':
+        return string(value);
+      case 'bigint':
+        return decimal(value.toString());
+      case 'boolean':
+        return boolean(value);
+      case 'number':
+        return decimal(value.toString());
+      case 'symbol':
+        return string(value.toString());
       default:
-        throw new Error(`Unsupported value: ${value}`)
+        throw new Error(`Unsupported value: ${value}`);
     }
   }
-}
+};
 
 export const boolean = (value: boolean): BooleanLiteral => ({
   type: 'boolean',
@@ -506,5 +513,5 @@ export default {
   objectToRecord,
   propertiesToRecord,
   propertyValue,
-  fromLiteral: getLiteral
+  fromLiteral: getLiteral,
 };

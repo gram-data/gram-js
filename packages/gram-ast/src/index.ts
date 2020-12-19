@@ -15,7 +15,7 @@ import {
 } from 'unist';
 import * as tokens from './gram-tokens';
 
-export {tokens}
+export { tokens };
 
 /**
  * A GramSeq is a sequence of paths.
@@ -44,7 +44,6 @@ export const isGramSeq = (o: any): o is GramSeq => !!o.type && o.type === 'seq';
  * GramPath is either empty, or the composition of two paths.
  */
 export interface GramPath extends UnistParent {
-
   /**
    * Type discriminator for this AST element, always 'path'.
    */
@@ -76,9 +75,9 @@ export interface GramPath extends UnistParent {
 
   /**
    * The children are the path members which the path composed.
-   * 
+   *
    * The 'children' field is compatible with generic AST.
-   * 
+   *
    * Either:
    * - no children
    * - a single child with an implied RHS empty path
@@ -124,11 +123,10 @@ export const isGramEmptyPath = (o: any): o is GramEmptyPath =>
   isGramPath(o) && o.id === EMPTY_PATH_ID;
 
 /**
- * A GramNode is a special case of a path composed of two 
+ * A GramNode is a special case of a path composed of two
  * empty paths, which is equivalent to having no children.
  */
 export interface GramNode extends GramPath {
-
   /**
    * Optimized to no children, though understood
    * to have two empty paths as children.
@@ -148,7 +146,7 @@ export const isGramNode = (o: any): o is GramNode =>
   o.id !== EMPTY_PATH_ID;
 
 /**
- * A GramEdge is a special case of a path composed of 
+ * A GramEdge is a special case of a path composed of
  * two GramNodes.
  *
  */
@@ -178,7 +176,7 @@ export const isGramEdge = (o: any): o is GramEdge =>
  * Kind of path which forms a graph relationship.
  *
  * One of:
- * 
+ *
  * - left   `(a)<--(b)`
  * - right  `(a)-->(b)`
  * - either `(a)--(b)`
@@ -187,19 +185,19 @@ export const isGramEdge = (o: any): o is GramEdge =>
 export type RelationshipKind = 'left' | 'right' | 'either';
 
 /**
- * Kind of path which combines two paths together 
- * without implying any semantics. 
- * 
+ * Kind of path which combines two paths together
+ * without implying any semantics.
+ *
  * One of:
- * 
+ *
  * - pair  `(a),(b)`
- * 
+ *
  */
 export type CombinationKind = 'pair';
 
 /**
  * PathKind describes the nature of the
- * path composition. 
+ * path composition.
  *
  * One of:
  *
@@ -213,7 +211,6 @@ export type PathKind = RelationshipKind | CombinationKind;
  * its two primary specializations, GramNode and GramEdge.
  */
 export type GramPathlike = GramPath | GramNode | GramEdge;
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Records...
@@ -234,11 +231,11 @@ export type GramRecord = Map<string, GramRecordValue>; // { [key: string]: GramR
  * A type guard to narrow a GramRecordValue to a GramRecord.
  *
  * Warning: this is not a runtime guarantee
- * 
+ *
  * @param v any GramRecordValue
  */
 export const isGramRecord = (v: any): v is GramRecord =>
-  (typeof v == 'object') && (v instanceof Map);
+  typeof v == 'object' && v instanceof Map;
 
 export const isGramLiteralArray = (v: GramRecordValue): v is GramLiteral[] =>
   Array.isArray(v) && isGramLiteral(v[0]);
@@ -339,7 +336,6 @@ export interface StringLiteral extends TextLiteral {
 export const isStringLiteral = (o: any): o is TextLiteral =>
   !!o.type && !!o.value && o.type === 'string';
 
-
 /**
  * Represents an integer number, like 235276234.
  * Note: there is no explicit min or max value.
@@ -355,7 +351,6 @@ export interface IntegerLiteral extends TextLiteral {
  */
 export const isIntegerLiteral = (o: any): o is IntegerLiteral =>
   !!o.type && !!o.value && o.type === 'integer';
-
 
 /**
  * Represents an decimal number, like 3.1495.
@@ -408,7 +403,6 @@ export interface OctalLiteral extends TextLiteral {
 export const isOctalLiteral = (o: any): o is OctalLiteral =>
   !!o.type && !!o.value && o.type === 'octal';
 
-
 /**
  * Represents a decimal with units, like 12.4px or 42.0mm
  */
@@ -429,19 +423,17 @@ export interface MeasurementLiteral extends TextLiteral {
 export const isMeasurementLiteral = (o: any): o is MeasurementLiteral =>
   !!o.type && !!o.value && !!o.unit && o.type === 'measurement';
 
-
 ///////////////////////////////////////
 // Tagged text literals
 
 export type TaggedLiteral =
-  DateLiteral |
-  TimeLiteral |
-  DateTimeLiteral |
-  TimeIntervalLiteral |
-  DurationLiteral |
-  WellKnownTextLiteral |
-  UriLiteral
-  ;
+  | DateLiteral
+  | TimeLiteral
+  | DateTimeLiteral
+  | TimeIntervalLiteral
+  | DurationLiteral
+  | WellKnownTextLiteral
+  | UriLiteral;
 /**
  * Represents a string value with a format indicated by a "tag".
  *
@@ -474,7 +466,7 @@ export const isTaggedLiteral = (o: any): o is TaggedLiteral =>
 
 /**
  * Represents an ISO8601 calendar date, like `2020-02-02`.
- * 
+ *
  * @see {@link https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates | Wikipedia ISO8601 Caelndar dates}
  */
 export interface DateLiteral extends TaggedTextLiteral {
@@ -493,7 +485,7 @@ export const isDateLiteral = (o: any): o is DateLiteral =>
 
 /**
  * Represents an ISO8601 time, like `13:47:30`.
- * 
+ *
  * @see {@link https://en.wikipedia.org/wiki/ISO_8601#Times | Wikipedia ISO8601 Times}
  */
 export interface TimeLiteral extends TaggedTextLiteral {
@@ -617,7 +609,7 @@ export const isWellKnownTextLiteral = (o: any): o is WellKnownTextLiteral =>
  * ```
  *
  * @see {@link https://tools.ietf.org/html/rfc5870 | IETF RFC5870 }
- * 
+ *
  * ### `plus`
  *
  * > A 'plus' URI identifies a physical location encoded as
@@ -628,11 +620,11 @@ export const isWellKnownTextLiteral = (o: any): o is WellKnownTextLiteral =>
  * ```
  *
  * @see {@link https://github.com/google/open-location-code | Open Location Code }
- * 
+ *
  * ### `h3`
  *
  * > An 'h3' URI identifies a physical location encoded using
- * > the H3 geospatial indexing system, a multi-precision hexagonal 
+ * > the H3 geospatial indexing system, a multi-precision hexagonal
  * > tiling of the sphere indexed with hierarchical linear indexes.
  *
  * ```
@@ -645,7 +637,7 @@ export const isWellKnownTextLiteral = (o: any): o is WellKnownTextLiteral =>
  *
  * > Hopefully This Thing Presents Sensibly, a popular scheme used
  * >on the interwebs.
- *  
+ *
  */
 export interface UriLiteral extends TaggedTextLiteral {
   tag: 'uri';

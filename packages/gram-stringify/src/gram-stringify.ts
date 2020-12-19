@@ -49,19 +49,20 @@ const toStringValue = (v: GramRecordValue) => {
   }
 };
 
-const propertyToString = (property: GramProperty) => (`${property.name}:${toStringValue(property.value)}`)
+const propertyToString = (property: GramProperty) =>
+  `${property.name}:${toStringValue(property.value)}`;
 
 const recordToString = (record: GramRecord): string => {
-  const fields = Array.from(record, 
-    ([k,v], i: number) =>
-      `${i > 0 ? ',' : ''}${k}:${toStringValue(v)}`
+  const fields = Array.from(
+    record,
+    ([k, v], i: number) => `${i > 0 ? ',' : ''}${k}:${toStringValue(v)}`
   );
   return `{${fields.join('')}}`;
 };
 
-const arrayToString = (xs:any[]): string => `[${xs.map(stringify).join(',')}]`;
+const arrayToString = (xs: any[]): string => `[${xs.map(stringify).join(',')}]`;
 
-const objectToString = (o: { [key:string]:any }): string => {
+const objectToString = (o: { [key: string]: any }): string => {
   const fields = Object.entries(o).map(
     ([name, value], i: number) =>
       `${i > 0 ? ',' : ''}${name}:${stringify(value)}`
@@ -159,7 +160,7 @@ const pathToString = (ast?: GramPath): string => {
   return pathExpression;
 };
 
-export const stringify = ( ast: any | any[] ): string => {
+export const stringify = (ast: any | any[]): string => {
   if (Array.isArray(ast)) {
     if (ast.length > 0) {
       const element = ast[0];
@@ -180,12 +181,12 @@ export const stringify = ( ast: any | any[] ): string => {
       default:
         if (isGramLiteral(ast)) {
           return toStringLiteral(ast);
-        } 
+        }
         return objectToString(ast);
     }
   } else if (typeof ast === 'object') {
     if (isGramRecord(ast)) {
-      return recordToString(ast)
+      return recordToString(ast);
     } else {
       return objectToString(ast);
     }
