@@ -9,7 +9,7 @@
     "unified",
     "ast"
   ],
-  "version": "0.3.9-alpha.2",
+  "version": "0.3.9",
   "license": "MIT",
   "repository": {
     "type": "git",
