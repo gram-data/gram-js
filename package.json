@@ -16,7 +16,7 @@
     "docs:api-data": "typedoc --json docs/_data/api.json",
     "docs:railroad": "lerna run railroad --scope @gram-data/gram-parse && node ./scripts/railroad-guide.js && node ./scripts/api-headers.js",
     "docs:scripts": "shx cp './packages/*/dist/*.umd.development.js' docs/assets/scripts",
-    "bump:dev": "lerna version --force-publish prerelease"
+    "bump": "lerna version --force-publish prerelease"
   },
   "devDependencies": {
     "@strictsoftware/typedoc-plugin-monorepo": "0.3.1",

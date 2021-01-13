@@ -25,4 +25,4 @@ layout: api
 
 •  **strict**: boolean
 
-*Defined in [packages/gram-parse/src/gram-parser-plugin.ts:47](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-parser-plugin.ts#L47)*
+*Defined in [packages/gram-parse/src/gram-parser-plugin.ts:47](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-parser-plugin.ts#L47)*

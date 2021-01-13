@@ -29,7 +29,7 @@ layout: api
 
 •  **formatError**: (token: never) => string
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:119](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L119)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:119](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L119)*
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 •  **has**: (tokenType: string) => boolean
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:120](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L120)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:120](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L120)*
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 •  **next**: () => [NearleyToken](gram_parse.nearleytoken.md) \| undefined
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:117](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L117)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:117](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L117)*
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 •  **reset**: (chunk: string, info: any) => void
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:116](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L116)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:116](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L116)*
 
 ___
 
@@ -61,4 +61,4 @@ ___
 
 •  **save**: () => any
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:118](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L118)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:118](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L118)*

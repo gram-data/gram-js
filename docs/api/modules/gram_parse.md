@@ -99,7 +99,7 @@ console.log(inspect(parsed));
 
 Ƭ  **NearleySymbol**: string \| { literal: any  } \| { test: (token: any) => boolean  }
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:129](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L129)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:129](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L129)*
 
 ## Variables
 
@@ -107,7 +107,7 @@ console.log(inspect(parsed));
 
 • `Const` **INCOMPLETE\_PARSE**: \"Incomplete parse.\" = "Incomplete parse."
 
-*Defined in [packages/gram-parse/src/gram-errors.ts:1](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-errors.ts#L1)*
+*Defined in [packages/gram-parse/src/gram-errors.ts:1](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-errors.ts#L1)*
 
 ___
 
@@ -115,7 +115,7 @@ ___
 
 • `Const` **SYNTAX\_ERROR**: \"Syntax error at\" = "Syntax error at"
 
-*Defined in [packages/gram-parse/src/gram-errors.ts:2](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-errors.ts#L2)*
+*Defined in [packages/gram-parse/src/gram-errors.ts:2](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-errors.ts#L2)*
 
 ___
 
@@ -123,7 +123,7 @@ ___
 
 •  **boolean**: any
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:19](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L19)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:19](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L19)*
 
 ___
 
@@ -131,7 +131,7 @@ ___
 
 •  **decimal**: any
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:23](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L23)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:23](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L23)*
 
 ___
 
@@ -139,7 +139,7 @@ ___
 
 •  **doubleQuotedString**: any
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:21](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L21)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:21](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L21)*
 
 ___
 
@@ -147,7 +147,7 @@ ___
 
 •  **hexadecimal**: any
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:16](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L16)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:16](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L16)*
 
 ___
 
@@ -155,7 +155,7 @@ ___
 
 •  **identifier**: any
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:12](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L12)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:12](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L12)*
 
 ___
 
@@ -163,7 +163,7 @@ ___
 
 •  **integer**: any
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:14](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L14)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:14](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L14)*
 
 ___
 
@@ -171,7 +171,7 @@ ___
 
 • `Let` **lexer**: [NearleyLexer](../interfaces/gram_parse.nearleylexer.md) = (moo.compile({ whitespace: { match: /\s+/, lineBreaks: true }, lineComment: { match: /\/\/.*?\n?$/ }, hexadecimal: tokens.hexadecimal, octal: tokens.octal, measurement: tokens.measurement, decimal: tokens.decimal, integer: tokens.integer, taggedString: { match: tokens.taggedString }, boolean: ['true', 'TRUE', 'True', 'false', 'FALSE', 'False'], symbol: tokens.symbol, identifier: tokens.identifier, doubleQuotedString: { match: tokens.doubleQuotedString, value: (s: string) =\> s.slice(1, -1), }, singleQuotedString: { match: tokens.singleQuotedString, value: (s: string) =\> s.slice(1, -1), }, tickedString: { match: tokens.tickedString, value: (s: string) =\> s.slice(1, -1), }, '--\>': '--\>', '--': '--', '<--': '<--', '-[]-\>': '-[]-\>', '-[]-': '-[]-', '<-[]-': '<-[]-', '<-[': '<-[', ']-\>': ']-\>', '-[': '-[', ']-': ']-', '{': '{', '}': '}', '[': '[', ']': ']', '(': '(', ')': ')', ',': ',', ':': ':', '\`': '\`', "'": "'", ø: 'ø',}) as unknown) as NearleyLexer
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:27](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L27)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:27](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L27)*
 
 ___
 
@@ -179,7 +179,7 @@ ___
 
 •  **lineComment**: any
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:25](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L25)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:25](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L25)*
 
 ___
 
@@ -187,7 +187,7 @@ ___
 
 •  **measurement**: any
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:17](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L17)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:17](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L17)*
 
 ___
 
@@ -195,7 +195,7 @@ ___
 
 •  **octal**: any
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:15](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L15)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:15](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L15)*
 
 ___
 
@@ -203,7 +203,7 @@ ___
 
 •  **singleQuotedString**: any
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:20](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L20)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:20](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L20)*
 
 ___
 
@@ -211,7 +211,7 @@ ___
 
 •  **symbol**: any
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:13](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L13)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:13](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L13)*
 
 ___
 
@@ -219,7 +219,7 @@ ___
 
 •  **taggedString**: any
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:22](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L22)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:22](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L22)*
 
 ___
 
@@ -227,7 +227,7 @@ ___
 
 •  **tickedString**: any
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:18](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L18)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:18](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L18)*
 
 ___
 
@@ -235,7 +235,7 @@ ___
 
 •  **whitespace**: any
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:24](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L24)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:24](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L24)*
 
 ## Functions
 
@@ -243,7 +243,7 @@ ___
 
 ▸ `Const`**empty**(): null
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:74](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L74)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:74](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L74)*
 
 **Returns:** null
 
@@ -253,7 +253,7 @@ ___
 
 ▸ `Const`**gramParserPlugin**(): void
 
-*Defined in [packages/gram-parse/src/gram-parser-plugin.ts:50](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-parser-plugin.ts#L50)*
+*Defined in [packages/gram-parse/src/gram-parser-plugin.ts:50](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-parser-plugin.ts#L50)*
 
 **Returns:** void
 
@@ -263,7 +263,7 @@ ___
 
 ▸ **id**(`d`: any[]): any
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:9](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L9)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:9](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L9)*
 
 #### Parameters:
 
@@ -279,7 +279,7 @@ ___
 
 ▸ `Const`**lexerLocation**(`state`: LexerState): Point
 
-*Defined in [packages/gram-parse/src/gram-parser-plugin.ts:13](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-parser-plugin.ts#L13)*
+*Defined in [packages/gram-parse/src/gram-parser-plugin.ts:13](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-parser-plugin.ts#L13)*
 
 #### Parameters:
 
@@ -295,7 +295,7 @@ ___
 
 ▸ `Const`**parse**(`text`: string, `file`: VFile): any
 
-*Defined in [packages/gram-parse/src/gram-parser-plugin.ts:27](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-parser-plugin.ts#L27)*
+*Defined in [packages/gram-parse/src/gram-parser-plugin.ts:27](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-parser-plugin.ts#L27)*
 
 #### Parameters:
 
@@ -312,7 +312,7 @@ ___
 
 ▸ **separateNumberFromUnits**(`measurementValue`: string): object
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:100](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L100)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:100](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L100)*
 
 #### Parameters:
 
@@ -333,7 +333,7 @@ ___
 
 ▸ **separateTagFromString**(`taggedStringValue`: string): object
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:90](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L90)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:90](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L90)*
 
 #### Parameters:
 
@@ -354,7 +354,7 @@ ___
 
 ▸ `Const`**text**(`__namedParameters`: [any]): string
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:76](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L76)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:76](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L76)*
 
 #### Parameters:
 
@@ -370,7 +370,7 @@ ___
 
 ▸ `Const`**toAST**(`src`: string): [GramSeq](../interfaces/gram_ast.gramseq.md)
 
-*Defined in [packages/gram-parse/src/index.ts:7](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/index.ts#L7)*
+*Defined in [packages/gram-parse/src/index.ts:7](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/index.ts#L7)*
 
 #### Parameters:
 
@@ -386,7 +386,7 @@ ___
 
 ▸ `Const`**tokenLocation**(`token`: Token): object
 
-*Defined in [packages/gram-parse/src/gram-parser-plugin.ts:20](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-parser-plugin.ts#L20)*
+*Defined in [packages/gram-parse/src/gram-parser-plugin.ts:20](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-parser-plugin.ts#L20)*
 
 #### Parameters:
 
@@ -407,7 +407,7 @@ Name | Type |
 
 ▪ `Const` **grammar**: object
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:140](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L140)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:140](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L140)*
 
 #### Properties:
 

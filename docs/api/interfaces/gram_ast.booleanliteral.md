@@ -65,7 +65,7 @@ ___
 
 *Overrides [TextLiteral](gram_ast.textliteral.md).[type](gram_ast.textliteral.md#type)*
 
-*Defined in [packages/gram-ast/src/index.ts:308](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L308)*
+*Defined in [packages/gram-ast/src/index.ts:308](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L308)*
 
 Represents this variant of a Literal.
 
@@ -77,4 +77,4 @@ ___
 
 *Overrides [TextLiteral](gram_ast.textliteral.md).[value](gram_ast.textliteral.md#value)*
 
-*Defined in [packages/gram-ast/src/index.ts:310](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L310)*
+*Defined in [packages/gram-ast/src/index.ts:310](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L310)*

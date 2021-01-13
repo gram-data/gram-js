@@ -29,4 +29,4 @@ layout: api
 
 •  **value**: any
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:111](https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-parse/src/gram-grammar.ts#L111)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:111](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L111)*
