@@ -53,8 +53,8 @@ Here we arrange `g`,`a`, and `j` into a path:
 
 ### _Footnotes_
 
-- [gram-ast]({% link /api/interfaces/gram_ast.textliteral.html %}) for text literal data types
-- [gram-value]({% link /api/modules/gram_value.html %}) for standard conversions to JS primitives
+- [gram-ast]({{site.baseurl}}/api/interfaces/gram_ast.textliteral) for text literal data types
+- [gram-value]({{site.baseurl}}/api/modules/gram_value/) for standard conversions to JS primitives
 - [Semi-structured data](https://en.wikipedia.org/wiki/Semi-structured_data) use arbitrary nesting of lists and maps. There is structure without a constraining schema.
 - [Cypher data patterns](https://neo4j.com/docs/cypher-manual/current/syntax/patterns/#cypher-pattern-related-nodes)
   innovated the ascii-art representation of round graph nodes `(a)` and interrupted arrows `-[e]->` for graph relationships. 

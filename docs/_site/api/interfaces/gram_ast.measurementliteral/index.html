@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>gram_ast.measurementliteral</title>
+  <meta name="description" content="Gram is a textual format for data graphs.">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>gram_ast.measurementliteral | gram.js</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="gram_ast.measurementliteral" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Gram is a textual format for data graphs." />
+<meta property="og:description" content="Gram is a textual format for data graphs." />
+<link rel="canonical" href="http://localhost:4000/api/interfaces/gram_ast.measurementliteral/" />
+<meta property="og:url" content="http://localhost:4000/api/interfaces/gram_ast.measurementliteral/" />
+<meta property="og:site_name" content="gram.js" />
+<script type="application/ld+json">
+{"headline":"gram_ast.measurementliteral","description":"Gram is a textual format for data graphs.","url":"http://localhost:4000/api/interfaces/gram_ast.measurementliteral/","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/site.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="gram.js" /><link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/assets/favicon/site.webmanifest">
+  <link rel="mask-icon" href="/assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" content="/assets/favicon/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+
+</head>
+<body class="bg-gray-100 tracking-normal">
+<nav id="header" class="fixed w-full z-10 top-0 bg-white border-b border-gray-400">
+
+  <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-4">
+     <div class="pl-4 flex items-center">
+        <a class="text-gray-900 text-base no-underline hover:no-underline font-neo4j font-thin text-xl pb-2"  href="/"> 
+         gram.js
+        </a>
+        &nbsp;
+        <a class="text-gray-600 p-1 text-base no-underline hover:no-underline font-neo4j font-thin text-xl pb-2"  href="https://github.com/gram-data/gram-js/releases/tag/v0.3.5"> 
+         v0.3.5
+        </a>
+     </div>
+     
+     <div>
+      <div class="block lg:hidden pr-4">
+            <button id="nav-toggle" class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-900 hover:border-purple-500 appearance-none focus:outline-none">
+               <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <title>Menu</title>
+                  <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
+               </svg>
+            </button>
+         </div>
+         <div class="w-full flex-grow lg:flex  lg:content-center lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 z-20" id="nav-content">
+            
+            <ul class="list-reset lg:flex justify-end items-center">
+               <li class="mr-3 py-2 lg:py-0">
+                  <a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:underline py-2 px-4" href="/guides/">Guides</a>
+               </li>
+               <li class="mr-3 py-2 lg:py-0">
+                  <a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:underline py-2 px-4" href="/api/">API</a>
+               </li>
+            </ul>
+         </div>
+      </div>
+  </div>
+</nav>
+
+<script>
+   /*Toggle dropdown list*/
+   /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
+   
+   var navMenuDiv = document.getElementById("nav-content");
+   var navMenu = document.getElementById("nav-toggle");
+   
+   var helpMenuDiv = document.getElementById("menu-content");
+   var helpMenu = document.getElementById("menu-toggle");
+   
+   document.onclick = check;
+   
+   function check(e){
+     var target = (e && e.target) || (event && event.srcElement);
+   
+    
+     //Nav Menu
+     if (!checkParent(target, navMenuDiv)) {
+      // click NOT on the menu
+      if (checkParent(target, navMenu)) {
+        // click on the link
+        if (navMenuDiv.classList.contains("hidden")) {
+         navMenuDiv.classList.remove("hidden");
+        } else {navMenuDiv.classList.add("hidden");}
+      } else {
+        // click both outside link and outside menu, hide menu
+        navMenuDiv.classList.add("hidden");
+      }
+     }
+     
+     //Help Menu
+     if (!checkParent(target, helpMenuDiv)) {
+      // click NOT on the menu
+      if (checkParent(target, helpMenu)) {
+        // click on the link
+        if (helpMenuDiv.classList.contains("hidden")) {
+         helpMenuDiv.classList.remove("hidden");
+        } else {helpMenuDiv.classList.add("hidden");}
+      } else {
+        // click both outside link and outside menu, hide menu
+        helpMenuDiv.classList.add("hidden");
+      }
+     }
+     
+   }
+   
+   function checkParent(t, elm) {
+     while(t.parentNode) {
+      if( t == elm ) {return true;}
+      t = t.parentNode;
+     }
+     return false;
+   }
+   
+   
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-16">
+   <div class="w-full lg:w-1/5 lg:px-6 text-xl text-gray-800 leading-normal"><p class="text-base font-bold py-2 lg:pb-6 text-gray-700"><a href="/guides/">Guides</a></p>
+<p class="text-base font-bold py-2 lg:pb-6 text-gray-700"><a href="/api/">API</a></p>
+<div class="block lg:hidden sticky inset-0">
+   <button id="menu-toggle" class="flex w-full justify-end px-3 py-3 bg-white lg:bg-transparent border rounded border-gray-600 hover:border-blue-500 appearance-none focus:outline-none">
+      <svg class="fill-current h-3 float-right" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+      </svg>
+   </button>
+</div>
+<div class="w-full sticky inset-0 hidden h-64 lg:h-auto overflow-x-hidden overflow-y-auto lg:overflow-y-hidden lg:block mt-0 border border-gray-400 lg:border-transparent bg-white shadow lg:shadow-none lg:bg-transparent z-20" style="top:5em;" id="menu-content">
+   <ul class="list-reset">
+      
+      
+      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
+         <a href="/api/modules/gram_ast" 
+            
+               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
+            
+         >
+         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">gram-ast</span>
+         </a>
+      </li>
+      
+      
+      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
+         <a href="/api/modules/gram_builder" 
+            
+               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
+            
+         >
+         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">gram-builder</span>
+         </a>
+      </li>
+      
+      
+      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
+         <a href="/api/modules/gram_identity" 
+            
+               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
+            
+         >
+         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">gram-identity</span>
+         </a>
+      </li>
+      
+      
+      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
+         <a href="/api/modules/gram_ops" 
+            
+               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
+            
+         >
+         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">gram-ops</span>
+         </a>
+      </li>
+      
+      
+      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
+         <a href="/api/modules/gram_parse" 
+            
+               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
+            
+         >
+         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">gram-parse</span>
+         </a>
+      </li>
+      
+      
+      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
+         <a href="/api/modules/gram_stringify" 
+            
+               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
+            
+         >
+         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">gram-stringify</span>
+         </a>
+      </li>
+      
+      
+      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
+         <a href="/api/modules/gram_value" 
+            
+               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
+            
+         >
+         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">gram-value</span>
+         </a>
+      </li>
+      
+   </ul>
+</div>
+</div>
+   <div class="w-full lg:w-4/5 p-8 mt-6 lg:mt-0 text-gray-900 leading-normal bg-white border border-gray-400 border-rounded">
+      <!--Title-->
+      <div class="font-sans">
+         <h1 class="font-sans break-normal text-gray-900 pt-6 pb-2 text-xl">gram_ast.measurementliteral</h1>
+         <hr class="border-b border-gray-400">
+      </div>
+      <!--Page Content-->
+      <div class="prose max-w-none">
+         <p><strong><a href="/api/README/">gram.js API</a></strong></p>
+
+<blockquote>
+  <p><a href="/api/globals/">Globals</a> / <a href="/api/modules/gram_ast/">gram-ast</a> / MeasurementLiteral</p>
+</blockquote>
+
+<h1 id="interface-measurementliteral">Interface: MeasurementLiteral</h1>
+
+<p>Represents a decimal with units, like 12.4px or 42.0mm</p>
+
+<h2 id="hierarchy">Hierarchy</h2>
+
+<ul>
+  <li>
+    <p><a href="/api/interfaces/gram_ast.textliteral/">TextLiteral</a></p>
+
+    <p>↳ <strong>MeasurementLiteral</strong></p>
+  </li>
+</ul>
+
+<h2 id="indexable">Indexable</h2>
+
+<p>▪ [key: string]: unknown</p>
+
+<p>Represents a decimal with units, like 12.4px or 42.0mm</p>
+
+<h2 id="index">Index</h2>
+
+<h3 id="properties">Properties</h3>
+
+<ul>
+  <li><a href="/api/interfaces/gram_ast.measurementliteral/#data">data</a></li>
+  <li><a href="/api/interfaces/gram_ast.measurementliteral/#position">position</a></li>
+  <li><a href="/api/interfaces/gram_ast.measurementliteral/#type">type</a></li>
+  <li><a href="/api/interfaces/gram_ast.measurementliteral/#unit">unit</a></li>
+  <li><a href="/api/interfaces/gram_ast.measurementliteral/#value">value</a></li>
+</ul>
+
+<h2 id="properties-1">Properties</h2>
+
+<h3 id="data">data</h3>
+
+<p>• <code class="language-plaintext highlighter-rouge">Optional</code> <strong>data</strong>: Data</p>
+
+<p><em>Inherited from <a href="/api/interfaces/gram_ast.gramseq/">GramSeq</a>.<a href="/api/interfaces/gram_ast.gramseq/#data">data</a></em></p>
+
+<p><em>Defined in node_modules/@types/unist/index.d.ts:23</em></p>
+
+<p>Information from the ecosystem.</p>
+
+<hr />
+
+<h3 id="position">position</h3>
+
+<p>• <code class="language-plaintext highlighter-rouge">Optional</code> <strong>position</strong>: Position</p>
+
+<p><em>Inherited from <a href="/api/interfaces/gram_ast.gramseq/">GramSeq</a>.<a href="/api/interfaces/gram_ast.gramseq/#position">position</a></em></p>
+
+<p><em>Defined in node_modules/@types/unist/index.d.ts:29</em></p>
+
+<p>Location of a node in a source document.
+Must not be present if a node is generated.</p>
+
+<hr />
+
+<h3 id="type">type</h3>
+
+<p>•  <strong>type</strong>: "measurement"</p>
+
+<p><em>Overrides <a href="/api/interfaces/gram_ast.textliteral/">TextLiteral</a>.<a href="/api/interfaces/gram_ast.textliteral/#type">type</a></em></p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L410">packages/gram-ast/src/index.ts:410</a></em></p>
+
+<hr />
+
+<h3 id="unit">unit</h3>
+
+<p>•  <strong>unit</strong>: string</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L415">packages/gram-ast/src/index.ts:415</a></em></p>
+
+<p>The unit suffix of the decimal value.</p>
+
+<hr />
+
+<h3 id="value">value</h3>
+
+<p>•  <strong>value</strong>: string</p>
+
+<p><em>Inherited from <a href="/api/interfaces/gram_ast.textliteral/">TextLiteral</a>.<a href="/api/interfaces/gram_ast.textliteral/#value">value</a></em></p>
+
+<p><em>Overrides void</em></p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L277">packages/gram-ast/src/index.ts:277</a></em></p>
+
+      </div>
+      <!--/ Page Content-->
+   </div>
+
+   <!-- page footer -->
+   <div class="w-full container mx-auto items-center justify-between mt-0 py-4">
+      <div class="float-right lg:content-center lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 z-20" id="nav-content">
+         <a href="https://github.com/gram-data/gram-js/tree/main/docs/">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current inline-block text-gray-500 h-5 w-5">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+            <span>Help improve this page</span>
+            </a>
+      </div>
+   </div>
+</div>
+
+    </main><footer class="bg-white border-t border-gray-400 shadow">
+  <div class="container mx-auto flex flex-wrap items-center justify-between p-8">
+     <div class="w-3/4 mx-auto flex flex-grow flex-wrap">
+        <div class="flex w-full lg:w-1/2 ">
+           <div>
+              <h3 class="font-bold text-gray-900">About gram.js</h3>
+              <p class="py-4 text-gray-600 text-sm">
+                 Gram is a textual format for data graphs. 
+              </p>
+           </div>
+        </div>
+     </div>
+     <div class=""><div class="grid grid-flow-col grid-cols-3 gap-2"><div ><a rel="me" href="https://github.com/gram-data/gram-js" title="gram-data"><svg role="img" width="2em" height="2em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub icon</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a></div><div><a rel="me" href="https://stackoverflow.com/questions/tagged/gram" title="gram"><svg role="img" width="2em" height="2em"viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Stack Overflow icon</title><path d="M18.986 21.865v-6.404h2.134V24H1.844v-8.539h2.13v6.404h15.012zM6.111 19.731H16.85v-2.137H6.111v2.137zm.259-4.852l10.48 2.189.451-2.07-10.478-2.187-.453 2.068zm1.359-5.056l9.705 4.53.903-1.95-9.706-4.53-.902 1.936v.014zm2.715-4.785l8.217 6.855 1.359-1.62-8.216-6.853-1.35 1.617-.01.001zM15.751 0l-1.746 1.294 6.405 8.604 1.746-1.294L15.749 0h.002z"/></svg></a></div><div><a rel="me" href="https://twitter.com/akollegger" title="akollegger"><svg role="img" width="2em" height="2em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Twitter icon</title><path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"/></svg></a></div></div></div>
+  </div>
+</footer>
+</body>
+
+</html>

@@ -14,7 +14,7 @@ defaults:
   - scope:
       path: ""
     values:
-      layout: "page"
+      layout: "guides"
 
 exclude:  
   - "*.config.js"

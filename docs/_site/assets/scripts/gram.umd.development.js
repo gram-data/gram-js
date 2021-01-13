@@ -1702,6 +1702,16 @@
     cwd: cwd_1
   };
 
+  /*!
+   * Determine if an object is a Buffer
+   *
+   * @author   Feross Aboukhadijeh <https://feross.org>
+   * @license  MIT
+   */
+  var isBuffer$1 = function isBuffer(obj) {
+    return obj != null && obj.constructor != null && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj);
+  };
+
   var core = VFile;
   var own$1 = {}.hasOwnProperty; // Order of setting (least specific to most), we need this because otherwise
   // `{stem: 'a', path: '~/b.js'}` would throw, as a path is needed before a
@@ -1741,7 +1751,7 @@
 
     if (!options) {
       options = {};
-    } else if (typeof options === 'string' || isBuffer(options)) {
+    } else if (typeof options === 'string' || isBuffer$1(options)) {
       options = {
         contents: options
       };

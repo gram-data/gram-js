@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>gram_ast</title>
+  <meta name="description" content="Gram is a textual format for data graphs.">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>gram_ast | gram.js</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="gram_ast" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Gram is a textual format for data graphs." />
+<meta property="og:description" content="Gram is a textual format for data graphs." />
+<link rel="canonical" href="http://localhost:4000/api/modules/gram_ast/" />
+<meta property="og:url" content="http://localhost:4000/api/modules/gram_ast/" />
+<meta property="og:site_name" content="gram.js" />
+<script type="application/ld+json">
+{"headline":"gram_ast","description":"Gram is a textual format for data graphs.","url":"http://localhost:4000/api/modules/gram_ast/","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/site.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="gram.js" /><link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/assets/favicon/site.webmanifest">
+  <link rel="mask-icon" href="/assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" content="/assets/favicon/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+
+</head>
+<body class="bg-gray-100 tracking-normal">
+<nav id="header" class="fixed w-full z-10 top-0 bg-white border-b border-gray-400">
+
+  <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-4">
+     <div class="pl-4 flex items-center">
+        <a class="text-gray-900 text-base no-underline hover:no-underline font-neo4j font-thin text-xl pb-2"  href="/"> 
+         gram.js
+        </a>
+        &nbsp;
+        <a class="text-gray-600 p-1 text-base no-underline hover:no-underline font-neo4j font-thin text-xl pb-2"  href="https://github.com/gram-data/gram-js/releases/tag/v0.3.5"> 
+         v0.3.5
+        </a>
+     </div>
+     
+     <div>
+      <div class="block lg:hidden pr-4">
+            <button id="nav-toggle" class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-900 hover:border-purple-500 appearance-none focus:outline-none">
+               <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <title>Menu</title>
+                  <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
+               </svg>
+            </button>
+         </div>
+         <div class="w-full flex-grow lg:flex  lg:content-center lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 z-20" id="nav-content">
+            
+            <ul class="list-reset lg:flex justify-end items-center">
+               <li class="mr-3 py-2 lg:py-0">
+                  <a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:underline py-2 px-4" href="/guides/">Guides</a>
+               </li>
+               <li class="mr-3 py-2 lg:py-0">
+                  <a class="inline-block text-gray-600 no-underline hover:text-gray-900 hover:underline py-2 px-4" href="/api/">API</a>
+               </li>
+            </ul>
+         </div>
+      </div>
+  </div>
+</nav>
+
+<script>
+   /*Toggle dropdown list*/
+   /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
+   
+   var navMenuDiv = document.getElementById("nav-content");
+   var navMenu = document.getElementById("nav-toggle");
+   
+   var helpMenuDiv = document.getElementById("menu-content");
+   var helpMenu = document.getElementById("menu-toggle");
+   
+   document.onclick = check;
+   
+   function check(e){
+     var target = (e && e.target) || (event && event.srcElement);
+   
+    
+     //Nav Menu
+     if (!checkParent(target, navMenuDiv)) {
+      // click NOT on the menu
+      if (checkParent(target, navMenu)) {
+        // click on the link
+        if (navMenuDiv.classList.contains("hidden")) {
+         navMenuDiv.classList.remove("hidden");
+        } else {navMenuDiv.classList.add("hidden");}
+      } else {
+        // click both outside link and outside menu, hide menu
+        navMenuDiv.classList.add("hidden");
+      }
+     }
+     
+     //Help Menu
+     if (!checkParent(target, helpMenuDiv)) {
+      // click NOT on the menu
+      if (checkParent(target, helpMenu)) {
+        // click on the link
+        if (helpMenuDiv.classList.contains("hidden")) {
+         helpMenuDiv.classList.remove("hidden");
+        } else {helpMenuDiv.classList.add("hidden");}
+      } else {
+        // click both outside link and outside menu, hide menu
+        helpMenuDiv.classList.add("hidden");
+      }
+     }
+     
+   }
+   
+   function checkParent(t, elm) {
+     while(t.parentNode) {
+      if( t == elm ) {return true;}
+      t = t.parentNode;
+     }
+     return false;
+   }
+   
+   
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-16">
+   <div class="w-full lg:w-1/5 lg:px-6 text-xl text-gray-800 leading-normal"><p class="text-base font-bold py-2 lg:pb-6 text-gray-700"><a href="/guides/">Guides</a></p>
+<p class="text-base font-bold py-2 lg:pb-6 text-gray-700"><a href="/api/">API</a></p>
+<div class="block lg:hidden sticky inset-0">
+   <button id="menu-toggle" class="flex w-full justify-end px-3 py-3 bg-white lg:bg-transparent border rounded border-gray-600 hover:border-blue-500 appearance-none focus:outline-none">
+      <svg class="fill-current h-3 float-right" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+      </svg>
+   </button>
+</div>
+<div class="w-full sticky inset-0 hidden h-64 lg:h-auto overflow-x-hidden overflow-y-auto lg:overflow-y-hidden lg:block mt-0 border border-gray-400 lg:border-transparent bg-white shadow lg:shadow-none lg:bg-transparent z-20" style="top:5em;" id="menu-content">
+   <ul class="list-reset">
+      
+      
+      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
+         <a href="/api/modules/gram_ast" 
+            
+               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:border-blue-500 lg:hover:border-green-500"
+            
+         >
+         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">gram-ast</span>
+         </a>
+      </li>
+      
+      
+      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
+         <a href="/api/modules/gram_builder" 
+            
+               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
+            
+         >
+         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">gram-builder</span>
+         </a>
+      </li>
+      
+      
+      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
+         <a href="/api/modules/gram_identity" 
+            
+               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
+            
+         >
+         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">gram-identity</span>
+         </a>
+      </li>
+      
+      
+      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
+         <a href="/api/modules/gram_ops" 
+            
+               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
+            
+         >
+         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">gram-ops</span>
+         </a>
+      </li>
+      
+      
+      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
+         <a href="/api/modules/gram_parse" 
+            
+               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
+            
+         >
+         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">gram-parse</span>
+         </a>
+      </li>
+      
+      
+      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
+         <a href="/api/modules/gram_stringify" 
+            
+               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
+            
+         >
+         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">gram-stringify</span>
+         </a>
+      </li>
+      
+      
+      <li class="py-2 md:my-0 hover:bg-blue-100 lg:hover:bg-transparent">
+         <a href="/api/modules/gram_value" 
+            
+               class="block pl-4 align-middle text-gray-700 no-underline hover:text-blue-500 border-l-4 border-transparent lg:hover:border-gray-400"
+            
+         >
+         <span class="pb-1 md:pb-0 text-sm text-gray-900 font-bold">gram-value</span>
+         </a>
+      </li>
+      
+   </ul>
+</div>
+</div>
+   <div class="w-full lg:w-4/5 p-8 mt-6 lg:mt-0 text-gray-900 leading-normal bg-white border border-gray-400 border-rounded">
+      <!--Title-->
+      <div class="font-sans">
+         <h1 class="font-sans break-normal text-gray-900 pt-6 pb-2 text-xl">gram_ast</h1>
+         <hr class="border-b border-gray-400">
+      </div>
+      <!--Page Content-->
+      <div class="prose max-w-none">
+         <p><strong><a href="/api/README/">gram.js API</a></strong></p>
+
+<blockquote>
+  <p><a href="/api/globals/">Globals</a> / gram-ast</p>
+</blockquote>
+
+<h1 id="package-gram-ast">Package: gram-ast</h1>
+
+<p><code class="language-plaintext highlighter-rouge">()-[define]-&gt;(ast)</code></p>
+
+<p>Gram abstract syntax tree definitions, tokenizing regexes, and utilities like type guards.</p>
+
+<h2 id="how-to-gram-ast">How to gram-ast</h2>
+
+<h3 id="install">Install:</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @gram-data/gram-ast
+</code></pre></div></div>
+
+<h3 id="use-gram-parse-to-create-an-ast-then-introspect-with-gram-ast">Use <a href="/api/modules/gram_parse/">gram-parse</a> to create an AST, then introspect with gram-ast:</h3>
+
+<pre><code class="language-TypeScript">import { isGramSeq, isGramNode, isGramEdge } from '@gram-data/gram-ast';
+import { toAST } from '@gram-data/gram-parse';  
+
+const src = '(a)--&gt;(b)';
+const parsed = toAST(src);
+
+// the top-level of the AST is a sequence of paths
+console.assert(isGramSeq(parsed));
+
+// the first path should be an edge
+const firstPath = parsed.children[0];
+console.assert(isGramEdge(firstPath));
+
+// the children of an edge are nodes
+console.assert(isGramNode(firstPath.children[0]));
+console.assert(isGramNode(firstPath.children[1]));
+</code></pre>
+
+<h2 id="syntax-tree">Syntax Tree</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">gram</code> AST is based on the <a href="https://github.com/syntax-tree/unist">unist</a> specification
+for syntax trees. Many of the tools and techniques of the <a href="https://unifiedjs.com">unified</a>
+ecosystem can be applied to working with <code class="language-plaintext highlighter-rouge">gram</code>.</p>
+
+<p>Gram represents data using two basic elements: paths and sequences.</p>
+
+<p>Paths provide structure. Sequences provide order.</p>
+
+<h3 id="gramseq"><a href="/api/interfaces/gram_ast.gramseq/"><code class="language-plaintext highlighter-rouge">GramSeq</code></a></h3>
+
+<p>A <code class="language-plaintext highlighter-rouge">gram</code> sequence is the root element of an AST.
+It is exactly what it sounds like: a sequence of elements where
+each element is a path.</p>
+
+<p>The AST type is useful in returning a well-rooted tree that can be processed
+by general-purpose AST tools like <a href="https://github.com/syntax-tree/unist-util-visit">unist-util-visit</a>.</p>
+
+<p>In practice this is equivalent to a <code class="language-plaintext highlighter-rouge">GramPath[]</code>. Most <code class="language-plaintext highlighter-rouge">gram</code> functions will accept either.</p>
+
+<h3 id="grampath"><a href="/api/interfaces/gram_ast.grampath/"><code class="language-plaintext highlighter-rouge">GramPath</code></a></h3>
+
+<p>A <code class="language-plaintext highlighter-rouge">gram</code> path is either an empty path, or the composition of two other paths.
+The data structure of a path is like a list which remembers how it was assembled.
+The list elements are other paths.</p>
+
+<p>Each path has its own identity, labels and a data record.</p>
+
+<h3 id="record"><a href="../interfaces/gram_ast.gramrecord-1.html">record</a></h3>
+
+<p>In the AST, records are a multimap presented as an <em>array</em> of name/value
+properties. That means a property name <em>may</em> appear more than once, with
+different or the same values.</p>
+
+<p>When mapping to a data model, choose one of these strageies for handling the
+multimapped properties:</p>
+
+<ul>
+  <li>single-state: pick the first or last value (<em>recommended</em>)</li>
+  <li>join: accumulate the values into an array</li>
+  <li>reduce: aggregate the values into a single value</li>
+</ul>
+
+<h2 id="next-steps">Next Steps</h2>
+
+<ul>
+  <li>Learn more about parsing with <a href="/api/modules/gram_ast/">gram-ast</a></li>
+  <li>Transform to js objects using <a href="/api/modules/gram_value/">gram-value</a></li>
+  <li>Serialize back to text using <a href="/api/modules/gram_stringify/">gram-stringify</a></li>
+</ul>
+
+<h2 id="index">Index</h2>
+
+<h3 id="interfaces">Interfaces</h3>
+
+<ul>
+  <li><a href="/api/interfaces/gram_ast.booleanliteral/">BooleanLiteral</a></li>
+  <li><a href="/api/interfaces/gram_ast.dateliteral/">DateLiteral</a></li>
+  <li><a href="/api/interfaces/gram_ast.datetimeliteral/">DateTimeLiteral</a></li>
+  <li><a href="/api/interfaces/gram_ast.decimalliteral/">DecimalLiteral</a></li>
+  <li><a href="/api/interfaces/gram_ast.durationliteral/">DurationLiteral</a></li>
+  <li><a href="/api/interfaces/gram_ast.gramedge/">GramEdge</a></li>
+  <li><a href="/api/interfaces/gram_ast.gramemptypath/">GramEmptyPath</a></li>
+  <li><a href="/api/interfaces/gram_ast.gramnode/">GramNode</a></li>
+  <li><a href="/api/interfaces/gram_ast.grampath/">GramPath</a></li>
+  <li><a href="/api/interfaces/gram_ast.gramproperty/">GramProperty</a></li>
+  <li><a href="/api/interfaces/gram_ast.gramseq/">GramSeq</a></li>
+  <li><a href="/api/interfaces/gram_ast.hexadecimalliteral/">HexadecimalLiteral</a></li>
+  <li><a href="/api/interfaces/gram_ast.integerliteral/">IntegerLiteral</a></li>
+  <li><a href="/api/interfaces/gram_ast.measurementliteral/">MeasurementLiteral</a></li>
+  <li><a href="/api/interfaces/gram_ast.octalliteral/">OctalLiteral</a></li>
+  <li><a href="/api/interfaces/gram_ast.stringliteral/">StringLiteral</a></li>
+  <li><a href="/api/interfaces/gram_ast.taggedtextliteral/">TaggedTextLiteral</a></li>
+  <li><a href="/api/interfaces/gram_ast.textliteral/">TextLiteral</a></li>
+  <li><a href="/api/interfaces/gram_ast.timeintervalliteral/">TimeIntervalLiteral</a></li>
+  <li><a href="/api/interfaces/gram_ast.timeliteral/">TimeLiteral</a></li>
+  <li><a href="/api/interfaces/gram_ast.uriliteral/">UriLiteral</a></li>
+  <li><a href="/api/interfaces/gram_ast.wellknowntextliteral/">WellKnownTextLiteral</a></li>
+</ul>
+
+<h3 id="type-aliases">Type aliases</h3>
+
+<ul>
+  <li><a href="/api/modules/gram_ast/#combinationkind">CombinationKind</a></li>
+  <li><a href="/api/modules/gram_ast/#gramliteral">GramLiteral</a></li>
+  <li><a href="/api/modules/gram_ast/#grampathlike">GramPathlike</a></li>
+  <li><a href="/api/modules/gram_ast/#gramrecord">GramRecord</a></li>
+  <li><a href="/api/modules/gram_ast/#gramrecordvalue">GramRecordValue</a></li>
+  <li><a href="/api/modules/gram_ast/#pathkind">PathKind</a></li>
+  <li><a href="/api/modules/gram_ast/#relationshipkind">RelationshipKind</a></li>
+  <li><a href="/api/modules/gram_ast/#taggedliteral">TaggedLiteral</a></li>
+</ul>
+
+<h3 id="variables">Variables</h3>
+
+<ul>
+  <li><a href="/api/modules/gram_ast/#empty_path_id">EMPTY_PATH_ID</a></li>
+  <li><a href="/api/modules/gram_ast/#boolean">boolean</a></li>
+  <li><a href="/api/modules/gram_ast/#checkidentifierregex">checkIdentifierRegex</a></li>
+  <li><a href="/api/modules/gram_ast/#decimal">decimal</a></li>
+  <li><a href="/api/modules/gram_ast/#doublequotedstring">doubleQuotedString</a></li>
+  <li><a href="/api/modules/gram_ast/#hexadecimal">hexadecimal</a></li>
+  <li><a href="/api/modules/gram_ast/#identifier">identifier</a></li>
+  <li><a href="/api/modules/gram_ast/#integer">integer</a></li>
+  <li><a href="/api/modules/gram_ast/#measurement">measurement</a></li>
+  <li><a href="/api/modules/gram_ast/#octal">octal</a></li>
+  <li><a href="/api/modules/gram_ast/#singlequotedstring">singleQuotedString</a></li>
+  <li><a href="/api/modules/gram_ast/#symbol">symbol</a></li>
+  <li><a href="/api/modules/gram_ast/#taggedstring">taggedString</a></li>
+  <li><a href="/api/modules/gram_ast/#tickedstring">tickedString</a></li>
+</ul>
+
+<h3 id="functions">Functions</h3>
+
+<ul>
+  <li><a href="/api/modules/gram_ast/#isbooleanliteral">isBooleanLiteral</a></li>
+  <li><a href="/api/modules/gram_ast/#isdateliteral">isDateLiteral</a></li>
+  <li><a href="/api/modules/gram_ast/#isdatetimeliteral">isDateTimeLiteral</a></li>
+  <li><a href="/api/modules/gram_ast/#isdecimalliteral">isDecimalLiteral</a></li>
+  <li><a href="/api/modules/gram_ast/#isduration">isDuration</a></li>
+  <li><a href="/api/modules/gram_ast/#isgramedge">isGramEdge</a></li>
+  <li><a href="/api/modules/gram_ast/#isgramemptypath">isGramEmptyPath</a></li>
+  <li><a href="/api/modules/gram_ast/#isgramliteral">isGramLiteral</a></li>
+  <li><a href="/api/modules/gram_ast/#isgramliteralarray">isGramLiteralArray</a></li>
+  <li><a href="/api/modules/gram_ast/#isgramnode">isGramNode</a></li>
+  <li><a href="/api/modules/gram_ast/#isgrampath">isGramPath</a></li>
+  <li><a href="/api/modules/gram_ast/#isgramproperty">isGramProperty</a></li>
+  <li><a href="/api/modules/gram_ast/#isgramrecord">isGramRecord</a></li>
+  <li><a href="/api/modules/gram_ast/#isgramseq">isGramSeq</a></li>
+  <li><a href="/api/modules/gram_ast/#ishexadecimalliteral">isHexadecimalLiteral</a></li>
+  <li><a href="/api/modules/gram_ast/#isintegerliteral">isIntegerLiteral</a></li>
+  <li><a href="/api/modules/gram_ast/#ismeasurementliteral">isMeasurementLiteral</a></li>
+  <li><a href="/api/modules/gram_ast/#isoctalliteral">isOctalLiteral</a></li>
+  <li><a href="/api/modules/gram_ast/#isstringliteral">isStringLiteral</a></li>
+  <li><a href="/api/modules/gram_ast/#istaggedliteral">isTaggedLiteral</a></li>
+  <li><a href="/api/modules/gram_ast/#istimeinterval">isTimeInterval</a></li>
+  <li><a href="/api/modules/gram_ast/#istimeliteral">isTimeLiteral</a></li>
+  <li><a href="/api/modules/gram_ast/#isuriliteral">isUriLiteral</a></li>
+  <li><a href="/api/modules/gram_ast/#isvalididentifier">isValidIdentifier</a></li>
+  <li><a href="/api/modules/gram_ast/#iswellknowntextliteral">isWellKnownTextLiteral</a></li>
+</ul>
+
+<h2 id="type-aliases-1">Type aliases</h2>
+
+<h3 id="combinationkind">CombinationKind</h3>
+
+<p>Ƭ  <strong>CombinationKind</strong>: "pair"</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L196">packages/gram-ast/src/index.ts:196</a></em></p>
+
+<p>Kind of path which combines two paths together
+without implying any semantics.</p>
+
+<p>One of:</p>
+
+<ul>
+  <li>pair  <code class="language-plaintext highlighter-rouge">(a),(b)</code></li>
+</ul>
+
+<hr />
+
+<h3 id="gramliteral">GramLiteral</h3>
+
+<p>Ƭ  <strong>GramLiteral</strong>: <a href="/api/interfaces/gram_ast.booleanliteral/">BooleanLiteral</a> | <a href="/api/interfaces/gram_ast.stringliteral/">StringLiteral</a> | <a href="/api/interfaces/gram_ast.taggedtextliteral/">TaggedTextLiteral</a> | <a href="/api/interfaces/gram_ast.integerliteral/">IntegerLiteral</a> | <a href="/api/interfaces/gram_ast.measurementliteral/">MeasurementLiteral</a> | <a href="/api/interfaces/gram_ast.decimalliteral/">DecimalLiteral</a> | <a href="/api/interfaces/gram_ast.hexadecimalliteral/">HexadecimalLiteral</a> | <a href="/api/interfaces/gram_ast.octalliteral/">OctalLiteral</a></p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L283">packages/gram-ast/src/index.ts:283</a></em></p>
+
+<p>Discrimination union of all possible literals.</p>
+
+<hr />
+
+<h3 id="grampathlike">GramPathlike</h3>
+
+<p>Ƭ  <strong>GramPathlike</strong>: <a href="/api/interfaces/gram_ast.grampath/">GramPath</a> | <a href="/api/interfaces/gram_ast.gramnode/">GramNode</a> | <a href="/api/interfaces/gram_ast.gramedge/">GramEdge</a></p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L213">packages/gram-ast/src/index.ts:213</a></em></p>
+
+<p>GramPathlike is a discriminated union of GramPath with
+its two primary specializations, GramNode and GramEdge.</p>
+
+<hr />
+
+<h3 id="gramrecord">GramRecord</h3>
+
+<p>Ƭ  <strong>GramRecord</strong>: Map&lt;string, <a href="/api/modules/gram_ast/#gramrecordvalue">GramRecordValue</a>&gt;</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L228">packages/gram-ast/src/index.ts:228</a></em></p>
+
+<p>A GramRecord is a map of name/value pairs.</p>
+
+<hr />
+
+<h3 id="gramrecordvalue">GramRecordValue</h3>
+
+<p>Ƭ  <strong>GramRecordValue</strong>: <a href="/api/modules/gram_ast/#gramliteral">GramLiteral</a> | <a href="/api/modules/gram_ast/#gramrecord">GramRecord</a> | <a href="/api/modules/gram_ast/#gramrecordvalue">GramRecordValue</a>[]</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L222">packages/gram-ast/src/index.ts:222</a></em></p>
+
+<p>GramRecordValue is a union of literals, literal arrays and nested records.
+This forms a familiar OO-style structure.</p>
+
+<hr />
+
+<h3 id="pathkind">PathKind</h3>
+
+<p>Ƭ  <strong>PathKind</strong>: <a href="/api/modules/gram_ast/#relationshipkind">RelationshipKind</a> | <a href="/api/modules/gram_ast/#combinationkind">CombinationKind</a></p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L207">packages/gram-ast/src/index.ts:207</a></em></p>
+
+<p>PathKind describes the nature of the
+path composition.</p>
+
+<p>One of:</p>
+
+<ul>
+  <li>RelationshipKind: ‘left’, ‘right’, ‘either’</li>
+  <li>CombinationKind:  <code class="language-plaintext highlighter-rouge">pair</code></li>
+</ul>
+
+<hr />
+
+<h3 id="relationshipkind">RelationshipKind</h3>
+
+<p>Ƭ  <strong>RelationshipKind</strong>: "left" | "right" | "either"</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L185">packages/gram-ast/src/index.ts:185</a></em></p>
+
+<p>Kind of path which forms a graph relationship.</p>
+
+<p>One of:</p>
+
+<ul>
+  <li>left   <code class="language-plaintext highlighter-rouge">(a)&lt;--(b)</code></li>
+  <li>right  <code class="language-plaintext highlighter-rouge">(a)--&gt;(b)</code></li>
+  <li>either <code class="language-plaintext highlighter-rouge">(a)--(b)</code></li>
+</ul>
+
+<hr />
+
+<h3 id="taggedliteral">TaggedLiteral</h3>
+
+<p>Ƭ  <strong>TaggedLiteral</strong>: <a href="/api/interfaces/gram_ast.dateliteral/">DateLiteral</a> | <a href="/api/interfaces/gram_ast.timeliteral/">TimeLiteral</a> | <a href="/api/interfaces/gram_ast.datetimeliteral/">DateTimeLiteral</a> | <a href="/api/interfaces/gram_ast.timeintervalliteral/">TimeIntervalLiteral</a> | <a href="/api/interfaces/gram_ast.durationliteral/">DurationLiteral</a> | <a href="/api/interfaces/gram_ast.wellknowntextliteral/">WellKnownTextLiteral</a> | <a href="/api/interfaces/gram_ast.uriliteral/">UriLiteral</a></p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L429">packages/gram-ast/src/index.ts:429</a></em></p>
+
+<h2 id="variables-1">Variables</h2>
+
+<h3 id="empty_path_id">EMPTY_PATH_ID</h3>
+
+<p>• <code class="language-plaintext highlighter-rouge">Const</code> <strong>EMPTY_PATH_ID</strong>: "ø" = “ø”</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L100">packages/gram-ast/src/index.ts:100</a></em></p>
+
+<p>Constant identity for empty paths: <code class="language-plaintext highlighter-rouge">ø</code>.</p>
+
+<hr />
+
+<h3 id="boolean">boolean</h3>
+
+<p>• <code class="language-plaintext highlighter-rouge">Const</code> <strong>boolean</strong>: RegExp = /true|false|TRUE|FALSE\b(?!@)/</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/gram-tokens.ts#L1">packages/gram-ast/src/gram-tokens.ts:1</a></em></p>
+
+<hr />
+
+<h3 id="checkidentifierregex">checkIdentifierRegex</h3>
+
+<p>• <code class="language-plaintext highlighter-rouge">Const</code> <strong>checkIdentifierRegex</strong>: RegExp = new RegExp(‘^’ + identifier.source + ‘$’)</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/gram-tokens.ts#L14">packages/gram-ast/src/gram-tokens.ts:14</a></em></p>
+
+<hr />
+
+<h3 id="decimal">decimal</h3>
+
+<p>• <code class="language-plaintext highlighter-rouge">Const</code> <strong>decimal</strong>: RegExp = /-?(?:[0-9]|[1-9][0-9]+).[0-9]+(?:[eE][-+]?[0-9]+)?\b(?!@)/</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/gram-tokens.ts#L5">packages/gram-ast/src/gram-tokens.ts:5</a></em></p>
+
+<hr />
+
+<h3 id="doublequotedstring">doubleQuotedString</h3>
+
+<p>• <code class="language-plaintext highlighter-rouge">Const</code> <strong>doubleQuotedString</strong>: RegExp = /”(?:\[“bfnrt/\]|\u[a-fA-F0-9]{4}|[^”\])*”/</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/gram-tokens.ts#L8">packages/gram-ast/src/gram-tokens.ts:8</a></em></p>
+
+<hr />
+
+<h3 id="hexadecimal">hexadecimal</h3>
+
+<p>• <code class="language-plaintext highlighter-rouge">Const</code> <strong>hexadecimal</strong>: RegExp = /-?0x(?:[0-9a-fA-F]+)\b(?!@)/</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/gram-tokens.ts#L2">packages/gram-ast/src/gram-tokens.ts:2</a></em></p>
+
+<hr />
+
+<h3 id="identifier">identifier</h3>
+
+<p>• <code class="language-plaintext highlighter-rouge">Const</code> <strong>identifier</strong>: RegExp = /[0-9a-zA-Z_@]+\b@*/</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/gram-tokens.ts#L12">packages/gram-ast/src/gram-tokens.ts:12</a></em></p>
+
+<hr />
+
+<h3 id="integer">integer</h3>
+
+<p>• <code class="language-plaintext highlighter-rouge">Const</code> <strong>integer</strong>: RegExp = /-?(?:[0-9]|[1-9][0-9]+)(?:[eE][-+]?[0-9]+)?\b(?!@)/</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/gram-tokens.ts#L6">packages/gram-ast/src/gram-tokens.ts:6</a></em></p>
+
+<hr />
+
+<h3 id="measurement">measurement</h3>
+
+<p>• <code class="language-plaintext highlighter-rouge">Const</code> <strong>measurement</strong>: RegExp = /-?(?:[0-9]|[1-9][0-9]+)(?:.[0-9]+)?[a-zA-Z]+\b(?!@)/</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/gram-tokens.ts#L4">packages/gram-ast/src/gram-tokens.ts:4</a></em></p>
+
+<hr />
+
+<h3 id="octal">octal</h3>
+
+<p>• <code class="language-plaintext highlighter-rouge">Const</code> <strong>octal</strong>: RegExp = /-?0(?:[0-7]+)\b(?!@)/</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/gram-tokens.ts#L3">packages/gram-ast/src/gram-tokens.ts:3</a></em></p>
+
+<hr />
+
+<h3 id="singlequotedstring">singleQuotedString</h3>
+
+<p>• <code class="language-plaintext highlighter-rouge">Const</code> <strong>singleQuotedString</strong>: RegExp = /’(?:\[‘bfnrt/\]|\u[a-fA-F0-9]{4}|[^’\])*’/</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/gram-tokens.ts#L9">packages/gram-ast/src/gram-tokens.ts:9</a></em></p>
+
+<hr />
+
+<h3 id="symbol">symbol</h3>
+
+<p>• <code class="language-plaintext highlighter-rouge">Const</code> <strong>symbol</strong>: RegExp = /[a-zA-Z_][0-9a-zA-Z_]*\b(?!@)/</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/gram-tokens.ts#L11">packages/gram-ast/src/gram-tokens.ts:11</a></em></p>
+
+<hr />
+
+<h3 id="taggedstring">taggedString</h3>
+
+<p>• <code class="language-plaintext highlighter-rouge">Const</code> <strong>taggedString</strong>: RegExp = /[a-zA-Z][0-9a-zA-Z_@]<em>`(?:\[`bfnrt/\]|\u[a-fA-F0-9]{4}|[^`\])</em>`/</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/gram-tokens.ts#L7">packages/gram-ast/src/gram-tokens.ts:7</a></em></p>
+
+<hr />
+
+<h3 id="tickedstring">tickedString</h3>
+
+<p>• <code class="language-plaintext highlighter-rouge">Const</code> <strong>tickedString</strong>: RegExp = /`(?:\[`bfnrt/\]|\u[a-fA-F0-9]{4}|[^`\])*`/</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/gram-tokens.ts#L10">packages/gram-ast/src/gram-tokens.ts:10</a></em></p>
+
+<h2 id="functions-1">Functions</h2>
+
+<h3 id="isbooleanliteral">isBooleanLiteral</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isBooleanLiteral</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is TextLiteral</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L318">packages/gram-ast/src/index.ts:318</a></em></p>
+
+<p>Type guard for BooleanLiteral.</p>
+
+<h4 id="parameters">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is TextLiteral</p>
+
+<hr />
+
+<h3 id="isdateliteral">isDateLiteral</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isDateLiteral</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is DateLiteral</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L483">packages/gram-ast/src/index.ts:483</a></em></p>
+
+<p>Type guard for DateLiteral.</p>
+
+<p>Note: this does not validate the text representation.</p>
+
+<h4 id="parameters-1">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is DateLiteral</p>
+
+<hr />
+
+<h3 id="isdatetimeliteral">isDateTimeLiteral</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isDateTimeLiteral</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is DateTimeLiteral</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L522">packages/gram-ast/src/index.ts:522</a></em></p>
+
+<p>Type guard for DateTimeLiteral.</p>
+
+<p>Note: this does not validate the text representation.</p>
+
+<h4 id="parameters-2">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is DateTimeLiteral</p>
+
+<hr />
+
+<h3 id="isdecimalliteral">isDecimalLiteral</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isDecimalLiteral</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is DecimalLiteral</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L368">packages/gram-ast/src/index.ts:368</a></em></p>
+
+<p>Type guard for DecimalLiteral.</p>
+
+<h4 id="parameters-3">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is DecimalLiteral</p>
+
+<hr />
+
+<h3 id="isduration">isDuration</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isDuration</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is DurationLiteral</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L545">packages/gram-ast/src/index.ts:545</a></em></p>
+
+<p>Type guard for DurationLiteral.</p>
+
+<p>Note: this does not validate the text representation.</p>
+
+<h4 id="parameters-4">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is DurationLiteral</p>
+
+<hr />
+
+<h3 id="isgramedge">isGramEdge</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isGramEdge</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is GramEdge</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L168">packages/gram-ast/src/index.ts:168</a></em></p>
+
+<p>Type guard for GramEdge.</p>
+
+<h4 id="parameters-5">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is GramEdge</p>
+
+<hr />
+
+<h3 id="isgramemptypath">isGramEmptyPath</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isGramEmptyPath</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is GramEmptyPath</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L122">packages/gram-ast/src/index.ts:122</a></em></p>
+
+<p>Type guard for GramEmptyPath.</p>
+
+<h4 id="parameters-6">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is GramEmptyPath</p>
+
+<hr />
+
+<h3 id="isgramliteral">isGramLiteral</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isGramLiteral</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is GramLiteral</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L298">packages/gram-ast/src/index.ts:298</a></em></p>
+
+<p>Type guard for GramLiteral.</p>
+
+<h4 id="parameters-7">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is GramLiteral</p>
+
+<hr />
+
+<h3 id="isgramliteralarray">isGramLiteralArray</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isGramLiteralArray</strong>(<code class="language-plaintext highlighter-rouge">v</code>: <a href="/api/modules/gram_ast/#gramrecordvalue">GramRecordValue</a>): v is GramLiteral[]</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L240">packages/gram-ast/src/index.ts:240</a></em></p>
+
+<h4 id="parameters-8">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">v</code></td>
+      <td><a href="/api/modules/gram_ast/#gramrecordvalue">GramRecordValue</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> v is GramLiteral[]</p>
+
+<hr />
+
+<h3 id="isgramnode">isGramNode</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isGramNode</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is GramNode</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L142">packages/gram-ast/src/index.ts:142</a></em></p>
+
+<p>Type guard for GramNode.</p>
+
+<h4 id="parameters-9">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is GramNode</p>
+
+<hr />
+
+<h3 id="isgrampath">isGramPath</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isGramPath</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is GramPath</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L94">packages/gram-ast/src/index.ts:94</a></em></p>
+
+<p>Type guard for a Path.</p>
+
+<h4 id="parameters-10">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is GramPath</p>
+
+<hr />
+
+<h3 id="isgramproperty">isGramProperty</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isGramProperty</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is GramProperty</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L268">packages/gram-ast/src/index.ts:268</a></em></p>
+
+<p>Type guard for GramProperty.</p>
+
+<h4 id="parameters-11">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is GramProperty</p>
+
+<hr />
+
+<h3 id="isgramrecord">isGramRecord</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isGramRecord</strong>(<code class="language-plaintext highlighter-rouge">v</code>: any): v is GramRecord</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L237">packages/gram-ast/src/index.ts:237</a></em></p>
+
+<p>A type guard to narrow a GramRecordValue to a GramRecord.</p>
+
+<p>Warning: this is not a runtime guarantee</p>
+
+<h4 id="parameters-12">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">v</code></td>
+      <td>any</td>
+      <td>any GramRecordValue</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> v is GramRecord</p>
+
+<hr />
+
+<h3 id="isgramseq">isGramSeq</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isGramSeq</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is GramSeq</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L38">packages/gram-ast/src/index.ts:38</a></em></p>
+
+<p>Type guard for GramSeq.</p>
+
+<h4 id="parameters-13">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is GramSeq</p>
+
+<hr />
+
+<h3 id="ishexadecimalliteral">isHexadecimalLiteral</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isHexadecimalLiteral</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is HexadecimalLiteral</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L385">packages/gram-ast/src/index.ts:385</a></em></p>
+
+<p>Type guard for HexadecimalLiteral.</p>
+
+<h4 id="parameters-14">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is HexadecimalLiteral</p>
+
+<hr />
+
+<h3 id="isintegerliteral">isIntegerLiteral</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isIntegerLiteral</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is IntegerLiteral</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L352">packages/gram-ast/src/index.ts:352</a></em></p>
+
+<p>Type guard for IntegerLiteral.</p>
+
+<h4 id="parameters-15">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is IntegerLiteral</p>
+
+<hr />
+
+<h3 id="ismeasurementliteral">isMeasurementLiteral</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isMeasurementLiteral</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is MeasurementLiteral</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L423">packages/gram-ast/src/index.ts:423</a></em></p>
+
+<p>Type guard for MeasurementLiteral.</p>
+
+<h4 id="parameters-16">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is MeasurementLiteral</p>
+
+<hr />
+
+<h3 id="isoctalliteral">isOctalLiteral</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isOctalLiteral</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is OctalLiteral</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L403">packages/gram-ast/src/index.ts:403</a></em></p>
+
+<p>Type guard for OctalLiteral.</p>
+
+<h4 id="parameters-17">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is OctalLiteral</p>
+
+<hr />
+
+<h3 id="isstringliteral">isStringLiteral</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isStringLiteral</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is TextLiteral</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L336">packages/gram-ast/src/index.ts:336</a></em></p>
+
+<p>Type guard for StringLiteral.</p>
+
+<h4 id="parameters-18">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is TextLiteral</p>
+
+<hr />
+
+<h3 id="istaggedliteral">isTaggedLiteral</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isTaggedLiteral</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is TaggedLiteral</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L464">packages/gram-ast/src/index.ts:464</a></em></p>
+
+<p>Type guard for TaggedTextLiteral.</p>
+
+<h4 id="parameters-19">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is TaggedLiteral</p>
+
+<hr />
+
+<h3 id="istimeinterval">isTimeInterval</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isTimeInterval</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is TimeIntervalLiteral</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L571">packages/gram-ast/src/index.ts:571</a></em></p>
+
+<p>Type guard for TimeIntervalLiteral.</p>
+
+<p>Note: this does not validate the text representation.</p>
+
+<h4 id="parameters-20">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is TimeIntervalLiteral</p>
+
+<hr />
+
+<h3 id="istimeliteral">isTimeLiteral</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isTimeLiteral</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is TaggedTextLiteral</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L502">packages/gram-ast/src/index.ts:502</a></em></p>
+
+<p>Type guard for TimeLiteral.</p>
+
+<p>Note: this does not validate the text representation.</p>
+
+<h4 id="parameters-21">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is TaggedTextLiteral</p>
+
+<hr />
+
+<h3 id="isuriliteral">isUriLiteral</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isUriLiteral</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is UriLiteral</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L651">packages/gram-ast/src/index.ts:651</a></em></p>
+
+<p>Type guard for UriLiteral.</p>
+
+<h4 id="parameters-22">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is UriLiteral</p>
+
+<hr />
+
+<h3 id="isvalididentifier">isValidIdentifier</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isValidIdentifier</strong>(<code class="language-plaintext highlighter-rouge">s?</code>: undefined | string): undefined | false | true | “”</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/gram-tokens.ts#L20">packages/gram-ast/src/gram-tokens.ts:20</a></em></p>
+
+<p>Checks whether the given string is a valid identifier.</p>
+
+<h4 id="parameters-23">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">s?</code></td>
+      <td>undefined | string</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> undefined | false | true | “”</p>
+
+<hr />
+
+<h3 id="iswellknowntextliteral">isWellKnownTextLiteral</h3>
+
+<p>▸ <code class="language-plaintext highlighter-rouge">Const</code><strong>isWellKnownTextLiteral</strong>(<code class="language-plaintext highlighter-rouge">o</code>: any): o is WellKnownTextLiteral</p>
+
+<p><em>Defined in <a href="https://github.com/gram-data/gram-js/blob/6df7c85/packages/gram-ast/src/index.ts#L593">packages/gram-ast/src/index.ts:593</a></em></p>
+
+<p>Type guard for WellKnownTextLiteral.</p>
+
+<h4 id="parameters-24">Parameters:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">o</code></td>
+      <td>any</td>
+      <td>any object</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Returns:</strong> o is WellKnownTextLiteral</p>
+
+      </div>
+      <!--/ Page Content-->
+   </div>
+
+   <!-- page footer -->
+   <div class="w-full container mx-auto items-center justify-between mt-0 py-4">
+      <div class="float-right lg:content-center lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 z-20" id="nav-content">
+         <a href="https://github.com/gram-data/gram-js/tree/main/docs/">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current inline-block text-gray-500 h-5 w-5">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+            <span>Help improve this page</span>
+            </a>
+      </div>
+   </div>
+</div>
+
+    </main><footer class="bg-white border-t border-gray-400 shadow">
+  <div class="container mx-auto flex flex-wrap items-center justify-between p-8">
+     <div class="w-3/4 mx-auto flex flex-grow flex-wrap">
+        <div class="flex w-full lg:w-1/2 ">
+           <div>
+              <h3 class="font-bold text-gray-900">About gram.js</h3>
+              <p class="py-4 text-gray-600 text-sm">
+                 Gram is a textual format for data graphs. 
+              </p>
+           </div>
+        </div>
+     </div>
+     <div class=""><div class="grid grid-flow-col grid-cols-3 gap-2"><div ><a rel="me" href="https://github.com/gram-data/gram-js" title="gram-data"><svg role="img" width="2em" height="2em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub icon</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a></div><div><a rel="me" href="https://stackoverflow.com/questions/tagged/gram" title="gram"><svg role="img" width="2em" height="2em"viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Stack Overflow icon</title><path d="M18.986 21.865v-6.404h2.134V24H1.844v-8.539h2.13v6.404h15.012zM6.111 19.731H16.85v-2.137H6.111v2.137zm.259-4.852l10.48 2.189.451-2.07-10.478-2.187-.453 2.068zm1.359-5.056l9.705 4.53.903-1.95-9.706-4.53-.902 1.936v.014zm2.715-4.785l8.217 6.855 1.359-1.62-8.216-6.853-1.35 1.617-.01.001zM15.751 0l-1.746 1.294 6.405 8.604 1.746-1.294L15.749 0h.002z"/></svg></a></div><div><a rel="me" href="https://twitter.com/akollegger" title="akollegger"><svg role="img" width="2em" height="2em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Twitter icon</title><path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"/></svg></a></div></div></div>
+  </div>
+</footer>
+</body>
+
+</html>

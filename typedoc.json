@@ -1,9 +1,8 @@
 {
   "name": "gram.js API",
-  "readme": "./readme.md",
+  "readme": "/api",
   "mode": "modules",
   "inputFiles": [
-    "./readme.md",
     "./packages/gram-ast/src",
     "./packages/gram-builder/src",
     "./packages/gram-identity/src",
@@ -14,15 +13,11 @@
     "./packages/gram-value/src"
   ],
   "out": "docs/api",
-  "theme": "node_modules/typedoc-neo-theme/bin/default",
-  "ignoreCompilerErrors": "false",
-  "preserveConstEnums": "true",
+  "ignoreCompilerErrors": false,
+  "listInvalidSymbolLinks": true,
+  "preserveConstEnums": true,
   "exclude": "*.spec.ts",
   "external-modulemap": ".*packages\/([^\/]+)\/src/.*",
   "hideGenerator": true,
-  "stripInternal": "false",
-  "links": [{
-    "label": "Guides",
-    "url": "https://gram-data.github.io/gram-js/guides"
-  }]
+  "stripInternal": false
 }

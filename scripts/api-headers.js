@@ -3,7 +3,8 @@ const path = require('path');
 
 jetpack.find('docs', {matching: 'api/**/*.md'}).forEach( file => {
   const header = `---
-name: ${path.basename(file, '.md')}
+title: ${path.basename(file, '.md')}
+layout: api
 ---
 
 `;
@@ -14,4 +15,4 @@ name: ${path.basename(file, '.md')}
   jetpack.append(file, content);
 })
 
-jetpack.rename('docs/api/README.md', 'index.md');
+// jetpack.rename('docs/api/README.md', 'index.md');

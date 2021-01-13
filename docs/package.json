@@ -21,6 +21,9 @@
     "tailwindcss": "^2.0.1"
   },
   "dependencies": {
+    "@fontsource/cormorant-garamond": "^4.1.0",
+    "@fontsource/fira-code": "^4.1.0",
+    "@fontsource/open-sans": "^4.1.0",
     "fontsource-cormorant-garamond": "^3.0.10"
   }
 }

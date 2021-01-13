@@ -154,7 +154,7 @@ const grammar: Grammar = {
     {
       name: 'GramSeq$ebnf$1',
       symbols: ['GramSeq$ebnf$1', 'GramSeq$ebnf$1$subexpression$2'],
-      postprocess: d => d[0].concat([d[1]]),
+      postprocess: (d) => d[0].concat([d[1]]),
     },
     {
       name: 'GramSeq',
@@ -343,7 +343,7 @@ const grammar: Grammar = {
     {
       name: 'Attributes',
       symbols: ['Attributes$ebnf$1', 'Attributes$ebnf$2', 'Attributes$ebnf$3'],
-      postprocess: function(d, _, reject) {
+      postprocess: function (d, _, reject) {
         const [id, labels, record] = d;
         if (id || labels || record) {
           return { id, labels, record };
@@ -354,7 +354,7 @@ const grammar: Grammar = {
     {
       name: 'LabelList$ebnf$1',
       symbols: ['LabelList$ebnf$1', 'Label'],
-      postprocess: d => d[0].concat([d[1]]),
+      postprocess: (d) => d[0].concat([d[1]]),
     },
     {
       name: 'LabelList',
@@ -441,7 +441,7 @@ const grammar: Grammar = {
     {
       name: 'Record$ebnf$1',
       symbols: ['Record$ebnf$1', 'Record$ebnf$1$subexpression$1'],
-      postprocess: d => d[0].concat([d[1]]),
+      postprocess: (d) => d[0].concat([d[1]]),
     },
     {
       name: 'Record',
@@ -465,7 +465,7 @@ const grammar: Grammar = {
     {
       name: 'Value',
       symbols: [lexer.has('boolean') ? { type: 'boolean' } : boolean, '_'],
-      postprocess: d => g.boolean(JSON.parse(d[0].value.toLowerCase())),
+      postprocess: (d) => g.boolean(JSON.parse(d[0].value.toLowerCase())),
     },
     { name: 'Value$ebnf$1', symbols: [] },
     {
@@ -476,7 +476,7 @@ const grammar: Grammar = {
     {
       name: 'Value$ebnf$1',
       symbols: ['Value$ebnf$1', 'Value$ebnf$1$subexpression$1'],
-      postprocess: d => d[0].concat([d[1]]),
+      postprocess: (d) => d[0].concat([d[1]]),
     },
     {
       name: 'Value',
@@ -497,7 +497,7 @@ const grammar: Grammar = {
           ? { type: 'singleQuotedString' }
           : singleQuotedString,
       ],
-      postprocess: d => g.string(d[0].value),
+      postprocess: (d) => g.string(d[0].value),
     },
     {
       name: 'StringLiteral',
@@ -506,21 +506,21 @@ const grammar: Grammar = {
           ? { type: 'doubleQuotedString' }
           : doubleQuotedString,
       ],
-      postprocess: d => g.string(d[0].value),
+      postprocess: (d) => g.string(d[0].value),
     },
     {
       name: 'StringLiteral',
       symbols: [
         lexer.has('tickedString') ? { type: 'tickedString' } : tickedString,
       ],
-      postprocess: d => g.string(d[0].value),
+      postprocess: (d) => g.string(d[0].value),
     },
     {
       name: 'StringLiteral',
       symbols: [
         lexer.has('taggedString') ? { type: 'taggedString' } : taggedString,
       ],
-      postprocess: d => {
+      postprocess: (d) => {
         const parts = separateTagFromString(d[0].value);
         return g.tagged(parts.tag, parts.value);
       },
@@ -528,31 +528,31 @@ const grammar: Grammar = {
     {
       name: 'NumericLiteral',
       symbols: [lexer.has('integer') ? { type: 'integer' } : integer],
-      postprocess: d => g.integer(d[0].value),
+      postprocess: (d) => g.integer(d[0].value),
     },
     {
       name: 'NumericLiteral',
       symbols: [lexer.has('decimal') ? { type: 'decimal' } : decimal],
-      postprocess: d => g.decimal(d[0].value),
+      postprocess: (d) => g.decimal(d[0].value),
     },
     {
       name: 'NumericLiteral',
       symbols: [
         lexer.has('hexadecimal') ? { type: 'hexadecimal' } : hexadecimal,
       ],
-      postprocess: d => g.hexadecimal(d[0].value),
+      postprocess: (d) => g.hexadecimal(d[0].value),
     },
     {
       name: 'NumericLiteral',
       symbols: [lexer.has('octal') ? { type: 'octal' } : octal],
-      postprocess: d => g.octal(d[0].value),
+      postprocess: (d) => g.octal(d[0].value),
     },
     {
       name: 'NumericLiteral',
       symbols: [
         lexer.has('measurement') ? { type: 'measurement' } : measurement,
       ],
-      postprocess: d => {
+      postprocess: (d) => {
         const parts = separateNumberFromUnits(d[0].value);
         return g.measurement(parts.unit, parts.value);
       },
