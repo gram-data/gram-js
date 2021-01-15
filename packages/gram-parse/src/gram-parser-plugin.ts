@@ -47,7 +47,7 @@ export interface GramParserSettings {
   strict: boolean;
 }
 
-const gramParserPlugin: Plugin<GramParserSettings[]> = function () {
+const gramParserPlugin: Plugin<GramParserSettings[]> = function() {
   this.Parser = parse;
 };
 

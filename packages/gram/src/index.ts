@@ -1,5 +1,6 @@
-import unified from 'unified';
-import vfile from 'vfile';
+const unified = require('unified');
+import { VFileCompatible } from 'vfile';
+
 import * as ast from '@gram-data/gram-ast';
 import * as builder from '@gram-data/gram-builder';
 import * as identity from '@gram-data/gram-identity';
@@ -18,6 +19,6 @@ export const processor = unified()
 export { ast, builder, identity, parser, ops, value, stringify };
 
 export default {
-  parse: processor.parse as (vfile: vfile.VFileCompatible) => ast.GramSeq,
+  parse: processor.parse as (vfile: VFileCompatible) => ast.GramSeq,
   stringify: stringify.toGram
 }
