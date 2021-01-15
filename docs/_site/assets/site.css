@@ -32468,6 +32468,10 @@ h1, h2, h3, h4, h5 {
   font-weight: 300;
 }
 
+.excerpt svg.railroad-diagram {
+  margin: 0;
+}
+
 svg.railroad-diagram {
   /* background-color: hsl(30,20%,95%); */
   margin-bottom: 4em;
