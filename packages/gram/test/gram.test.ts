@@ -29,8 +29,8 @@ describe('gram ops', () => {
 });
 
 describe('gram stringify', () => {
-  it('can serialize a parsed node "()"', () => {
-    const src = `()`;
+  it('can serialize a parsed node "(1)"', () => {
+    const src = `(1)`;
     const seq = gram.parse(src);
     const serialized = gram.stringify(seq);
 
