@@ -1,4 +1,5 @@
 import unified from 'unified';
+import vfile from 'vfile';
 import * as ast from '@gram-data/gram-ast';
 import * as builder from '@gram-data/gram-builder';
 import * as identity from '@gram-data/gram-identity';
@@ -10,10 +11,13 @@ import * as stringify from '@gram-data/gram-stringify';
 import { gramParserPlugin } from '@gram-data/gram-parse';
 import * as gramPresetBasic from '@gram-data/gram-preset-basic';
 
-const gramProcessor = unified()
+export const processor = unified()
   .use(gramParserPlugin)
   .use(gramPresetBasic);
 
 export { ast, builder, identity, parser, ops, value, stringify };
 
-export default gramProcessor;
+export default {
+  parse: processor.parse as (vfile: vfile.VFileCompatible) => ast.GramSeq,
+  stringify: stringify.toGram
+}
