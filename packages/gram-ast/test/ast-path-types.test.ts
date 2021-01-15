@@ -36,10 +36,8 @@ describe('gram nodes', () => {
       expect(node.id).toEqual('a');
       node.labels = ['A', 'B'];
       expect(node.labels).toEqual(expect.arrayContaining(['A', 'B']));
-      node.record = [
-        { type: 'property', name: 'k', value: { type: 'string', value: 'v' } },
-      ];
-      expect(isStringLiteral(node.record[0].value)).toBeTruthy();
+      node.record = new Map([['k', { type: 'string', value: 'v' }]]);
+      expect(isStringLiteral(node.record.get('k'))).toBeTruthy();
       expect(node.children).toHaveLength(0);
     }
   });
@@ -54,10 +52,8 @@ describe('gram edges', () => {
       expect(edge.id).toEqual('e');
       edge.labels = ['A', 'B'];
       expect(edge.labels).toEqual(expect.arrayContaining(['A', 'B']));
-      edge.record = [
-        { type: 'property', name: 'k', value: { type: 'string', value: 'v' } },
-      ];
-      expect(isStringLiteral(edge.record[0].value)).toBeTruthy();
+      edge.record = new Map([['k', { type: 'string', value: 'v' }]]);
+      expect(isStringLiteral(edge.record.get('k'))).toBeTruthy();
       expect(edge.children).toHaveLength(2);
       expect(edge.kind).toBeDefined();
     }

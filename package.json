@@ -10,7 +10,7 @@
     "build:packages": "lerna run build",
     "build:demo": "npm run build --prefix demo",
     "test": "lerna run test --concurrency 1",
-    "prepare": "run-s clean build",
+    "prepare": "run-s clean bootstrap",
     "docs": "run-s docs:**",
     "docs:api": "shx rm -rf docs/api && typedoc",
     "docs:api-data": "typedoc --json docs/_data/api.json",

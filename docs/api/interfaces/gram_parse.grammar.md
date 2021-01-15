@@ -27,7 +27,7 @@ layout: api
 
 •  **Lexer**: [NearleyLexer](gram_parse.nearleylexer.md) \| undefined
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:135](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L135)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:135](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-parse/src/gram-grammar.ts#L135)*
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 •  **ParserRules**: [NearleyRule](gram_parse.nearleyrule.md)[]
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:136](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L136)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:136](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-parse/src/gram-grammar.ts#L136)*
 
 ___
 
@@ -43,4 +43,4 @@ ___
 
 •  **ParserStart**: string
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:137](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-parse/src/gram-grammar.ts#L137)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:137](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-parse/src/gram-grammar.ts#L137)*

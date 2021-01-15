@@ -179,7 +179,7 @@ multimapped properties:
 
 Ƭ  **CombinationKind**: \"pair\"
 
-*Defined in [packages/gram-ast/src/index.ts:196](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L196)*
+*Defined in [packages/gram-ast/src/index.ts:196](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L196)*
 
 Kind of path which combines two paths together
 without implying any semantics.
@@ -194,7 +194,7 @@ ___
 
 Ƭ  **GramLiteral**: [BooleanLiteral](../interfaces/gram_ast.booleanliteral.md) \| [StringLiteral](../interfaces/gram_ast.stringliteral.md) \| [TaggedTextLiteral](../interfaces/gram_ast.taggedtextliteral.md) \| [IntegerLiteral](../interfaces/gram_ast.integerliteral.md) \| [MeasurementLiteral](../interfaces/gram_ast.measurementliteral.md) \| [DecimalLiteral](../interfaces/gram_ast.decimalliteral.md) \| [HexadecimalLiteral](../interfaces/gram_ast.hexadecimalliteral.md) \| [OctalLiteral](../interfaces/gram_ast.octalliteral.md)
 
-*Defined in [packages/gram-ast/src/index.ts:283](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L283)*
+*Defined in [packages/gram-ast/src/index.ts:283](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L283)*
 
 Discrimination union of all possible literals.
 
@@ -204,7 +204,7 @@ ___
 
 Ƭ  **GramPathlike**: [GramPath](../interfaces/gram_ast.grampath.md) \| [GramNode](../interfaces/gram_ast.gramnode.md) \| [GramEdge](../interfaces/gram_ast.gramedge.md)
 
-*Defined in [packages/gram-ast/src/index.ts:213](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L213)*
+*Defined in [packages/gram-ast/src/index.ts:213](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L213)*
 
 GramPathlike is a discriminated union of GramPath with
 its two primary specializations, GramNode and GramEdge.
@@ -215,7 +215,7 @@ ___
 
 Ƭ  **GramRecord**: Map<string, [GramRecordValue](gram_ast.md#gramrecordvalue)\>
 
-*Defined in [packages/gram-ast/src/index.ts:228](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L228)*
+*Defined in [packages/gram-ast/src/index.ts:228](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L228)*
 
 A GramRecord is a map of name/value pairs.
 
@@ -225,7 +225,7 @@ ___
 
 Ƭ  **GramRecordValue**: [GramLiteral](gram_ast.md#gramliteral) \| [GramRecord](gram_ast.md#gramrecord) \| [GramRecordValue](gram_ast.md#gramrecordvalue)[]
 
-*Defined in [packages/gram-ast/src/index.ts:222](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L222)*
+*Defined in [packages/gram-ast/src/index.ts:222](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L222)*
 
 GramRecordValue is a union of literals, literal arrays and nested records.
 This forms a familiar OO-style structure.
@@ -236,7 +236,7 @@ ___
 
 Ƭ  **PathKind**: [RelationshipKind](gram_ast.md#relationshipkind) \| [CombinationKind](gram_ast.md#combinationkind)
 
-*Defined in [packages/gram-ast/src/index.ts:207](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L207)*
+*Defined in [packages/gram-ast/src/index.ts:207](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L207)*
 
 PathKind describes the nature of the
 path composition.
@@ -252,7 +252,7 @@ ___
 
 Ƭ  **RelationshipKind**: \"left\" \| \"right\" \| \"either\"
 
-*Defined in [packages/gram-ast/src/index.ts:185](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L185)*
+*Defined in [packages/gram-ast/src/index.ts:185](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L185)*
 
 Kind of path which forms a graph relationship.
 
@@ -268,7 +268,7 @@ ___
 
 Ƭ  **TaggedLiteral**: [DateLiteral](../interfaces/gram_ast.dateliteral.md) \| [TimeLiteral](../interfaces/gram_ast.timeliteral.md) \| [DateTimeLiteral](../interfaces/gram_ast.datetimeliteral.md) \| [TimeIntervalLiteral](../interfaces/gram_ast.timeintervalliteral.md) \| [DurationLiteral](../interfaces/gram_ast.durationliteral.md) \| [WellKnownTextLiteral](../interfaces/gram_ast.wellknowntextliteral.md) \| [UriLiteral](../interfaces/gram_ast.uriliteral.md)
 
-*Defined in [packages/gram-ast/src/index.ts:429](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L429)*
+*Defined in [packages/gram-ast/src/index.ts:429](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L429)*
 
 ## Variables
 
@@ -276,7 +276,7 @@ ___
 
 • `Const` **EMPTY\_PATH\_ID**: \"ø\" = "ø"
 
-*Defined in [packages/gram-ast/src/index.ts:100](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L100)*
+*Defined in [packages/gram-ast/src/index.ts:100](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L100)*
 
 Constant identity for empty paths: `ø`.
 
@@ -286,7 +286,7 @@ ___
 
 • `Const` **boolean**: RegExp = /true\|false\|TRUE\|FALSE\b(?!@)/
 
-*Defined in [packages/gram-ast/src/gram-tokens.ts:1](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/gram-tokens.ts#L1)*
+*Defined in [packages/gram-ast/src/gram-tokens.ts:1](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/gram-tokens.ts#L1)*
 
 ___
 
@@ -294,7 +294,7 @@ ___
 
 • `Const` **checkIdentifierRegex**: RegExp = new RegExp('^' + identifier.source + '$')
 
-*Defined in [packages/gram-ast/src/gram-tokens.ts:14](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/gram-tokens.ts#L14)*
+*Defined in [packages/gram-ast/src/gram-tokens.ts:14](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/gram-tokens.ts#L14)*
 
 ___
 
@@ -302,7 +302,7 @@ ___
 
 • `Const` **decimal**: RegExp = /-?(?:[0-9]\|[1-9][0-9]+)\.[0-9]+(?:[eE][-+]?[0-9]+)?\b(?!@)/
 
-*Defined in [packages/gram-ast/src/gram-tokens.ts:5](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/gram-tokens.ts#L5)*
+*Defined in [packages/gram-ast/src/gram-tokens.ts:5](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/gram-tokens.ts#L5)*
 
 ___
 
@@ -310,7 +310,7 @@ ___
 
 • `Const` **doubleQuotedString**: RegExp = /"(?:\\["bfnrt/\\]\|\\u[a-fA-F0-9]{4}\|[^"\\])*"/
 
-*Defined in [packages/gram-ast/src/gram-tokens.ts:8](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/gram-tokens.ts#L8)*
+*Defined in [packages/gram-ast/src/gram-tokens.ts:8](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/gram-tokens.ts#L8)*
 
 ___
 
@@ -318,7 +318,7 @@ ___
 
 • `Const` **hexadecimal**: RegExp = /-?0x(?:[0-9a-fA-F]+)\b(?!@)/
 
-*Defined in [packages/gram-ast/src/gram-tokens.ts:2](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/gram-tokens.ts#L2)*
+*Defined in [packages/gram-ast/src/gram-tokens.ts:2](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/gram-tokens.ts#L2)*
 
 ___
 
@@ -326,7 +326,7 @@ ___
 
 • `Const` **identifier**: RegExp = /[0-9a-zA-Z\_@]+\b@*/
 
-*Defined in [packages/gram-ast/src/gram-tokens.ts:12](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/gram-tokens.ts#L12)*
+*Defined in [packages/gram-ast/src/gram-tokens.ts:12](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/gram-tokens.ts#L12)*
 
 ___
 
@@ -334,7 +334,7 @@ ___
 
 • `Const` **integer**: RegExp = /-?(?:[0-9]\|[1-9][0-9]+)(?:[eE][-+]?[0-9]+)?\b(?!@)/
 
-*Defined in [packages/gram-ast/src/gram-tokens.ts:6](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/gram-tokens.ts#L6)*
+*Defined in [packages/gram-ast/src/gram-tokens.ts:6](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/gram-tokens.ts#L6)*
 
 ___
 
@@ -342,7 +342,7 @@ ___
 
 • `Const` **measurement**: RegExp = /-?(?:[0-9]\|[1-9][0-9]+)(?:\.[0-9]+)?[a-zA-Z]+\b(?!@)/
 
-*Defined in [packages/gram-ast/src/gram-tokens.ts:4](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/gram-tokens.ts#L4)*
+*Defined in [packages/gram-ast/src/gram-tokens.ts:4](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/gram-tokens.ts#L4)*
 
 ___
 
@@ -350,7 +350,7 @@ ___
 
 • `Const` **octal**: RegExp = /-?0(?:[0-7]+)\b(?!@)/
 
-*Defined in [packages/gram-ast/src/gram-tokens.ts:3](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/gram-tokens.ts#L3)*
+*Defined in [packages/gram-ast/src/gram-tokens.ts:3](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/gram-tokens.ts#L3)*
 
 ___
 
@@ -358,7 +358,7 @@ ___
 
 • `Const` **singleQuotedString**: RegExp = /'(?:\\['bfnrt/\\]\|\\u[a-fA-F0-9]{4}\|[^'\\])*'/
 
-*Defined in [packages/gram-ast/src/gram-tokens.ts:9](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/gram-tokens.ts#L9)*
+*Defined in [packages/gram-ast/src/gram-tokens.ts:9](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/gram-tokens.ts#L9)*
 
 ___
 
@@ -366,7 +366,7 @@ ___
 
 • `Const` **symbol**: RegExp = /[a-zA-Z\_][0-9a-zA-Z\_]*\b(?!@)/
 
-*Defined in [packages/gram-ast/src/gram-tokens.ts:11](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/gram-tokens.ts#L11)*
+*Defined in [packages/gram-ast/src/gram-tokens.ts:11](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/gram-tokens.ts#L11)*
 
 ___
 
@@ -374,7 +374,7 @@ ___
 
 • `Const` **taggedString**: RegExp = /[a-zA-Z][0-9a-zA-Z\_@]*\`(?:\\[\`bfnrt/\\]\|\\u[a-fA-F0-9]{4}\|[^\`\\])*\`/
 
-*Defined in [packages/gram-ast/src/gram-tokens.ts:7](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/gram-tokens.ts#L7)*
+*Defined in [packages/gram-ast/src/gram-tokens.ts:7](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/gram-tokens.ts#L7)*
 
 ___
 
@@ -382,7 +382,7 @@ ___
 
 • `Const` **tickedString**: RegExp = /\`(?:\\[\`bfnrt/\\]\|\\u[a-fA-F0-9]{4}\|[^\`\\])*\`/
 
-*Defined in [packages/gram-ast/src/gram-tokens.ts:10](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/gram-tokens.ts#L10)*
+*Defined in [packages/gram-ast/src/gram-tokens.ts:10](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/gram-tokens.ts#L10)*
 
 ## Functions
 
@@ -390,7 +390,7 @@ ___
 
 ▸ `Const`**isBooleanLiteral**(`o`: any): o is TextLiteral
 
-*Defined in [packages/gram-ast/src/index.ts:318](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L318)*
+*Defined in [packages/gram-ast/src/index.ts:318](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L318)*
 
 Type guard for BooleanLiteral.
 
@@ -408,7 +408,7 @@ ___
 
 ▸ `Const`**isDateLiteral**(`o`: any): o is DateLiteral
 
-*Defined in [packages/gram-ast/src/index.ts:483](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L483)*
+*Defined in [packages/gram-ast/src/index.ts:483](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L483)*
 
 Type guard for DateLiteral.
 
@@ -428,7 +428,7 @@ ___
 
 ▸ `Const`**isDateTimeLiteral**(`o`: any): o is DateTimeLiteral
 
-*Defined in [packages/gram-ast/src/index.ts:522](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L522)*
+*Defined in [packages/gram-ast/src/index.ts:522](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L522)*
 
 Type guard for DateTimeLiteral.
 
@@ -448,7 +448,7 @@ ___
 
 ▸ `Const`**isDecimalLiteral**(`o`: any): o is DecimalLiteral
 
-*Defined in [packages/gram-ast/src/index.ts:368](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L368)*
+*Defined in [packages/gram-ast/src/index.ts:368](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L368)*
 
 Type guard for DecimalLiteral.
 
@@ -466,7 +466,7 @@ ___
 
 ▸ `Const`**isDuration**(`o`: any): o is DurationLiteral
 
-*Defined in [packages/gram-ast/src/index.ts:545](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L545)*
+*Defined in [packages/gram-ast/src/index.ts:545](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L545)*
 
 Type guard for DurationLiteral.
 
@@ -486,7 +486,7 @@ ___
 
 ▸ `Const`**isGramEdge**(`o`: any): o is GramEdge
 
-*Defined in [packages/gram-ast/src/index.ts:168](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L168)*
+*Defined in [packages/gram-ast/src/index.ts:168](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L168)*
 
 Type guard for GramEdge.
 
@@ -504,7 +504,7 @@ ___
 
 ▸ `Const`**isGramEmptyPath**(`o`: any): o is GramEmptyPath
 
-*Defined in [packages/gram-ast/src/index.ts:122](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L122)*
+*Defined in [packages/gram-ast/src/index.ts:122](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L122)*
 
 Type guard for GramEmptyPath.
 
@@ -522,7 +522,7 @@ ___
 
 ▸ `Const`**isGramLiteral**(`o`: any): o is GramLiteral
 
-*Defined in [packages/gram-ast/src/index.ts:298](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L298)*
+*Defined in [packages/gram-ast/src/index.ts:298](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L298)*
 
 Type guard for GramLiteral.
 
@@ -540,7 +540,7 @@ ___
 
 ▸ `Const`**isGramLiteralArray**(`v`: [GramRecordValue](gram_ast.md#gramrecordvalue)): v is GramLiteral[]
 
-*Defined in [packages/gram-ast/src/index.ts:240](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L240)*
+*Defined in [packages/gram-ast/src/index.ts:240](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L240)*
 
 #### Parameters:
 
@@ -556,7 +556,7 @@ ___
 
 ▸ `Const`**isGramNode**(`o`: any): o is GramNode
 
-*Defined in [packages/gram-ast/src/index.ts:142](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L142)*
+*Defined in [packages/gram-ast/src/index.ts:142](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L142)*
 
 Type guard for GramNode.
 
@@ -574,7 +574,7 @@ ___
 
 ▸ `Const`**isGramPath**(`o`: any): o is GramPath
 
-*Defined in [packages/gram-ast/src/index.ts:94](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L94)*
+*Defined in [packages/gram-ast/src/index.ts:94](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L94)*
 
 Type guard for a Path.
 
@@ -592,7 +592,7 @@ ___
 
 ▸ `Const`**isGramProperty**(`o`: any): o is GramProperty
 
-*Defined in [packages/gram-ast/src/index.ts:268](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L268)*
+*Defined in [packages/gram-ast/src/index.ts:268](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L268)*
 
 Type guard for GramProperty.
 
@@ -610,7 +610,7 @@ ___
 
 ▸ `Const`**isGramRecord**(`v`: any): v is GramRecord
 
-*Defined in [packages/gram-ast/src/index.ts:237](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L237)*
+*Defined in [packages/gram-ast/src/index.ts:237](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L237)*
 
 A type guard to narrow a GramRecordValue to a GramRecord.
 
@@ -630,7 +630,7 @@ ___
 
 ▸ `Const`**isGramSeq**(`o`: any): o is GramSeq
 
-*Defined in [packages/gram-ast/src/index.ts:38](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L38)*
+*Defined in [packages/gram-ast/src/index.ts:38](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L38)*
 
 Type guard for GramSeq.
 
@@ -648,7 +648,7 @@ ___
 
 ▸ `Const`**isHexadecimalLiteral**(`o`: any): o is HexadecimalLiteral
 
-*Defined in [packages/gram-ast/src/index.ts:385](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L385)*
+*Defined in [packages/gram-ast/src/index.ts:385](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L385)*
 
 Type guard for HexadecimalLiteral.
 
@@ -666,7 +666,7 @@ ___
 
 ▸ `Const`**isIntegerLiteral**(`o`: any): o is IntegerLiteral
 
-*Defined in [packages/gram-ast/src/index.ts:352](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L352)*
+*Defined in [packages/gram-ast/src/index.ts:352](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L352)*
 
 Type guard for IntegerLiteral.
 
@@ -684,7 +684,7 @@ ___
 
 ▸ `Const`**isMeasurementLiteral**(`o`: any): o is MeasurementLiteral
 
-*Defined in [packages/gram-ast/src/index.ts:423](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L423)*
+*Defined in [packages/gram-ast/src/index.ts:423](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L423)*
 
 Type guard for MeasurementLiteral.
 
@@ -702,7 +702,7 @@ ___
 
 ▸ `Const`**isOctalLiteral**(`o`: any): o is OctalLiteral
 
-*Defined in [packages/gram-ast/src/index.ts:403](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L403)*
+*Defined in [packages/gram-ast/src/index.ts:403](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L403)*
 
 Type guard for OctalLiteral.
 
@@ -720,7 +720,7 @@ ___
 
 ▸ `Const`**isStringLiteral**(`o`: any): o is TextLiteral
 
-*Defined in [packages/gram-ast/src/index.ts:336](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L336)*
+*Defined in [packages/gram-ast/src/index.ts:336](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L336)*
 
 Type guard for StringLiteral.
 
@@ -738,7 +738,7 @@ ___
 
 ▸ `Const`**isTaggedLiteral**(`o`: any): o is TaggedLiteral
 
-*Defined in [packages/gram-ast/src/index.ts:464](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L464)*
+*Defined in [packages/gram-ast/src/index.ts:464](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L464)*
 
 Type guard for TaggedTextLiteral.
 
@@ -756,7 +756,7 @@ ___
 
 ▸ `Const`**isTimeInterval**(`o`: any): o is TimeIntervalLiteral
 
-*Defined in [packages/gram-ast/src/index.ts:571](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L571)*
+*Defined in [packages/gram-ast/src/index.ts:571](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L571)*
 
 Type guard for TimeIntervalLiteral.
 
@@ -776,7 +776,7 @@ ___
 
 ▸ `Const`**isTimeLiteral**(`o`: any): o is TaggedTextLiteral
 
-*Defined in [packages/gram-ast/src/index.ts:502](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L502)*
+*Defined in [packages/gram-ast/src/index.ts:502](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L502)*
 
 Type guard for TimeLiteral.
 
@@ -796,7 +796,7 @@ ___
 
 ▸ `Const`**isUriLiteral**(`o`: any): o is UriLiteral
 
-*Defined in [packages/gram-ast/src/index.ts:651](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L651)*
+*Defined in [packages/gram-ast/src/index.ts:651](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L651)*
 
 Type guard for UriLiteral.
 
@@ -814,7 +814,7 @@ ___
 
 ▸ `Const`**isValidIdentifier**(`s?`: undefined \| string): undefined \| false \| true \| ""
 
-*Defined in [packages/gram-ast/src/gram-tokens.ts:20](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/gram-tokens.ts#L20)*
+*Defined in [packages/gram-ast/src/gram-tokens.ts:20](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/gram-tokens.ts#L20)*
 
 Checks whether the given string is a valid identifier.
 
@@ -832,7 +832,7 @@ ___
 
 ▸ `Const`**isWellKnownTextLiteral**(`o`: any): o is WellKnownTextLiteral
 
-*Defined in [packages/gram-ast/src/index.ts:593](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L593)*
+*Defined in [packages/gram-ast/src/index.ts:593](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L593)*
 
 Type guard for WellKnownTextLiteral.
 

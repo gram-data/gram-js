@@ -1,4 +1,4 @@
-import { IDGenerator } from '.';
+import { IDGenerator } from './generator-type';
 
 /**
  * Creates an IDGenerator based on incrementing numbers.

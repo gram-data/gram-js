@@ -61,7 +61,8 @@
     "@gram-data/gram-ops": "^0.4.0-alpha.0",
     "@gram-data/gram-parse": "^0.4.0-alpha.0",
     "@gram-data/gram-stringify": "^0.4.0-alpha.0",
-    "@gram-data/gram-value": "^0.4.0-alpha.0"
+    "@gram-data/gram-value": "^0.4.0-alpha.0",
+    "@gram-data/gram-preset-basic": "^0.4.0-alpha.0"
   },
   "publishConfig": {
     "access": "public"

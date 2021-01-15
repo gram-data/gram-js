@@ -1,17 +1,19 @@
+import unified from 'unified';
 import * as ast from '@gram-data/gram-ast';
 import * as builder from '@gram-data/gram-builder';
+import * as identity from '@gram-data/gram-identity';
 import * as parser from '@gram-data/gram-parse';
-import * as value from '@gram-data/gram-value';
 import * as ops from '@gram-data/gram-ops';
+import * as value from '@gram-data/gram-value';
 import * as stringify from '@gram-data/gram-stringify';
 
-export { ast, builder, parser, ops, value, stringify };
+import { gramParserPlugin } from '@gram-data/gram-parse';
+import * as gramPresetBasic from '@gram-data/gram-preset-basic';
 
-export default {
-  ast,
-  builder,
-  parser,
-  ops,
-  value,
-  stringify,
-};
+const gramProcessor = unified()
+  .use(gramParserPlugin)
+  .use(gramPresetBasic);
+
+export { ast, builder, identity, parser, ops, value, stringify };
+
+export default gramProcessor;

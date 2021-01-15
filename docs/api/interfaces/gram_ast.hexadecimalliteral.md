@@ -69,7 +69,7 @@ ___
 
 *Overrides [TextLiteral](gram_ast.textliteral.md).[type](gram_ast.textliteral.md#type)*
 
-*Defined in [packages/gram-ast/src/index.ts:377](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L377)*
+*Defined in [packages/gram-ast/src/index.ts:377](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L377)*
 
 ___
 
@@ -81,4 +81,4 @@ ___
 
 *Overrides void*
 
-*Defined in [packages/gram-ast/src/index.ts:277](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-ast/src/index.ts#L277)*
+*Defined in [packages/gram-ast/src/index.ts:277](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L277)*

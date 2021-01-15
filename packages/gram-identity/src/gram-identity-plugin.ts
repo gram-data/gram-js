@@ -4,7 +4,8 @@ import { Node as UnistNode } from 'unist';
 // import {VFile} from 'vfile'
 
 import { isGramPath } from '@gram-data/gram-ast';
-import { alphabets, IDGenerator } from './gram-identity';
+import { alphabets } from './identity-alphabets';
+import { IDGenerator } from './generator-type';
 import { counterIDGenerator } from './counter-generator';
 import { nanoidGenerator } from './nanoid-generator';
 
@@ -22,7 +23,7 @@ const defaultSettings = {
   prefix: undefined,
 };
 
-const gramIdentityPlugin: Plugin<IdentityPluginSettings[]> = (
+export const gramIdentityPlugin: Plugin<IdentityPluginSettings[]> = (
   settings: IdentityPluginSettings
 ) => {
   const s = { ...defaultSettings, ...settings };

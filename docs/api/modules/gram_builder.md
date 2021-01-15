@@ -94,7 +94,7 @@ const ast = edge([left, right], 'right');
 
 Ƭ  **Children**<T\>: T \| T[] \| () => T \| T[]
 
-*Defined in [packages/gram-builder/src/index.ts:37](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L37)*
+*Defined in [packages/gram-builder/src/index.ts:37](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L37)*
 
 #### Type parameters:
 
@@ -108,7 +108,7 @@ Name |
 
 ▸ `Const`**boolean**(`value`: boolean): [BooleanLiteral](../interfaces/gram_ast.booleanliteral.md)
 
-*Defined in [packages/gram-builder/src/index.ts:410](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L410)*
+*Defined in [packages/gram-builder/src/index.ts:410](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L410)*
 
 #### Parameters:
 
@@ -124,7 +124,7 @@ ___
 
 ▸ `Const`**cons**(`members?`: [] \| [[GramPath](../interfaces/gram_ast.grampath.md)] \| [[GramPath](../interfaces/gram_ast.grampath.md), [GramPath](../interfaces/gram_ast.grampath.md)], `attributes?`: [PathAttributes](../interfaces/gram_builder.pathattributes.md)): [GramPath](../interfaces/gram_ast.grampath.md)
 
-*Defined in [packages/gram-builder/src/index.ts:112](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L112)*
+*Defined in [packages/gram-builder/src/index.ts:112](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L112)*
 
 Build a path.
 
@@ -143,7 +143,7 @@ ___
 
 ▸ `Const`**date**(`value`: string \| Date): [DateLiteral](../interfaces/gram_ast.dateliteral.md)
 
-*Defined in [packages/gram-builder/src/index.ts:461](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L461)*
+*Defined in [packages/gram-builder/src/index.ts:461](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L461)*
 
 #### Parameters:
 
@@ -159,7 +159,7 @@ ___
 
 ▸ `Const`**dateToDayOfMonth**(`d`: Date): string
 
-*Defined in [packages/gram-builder/src/index.ts:54](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L54)*
+*Defined in [packages/gram-builder/src/index.ts:54](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L54)*
 
 #### Parameters:
 
@@ -175,7 +175,7 @@ ___
 
 ▸ `Const`**dateToYMD**(`d`: Date): string
 
-*Defined in [packages/gram-builder/src/index.ts:52](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L52)*
+*Defined in [packages/gram-builder/src/index.ts:52](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L52)*
 
 #### Parameters:
 
@@ -191,7 +191,7 @@ ___
 
 ▸ `Const`**dayOfMonth**(`value`: string \| Date): [DateLiteral](../interfaces/gram_ast.dateliteral.md)
 
-*Defined in [packages/gram-builder/src/index.ts:467](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L467)*
+*Defined in [packages/gram-builder/src/index.ts:467](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L467)*
 
 #### Parameters:
 
@@ -207,7 +207,7 @@ ___
 
 ▸ `Const`**decimal**(`value`: string \| number): [DecimalLiteral](../interfaces/gram_ast.decimalliteral.md)
 
-*Defined in [packages/gram-builder/src/index.ts:431](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L431)*
+*Defined in [packages/gram-builder/src/index.ts:431](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L431)*
 
 #### Parameters:
 
@@ -223,7 +223,7 @@ ___
 
 ▸ `Const`**duration**(`value`: string \| Date): [DurationLiteral](../interfaces/gram_ast.durationliteral.md)
 
-*Defined in [packages/gram-builder/src/index.ts:479](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L479)*
+*Defined in [packages/gram-builder/src/index.ts:479](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L479)*
 
 #### Parameters:
 
@@ -239,7 +239,7 @@ ___
 
 ▸ `Const`**edge**(`children`: [[GramNode](../interfaces/gram_ast.gramnode.md), [GramNode](../interfaces/gram_ast.gramnode.md)], `kind`: [RelationshipKind](gram_ast.md#relationshipkind), `id?`: undefined \| string, `labels?`: string[], `record?`: [GramRecord](gram_ast.md#gramrecord)): [GramEdge](../interfaces/gram_ast.gramedge.md)
 
-*Defined in [packages/gram-builder/src/index.ts:212](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L212)*
+*Defined in [packages/gram-builder/src/index.ts:212](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L212)*
 
 Build an Edge.
 
@@ -261,7 +261,7 @@ ___
 
 ▸ `Const`**empty**(): [GramEmptyPath](../interfaces/gram_ast.gramemptypath.md)
 
-*Defined in [packages/gram-builder/src/index.ts:181](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L181)*
+*Defined in [packages/gram-builder/src/index.ts:181](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L181)*
 
 Convenience function for retrieving the singleton GramEmptyPath.
 
@@ -273,7 +273,7 @@ ___
 
 ▸ `Const`**emptyRecord**(): Map<string, [GramRecordValue](gram_ast.md#gramrecordvalue)\>
 
-*Defined in [packages/gram-builder/src/index.ts:269](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L269)*
+*Defined in [packages/gram-builder/src/index.ts:269](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L269)*
 
 Create a new, empty GramRecord.
 
@@ -285,7 +285,7 @@ ___
 
 ▸ `Const`**flatten**(`xs`: any[], `depth?`: number): any[]
 
-*Defined in [packages/gram-builder/src/index.ts:489](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L489)*
+*Defined in [packages/gram-builder/src/index.ts:489](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L489)*
 
 #### Parameters:
 
@@ -302,7 +302,7 @@ ___
 
 ▸ `Const`**getDown**(`hierarchy`: string[] \| string, `f?`: undefined \| (r: [GramRecordValue](gram_ast.md#gramrecordvalue)) => any): (Anonymous function)
 
-*Defined in [packages/gram-builder/src/index.ts:354](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L354)*
+*Defined in [packages/gram-builder/src/index.ts:354](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L354)*
 
 Produces a Lens down into nested GramRecords.
 
@@ -343,7 +343,7 @@ ___
 
 ▸ `Const`**getLiteral**(`name`: string): (Anonymous function)
 
-*Defined in [packages/gram-builder/src/index.ts:308](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L308)*
+*Defined in [packages/gram-builder/src/index.ts:308](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L308)*
 
 Produces a Lens into a literal value with a GramRecord.
 
@@ -361,7 +361,7 @@ ___
 
 ▸ `Const`**getRecord**(`name`: string): (Anonymous function)
 
-*Defined in [packages/gram-builder/src/index.ts:320](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L320)*
+*Defined in [packages/gram-builder/src/index.ts:320](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L320)*
 
 Produces a Lens into a record value with a GramRecord.
 
@@ -379,7 +379,7 @@ ___
 
 ▸ `Const`**getValue**(`l`: [GramRecordValue](gram_ast.md#gramrecordvalue) \| undefined): undefined \| string
 
-*Defined in [packages/gram-builder/src/index.ts:300](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L300)*
+*Defined in [packages/gram-builder/src/index.ts:300](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L300)*
 
 Extracts the value from a GramLiteral, if available.
 
@@ -397,7 +397,7 @@ ___
 
 ▸ `Const`**hexadecimal**(`value`: string \| number): [HexadecimalLiteral](../interfaces/gram_ast.hexadecimalliteral.md)
 
-*Defined in [packages/gram-builder/src/index.ts:436](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L436)*
+*Defined in [packages/gram-builder/src/index.ts:436](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L436)*
 
 #### Parameters:
 
@@ -413,7 +413,7 @@ ___
 
 ▸ `Const`**integer**(`value`: string \| number): [IntegerLiteral](../interfaces/gram_ast.integerliteral.md)
 
-*Defined in [packages/gram-builder/src/index.ts:426](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L426)*
+*Defined in [packages/gram-builder/src/index.ts:426](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L426)*
 
 #### Parameters:
 
@@ -429,7 +429,7 @@ ___
 
 ▸ `Const`**listToPath**(`kind?`: [PathKind](gram_ast.md#pathkind), `pathlist`: [GramPath](../interfaces/gram_ast.grampath.md)[]): [GramPath](../interfaces/gram_ast.grampath.md)
 
-*Defined in [packages/gram-builder/src/index.ts:91](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L91)*
+*Defined in [packages/gram-builder/src/index.ts:91](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L91)*
 
 Reduce a list of paths into a single path composed using the given kind.
 
@@ -448,7 +448,7 @@ ___
 
 ▸ `Const`**measurement**(`unit`: string, `value`: string \| number): [MeasurementLiteral](../interfaces/gram_ast.measurementliteral.md)
 
-*Defined in [packages/gram-builder/src/index.ts:446](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L446)*
+*Defined in [packages/gram-builder/src/index.ts:446](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L446)*
 
 #### Parameters:
 
@@ -465,7 +465,7 @@ ___
 
 ▸ `Const`**node**(`id?`: undefined \| string, `labels?`: string[], `record?`: [GramRecord](gram_ast.md#gramrecord)): [GramNode](../interfaces/gram_ast.gramnode.md)
 
-*Defined in [packages/gram-builder/src/index.ts:191](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L191)*
+*Defined in [packages/gram-builder/src/index.ts:191](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L191)*
 
 Build a GramNode.
 
@@ -485,7 +485,7 @@ ___
 
 ▸ **normalizeChildren**<T\>(`children?`: [Children](gram_builder.md#children)<T\>): T[]
 
-*Defined in [packages/gram-builder/src/index.ts:39](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L39)*
+*Defined in [packages/gram-builder/src/index.ts:39](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L39)*
 
 #### Type parameters:
 
@@ -507,7 +507,7 @@ ___
 
 ▸ `Const`**objectToRecord**(`o`: any): [GramRecord](gram_ast.md#gramrecord)
 
-*Defined in [packages/gram-builder/src/index.ts:288](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L288)*
+*Defined in [packages/gram-builder/src/index.ts:288](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L288)*
 
 Transforms a plain js object into a GramRecord.
 
@@ -525,7 +525,7 @@ ___
 
 ▸ `Const`**octal**(`value`: string \| number): [OctalLiteral](../interfaces/gram_ast.octalliteral.md)
 
-*Defined in [packages/gram-builder/src/index.ts:441](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L441)*
+*Defined in [packages/gram-builder/src/index.ts:441](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L441)*
 
 #### Parameters:
 
@@ -541,7 +541,7 @@ ___
 
 ▸ `Const`**pair**(`members`: [[GramPath](../interfaces/gram_ast.grampath.md), [GramPath](../interfaces/gram_ast.grampath.md)], `id?`: undefined \| string, `labels?`: string[], `record?`: [GramRecord](gram_ast.md#gramrecord)): [GramPath](../interfaces/gram_ast.grampath.md)
 
-*Defined in [packages/gram-builder/src/index.ts:258](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L258)*
+*Defined in [packages/gram-builder/src/index.ts:258](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L258)*
 
 Build a pair
 
@@ -562,7 +562,7 @@ ___
 
 ▸ `Const`**path**(`kind`: [PathKind](gram_ast.md#pathkind), `members`: [[GramPath](../interfaces/gram_ast.grampath.md), [GramPath](../interfaces/gram_ast.grampath.md)], `id?`: undefined \| string, `labels?`: string[], `record?`: [GramRecord](gram_ast.md#gramrecord)): [GramPath](../interfaces/gram_ast.grampath.md)
 
-*Defined in [packages/gram-builder/src/index.ts:235](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L235)*
+*Defined in [packages/gram-builder/src/index.ts:235](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L235)*
 
 Build a pair
 
@@ -584,7 +584,7 @@ ___
 
 ▸ `Const`**propertiesToRecord**(`properties`: [GramProperty](../interfaces/gram_ast.gramproperty.md)[]): [GramRecord](gram_ast.md#gramrecord)
 
-*Defined in [packages/gram-builder/src/index.ts:276](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L276)*
+*Defined in [packages/gram-builder/src/index.ts:276](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L276)*
 
 Reduces an array of GramProperties into a GramRecord.
 
@@ -602,7 +602,7 @@ ___
 
 ▸ `Const`**property**(`name`: string, `value`: any): [GramProperty](../interfaces/gram_ast.gramproperty.md)
 
-*Defined in [packages/gram-builder/src/index.ts:373](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L373)*
+*Defined in [packages/gram-builder/src/index.ts:373](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L373)*
 
 Builds a GramProperty from a name
 
@@ -621,7 +621,7 @@ ___
 
 ▸ `Const`**propertyValue**(`value`: any): [GramRecordValue](gram_ast.md#gramrecordvalue)
 
-*Defined in [packages/gram-builder/src/index.ts:382](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L382)*
+*Defined in [packages/gram-builder/src/index.ts:382](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L382)*
 
 #### Parameters:
 
@@ -637,7 +637,7 @@ ___
 
 ▸ `Const`**seq**(`paths`: [Children](gram_builder.md#children)<[GramPath](../interfaces/gram_ast.grampath.md)\>, `id?`: undefined \| string, `labels?`: string[], `record?`: [GramRecord](gram_ast.md#gramrecord)): [GramSeq](../interfaces/gram_ast.gramseq.md)
 
-*Defined in [packages/gram-builder/src/index.ts:64](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L64)*
+*Defined in [packages/gram-builder/src/index.ts:64](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L64)*
 
 Build a path sequence that represents a graph.
 
@@ -658,7 +658,7 @@ ___
 
 ▸ `Const`**string**(`value`: string): [StringLiteral](../interfaces/gram_ast.stringliteral.md)
 
-*Defined in [packages/gram-builder/src/index.ts:415](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L415)*
+*Defined in [packages/gram-builder/src/index.ts:415](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L415)*
 
 #### Parameters:
 
@@ -674,7 +674,7 @@ ___
 
 ▸ `Const`**tagged**(`tag`: string, `value`: string): [TaggedTextLiteral](../interfaces/gram_ast.taggedtextliteral.md)
 
-*Defined in [packages/gram-builder/src/index.ts:420](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L420)*
+*Defined in [packages/gram-builder/src/index.ts:420](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L420)*
 
 #### Parameters:
 
@@ -691,7 +691,7 @@ ___
 
 ▸ `Const`**time**(`value`: string \| Date): [TimeLiteral](../interfaces/gram_ast.timeliteral.md)
 
-*Defined in [packages/gram-builder/src/index.ts:473](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L473)*
+*Defined in [packages/gram-builder/src/index.ts:473](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L473)*
 
 #### Parameters:
 
@@ -707,7 +707,7 @@ ___
 
 ▸ `Const`**year**(`value`: string \| Date): [DateLiteral](../interfaces/gram_ast.dateliteral.md)
 
-*Defined in [packages/gram-builder/src/index.ts:455](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L455)*
+*Defined in [packages/gram-builder/src/index.ts:455](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L455)*
 
 #### Parameters:
 
@@ -723,7 +723,7 @@ Name | Type |
 
 ▪ `Const` **EMPTY\_PATH**: object
 
-*Defined in [packages/gram-builder/src/index.ts:170](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-builder/src/index.ts#L170)*
+*Defined in [packages/gram-builder/src/index.ts:170](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-builder/src/index.ts#L170)*
 
 Singleton instance of GramEmptyPath
 

@@ -1,7 +1,12 @@
 import gramIdentityPlugin from './gram-identity-plugin';
 
-export * from './gram-identity';
-export * from './counter-generator';
-export * from './nanoid-generator';
+import {alphabets} from './identity-alphabets';
+import {counterIDGenerator} from './counter-generator';
+import {nanoidGenerator} from './nanoid-generator';
 
-export { gramIdentityPlugin };
+export { 
+  alphabets,
+  counterIDGenerator,
+  nanoidGenerator,
+  gramIdentityPlugin 
+};

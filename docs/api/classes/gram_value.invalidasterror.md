@@ -35,7 +35,7 @@ layout: api
 
 \+ **new InvalidAstError**(`ast`: UnistParent \| UnistLiteral \| UnistNode): [InvalidAstError](gram_value.invalidasterror.md)
 
-*Defined in [packages/gram-value/src/gram-value.ts:40](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-value/src/gram-value.ts#L40)*
+*Defined in [packages/gram-value/src/gram-value.ts:40](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-value/src/gram-value.ts#L40)*
 
 #### Parameters:
 
@@ -51,7 +51,7 @@ Name | Type |
 
 •  **ast**: UnistParent \| UnistLiteral \| UnistNode
 
-*Defined in [packages/gram-value/src/gram-value.ts:40](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-value/src/gram-value.ts#L40)*
+*Defined in [packages/gram-value/src/gram-value.ts:40](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-value/src/gram-value.ts#L40)*
 
 ___
 

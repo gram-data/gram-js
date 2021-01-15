@@ -77,7 +77,7 @@ console.log(stringify(ast));
 
 ▸ `Const`**arrayToString**(`xs`: any[]): string
 
-*Defined in [packages/gram-stringify/src/gram-stringify.ts:63](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-stringify/src/gram-stringify.ts#L63)*
+*Defined in [packages/gram-stringify/src/gram-stringify.ts:63](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-stringify/src/gram-stringify.ts#L63)*
 
 #### Parameters:
 
@@ -93,7 +93,7 @@ ___
 
 ▸ **assertNever**(`x`: never): never
 
-*Defined in [packages/gram-stringify/src/gram-stringify.ts:20](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-stringify/src/gram-stringify.ts#L20)*
+*Defined in [packages/gram-stringify/src/gram-stringify.ts:20](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-stringify/src/gram-stringify.ts#L20)*
 
 #### Parameters:
 
@@ -109,7 +109,7 @@ ___
 
 ▸ `Const`**edgeToString**(`ast`: [GramEdge](../interfaces/gram_ast.gramedge.md)): string
 
-*Defined in [packages/gram-stringify/src/gram-stringify.ts:90](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-stringify/src/gram-stringify.ts#L90)*
+*Defined in [packages/gram-stringify/src/gram-stringify.ts:90](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-stringify/src/gram-stringify.ts#L90)*
 
 #### Parameters:
 
@@ -125,7 +125,7 @@ ___
 
 ▸ `Const`**elementContentToString**(`ast`: [GramPath](../interfaces/gram_ast.grampath.md)): string
 
-*Defined in [packages/gram-stringify/src/gram-stringify.ts:73](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-stringify/src/gram-stringify.ts#L73)*
+*Defined in [packages/gram-stringify/src/gram-stringify.ts:73](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-stringify/src/gram-stringify.ts#L73)*
 
 #### Parameters:
 
@@ -141,7 +141,7 @@ ___
 
 ▸ `Const`**gramStringifyPlugin**(): void
 
-*Defined in [packages/gram-stringify/src/gram-stringify-plugin.ts:20](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-stringify/src/gram-stringify-plugin.ts#L20)*
+*Defined in [packages/gram-stringify/src/gram-stringify-plugin.ts:20](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-stringify/src/gram-stringify-plugin.ts#L20)*
 
 **Returns:** void
 
@@ -151,7 +151,7 @@ ___
 
 ▸ `Const`**hasAttributes**(`p`: [GramPath](../interfaces/gram_ast.grampath.md)): undefined \| string \| string[] \| [GramRecord](gram_ast.md#gramrecord)
 
-*Defined in [packages/gram-stringify/src/gram-stringify.ts:144](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-stringify/src/gram-stringify.ts#L144)*
+*Defined in [packages/gram-stringify/src/gram-stringify.ts:144](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-stringify/src/gram-stringify.ts#L144)*
 
 #### Parameters:
 
@@ -167,7 +167,7 @@ ___
 
 ▸ `Const`**isEmpty**(`r`: [GramRecord](gram_ast.md#gramrecord)): boolean
 
-*Defined in [packages/gram-stringify/src/gram-stringify.ts:18](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-stringify/src/gram-stringify.ts#L18)*
+*Defined in [packages/gram-stringify/src/gram-stringify.ts:18](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-stringify/src/gram-stringify.ts#L18)*
 
 #### Parameters:
 
@@ -183,7 +183,7 @@ ___
 
 ▸ `Const`**nodeToString**(`ast`: [GramNode](../interfaces/gram_ast.gramnode.md)): string
 
-*Defined in [packages/gram-stringify/src/gram-stringify.ts:87](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-stringify/src/gram-stringify.ts#L87)*
+*Defined in [packages/gram-stringify/src/gram-stringify.ts:87](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-stringify/src/gram-stringify.ts#L87)*
 
 #### Parameters:
 
@@ -199,7 +199,7 @@ ___
 
 ▸ `Const`**objectToString**(`o`: { [key:string]: any;  }): string
 
-*Defined in [packages/gram-stringify/src/gram-stringify.ts:65](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-stringify/src/gram-stringify.ts#L65)*
+*Defined in [packages/gram-stringify/src/gram-stringify.ts:65](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-stringify/src/gram-stringify.ts#L65)*
 
 #### Parameters:
 
@@ -215,7 +215,7 @@ ___
 
 ▸ `Const`**pairToString**(`ast`: [GramPath](../interfaces/gram_ast.grampath.md)): string
 
-*Defined in [packages/gram-stringify/src/gram-stringify.ts:132](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-stringify/src/gram-stringify.ts#L132)*
+*Defined in [packages/gram-stringify/src/gram-stringify.ts:132](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-stringify/src/gram-stringify.ts#L132)*
 
 #### Parameters:
 
@@ -231,7 +231,7 @@ ___
 
 ▸ `Const`**pathCompositionToString**(`ast`: [GramPath](../interfaces/gram_ast.grampath.md)): string
 
-*Defined in [packages/gram-stringify/src/gram-stringify.ts:106](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-stringify/src/gram-stringify.ts#L106)*
+*Defined in [packages/gram-stringify/src/gram-stringify.ts:106](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-stringify/src/gram-stringify.ts#L106)*
 
 #### Parameters:
 
@@ -247,7 +247,7 @@ ___
 
 ▸ `Const`**pathToString**(`ast?`: [GramPath](../interfaces/gram_ast.grampath.md)): string
 
-*Defined in [packages/gram-stringify/src/gram-stringify.ts:146](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-stringify/src/gram-stringify.ts#L146)*
+*Defined in [packages/gram-stringify/src/gram-stringify.ts:146](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-stringify/src/gram-stringify.ts#L146)*
 
 #### Parameters:
 
@@ -263,7 +263,7 @@ ___
 
 ▸ `Const`**propertyToString**(`property`: [GramProperty](../interfaces/gram_ast.gramproperty.md)): string
 
-*Defined in [packages/gram-stringify/src/gram-stringify.ts:52](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-stringify/src/gram-stringify.ts#L52)*
+*Defined in [packages/gram-stringify/src/gram-stringify.ts:52](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-stringify/src/gram-stringify.ts#L52)*
 
 #### Parameters:
 
@@ -279,7 +279,7 @@ ___
 
 ▸ `Const`**recordToString**(`record`: [GramRecord](gram_ast.md#gramrecord)): string
 
-*Defined in [packages/gram-stringify/src/gram-stringify.ts:55](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-stringify/src/gram-stringify.ts#L55)*
+*Defined in [packages/gram-stringify/src/gram-stringify.ts:55](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-stringify/src/gram-stringify.ts#L55)*
 
 #### Parameters:
 
@@ -295,7 +295,7 @@ ___
 
 ▸ `Const`**stringify**(`ast`: any \| any[]): string
 
-*Defined in [packages/gram-stringify/src/gram-stringify.ts:163](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-stringify/src/gram-stringify.ts#L163)*
+*Defined in [packages/gram-stringify/src/gram-stringify.ts:163](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-stringify/src/gram-stringify.ts#L163)*
 
 #### Parameters:
 
@@ -311,7 +311,7 @@ ___
 
 ▸ `Const`**stringifyCompiler**(`element`: UnistNode): string
 
-*Defined in [packages/gram-stringify/src/gram-stringify-plugin.ts:9](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-stringify/src/gram-stringify-plugin.ts#L9)*
+*Defined in [packages/gram-stringify/src/gram-stringify-plugin.ts:9](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-stringify/src/gram-stringify-plugin.ts#L9)*
 
 #### Parameters:
 
@@ -327,7 +327,7 @@ ___
 
 ▸ `Const`**toStringLiteral**(`l`: [GramLiteral](gram_ast.md#gramliteral)): string
 
-*Defined in [packages/gram-stringify/src/gram-stringify.ts:23](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-stringify/src/gram-stringify.ts#L23)*
+*Defined in [packages/gram-stringify/src/gram-stringify.ts:23](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-stringify/src/gram-stringify.ts#L23)*
 
 #### Parameters:
 
@@ -343,7 +343,7 @@ ___
 
 ▸ `Const`**toStringValue**(`v`: [GramRecordValue](gram_ast.md#gramrecordvalue)): string
 
-*Defined in [packages/gram-stringify/src/gram-stringify.ts:42](https://github.com/gram-data/gram-js/blob/33eec55/packages/gram-stringify/src/gram-stringify.ts#L42)*
+*Defined in [packages/gram-stringify/src/gram-stringify.ts:42](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-stringify/src/gram-stringify.ts#L42)*
 
 #### Parameters:
 

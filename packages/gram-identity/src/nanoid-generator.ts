@@ -1,5 +1,6 @@
 import { customAlphabet } from 'nanoid';
-import { alphabets, IDGenerator } from '../src/gram-identity';
+import { alphabets } from './identity-alphabets';
+import { IDGenerator } from './generator-type';
 
 /**
  * Factory for creating an IDGenerator based on
