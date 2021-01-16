@@ -4,7 +4,7 @@ import { Node as UnistNode } from 'unist';
 import { isGramPath } from '@gram-data/gram-ast';
 import { valueOf, valueOfLiteral, LiteralValueEvaluator } from './gram-value';
 
-const visit = require('unist-util-visit');
+import visit from 'unist-util-visit';
 
 interface ValuePluginSettings {
   literalValueEvaluator?: LiteralValueEvaluator;

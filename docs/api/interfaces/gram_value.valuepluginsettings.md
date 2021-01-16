@@ -25,4 +25,4 @@ layout: api
 
 • `Optional` **literalValueEvaluator**: [LiteralValueEvaluator](../modules/gram_value.md#literalvalueevaluator)
 
-*Defined in [packages/gram-value/src/gram-value-plugin.ts:10](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-value/src/gram-value-plugin.ts#L10)*
+*Defined in [packages/gram-value/src/gram-value-plugin.ts:10](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-value/src/gram-value-plugin.ts#L10)*

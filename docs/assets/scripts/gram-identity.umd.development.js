@@ -155,14 +155,195 @@
     };
   };
 
-  var visit = /*#__PURE__*/require('unist-util-visit');
+  var convert_1 = convert;
+
+  function convert(test) {
+    if (test == null) {
+      return ok;
+    }
+
+    if (typeof test === 'string') {
+      return typeFactory(test);
+    }
+
+    if (typeof test === 'object') {
+      return 'length' in test ? anyFactory(test) : allFactory(test);
+    }
+
+    if (typeof test === 'function') {
+      return test;
+    }
+
+    throw new Error('Expected function, string, or object as test');
+  } // Utility assert each property in `test` is represented in `node`, and each
+  // values are strictly equal.
+
+
+  function allFactory(test) {
+    return all;
+
+    function all(node) {
+      var key;
+
+      for (key in test) {
+        if (node[key] !== test[key]) return false;
+      }
+
+      return true;
+    }
+  }
+
+  function anyFactory(tests) {
+    var checks = [];
+    var index = -1;
+
+    while (++index < tests.length) {
+      checks[index] = convert(tests[index]);
+    }
+
+    return any;
+
+    function any() {
+      var index = -1;
+
+      while (++index < checks.length) {
+        if (checks[index].apply(this, arguments)) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+  } // Utility to convert a string into a function which checks a given node’s type
+  // for said string.
+
+
+  function typeFactory(test) {
+    return type;
+
+    function type(node) {
+      return Boolean(node && node.type === test);
+    }
+  } // Utility to return true.
+
+
+  function ok() {
+    return true;
+  }
+
+  var color_browser = identity;
+
+  function identity(d) {
+    return d;
+  }
+
+  var unistUtilVisitParents = visitParents;
+  var CONTINUE = true;
+  var SKIP = 'skip';
+  var EXIT = false;
+  visitParents.CONTINUE = CONTINUE;
+  visitParents.SKIP = SKIP;
+  visitParents.EXIT = EXIT;
+
+  function visitParents(tree, test, visitor, reverse) {
+    var step;
+    var is;
+
+    if (typeof test === 'function' && typeof visitor !== 'function') {
+      reverse = visitor;
+      visitor = test;
+      test = null;
+    }
+
+    is = convert_1(test);
+    step = reverse ? -1 : 1;
+    factory(tree, null, [])();
+
+    function factory(node, index, parents) {
+      var value = typeof node === 'object' && node !== null ? node : {};
+      var name;
+
+      if (typeof value.type === 'string') {
+        name = typeof value.tagName === 'string' ? value.tagName : typeof value.name === 'string' ? value.name : undefined;
+        visit.displayName = 'node (' + color_browser(value.type + (name ? '<' + name + '>' : '')) + ')';
+      }
+
+      return visit;
+
+      function visit() {
+        var grandparents = parents.concat(node);
+        var result = [];
+        var subresult;
+        var offset;
+
+        if (!test || is(node, index, parents[parents.length - 1] || null)) {
+          result = toResult(visitor(node, parents));
+
+          if (result[0] === EXIT) {
+            return result;
+          }
+        }
+
+        if (node.children && result[0] !== SKIP) {
+          offset = (reverse ? node.children.length : -1) + step;
+
+          while (offset > -1 && offset < node.children.length) {
+            subresult = factory(node.children[offset], offset, grandparents)();
+
+            if (subresult[0] === EXIT) {
+              return subresult;
+            }
+
+            offset = typeof subresult[1] === 'number' ? subresult[1] : offset + step;
+          }
+        }
+
+        return result;
+      }
+    }
+  }
+
+  function toResult(value) {
+    if (value !== null && typeof value === 'object' && 'length' in value) {
+      return value;
+    }
+
+    if (typeof value === 'number') {
+      return [CONTINUE, value];
+    }
+
+    return [value];
+  }
+
+  var unistUtilVisit = visit;
+  var CONTINUE$1 = unistUtilVisitParents.CONTINUE;
+  var SKIP$1 = unistUtilVisitParents.SKIP;
+  var EXIT$1 = unistUtilVisitParents.EXIT;
+  visit.CONTINUE = CONTINUE$1;
+  visit.SKIP = SKIP$1;
+  visit.EXIT = EXIT$1;
+
+  function visit(tree, test, visitor, reverse) {
+    if (typeof test === 'function' && typeof visitor !== 'function') {
+      reverse = visitor;
+      visitor = test;
+      test = null;
+    }
+
+    unistUtilVisitParents(tree, test, overload, reverse);
+
+    function overload(node, parents) {
+      var parent = parents[parents.length - 1];
+      var index = parent ? parent.children.indexOf(node) : null;
+      return visitor(node, index, parent);
+    }
+  }
 
   var defaultSettings = {
     generator: 'counter',
     alphabet: alphabets.base58,
     prefix: undefined
   };
-
   var gramIdentityPlugin = function gramIdentityPlugin(settings) {
     var s = _extends({}, defaultSettings, settings);
 
@@ -179,7 +360,7 @@
           generator = counterIDGenerator(s.prefix);
       }
 
-      visit(tree, function (element) {
+      unistUtilVisit(tree, function (element) {
         if (isGramPath(element)) {
           element.id = element.id || generator.generate();
         }

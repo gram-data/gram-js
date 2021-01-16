@@ -23,7 +23,10 @@
     "lint:fix": "tsdx lint --fix src test",
     "prepare": "npm run build",
     "size": "size-limit",
-    "analyze": "size-limit --why"
+    "analyze": "size-limit --why",
+    "build:demo": "shx cp dist/gram.umd.development.* ./public",
+    "demo:parcel": "parcel ./public/index.html --open",
+    "demo:sirv": "sirv ./public/"
   },
   "husky": {
     "hooks": {
@@ -49,6 +52,8 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.9.1",
     "husky": "^4.3.6",
+    "parcel-bundler": "^1.12.4",
+    "shx": "^0.3.3",
     "size-limit": "^4.9.1",
     "tsdx": "^0.14.1",
     "tslib": "^2.0.3",
@@ -63,6 +68,7 @@
     "@gram-data/gram-preset-basic": "^0.4.0-alpha.4",
     "@gram-data/gram-stringify": "^0.4.0-alpha.4",
     "@gram-data/gram-value": "^0.4.0-alpha.4",
+    "sirv-cli": "^1.0.10",
     "unified": "^9.2.0",
     "vfile": "^4.2.1"
   },

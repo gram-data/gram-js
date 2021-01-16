@@ -1,14 +1,14 @@
 {
   "name": "gram.js API",
-  "readme": "/api",
   "mode": "modules",
+  "readme": "README.md",
   "inputFiles": [
+    "./packages/gram/src/index.ts",
     "./packages/gram-ast/src",
     "./packages/gram-builder/src",
     "./packages/gram-identity/src",
     "./packages/gram-ops/src",
     "./packages/gram-parse/src",
-    "./packages/gram-preset-basic/src",
     "./packages/gram-stringify/src",
     "./packages/gram-value/src"
   ],
@@ -17,7 +17,7 @@
   "listInvalidSymbolLinks": true,
   "preserveConstEnums": true,
   "exclude": "*.spec.ts",
-  "external-modulemap": ".*packages\/([^\/]+)\/src/.*",
+  "external-modulemap": ".*packages\/([^\/]+)\/.*",
   "hideGenerator": true,
   "stripInternal": false
 }

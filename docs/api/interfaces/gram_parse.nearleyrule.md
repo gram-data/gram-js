@@ -27,7 +27,7 @@ layout: api
 
 •  **name**: string
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:124](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-parse/src/gram-grammar.ts#L124)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:124](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-parse/src/gram-grammar.ts#L124)*
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 • `Optional` **postprocess**: undefined \| (d: any[], loc?: undefined \| number, reject?: undefined \| {}) => any
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:126](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-parse/src/gram-grammar.ts#L126)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:126](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-parse/src/gram-grammar.ts#L126)*
 
 ___
 
@@ -43,4 +43,4 @@ ___
 
 •  **symbols**: [NearleySymbol](../modules/gram_parse.md#nearleysymbol)[]
 
-*Defined in [packages/gram-parse/src/gram-grammar.ts:125](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-parse/src/gram-grammar.ts#L125)*
+*Defined in [packages/gram-parse/src/gram-grammar.ts:125](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-parse/src/gram-grammar.ts#L125)*

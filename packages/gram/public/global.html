@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="./gram.umd.development.js"></script>
+  </head>
+  <body>
+    <h1>gram demo - using global</h1>
+
+    <p>From gram source:</p>
+    <pre id="src">(you)-[:GREET {message:"hello"}]->(world)</pre>
+
+    <p>To parsed AST:</p>
+    <pre id="ast">parsed AST should appear here</pre>
+
+    <script>
+      window.onload = function () {
+        var src = document.getElementById('src').textContent;
+        gram.default.parse(src)
+        document.getElementById("ast").textContent = JSON.stringify(ast,null,2);
+      }
+    </script>
+  </body>
+</html>

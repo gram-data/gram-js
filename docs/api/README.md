@@ -7,83 +7,39 @@ layout: api
 
 > [Globals](globals.md)
 
-`()-[define]->(ast)`
+`(text)-->(ast)-->(text)`
 
-Gram abstract syntax tree definitions, tokenizing regexes, and utilities like type guards.
+`gram.js` is a collection of packages for working with the [gram](https://gram-data.github.io)
+textual format for graph data.
 
-## How to gram-ast
+You can parse `.gram` files into an AST. 
 
-### Install:
+Or, you can produce `.gram` files from an existing AST. 
 
-```bash
-npm install @gram-data/gram-ast
-```
+The AST is not a data model. But it does easily maps to a data model. For example see
+[d3-gram](https://github.com/gram-data/d3-gram).
 
-### Use [gram-parse](modules/gram_parse.md) to create an AST, then introspect with gram-ast:
+## How to gram in javascript
 
-```TypeScript
-import { isGramSeq, isGramNode, isGramEdge } from '@gram-data/gram-ast';
-import { toAST } from '@gram-data/gram-parse';  
+The 2 best places to start:
 
-const src = '(a)-->(b)';
-const parsed = toAST(src);
+1. Parse from text using [gram-parse](modules/gram_parse.md)
+2. Build an AST by hand using [gram-builder](modules/gram_builder.md)
 
-// the top-level of the AST is a sequence of paths
-console.assert(isGramSeq(parsed));
+### All packages
 
-// the first path should be an edge
-const firstPath = parsed.children[0];
-console.assert(isGramEdge(firstPath));
+- [gram](modules/gram.md) for general use
+- [gram-ast](modules/gram_ast.md) defines abstract syntax tree types 
+- [gram-builder](modules/gram_builder.md) composes a valid AST
+- [gram-identity](modules/gram_identity.md) generates identity. (available as a [unified plugin](https://github.com/unifiedjs/unified#plugin) )
+- [gram-ops](modules/gram_ops.md) extracts features from the AST
+- [gram-parse](modules/gram_parse.md) processes text literal `.gram` into an AST. (available as a [unified plugin](https://github.com/unifiedjs/unified#plugin) )
+- [gram-preset-basic](https://github.com/gram-data/gram-js/tree/main/packages/gram-preset-basic) a [unified preset](https://github.com/unifiedjs/unified#preset) for processing `.gram` files
+- [gram-stringify](modules/gram_stringify.md) serializes AST back to text literal format (available as a [unified plugin](https://github.com/unifiedjs/unified#plugin) )
+- [gram-value](modules/gram_value.md) enrich AST text literals with JS primitive or object values
 
-// the children of an edge are nodes
-console.assert(isGramNode(firstPath.children[0]));
-console.assert(isGramNode(firstPath.children[1]));
-```
+## Credit
 
-## Syntax Tree
+### Unified "Content as structured data"
 
-The `gram` AST is based on the [unist](https://github.com/syntax-tree/unist) specification
-for syntax trees. Many of the tools and techniques of the [unified](https://unifiedjs.com)
-ecosystem can be applied to working with `gram`.
-
-Gram represents data using two basic elements: paths and sequences.
-
-Paths provide structure. Sequences provide order.
-
-### [`GramSeq`](interfaces/gram_ast.gramseq.md)
-
-A `gram` sequence is the root element of an AST.
-It is exactly what it sounds like: a sequence of elements where
-each element is a path.
-
-The AST type is useful in returning a well-rooted tree that can be processed
-by general-purpose AST tools like [unist-util-visit](https://github.com/syntax-tree/unist-util-visit).
-
-In practice this is equivalent to a `GramPath[]`. Most `gram` functions will accept either.
-
-### [`GramPath`](interfaces/gram_ast.grampath.md)
-
-A `gram` path is either an empty path, or the composition of two other paths.
-The data structure of a path is like a list which remembers how it was assembled.
-The list elements are other paths.
-
-Each path has its own identity, labels and a data record.
-
-### [record](../interfaces/gram_ast.gramrecord-1.html)
-
-In the AST, records are a multimap presented as an _array_ of name/value
-properties. That means a property name _may_ appear more than once, with
-different or the same values.
-
-When mapping to a data model, choose one of these strageies for handling the
-multimapped properties:
-
-- single-state: pick the first or last value (_recommended_)
-- join: accumulate the values into an array
-- reduce: aggregate the values into a single value
-
-## Next Steps
-
-- Learn more about parsing with [gram-ast](modules/gram_ast.md)
-- Transform to js objects using [gram-value](modules/gram_value.md)
-- Serialize back to text using [gram-stringify](modules/gram_stringify.md)
+Gram leverages the excellent [unified](https://unifiedjs.com) framework "for parsing, inspecting, transforming, and serializing content through syntax trees."

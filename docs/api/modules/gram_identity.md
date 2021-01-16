@@ -41,13 +41,6 @@ const ast = edge([left, right], 'right');
 
 ## Index
 
-### References
-
-* [IDGenerator](gram_identity.md#idgenerator)
-* [alphabets](gram_identity.md#alphabets)
-* [counterIDGenerator](gram_identity.md#counteridgenerator)
-* [nanoidGenerator](gram_identity.md#nanoidgenerator)
-
 ### Interfaces
 
 * [IdentityPluginSettings](../interfaces/gram_identity.identitypluginsettings.md)
@@ -55,10 +48,6 @@ const ast = edge([left, right], 'right');
 ### Type aliases
 
 * [IDGenerator](gram_identity.md#idgenerator)
-
-### Variables
-
-* [visit](gram_identity.md#visit)
 
 ### Functions
 
@@ -71,37 +60,13 @@ const ast = edge([left, right], 'right');
 * [alphabets](gram_identity.md#alphabets)
 * [defaultSettings](gram_identity.md#defaultsettings)
 
-## References
-
-### IDGenerator
-
-Re-exports: [IDGenerator](gram_identity.md#idgenerator)
-
-___
-
-### alphabets
-
-Re-exports: [alphabets](gram_identity.md#alphabets)
-
-___
-
-### counterIDGenerator
-
-Re-exports: [counterIDGenerator](gram_identity.md#counteridgenerator)
-
-___
-
-### nanoidGenerator
-
-Re-exports: [nanoidGenerator](gram_identity.md#nanoidgenerator)
-
 ## Type aliases
 
 ### IDGenerator
 
 Ƭ  **IDGenerator**: { generate: () => string  }
 
-*Defined in [packages/gram-identity/src/gram-identity.ts:26](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-identity/src/gram-identity.ts#L26)*
+*Defined in [packages/gram-identity/src/generator-type.ts:2](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-identity/src/generator-type.ts#L2)*
 
 #### Type declaration:
 
@@ -109,21 +74,13 @@ Name | Type |
 ------ | ------ |
 `generate` | () => string |
 
-## Variables
-
-### visit
-
-• `Const` **visit**: any = require('unist-util-visit')
-
-*Defined in [packages/gram-identity/src/gram-identity-plugin.ts:11](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-identity/src/gram-identity-plugin.ts#L11)*
-
 ## Functions
 
 ### counterIDGenerator
 
 ▸ `Const`**counterIDGenerator**(`prefix?`: undefined \| string): [IDGenerator](gram_identity.md#idgenerator)
 
-*Defined in [packages/gram-identity/src/counter-generator.ts:7](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-identity/src/counter-generator.ts#L7)*
+*Defined in [packages/gram-identity/src/counter-generator.ts:7](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-identity/src/counter-generator.ts#L7)*
 
 Creates an IDGenerator based on incrementing numbers.
 
@@ -141,7 +98,7 @@ ___
 
 ▸ `Const`**gramIdentityPlugin**(`settings`: [IdentityPluginSettings](../interfaces/gram_identity.identitypluginsettings.md)): Transformer
 
-*Defined in [packages/gram-identity/src/gram-identity-plugin.ts:25](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-identity/src/gram-identity-plugin.ts#L25)*
+*Defined in [packages/gram-identity/src/gram-identity-plugin.ts:24](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-identity/src/gram-identity-plugin.ts#L24)*
 
 #### Parameters:
 
@@ -157,7 +114,7 @@ ___
 
 ▸ `Const`**nanoidGenerator**(`alphabet?`: string, `size?`: number, `prefix?`: undefined \| string): [IDGenerator](gram_identity.md#idgenerator)
 
-*Defined in [packages/gram-identity/src/nanoid-generator.ts:9](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-identity/src/nanoid-generator.ts#L9)*
+*Defined in [packages/gram-identity/src/nanoid-generator.ts:10](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-identity/src/nanoid-generator.ts#L10)*
 
 Factory for creating an IDGenerator based on
 [nanoid](https://github.com/ai/nanoid)
@@ -178,7 +135,7 @@ Name | Type | Default value |
 
 ▪ `Const` **alphabets**: object
 
-*Defined in [packages/gram-identity/src/gram-identity.ts:1](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-identity/src/gram-identity.ts#L1)*
+*Defined in [packages/gram-identity/src/identity-alphabets.ts:1](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-identity/src/identity-alphabets.ts#L1)*
 
 #### Properties:
 
@@ -212,7 +169,7 @@ ___
 
 ▪ `Const` **defaultSettings**: object
 
-*Defined in [packages/gram-identity/src/gram-identity-plugin.ts:19](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-identity/src/gram-identity-plugin.ts#L19)*
+*Defined in [packages/gram-identity/src/gram-identity-plugin.ts:18](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-identity/src/gram-identity-plugin.ts#L18)*
 
 #### Properties:
 

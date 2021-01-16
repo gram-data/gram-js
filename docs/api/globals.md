@@ -13,6 +13,7 @@ layout: api
 
 ### Modules
 
+* [gram](modules/gram.md)
 * [gram-ast](modules/gram_ast.md)
 * [gram-builder](modules/gram_builder.md)
 * [gram-identity](modules/gram_identity.md)

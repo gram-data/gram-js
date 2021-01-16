@@ -27,7 +27,7 @@ layout: api
 
 • `Optional` **alphabet**: undefined \| string
 
-*Defined in [packages/gram-identity/src/gram-identity-plugin.ts:15](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-identity/src/gram-identity-plugin.ts#L15)*
+*Defined in [packages/gram-identity/src/gram-identity-plugin.ts:14](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-identity/src/gram-identity-plugin.ts#L14)*
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 •  **generator**: \"counter\" \| \"nanoid\"
 
-*Defined in [packages/gram-identity/src/gram-identity-plugin.ts:14](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-identity/src/gram-identity-plugin.ts#L14)*
+*Defined in [packages/gram-identity/src/gram-identity-plugin.ts:13](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-identity/src/gram-identity-plugin.ts#L13)*
 
 ___
 
@@ -43,4 +43,4 @@ ___
 
 • `Optional` **prefix**: undefined \| string
 
-*Defined in [packages/gram-identity/src/gram-identity-plugin.ts:16](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-identity/src/gram-identity-plugin.ts#L16)*
+*Defined in [packages/gram-identity/src/gram-identity-plugin.ts:15](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-identity/src/gram-identity-plugin.ts#L15)*

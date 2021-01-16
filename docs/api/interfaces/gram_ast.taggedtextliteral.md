@@ -98,7 +98,7 @@ ___
 
 •  **tag**: string
 
-*Defined in [packages/gram-ast/src/index.ts:456](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L456)*
+*Defined in [packages/gram-ast/src/index.ts:456](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-ast/src/index.ts#L456)*
 
 The tag prefix of the string value.
 
@@ -110,7 +110,7 @@ ___
 
 *Overrides [TextLiteral](gram_ast.textliteral.md).[type](gram_ast.textliteral.md#type)*
 
-*Defined in [packages/gram-ast/src/index.ts:451](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L451)*
+*Defined in [packages/gram-ast/src/index.ts:451](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-ast/src/index.ts#L451)*
 
 ___
 
@@ -122,4 +122,4 @@ ___
 
 *Overrides void*
 
-*Defined in [packages/gram-ast/src/index.ts:277](https://github.com/gram-data/gram-js/blob/4edc28f/packages/gram-ast/src/index.ts#L277)*
+*Defined in [packages/gram-ast/src/index.ts:277](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-ast/src/index.ts#L277)*
