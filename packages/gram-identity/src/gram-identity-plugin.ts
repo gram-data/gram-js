@@ -1,15 +1,13 @@
 import { Plugin, Transformer } from 'unified';
 import { Node as UnistNode } from 'unist';
 
-// import {VFile} from 'vfile'
-
 import { isGramPath } from '@gram-data/gram-ast';
 import { alphabets } from './identity-alphabets';
 import { IDGenerator } from './generator-type';
 import { counterIDGenerator } from './counter-generator';
 import { nanoidGenerator } from './nanoid-generator';
 
-const visit = require('unist-util-visit');
+import visit from 'unist-util-visit';
 
 interface IdentityPluginSettings {
   generator: 'counter' | 'nanoid';
