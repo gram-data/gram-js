@@ -46,7 +46,7 @@ empty paths, which is equivalent to having no children.
 
 *Overrides [GramPath](gram_ast.grampath.md).[children](gram_ast.grampath.md#children)*
 
-*Defined in [packages/gram-ast/src/index.ts:134](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-ast/src/index.ts#L134)*
+*Defined in [packages/gram-ast/src/index.ts:134](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-ast/src/index.ts#L134)*
 
 Optimized to no children, though understood
 to have two empty paths as children.
@@ -59,7 +59,7 @@ ___
 
 *Inherited from [GramSeq](gram_ast.gramseq.md).[data](gram_ast.gramseq.md#data)*
 
-*Defined in node_modules/@types/unist/index.d.ts:23*
+*Defined in packages/gram-ast/node_modules/@types/unist/index.d.ts:23*
 
 Information from the ecosystem.
 
@@ -71,7 +71,7 @@ ___
 
 *Inherited from [GramPath](gram_ast.grampath.md).[id](gram_ast.grampath.md#id)*
 
-*Defined in [packages/gram-ast/src/index.ts:57](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-ast/src/index.ts#L57)*
+*Defined in [packages/gram-ast/src/index.ts:57](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-ast/src/index.ts#L57)*
 
 An identifier for the path.
 
@@ -85,7 +85,7 @@ ___
 
 *Inherited from [GramPath](gram_ast.grampath.md).[kind](gram_ast.grampath.md#kind)*
 
-*Defined in [packages/gram-ast/src/index.ts:62](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-ast/src/index.ts#L62)*
+*Defined in [packages/gram-ast/src/index.ts:62](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-ast/src/index.ts#L62)*
 
 The kind of path composition.
 
@@ -97,7 +97,7 @@ ___
 
 *Inherited from [GramPath](gram_ast.grampath.md).[labels](gram_ast.grampath.md#labels)*
 
-*Defined in [packages/gram-ast/src/index.ts:69](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-ast/src/index.ts#L69)*
+*Defined in [packages/gram-ast/src/index.ts:69](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-ast/src/index.ts#L69)*
 
 Labels are used to qualify a path.
 
@@ -111,7 +111,7 @@ ___
 
 *Inherited from [GramSeq](gram_ast.gramseq.md).[position](gram_ast.gramseq.md#position)*
 
-*Defined in node_modules/@types/unist/index.d.ts:29*
+*Defined in packages/gram-ast/node_modules/@types/unist/index.d.ts:29*
 
 Location of a node in a source document.
 Must not be present if a node is generated.
@@ -124,7 +124,7 @@ ___
 
 *Inherited from [GramPath](gram_ast.grampath.md).[record](gram_ast.grampath.md#record)*
 
-*Defined in [packages/gram-ast/src/index.ts:74](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-ast/src/index.ts#L74)*
+*Defined in [packages/gram-ast/src/index.ts:74](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-ast/src/index.ts#L74)*
 
 The data content of the path.
 
@@ -136,8 +136,8 @@ ___
 
 *Inherited from [GramPath](gram_ast.grampath.md).[type](gram_ast.grampath.md#type)*
 
-*Overrides [TextLiteral](gram_ast.textliteral.md).[type](gram_ast.textliteral.md#type)*
+*Overrides void*
 
-*Defined in [packages/gram-ast/src/index.ts:50](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-ast/src/index.ts#L50)*
+*Defined in [packages/gram-ast/src/index.ts:50](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-ast/src/index.ts#L50)*
 
 Type discriminator for this AST element, always 'path'.

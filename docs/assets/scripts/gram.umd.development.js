@@ -8,7 +8,7 @@
 
   function bail(err) {
     if (err) {
-      throw err;
+      throw err
     }
   }
 
@@ -18,8 +18,10 @@
    * @author   Feross Aboukhadijeh <https://feross.org>
    * @license  MIT
    */
-  var isBuffer = function isBuffer(obj) {
-    return obj != null && obj.constructor != null && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj);
+
+  var isBuffer = function isBuffer (obj) {
+    return obj != null && obj.constructor != null &&
+      typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
   };
 
   var hasOwn = Object.prototype.hasOwnProperty;
@@ -28,139 +30,136 @@
   var gOPD = Object.getOwnPropertyDescriptor;
 
   var isArray = function isArray(arr) {
-    if (typeof Array.isArray === 'function') {
-      return Array.isArray(arr);
-    }
+  	if (typeof Array.isArray === 'function') {
+  		return Array.isArray(arr);
+  	}
 
-    return toStr.call(arr) === '[object Array]';
+  	return toStr.call(arr) === '[object Array]';
   };
 
   var isPlainObject = function isPlainObject(obj) {
-    if (!obj || toStr.call(obj) !== '[object Object]') {
-      return false;
-    }
+  	if (!obj || toStr.call(obj) !== '[object Object]') {
+  		return false;
+  	}
 
-    var hasOwnConstructor = hasOwn.call(obj, 'constructor');
-    var hasIsPrototypeOf = obj.constructor && obj.constructor.prototype && hasOwn.call(obj.constructor.prototype, 'isPrototypeOf'); // Not own constructor property must be Object
+  	var hasOwnConstructor = hasOwn.call(obj, 'constructor');
+  	var hasIsPrototypeOf = obj.constructor && obj.constructor.prototype && hasOwn.call(obj.constructor.prototype, 'isPrototypeOf');
+  	// Not own constructor property must be Object
+  	if (obj.constructor && !hasOwnConstructor && !hasIsPrototypeOf) {
+  		return false;
+  	}
 
-    if (obj.constructor && !hasOwnConstructor && !hasIsPrototypeOf) {
-      return false;
-    } // Own properties are enumerated firstly, so to speed up,
-    // if last one is own, then all properties are own.
+  	// Own properties are enumerated firstly, so to speed up,
+  	// if last one is own, then all properties are own.
+  	var key;
+  	for (key in obj) { /**/ }
 
+  	return typeof key === 'undefined' || hasOwn.call(obj, key);
+  };
 
-    var key;
-
-    for (key in obj) {
-      /**/
-    }
-
-    return typeof key === 'undefined' || hasOwn.call(obj, key);
-  }; // If name is '__proto__', and Object.defineProperty is available, define __proto__ as an own property on target
-
-
+  // If name is '__proto__', and Object.defineProperty is available, define __proto__ as an own property on target
   var setProperty = function setProperty(target, options) {
-    if (defineProperty && options.name === '__proto__') {
-      defineProperty(target, options.name, {
-        enumerable: true,
-        configurable: true,
-        value: options.newValue,
-        writable: true
-      });
-    } else {
-      target[options.name] = options.newValue;
-    }
-  }; // Return undefined instead of __proto__ if '__proto__' is not an own property
+  	if (defineProperty && options.name === '__proto__') {
+  		defineProperty(target, options.name, {
+  			enumerable: true,
+  			configurable: true,
+  			value: options.newValue,
+  			writable: true
+  		});
+  	} else {
+  		target[options.name] = options.newValue;
+  	}
+  };
 
-
+  // Return undefined instead of __proto__ if '__proto__' is not an own property
   var getProperty = function getProperty(obj, name) {
-    if (name === '__proto__') {
-      if (!hasOwn.call(obj, name)) {
-        return void 0;
-      } else if (gOPD) {
-        // In early versions of node, obj['__proto__'] is buggy when obj has
-        // __proto__ as an own property. Object.getOwnPropertyDescriptor() works.
-        return gOPD(obj, name).value;
-      }
-    }
+  	if (name === '__proto__') {
+  		if (!hasOwn.call(obj, name)) {
+  			return void 0;
+  		} else if (gOPD) {
+  			// In early versions of node, obj['__proto__'] is buggy when obj has
+  			// __proto__ as an own property. Object.getOwnPropertyDescriptor() works.
+  			return gOPD(obj, name).value;
+  		}
+  	}
 
-    return obj[name];
+  	return obj[name];
   };
 
   var extend = function extend() {
-    var options, name, src, copy, copyIsArray, clone;
-    var target = arguments[0];
-    var i = 1;
-    var length = arguments.length;
-    var deep = false; // Handle a deep copy situation
+  	var options, name, src, copy, copyIsArray, clone;
+  	var target = arguments[0];
+  	var i = 1;
+  	var length = arguments.length;
+  	var deep = false;
 
-    if (typeof target === 'boolean') {
-      deep = target;
-      target = arguments[1] || {}; // skip the boolean and the target
+  	// Handle a deep copy situation
+  	if (typeof target === 'boolean') {
+  		deep = target;
+  		target = arguments[1] || {};
+  		// skip the boolean and the target
+  		i = 2;
+  	}
+  	if (target == null || (typeof target !== 'object' && typeof target !== 'function')) {
+  		target = {};
+  	}
 
-      i = 2;
-    }
+  	for (; i < length; ++i) {
+  		options = arguments[i];
+  		// Only deal with non-null/undefined values
+  		if (options != null) {
+  			// Extend the base object
+  			for (name in options) {
+  				src = getProperty(target, name);
+  				copy = getProperty(options, name);
 
-    if (target == null || typeof target !== 'object' && typeof target !== 'function') {
-      target = {};
-    }
+  				// Prevent never-ending loop
+  				if (target !== copy) {
+  					// Recurse if we're merging plain objects or arrays
+  					if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
+  						if (copyIsArray) {
+  							copyIsArray = false;
+  							clone = src && isArray(src) ? src : [];
+  						} else {
+  							clone = src && isPlainObject(src) ? src : {};
+  						}
 
-    for (; i < length; ++i) {
-      options = arguments[i]; // Only deal with non-null/undefined values
+  						// Never move original objects, clone them
+  						setProperty(target, { name: name, newValue: extend(deep, clone, copy) });
 
-      if (options != null) {
-        // Extend the base object
-        for (name in options) {
-          src = getProperty(target, name);
-          copy = getProperty(options, name); // Prevent never-ending loop
+  					// Don't bring in undefined values
+  					} else if (typeof copy !== 'undefined') {
+  						setProperty(target, { name: name, newValue: copy });
+  					}
+  				}
+  			}
+  		}
+  	}
 
-          if (target !== copy) {
-            // Recurse if we're merging plain objects or arrays
-            if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
-              if (copyIsArray) {
-                copyIsArray = false;
-                clone = src && isArray(src) ? src : [];
-              } else {
-                clone = src && isPlainObject(src) ? src : {};
-              } // Never move original objects, clone them
-
-
-              setProperty(target, {
-                name: name,
-                newValue: extend(deep, clone, copy)
-              }); // Don't bring in undefined values
-            } else if (typeof copy !== 'undefined') {
-              setProperty(target, {
-                name: name,
-                newValue: copy
-              });
-            }
-          }
-        }
-      }
-    } // Return the modified object
-
-
-    return target;
+  	// Return the modified object
+  	return target;
   };
 
-  var isPlainObj = function isPlainObj(value) {
-    if (Object.prototype.toString.call(value) !== '[object Object]') {
-      return false;
-    }
+  var isPlainObj = value => {
+  	if (Object.prototype.toString.call(value) !== '[object Object]') {
+  		return false;
+  	}
 
-    var prototype = Object.getPrototypeOf(value);
-    return prototype === null || prototype === Object.prototype;
+  	const prototype = Object.getPrototypeOf(value);
+  	return prototype === null || prototype === Object.prototype;
   };
 
   var slice = [].slice;
-  var wrap_1 = wrap; // Wrap `fn`.
+
+  var wrap_1 = wrap;
+
+  // Wrap `fn`.
   // Can be sync or async; return a promise, receive a completion handler, return
   // new values and errors.
-
   function wrap(fn, callback) {
     var invoked;
-    return wrapped;
+
+    return wrapped
 
     function wrapped() {
       var params = slice.call(arguments, 0);
@@ -180,10 +179,10 @@
         // We’re not about to restart the pipeline again, so the only thing left
         // to do is to throw the thing instead.
         if (callback && invoked) {
-          throw error;
+          throw error
         }
 
-        return done(error);
+        return done(error)
       }
 
       if (!callback) {
@@ -195,45 +194,53 @@
           then(result);
         }
       }
-    } // Invoke `next`, only once.
+    }
 
-
+    // Invoke `next`, only once.
     function done() {
       if (!invoked) {
         invoked = true;
+
         callback.apply(null, arguments);
       }
-    } // Invoke `done` with one value.
+    }
+
+    // Invoke `done` with one value.
     // Tracks if an error is passed, too.
-
-
     function then(value) {
       done(null, value);
     }
   }
 
   var trough_1 = trough;
-  trough.wrap = wrap_1;
-  var slice$1 = [].slice; // Create new middleware.
 
+  trough.wrap = wrap_1;
+
+  var slice$1 = [].slice;
+
+  // Create new middleware.
   function trough() {
     var fns = [];
     var middleware = {};
+
     middleware.run = run;
     middleware.use = use;
-    return middleware; // Run `fns`.  Last argument must be a completion handler.
 
+    return middleware
+
+    // Run `fns`.  Last argument must be a completion handler.
     function run() {
       var index = -1;
       var input = slice$1.call(arguments, 0, -1);
       var done = arguments[arguments.length - 1];
 
       if (typeof done !== 'function') {
-        throw new Error('Expected function as last argument, not ' + done);
+        throw new Error('Expected function as last argument, not ' + done)
       }
 
-      next.apply(null, [null].concat(input)); // Run the next `fn`, if any.
+      next.apply(null, [null].concat(input));
 
+      // Run the next `fn`, if any.
       function next(err) {
         var fn = fns[++index];
         var params = slice$1.call(arguments, 0);
@@ -243,63 +250,66 @@
 
         if (err) {
           done(err);
-          return;
-        } // Copy non-nully input into values.
+          return
+        }
 
-
+        // Copy non-nully input into values.
         while (++pos < length) {
           if (values[pos] === null || values[pos] === undefined) {
             values[pos] = input[pos];
           }
         }
 
-        input = values; // Next or done.
+        input = values;
 
+        // Next or done.
         if (fn) {
           wrap_1(fn, next).apply(null, input);
         } else {
           done.apply(null, [null].concat(input));
         }
       }
-    } // Add `fn` to the list.
+    }
 
-
+    // Add `fn` to the list.
     function use(fn) {
       if (typeof fn !== 'function') {
-        throw new Error('Expected `fn` to be a function, not ' + fn);
+        throw new Error('Expected `fn` to be a function, not ' + fn)
       }
 
       fns.push(fn);
-      return middleware;
+
+      return middleware
     }
   }
 
   var own = {}.hasOwnProperty;
+
   var unistUtilStringifyPosition = stringify;
 
   function stringify(value) {
     // Nothing.
     if (!value || typeof value !== 'object') {
-      return '';
-    } // Node.
+      return ''
+    }
 
-
+    // Node.
     if (own.call(value, 'position') || own.call(value, 'type')) {
-      return position(value.position);
-    } // Position.
+      return position(value.position)
+    }
 
-
+    // Position.
     if (own.call(value, 'start') || own.call(value, 'end')) {
-      return position(value);
-    } // Point.
+      return position(value)
+    }
 
-
+    // Point.
     if (own.call(value, 'line') || own.call(value, 'column')) {
-      return point(value);
-    } // ?
+      return point(value)
+    }
 
-
-    return '';
+    // ?
+    return ''
   }
 
   function point(point) {
@@ -307,7 +317,7 @@
       point = {};
     }
 
-    return index(point.line) + ':' + index(point.column);
+    return index(point.line) + ':' + index(point.column)
   }
 
   function position(pos) {
@@ -315,21 +325,23 @@
       pos = {};
     }
 
-    return point(pos.start) + '-' + point(pos.end);
+    return point(pos.start) + '-' + point(pos.end)
   }
 
   function index(value) {
-    return value && typeof value === 'number' ? value : 1;
+    return value && typeof value === 'number' ? value : 1
   }
 
-  var vfileMessage = VMessage; // Inherit from `Error#`.
+  var vfileMessage = VMessage;
 
+  // Inherit from `Error#`.
   function VMessagePrototype() {}
-
   VMessagePrototype.prototype = Error.prototype;
-  VMessage.prototype = /*#__PURE__*/new VMessagePrototype(); // Message properties.
+  VMessage.prototype = new VMessagePrototype();
 
+  // Message properties.
   var proto = VMessage.prototype;
+
   proto.file = '';
   proto.name = '';
   proto.reason = '';
@@ -337,12 +349,13 @@
   proto.stack = '';
   proto.fatal = null;
   proto.column = null;
-  proto.line = null; // Construct a new VMessage.
+  proto.line = null;
+
+  // Construct a new VMessage.
   //
   // Note: We cannot invoke `Error` on the created context, as that adds readonly
   // `line` and `column` attributes on Safari 9, thus throwing and failing the
   // data.
-
   function VMessage(reason, position, origin) {
     var parts;
     var range;
@@ -355,17 +368,13 @@
 
     parts = parseOrigin(origin);
     range = unistUtilStringifyPosition(position) || '1:1';
-    location = {
-      start: {
-        line: null,
-        column: null
-      },
-      end: {
-        line: null,
-        column: null
-      }
-    }; // Node.
 
+    location = {
+      start: {line: null, column: null},
+      end: {line: null, column: null}
+    };
+
+    // Node.
     if (position && position.position) {
       position = position.position;
     }
@@ -411,9 +420,10 @@
       }
     }
 
-    return result;
+    return result
   }
 
+  // A derivative work based on:
   // <https://github.com/browserify/path-browserify>.
   // Which is licensed:
   //
@@ -479,7 +489,7 @@
     var extIndex;
 
     if (ext !== undefined && typeof ext !== 'string') {
-      throw new TypeError('"ext" argument must be a string');
+      throw new TypeError('"ext" argument must be a string')
     }
 
     assertPath(path);
@@ -487,16 +497,14 @@
 
     if (ext === undefined || !ext.length || ext.length > path.length) {
       while (index--) {
-        if (path.charCodeAt(index) === 47
-        /* `/` */
-        ) {
-            // If we reached a path separator that was not part of a set of path
-            // separators at the end of the string, stop now.
-            if (seenNonSlash) {
-              start = index + 1;
-              break;
-            }
-          } else if (end < 0) {
+        if (path.charCodeAt(index) === 47 /* `/` */) {
+          // If we reached a path separator that was not part of a set of path
+          // separators at the end of the string, stop now.
+          if (seenNonSlash) {
+            start = index + 1;
+            break
+          }
+        } else if (end < 0) {
           // We saw the first non-path separator, mark this as the end of our
           // path component.
           seenNonSlash = true;
@@ -504,27 +512,25 @@
         }
       }
 
-      return end < 0 ? '' : path.slice(start, end);
+      return end < 0 ? '' : path.slice(start, end)
     }
 
     if (ext === path) {
-      return '';
+      return ''
     }
 
     firstNonSlashEnd = -1;
     extIndex = ext.length - 1;
 
     while (index--) {
-      if (path.charCodeAt(index) === 47
-      /* `/` */
-      ) {
-          // If we reached a path separator that was not part of a set of path
-          // separators at the end of the string, stop now.
-          if (seenNonSlash) {
-            start = index + 1;
-            break;
-          }
-        } else {
+      if (path.charCodeAt(index) === 47 /* `/` */) {
+        // If we reached a path separator that was not part of a set of path
+        // separators at the end of the string, stop now.
+        if (seenNonSlash) {
+          start = index + 1;
+          break
+        }
+      } else {
         if (firstNonSlashEnd < 0) {
           // We saw the first non-path separator, remember this index in case
           // we need it if the extension ends up not matching.
@@ -556,71 +562,73 @@
       end = path.length;
     }
 
-    return path.slice(start, end);
+    return path.slice(start, end)
   }
 
   function dirname(path) {
     var end;
     var unmatchedSlash;
     var index;
+
     assertPath(path);
 
     if (!path.length) {
-      return '.';
+      return '.'
     }
 
     end = -1;
-    index = path.length; // Prefix `--` is important to not run on `0`.
+    index = path.length;
 
+    // Prefix `--` is important to not run on `0`.
     while (--index) {
-      if (path.charCodeAt(index) === 47
-      /* `/` */
-      ) {
-          if (unmatchedSlash) {
-            end = index;
-            break;
-          }
-        } else if (!unmatchedSlash) {
+      if (path.charCodeAt(index) === 47 /* `/` */) {
+        if (unmatchedSlash) {
+          end = index;
+          break
+        }
+      } else if (!unmatchedSlash) {
         // We saw the first non-path separator
         unmatchedSlash = true;
       }
     }
 
-    return end < 0 ? path.charCodeAt(0) === 47
-    /* `/` */
-    ? '/' : '.' : end === 1 && path.charCodeAt(0) === 47
-    /* `/` */
-    ? '//' : path.slice(0, end);
+    return end < 0
+      ? path.charCodeAt(0) === 47 /* `/` */
+        ? '/'
+        : '.'
+      : end === 1 && path.charCodeAt(0) === 47 /* `/` */
+      ? '//'
+      : path.slice(0, end)
   }
 
   function extname(path) {
     var startDot = -1;
     var startPart = 0;
-    var end = -1; // Track the state of characters (if any) we see before our first dot and
+    var end = -1;
+    // Track the state of characters (if any) we see before our first dot and
     // after any path separator we find.
-
     var preDotState = 0;
     var unmatchedSlash;
     var code;
     var index;
+
     assertPath(path);
+
     index = path.length;
 
     while (index--) {
       code = path.charCodeAt(index);
 
-      if (code === 47
-      /* `/` */
-      ) {
-          // If we reached a path separator that was not part of a set of path
-          // separators at the end of the string, stop now.
-          if (unmatchedSlash) {
-            startPart = index + 1;
-            break;
-          }
-
-          continue;
+      if (code === 47 /* `/` */) {
+        // If we reached a path separator that was not part of a set of path
+        // separators at the end of the string, stop now.
+        if (unmatchedSlash) {
+          startPart = index + 1;
+          break
         }
+
+        continue
+      }
 
       if (end < 0) {
         // We saw the first non-path separator, mark this as the end of our
@@ -629,29 +637,32 @@
         end = index + 1;
       }
 
-      if (code === 46
-      /* `.` */
-      ) {
-          // If this is our first dot, mark it as the start of our extension.
-          if (startDot < 0) {
-            startDot = index;
-          } else if (preDotState !== 1) {
-            preDotState = 1;
-          }
-        } else if (startDot > -1) {
+      if (code === 46 /* `.` */) {
+        // If this is our first dot, mark it as the start of our extension.
+        if (startDot < 0) {
+          startDot = index;
+        } else if (preDotState !== 1) {
+          preDotState = 1;
+        }
+      } else if (startDot > -1) {
         // We saw a non-dot and non-path separator before our dot, so we should
         // have a good chance at having a non-empty extension.
         preDotState = -1;
       }
     }
 
-    if (startDot < 0 || end < 0 || // We saw a non-dot character immediately before the dot.
-    preDotState === 0 || // The (right-most) trimmed path component is exactly `..`.
-    preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
-      return '';
+    if (
+      startDot < 0 ||
+      end < 0 ||
+      // We saw a non-dot character immediately before the dot.
+      preDotState === 0 ||
+      // The (right-most) trimmed path component is exactly `..`.
+      (preDotState === 1 && startDot === end - 1 && startDot === startPart + 1)
+    ) {
+      return ''
     }
 
-    return path.slice(startDot, end);
+    return path.slice(startDot, end)
   }
 
   function join() {
@@ -662,39 +673,41 @@
       assertPath(arguments[index]);
 
       if (arguments[index]) {
-        joined = joined === undefined ? arguments[index] : joined + '/' + arguments[index];
+        joined =
+          joined === undefined
+            ? arguments[index]
+            : joined + '/' + arguments[index];
       }
     }
 
-    return joined === undefined ? '.' : normalize(joined);
-  } // Note: `normalize` is not exposed as `path.normalize`, so some code is
+    return joined === undefined ? '.' : normalize(joined)
+  }
+
+  // Note: `normalize` is not exposed as `path.normalize`, so some code is
   // manually removed from it.
-
-
   function normalize(path) {
     var absolute;
     var value;
-    assertPath(path);
-    absolute = path.charCodeAt(0) === 47;
-    /* `/` */
-    // Normalize the path according to POSIX rules.
 
+    assertPath(path);
+
+    absolute = path.charCodeAt(0) === 47; /* `/` */
+
+    // Normalize the path according to POSIX rules.
     value = normalizeString(path, !absolute);
 
     if (!value.length && !absolute) {
       value = '.';
     }
 
-    if (value.length && path.charCodeAt(path.length - 1) === 47
-    /* / */
-    ) {
-        value += '/';
-      }
+    if (value.length && path.charCodeAt(path.length - 1) === 47 /* / */) {
+      value += '/';
+    }
 
-    return absolute ? '/' + value : value;
-  } // Resolve `.` and `..` elements in a path with directory names.
+    return absolute ? '/' + value : value
+  }
 
-
+  // Resolve `.` and `..` elements in a path with directory names.
   function normalizeString(path, allowAboveRoot) {
     var result = '';
     var lastSegmentLength = 0;
@@ -707,171 +720,159 @@
     while (++index <= path.length) {
       if (index < path.length) {
         code = path.charCodeAt(index);
-      } else if (code === 47
-      /* `/` */
-      ) {
-          break;
-        } else {
-        code = 47;
-        /* `/` */
+      } else if (code === 47 /* `/` */) {
+        break
+      } else {
+        code = 47; /* `/` */
       }
 
-      if (code === 47
-      /* `/` */
-      ) {
-          if (lastSlash === index - 1 || dots === 1) ; else if (lastSlash !== index - 1 && dots === 2) {
-            if (result.length < 2 || lastSegmentLength !== 2 || result.charCodeAt(result.length - 1) !== 46
-            /* `.` */
-            || result.charCodeAt(result.length - 2) !== 46
-            /* `.` */
-            ) {
-                if (result.length > 2) {
-                  lastSlashIndex = result.lastIndexOf('/');
-                  /* istanbul ignore else - No clue how to cover it. */
+      if (code === 47 /* `/` */) {
+        if (lastSlash === index - 1 || dots === 1) ; else if (lastSlash !== index - 1 && dots === 2) {
+          if (
+            result.length < 2 ||
+            lastSegmentLength !== 2 ||
+            result.charCodeAt(result.length - 1) !== 46 /* `.` */ ||
+            result.charCodeAt(result.length - 2) !== 46 /* `.` */
+          ) {
+            if (result.length > 2) {
+              lastSlashIndex = result.lastIndexOf('/');
 
-                  if (lastSlashIndex !== result.length - 1) {
-                    if (lastSlashIndex < 0) {
-                      result = '';
-                      lastSegmentLength = 0;
-                    } else {
-                      result = result.slice(0, lastSlashIndex);
-                      lastSegmentLength = result.length - 1 - result.lastIndexOf('/');
-                    }
-
-                    lastSlash = index;
-                    dots = 0;
-                    continue;
-                  }
-                } else if (result.length) {
+              /* istanbul ignore else - No clue how to cover it. */
+              if (lastSlashIndex !== result.length - 1) {
+                if (lastSlashIndex < 0) {
                   result = '';
                   lastSegmentLength = 0;
-                  lastSlash = index;
-                  dots = 0;
-                  continue;
+                } else {
+                  result = result.slice(0, lastSlashIndex);
+                  lastSegmentLength = result.length - 1 - result.lastIndexOf('/');
                 }
+
+                lastSlash = index;
+                dots = 0;
+                continue
               }
-
-            if (allowAboveRoot) {
-              result = result.length ? result + '/..' : '..';
-              lastSegmentLength = 2;
+            } else if (result.length) {
+              result = '';
+              lastSegmentLength = 0;
+              lastSlash = index;
+              dots = 0;
+              continue
             }
-          } else {
-            if (result.length) {
-              result += '/' + path.slice(lastSlash + 1, index);
-            } else {
-              result = path.slice(lastSlash + 1, index);
-            }
-
-            lastSegmentLength = index - lastSlash - 1;
           }
 
-          lastSlash = index;
-          dots = 0;
-        } else if (code === 46
-      /* `.` */
-      && dots > -1) {
+          if (allowAboveRoot) {
+            result = result.length ? result + '/..' : '..';
+            lastSegmentLength = 2;
+          }
+        } else {
+          if (result.length) {
+            result += '/' + path.slice(lastSlash + 1, index);
+          } else {
+            result = path.slice(lastSlash + 1, index);
+          }
+
+          lastSegmentLength = index - lastSlash - 1;
+        }
+
+        lastSlash = index;
+        dots = 0;
+      } else if (code === 46 /* `.` */ && dots > -1) {
         dots++;
       } else {
         dots = -1;
       }
     }
 
-    return result;
+    return result
   }
 
   function assertPath(path) {
     if (typeof path !== 'string') {
-      throw new TypeError('Path must be a string. Received ' + JSON.stringify(path));
+      throw new TypeError(
+        'Path must be a string. Received ' + JSON.stringify(path)
+      )
     }
   }
 
   var minpath_browser = {
-    basename: basename_1,
-    dirname: dirname_1,
-    extname: extname_1,
-    join: join_1,
-    sep: sep
+  	basename: basename_1,
+  	dirname: dirname_1,
+  	extname: extname_1,
+  	join: join_1,
+  	sep: sep
   };
 
+  // Somewhat based on:
   // <https://github.com/defunctzombie/node-process/blob/master/browser.js>.
   // But I don’t think one tiny line of code can be copyrighted. 😅
-
   var cwd_1 = cwd;
 
   function cwd() {
-    return '/';
+    return '/'
   }
 
   var minproc_browser = {
-    cwd: cwd_1
-  };
-
-  /*!
-   * Determine if an object is a Buffer
-   *
-   * @author   Feross Aboukhadijeh <https://feross.org>
-   * @license  MIT
-   */
-  var isBuffer$1 = function isBuffer(obj) {
-    return obj != null && obj.constructor != null && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj);
+  	cwd: cwd_1
   };
 
   var core = VFile;
-  var own$1 = {}.hasOwnProperty; // Order of setting (least specific to most), we need this because otherwise
+
+  var own$1 = {}.hasOwnProperty;
+
+  // Order of setting (least specific to most), we need this because otherwise
   // `{stem: 'a', path: '~/b.js'}` would throw, as a path is needed before a
   // stem can be set.
-
   var order = ['history', 'path', 'basename', 'stem', 'extname', 'dirname'];
-  VFile.prototype.toString = toString; // Access full path (`~/index.min.js`).
 
-  Object.defineProperty(VFile.prototype, 'path', {
-    get: getPath,
-    set: setPath
-  }); // Access parent path (`~`).
+  VFile.prototype.toString = toString;
 
+  // Access full path (`~/index.min.js`).
+  Object.defineProperty(VFile.prototype, 'path', {get: getPath, set: setPath});
+
+  // Access parent path (`~`).
   Object.defineProperty(VFile.prototype, 'dirname', {
     get: getDirname,
     set: setDirname
-  }); // Access basename (`index.min.js`).
+  });
 
+  // Access basename (`index.min.js`).
   Object.defineProperty(VFile.prototype, 'basename', {
     get: getBasename,
     set: setBasename
-  }); // Access extname (`.js`).
+  });
 
+  // Access extname (`.js`).
   Object.defineProperty(VFile.prototype, 'extname', {
     get: getExtname,
     set: setExtname
-  }); // Access stem (`index.min`).
+  });
 
-  Object.defineProperty(VFile.prototype, 'stem', {
-    get: getStem,
-    set: setStem
-  }); // Construct a new file.
+  // Access stem (`index.min`).
+  Object.defineProperty(VFile.prototype, 'stem', {get: getStem, set: setStem});
 
+  // Construct a new file.
   function VFile(options) {
     var prop;
     var index;
 
     if (!options) {
       options = {};
-    } else if (typeof options === 'string' || isBuffer$1(options)) {
-      options = {
-        contents: options
-      };
+    } else if (typeof options === 'string' || isBuffer(options)) {
+      options = {contents: options};
     } else if ('message' in options && 'messages' in options) {
-      return options;
+      return options
     }
 
     if (!(this instanceof VFile)) {
-      return new VFile(options);
+      return new VFile(options)
     }
 
     this.data = {};
     this.messages = [];
     this.history = [];
-    this.cwd = minproc_browser.cwd(); // Set path related properties in the correct order.
+    this.cwd = minproc_browser.cwd();
 
+    // Set path related properties in the correct order.
     index = -1;
 
     while (++index < order.length) {
@@ -880,9 +881,9 @@
       if (own$1.call(options, prop)) {
         this[prop] = options[prop];
       }
-    } // Set non-path related properties.
+    }
 
-
+    // Set non-path related properties.
     for (prop in options) {
       if (order.indexOf(prop) < 0) {
         this[prop] = options[prop];
@@ -891,7 +892,7 @@
   }
 
   function getPath() {
-    return this.history[this.history.length - 1];
+    return this.history[this.history.length - 1]
   }
 
   function setPath(path) {
@@ -903,7 +904,7 @@
   }
 
   function getDirname() {
-    return typeof this.path === 'string' ? minpath_browser.dirname(this.path) : undefined;
+    return typeof this.path === 'string' ? minpath_browser.dirname(this.path) : undefined
   }
 
   function setDirname(dirname) {
@@ -912,7 +913,7 @@
   }
 
   function getBasename() {
-    return typeof this.path === 'string' ? minpath_browser.basename(this.path) : undefined;
+    return typeof this.path === 'string' ? minpath_browser.basename(this.path) : undefined
   }
 
   function setBasename(basename) {
@@ -922,7 +923,7 @@
   }
 
   function getExtname() {
-    return typeof this.path === 'string' ? minpath_browser.extname(this.path) : undefined;
+    return typeof this.path === 'string' ? minpath_browser.extname(this.path) : undefined
   }
 
   function setExtname(extname) {
@@ -930,14 +931,12 @@
     assertPath$1(this.path, 'extname');
 
     if (extname) {
-      if (extname.charCodeAt(0) !== 46
-      /* `.` */
-      ) {
-          throw new Error('`extname` must start with `.`');
-        }
+      if (extname.charCodeAt(0) !== 46 /* `.` */) {
+        throw new Error('`extname` must start with `.`')
+      }
 
       if (extname.indexOf('.', 1) > -1) {
-        throw new Error('`extname` cannot contain multiple dots');
+        throw new Error('`extname` cannot contain multiple dots')
       }
     }
 
@@ -945,47 +944,53 @@
   }
 
   function getStem() {
-    return typeof this.path === 'string' ? minpath_browser.basename(this.path, this.extname) : undefined;
+    return typeof this.path === 'string'
+      ? minpath_browser.basename(this.path, this.extname)
+      : undefined
   }
 
   function setStem(stem) {
     assertNonEmpty(stem, 'stem');
     assertPart(stem, 'stem');
     this.path = minpath_browser.join(this.dirname || '', stem + (this.extname || ''));
-  } // Get the value of the file.
+  }
 
-
+  // Get the value of the file.
   function toString(encoding) {
-    return (this.contents || '').toString(encoding);
-  } // Assert that `part` is not a path (i.e., does not contain `p.sep`).
+    return (this.contents || '').toString(encoding)
+  }
 
-
+  // Assert that `part` is not a path (i.e., does not contain `p.sep`).
   function assertPart(part, name) {
     if (part && part.indexOf(minpath_browser.sep) > -1) {
-      throw new Error('`' + name + '` cannot be a path: did not expect `' + minpath_browser.sep + '`');
+      throw new Error(
+        '`' + name + '` cannot be a path: did not expect `' + minpath_browser.sep + '`'
+      )
     }
-  } // Assert that `part` is not empty.
+  }
 
-
+  // Assert that `part` is not empty.
   function assertNonEmpty(part, name) {
     if (!part) {
-      throw new Error('`' + name + '` cannot be empty');
+      throw new Error('`' + name + '` cannot be empty')
     }
-  } // Assert `path` exists.
+  }
 
-
+  // Assert `path` exists.
   function assertPath$1(path, name) {
     if (!path) {
-      throw new Error('Setting `' + name + '` requires `path` to be set too');
+      throw new Error('Setting `' + name + '` requires `path` to be set too')
     }
   }
 
   var lib = core;
+
   core.prototype.message = message;
   core.prototype.info = info;
-  core.prototype.fail = fail; // Create a message with `reason` at `position`.
-  // When an error is passed in as `reason`, copies the stack.
+  core.prototype.fail = fail;
 
+  // Create a message with `reason` at `position`.
+  // When an error is passed in as `reason`, copies the stack.
   function message(reason, position, origin) {
     var message = new vfileMessage(reason, position, origin);
 
@@ -995,32 +1000,44 @@
     }
 
     message.fatal = false;
+
     this.messages.push(message);
-    return message;
-  } // Fail: creates a vmessage, associates it with the file, and throws it.
 
+    return message
+  }
 
+  // Fail: creates a vmessage, associates it with the file, and throws it.
   function fail() {
     var message = this.message.apply(this, arguments);
+
     message.fatal = true;
-    throw message;
-  } // Info: creates a vmessage, associates it with the file, and marks the fatality
+
+    throw message
+  }
+
+  // Info: creates a vmessage, associates it with the file, and marks the fatality
   // as null.
-
-
   function info() {
     var message = this.message.apply(this, arguments);
+
     message.fatal = null;
-    return message;
+
+    return message
   }
 
   var vfile = lib;
 
-  var unified_1 = /*#__PURE__*/unified().freeze();
-  var slice$2 = [].slice;
-  var own$2 = {}.hasOwnProperty; // Process pipeline.
+  // Expose a frozen processor.
+  var unified_1 = unified().freeze();
 
-  var pipeline = /*#__PURE__*/trough_1().use(pipelineParse).use(pipelineRun).use(pipelineStringify);
+  var slice$2 = [].slice;
+  var own$2 = {}.hasOwnProperty;
+
+  // Process pipeline.
+  var pipeline = trough_1()
+    .use(pipelineParse)
+    .use(pipelineRun)
+    .use(pipelineStringify);
 
   function pipelineParse(p, ctx) {
     ctx.tree = p.parse(ctx.file);
@@ -1049,32 +1066,38 @@
     } else {
       file.result = result;
     }
-  } // Function to create the first processor.
+  }
 
-
+  // Function to create the first processor.
   function unified() {
     var attachers = [];
     var transformers = trough_1();
     var namespace = {};
     var frozen = false;
-    var freezeIndex = -1; // Data management.
+    var freezeIndex = -1;
 
-    processor.data = data; // Lock.
+    // Data management.
+    processor.data = data;
 
-    processor.freeze = freeze; // Plugins.
+    // Lock.
+    processor.freeze = freeze;
 
+    // Plugins.
     processor.attachers = attachers;
-    processor.use = use; // API.
+    processor.use = use;
 
+    // API.
     processor.parse = parse;
     processor.stringify = stringify;
     processor.run = run;
     processor.runSync = runSync;
     processor.process = process;
-    processor.processSync = processSync; // Expose.
+    processor.processSync = processSync;
 
-    return processor; // Create a new processor based on the processor in the current scope.
+    // Expose.
+    return processor
 
+    // Create a new processor based on the processor in the current scope.
     function processor() {
       var destination = unified();
       var length = attachers.length;
@@ -1085,16 +1108,17 @@
       }
 
       destination.data(extend(true, {}, namespace));
-      return destination;
-    } // Freeze: used to signal a processor that has finished configuration.
+
+      return destination
+    }
+
+    // Freeze: used to signal a processor that has finished configuration.
     //
     // For example, take unified itself: it’s frozen.
     // Plugins should not be added to it.
     // Rather, it should be extended, by invoking it, before modifying it.
     //
     // In essence, always invoke this when exporting a processor.
-
-
     function freeze() {
       var values;
       var plugin;
@@ -1102,7 +1126,7 @@
       var transformer;
 
       if (frozen) {
-        return processor;
+        return processor
       }
 
       while (++freezeIndex < attachers.length) {
@@ -1112,7 +1136,7 @@
         transformer = null;
 
         if (options === false) {
-          continue;
+          continue
         }
 
         if (options === true) {
@@ -1128,44 +1152,48 @@
 
       frozen = true;
       freezeIndex = Infinity;
-      return processor;
-    } // Data management.
+
+      return processor
+    }
+
+    // Data management.
     // Getter / setter for processor-specific informtion.
-
-
     function data(key, value) {
       if (typeof key === 'string') {
         // Set `key`.
         if (arguments.length === 2) {
           assertUnfrozen('data', frozen);
+
           namespace[key] = value;
-          return processor;
-        } // Get `key`.
 
+          return processor
+        }
 
-        return own$2.call(namespace, key) && namespace[key] || null;
-      } // Set space.
+        // Get `key`.
+        return (own$2.call(namespace, key) && namespace[key]) || null
+      }
 
-
+      // Set space.
       if (key) {
         assertUnfrozen('data', frozen);
         namespace = key;
-        return processor;
-      } // Get space.
+        return processor
+      }
 
+      // Get space.
+      return namespace
+    }
 
-      return namespace;
-    } // Plugin management.
+    // Plugin management.
     //
     // Pass it:
     // *   an attacher and options,
     // *   a preset,
     // *   a list of presets, attachers, and arguments (list of attachers and
     //     options).
-
-
     function use(value) {
       var settings;
+
       assertUnfrozen('use', frozen);
 
       if (value === null || value === undefined) ; else if (typeof value === 'function') {
@@ -1177,14 +1205,14 @@
           addPreset(value);
         }
       } else {
-        throw new Error('Expected usable value, not `' + value + '`');
+        throw new Error('Expected usable value, not `' + value + '`')
       }
 
       if (settings) {
         namespace.settings = extend(namespace.settings || {}, settings);
       }
 
-      return processor;
+      return processor
 
       function addPreset(result) {
         addList(result.plugins);
@@ -1204,7 +1232,7 @@
             addPreset(value);
           }
         } else {
-          throw new Error('Expected usable value, not `' + value + '`');
+          throw new Error('Expected usable value, not `' + value + '`')
         }
       }
 
@@ -1220,7 +1248,7 @@
             add(plugins[index]);
           }
         } else {
-          throw new Error('Expected a list of plugins, not `' + plugins + '`');
+          throw new Error('Expected a list of plugins, not `' + plugins + '`')
         }
       }
 
@@ -1248,29 +1276,30 @@
         entry = attachers[index];
 
         if (entry[0] === plugin) {
-          return entry;
+          return entry
         }
       }
-    } // Parse a file (in string or vfile representation) into a unist node using
+    }
+
+    // Parse a file (in string or vfile representation) into a unist node using
     // the `Parser` on the processor.
-
-
     function parse(doc) {
       var file = vfile(doc);
       var Parser;
+
       freeze();
       Parser = processor.Parser;
       assertParser('parse', Parser);
 
       if (newable(Parser, 'parse')) {
-        return new Parser(String(file), file).parse();
+        return new Parser(String(file), file).parse()
       }
 
-      return Parser(String(file), file); // eslint-disable-line new-cap
-    } // Run transforms on a unist node representation of a file (in string or
+      return Parser(String(file), file) // eslint-disable-line new-cap
+    }
+
+    // Run transforms on a unist node representation of a file (in string or
     // vfile representation), async.
-
-
     function run(node, file, cb) {
       assertNode(node);
       freeze();
@@ -1281,7 +1310,7 @@
       }
 
       if (!cb) {
-        return new Promise(executor);
+        return new Promise(executor)
       }
 
       executor(null, cb);
@@ -1291,7 +1320,6 @@
 
         function done(err, tree, file) {
           tree = tree || node;
-
           if (err) {
             reject(err);
           } else if (resolve) {
@@ -1301,61 +1329,64 @@
           }
         }
       }
-    } // Run transforms on a unist node representation of a file (in string or
+    }
+
+    // Run transforms on a unist node representation of a file (in string or
     // vfile representation), sync.
-
-
     function runSync(node, file) {
       var complete = false;
       var result;
+
       run(node, file, done);
+
       assertDone('runSync', 'run', complete);
-      return result;
+
+      return result
 
       function done(err, tree) {
         complete = true;
         bail_1(err);
         result = tree;
       }
-    } // Stringify a unist node representation of a file (in string or vfile
+    }
+
+    // Stringify a unist node representation of a file (in string or vfile
     // representation) into a string using the `Compiler` on the processor.
-
-
     function stringify(node, doc) {
       var file = vfile(doc);
       var Compiler;
+
       freeze();
       Compiler = processor.Compiler;
       assertCompiler('stringify', Compiler);
       assertNode(node);
 
       if (newable(Compiler, 'compile')) {
-        return new Compiler(node, file).compile();
+        return new Compiler(node, file).compile()
       }
 
-      return Compiler(node, file); // eslint-disable-line new-cap
-    } // Parse a file (in string or vfile representation) into a unist node using
+      return Compiler(node, file) // eslint-disable-line new-cap
+    }
+
+    // Parse a file (in string or vfile representation) into a unist node using
     // the `Parser` on the processor, then run transforms on that node, and
     // compile the resulting node using the `Compiler` on the processor, and
     // store that result on the vfile.
-
-
     function process(doc, cb) {
       freeze();
       assertParser('process', processor.Parser);
       assertCompiler('process', processor.Compiler);
 
       if (!cb) {
-        return new Promise(executor);
+        return new Promise(executor)
       }
 
       executor(null, cb);
 
       function executor(resolve, reject) {
         var file = vfile(doc);
-        pipeline.run(processor, {
-          file: file
-        }, done);
+
+        pipeline.run(processor, {file: file}, done);
 
         function done(err) {
           if (err) {
@@ -1367,78 +1398,91 @@
           }
         }
       }
-    } // Process the given document (in string or vfile representation), sync.
+    }
 
-
+    // Process the given document (in string or vfile representation), sync.
     function processSync(doc) {
       var complete = false;
       var file;
+
       freeze();
       assertParser('processSync', processor.Parser);
       assertCompiler('processSync', processor.Compiler);
       file = vfile(doc);
+
       process(file, done);
+
       assertDone('processSync', 'process', complete);
-      return file;
+
+      return file
 
       function done(err) {
         complete = true;
         bail_1(err);
       }
     }
-  } // Check if `value` is a constructor.
+  }
 
-
+  // Check if `value` is a constructor.
   function newable(value, name) {
-    return typeof value === 'function' && value.prototype && ( // A function with keys in its prototype is probably a constructor.
-    // Classes’ prototype methods are not enumerable, so we check if some value
-    // exists in the prototype.
-    keys(value.prototype) || name in value.prototype);
-  } // Check if `value` is an object with keys.
+    return (
+      typeof value === 'function' &&
+      value.prototype &&
+      // A function with keys in its prototype is probably a constructor.
+      // Classes’ prototype methods are not enumerable, so we check if some value
+      // exists in the prototype.
+      (keys(value.prototype) || name in value.prototype)
+    )
+  }
 
-
+  // Check if `value` is an object with keys.
   function keys(value) {
     var key;
-
     for (key in value) {
-      return true;
+      return true
     }
 
-    return false;
-  } // Assert a parser is available.
+    return false
+  }
 
-
+  // Assert a parser is available.
   function assertParser(name, Parser) {
     if (typeof Parser !== 'function') {
-      throw new Error('Cannot `' + name + '` without `Parser`');
+      throw new Error('Cannot `' + name + '` without `Parser`')
     }
-  } // Assert a compiler is available.
+  }
 
-
+  // Assert a compiler is available.
   function assertCompiler(name, Compiler) {
     if (typeof Compiler !== 'function') {
-      throw new Error('Cannot `' + name + '` without `Compiler`');
+      throw new Error('Cannot `' + name + '` without `Compiler`')
     }
-  } // Assert the processor is not frozen.
+  }
 
-
+  // Assert the processor is not frozen.
   function assertUnfrozen(name, frozen) {
     if (frozen) {
-      throw new Error('Cannot invoke `' + name + '` on a frozen processor.\nCreate a new processor first, by invoking it: use `processor()` instead of `processor`.');
+      throw new Error(
+        'Cannot invoke `' +
+          name +
+          '` on a frozen processor.\nCreate a new processor first, by invoking it: use `processor()` instead of `processor`.'
+      )
     }
-  } // Assert `node` is a unist node.
+  }
 
-
+  // Assert `node` is a unist node.
   function assertNode(node) {
     if (!node || typeof node.type !== 'string') {
-      throw new Error('Expected node, got `' + node + '`');
+      throw new Error('Expected node, got `' + node + '`')
     }
-  } // Assert that `complete` is `true`.
+  }
 
-
+  // Assert that `complete` is `true`.
   function assertDone(name, asyncName, complete) {
     if (!complete) {
-      throw new Error('`' + name + '` finished async. Use `' + asyncName + '` instead');
+      throw new Error(
+        '`' + name + '` finished async. Use `' + asyncName + '` instead'
+      )
     }
   }
 
@@ -2701,6 +2745,1434 @@
     gramIdentityPlugin: gramIdentityPlugin,
     nanoidGenerator: nanoidGenerator
   };
+
+  var bail_1$1 = bail$1;
+
+  function bail$1(err) {
+    if (err) {
+      throw err;
+    }
+  }
+
+  /*!
+   * Determine if an object is a Buffer
+   *
+   * @author   Feross Aboukhadijeh <https://feross.org>
+   * @license  MIT
+   */
+  var isBuffer$1 = function isBuffer(obj) {
+    return obj != null && obj.constructor != null && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj);
+  };
+
+  var hasOwn$1 = Object.prototype.hasOwnProperty;
+  var toStr$1 = Object.prototype.toString;
+  var defineProperty$1 = Object.defineProperty;
+  var gOPD$1 = Object.getOwnPropertyDescriptor;
+
+  var isArray$1 = function isArray(arr) {
+    if (typeof Array.isArray === 'function') {
+      return Array.isArray(arr);
+    }
+
+    return toStr$1.call(arr) === '[object Array]';
+  };
+
+  var isPlainObject$1 = function isPlainObject(obj) {
+    if (!obj || toStr$1.call(obj) !== '[object Object]') {
+      return false;
+    }
+
+    var hasOwnConstructor = hasOwn$1.call(obj, 'constructor');
+    var hasIsPrototypeOf = obj.constructor && obj.constructor.prototype && hasOwn$1.call(obj.constructor.prototype, 'isPrototypeOf'); // Not own constructor property must be Object
+
+    if (obj.constructor && !hasOwnConstructor && !hasIsPrototypeOf) {
+      return false;
+    } // Own properties are enumerated firstly, so to speed up,
+    // if last one is own, then all properties are own.
+
+
+    var key;
+
+    for (key in obj) {
+      /**/
+    }
+
+    return typeof key === 'undefined' || hasOwn$1.call(obj, key);
+  }; // If name is '__proto__', and Object.defineProperty is available, define __proto__ as an own property on target
+
+
+  var setProperty$1 = function setProperty(target, options) {
+    if (defineProperty$1 && options.name === '__proto__') {
+      defineProperty$1(target, options.name, {
+        enumerable: true,
+        configurable: true,
+        value: options.newValue,
+        writable: true
+      });
+    } else {
+      target[options.name] = options.newValue;
+    }
+  }; // Return undefined instead of __proto__ if '__proto__' is not an own property
+
+
+  var getProperty$1 = function getProperty(obj, name) {
+    if (name === '__proto__') {
+      if (!hasOwn$1.call(obj, name)) {
+        return void 0;
+      } else if (gOPD$1) {
+        // In early versions of node, obj['__proto__'] is buggy when obj has
+        // __proto__ as an own property. Object.getOwnPropertyDescriptor() works.
+        return gOPD$1(obj, name).value;
+      }
+    }
+
+    return obj[name];
+  };
+
+  var extend$1 = function extend() {
+    var options, name, src, copy, copyIsArray, clone;
+    var target = arguments[0];
+    var i = 1;
+    var length = arguments.length;
+    var deep = false; // Handle a deep copy situation
+
+    if (typeof target === 'boolean') {
+      deep = target;
+      target = arguments[1] || {}; // skip the boolean and the target
+
+      i = 2;
+    }
+
+    if (target == null || typeof target !== 'object' && typeof target !== 'function') {
+      target = {};
+    }
+
+    for (; i < length; ++i) {
+      options = arguments[i]; // Only deal with non-null/undefined values
+
+      if (options != null) {
+        // Extend the base object
+        for (name in options) {
+          src = getProperty$1(target, name);
+          copy = getProperty$1(options, name); // Prevent never-ending loop
+
+          if (target !== copy) {
+            // Recurse if we're merging plain objects or arrays
+            if (deep && copy && (isPlainObject$1(copy) || (copyIsArray = isArray$1(copy)))) {
+              if (copyIsArray) {
+                copyIsArray = false;
+                clone = src && isArray$1(src) ? src : [];
+              } else {
+                clone = src && isPlainObject$1(src) ? src : {};
+              } // Never move original objects, clone them
+
+
+              setProperty$1(target, {
+                name: name,
+                newValue: extend(deep, clone, copy)
+              }); // Don't bring in undefined values
+            } else if (typeof copy !== 'undefined') {
+              setProperty$1(target, {
+                name: name,
+                newValue: copy
+              });
+            }
+          }
+        }
+      }
+    } // Return the modified object
+
+
+    return target;
+  };
+
+  var isPlainObj$1 = function isPlainObj(value) {
+    if (Object.prototype.toString.call(value) !== '[object Object]') {
+      return false;
+    }
+
+    var prototype = Object.getPrototypeOf(value);
+    return prototype === null || prototype === Object.prototype;
+  };
+
+  var slice$3 = [].slice;
+  var wrap_1$1 = wrap$1; // Wrap `fn`.
+  // Can be sync or async; return a promise, receive a completion handler, return
+  // new values and errors.
+
+  function wrap$1(fn, callback) {
+    var invoked;
+    return wrapped;
+
+    function wrapped() {
+      var params = slice$3.call(arguments, 0);
+      var callback = fn.length > params.length;
+      var result;
+
+      if (callback) {
+        params.push(done);
+      }
+
+      try {
+        result = fn.apply(null, params);
+      } catch (error) {
+        // Well, this is quite the pickle.
+        // `fn` received a callback and invoked it (thus continuing the pipeline),
+        // but later also threw an error.
+        // We’re not about to restart the pipeline again, so the only thing left
+        // to do is to throw the thing instead.
+        if (callback && invoked) {
+          throw error;
+        }
+
+        return done(error);
+      }
+
+      if (!callback) {
+        if (result && typeof result.then === 'function') {
+          result.then(then, done);
+        } else if (result instanceof Error) {
+          done(result);
+        } else {
+          then(result);
+        }
+      }
+    } // Invoke `next`, only once.
+
+
+    function done() {
+      if (!invoked) {
+        invoked = true;
+        callback.apply(null, arguments);
+      }
+    } // Invoke `done` with one value.
+    // Tracks if an error is passed, too.
+
+
+    function then(value) {
+      done(null, value);
+    }
+  }
+
+  var trough_1$1 = trough$1;
+  trough$1.wrap = wrap_1$1;
+  var slice$4 = [].slice; // Create new middleware.
+
+  function trough$1() {
+    var fns = [];
+    var middleware = {};
+    middleware.run = run;
+    middleware.use = use;
+    return middleware; // Run `fns`.  Last argument must be a completion handler.
+
+    function run() {
+      var index = -1;
+      var input = slice$4.call(arguments, 0, -1);
+      var done = arguments[arguments.length - 1];
+
+      if (typeof done !== 'function') {
+        throw new Error('Expected function as last argument, not ' + done);
+      }
+
+      next.apply(null, [null].concat(input)); // Run the next `fn`, if any.
+
+      function next(err) {
+        var fn = fns[++index];
+        var params = slice$4.call(arguments, 0);
+        var values = params.slice(1);
+        var length = input.length;
+        var pos = -1;
+
+        if (err) {
+          done(err);
+          return;
+        } // Copy non-nully input into values.
+
+
+        while (++pos < length) {
+          if (values[pos] === null || values[pos] === undefined) {
+            values[pos] = input[pos];
+          }
+        }
+
+        input = values; // Next or done.
+
+        if (fn) {
+          wrap_1$1(fn, next).apply(null, input);
+        } else {
+          done.apply(null, [null].concat(input));
+        }
+      }
+    } // Add `fn` to the list.
+
+
+    function use(fn) {
+      if (typeof fn !== 'function') {
+        throw new Error('Expected `fn` to be a function, not ' + fn);
+      }
+
+      fns.push(fn);
+      return middleware;
+    }
+  }
+
+  var own$3 = {}.hasOwnProperty;
+  var unistUtilStringifyPosition$1 = stringify$1;
+
+  function stringify$1(value) {
+    // Nothing.
+    if (!value || typeof value !== 'object') {
+      return '';
+    } // Node.
+
+
+    if (own$3.call(value, 'position') || own$3.call(value, 'type')) {
+      return position$1(value.position);
+    } // Position.
+
+
+    if (own$3.call(value, 'start') || own$3.call(value, 'end')) {
+      return position$1(value);
+    } // Point.
+
+
+    if (own$3.call(value, 'line') || own$3.call(value, 'column')) {
+      return point$1(value);
+    } // ?
+
+
+    return '';
+  }
+
+  function point$1(point) {
+    if (!point || typeof point !== 'object') {
+      point = {};
+    }
+
+    return index$2(point.line) + ':' + index$2(point.column);
+  }
+
+  function position$1(pos) {
+    if (!pos || typeof pos !== 'object') {
+      pos = {};
+    }
+
+    return point$1(pos.start) + '-' + point$1(pos.end);
+  }
+
+  function index$2(value) {
+    return value && typeof value === 'number' ? value : 1;
+  }
+
+  var vfileMessage$1 = VMessage$1; // Inherit from `Error#`.
+
+  function VMessagePrototype$1() {}
+
+  VMessagePrototype$1.prototype = Error.prototype;
+  VMessage$1.prototype = /*#__PURE__*/new VMessagePrototype$1(); // Message properties.
+
+  var proto$1 = VMessage$1.prototype;
+  proto$1.file = '';
+  proto$1.name = '';
+  proto$1.reason = '';
+  proto$1.message = '';
+  proto$1.stack = '';
+  proto$1.fatal = null;
+  proto$1.column = null;
+  proto$1.line = null; // Construct a new VMessage.
+  //
+  // Note: We cannot invoke `Error` on the created context, as that adds readonly
+  // `line` and `column` attributes on Safari 9, thus throwing and failing the
+  // data.
+
+  function VMessage$1(reason, position, origin) {
+    var parts;
+    var range;
+    var location;
+
+    if (typeof position === 'string') {
+      origin = position;
+      position = null;
+    }
+
+    parts = parseOrigin$1(origin);
+    range = unistUtilStringifyPosition$1(position) || '1:1';
+    location = {
+      start: {
+        line: null,
+        column: null
+      },
+      end: {
+        line: null,
+        column: null
+      }
+    }; // Node.
+
+    if (position && position.position) {
+      position = position.position;
+    }
+
+    if (position) {
+      // Position.
+      if (position.start) {
+        location = position;
+        position = position.start;
+      } else {
+        // Point.
+        location.start = position;
+      }
+    }
+
+    if (reason.stack) {
+      this.stack = reason.stack;
+      reason = reason.message;
+    }
+
+    this.message = reason;
+    this.name = range;
+    this.reason = reason;
+    this.line = position ? position.line : null;
+    this.column = position ? position.column : null;
+    this.location = location;
+    this.source = parts[0];
+    this.ruleId = parts[1];
+  }
+
+  function parseOrigin$1(origin) {
+    var result = [null, null];
+    var index;
+
+    if (typeof origin === 'string') {
+      index = origin.indexOf(':');
+
+      if (index === -1) {
+        result[1] = origin;
+      } else {
+        result[0] = origin.slice(0, index);
+        result[1] = origin.slice(index + 1);
+      }
+    }
+
+    return result;
+  }
+
+  // <https://github.com/browserify/path-browserify>.
+  // Which is licensed:
+  //
+  // MIT License
+  //
+  // Copyright (c) 2013 James Halliday
+  //
+  // Permission is hereby granted, free of charge, to any person obtaining a copy of
+  // this software and associated documentation files (the "Software"), to deal in
+  // the Software without restriction, including without limitation the rights to
+  // use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+  // the Software, and to permit persons to whom the Software is furnished to do so,
+  // subject to the following conditions:
+  //
+  // The above copyright notice and this permission notice shall be included in all
+  // copies or substantial portions of the Software.
+  //
+  // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+  // FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+  // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+  // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  // A derivative work based on:
+  //
+  // Parts of that are extracted from Node’s internal `path` module:
+  // <https://github.com/nodejs/node/blob/master/lib/path.js>.
+  // Which is licensed:
+  //
+  // Copyright Joyent, Inc. and other Node contributors.
+  //
+  // Permission is hereby granted, free of charge, to any person obtaining a
+  // copy of this software and associated documentation files (the
+  // "Software"), to deal in the Software without restriction, including
+  // without limitation the rights to use, copy, modify, merge, publish,
+  // distribute, sublicense, and/or sell copies of the Software, and to permit
+  // persons to whom the Software is furnished to do so, subject to the
+  // following conditions:
+  //
+  // The above copyright notice and this permission notice shall be included
+  // in all copies or substantial portions of the Software.
+  //
+  // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+  // OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+  // NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+  // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+  // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+  // USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+  var basename_1$1 = basename$1;
+  var dirname_1$1 = dirname$1;
+  var extname_1$1 = extname$1;
+  var join_1$1 = join$1;
+  var sep$1 = '/';
+
+  function basename$1(path, ext) {
+    var start = 0;
+    var end = -1;
+    var index;
+    var firstNonSlashEnd;
+    var seenNonSlash;
+    var extIndex;
+
+    if (ext !== undefined && typeof ext !== 'string') {
+      throw new TypeError('"ext" argument must be a string');
+    }
+
+    assertPath$2(path);
+    index = path.length;
+
+    if (ext === undefined || !ext.length || ext.length > path.length) {
+      while (index--) {
+        if (path.charCodeAt(index) === 47
+        /* `/` */
+        ) {
+            // If we reached a path separator that was not part of a set of path
+            // separators at the end of the string, stop now.
+            if (seenNonSlash) {
+              start = index + 1;
+              break;
+            }
+          } else if (end < 0) {
+          // We saw the first non-path separator, mark this as the end of our
+          // path component.
+          seenNonSlash = true;
+          end = index + 1;
+        }
+      }
+
+      return end < 0 ? '' : path.slice(start, end);
+    }
+
+    if (ext === path) {
+      return '';
+    }
+
+    firstNonSlashEnd = -1;
+    extIndex = ext.length - 1;
+
+    while (index--) {
+      if (path.charCodeAt(index) === 47
+      /* `/` */
+      ) {
+          // If we reached a path separator that was not part of a set of path
+          // separators at the end of the string, stop now.
+          if (seenNonSlash) {
+            start = index + 1;
+            break;
+          }
+        } else {
+        if (firstNonSlashEnd < 0) {
+          // We saw the first non-path separator, remember this index in case
+          // we need it if the extension ends up not matching.
+          seenNonSlash = true;
+          firstNonSlashEnd = index + 1;
+        }
+
+        if (extIndex > -1) {
+          // Try to match the explicit extension.
+          if (path.charCodeAt(index) === ext.charCodeAt(extIndex--)) {
+            if (extIndex < 0) {
+              // We matched the extension, so mark this as the end of our path
+              // component
+              end = index;
+            }
+          } else {
+            // Extension does not match, so our result is the entire path
+            // component
+            extIndex = -1;
+            end = firstNonSlashEnd;
+          }
+        }
+      }
+    }
+
+    if (start === end) {
+      end = firstNonSlashEnd;
+    } else if (end < 0) {
+      end = path.length;
+    }
+
+    return path.slice(start, end);
+  }
+
+  function dirname$1(path) {
+    var end;
+    var unmatchedSlash;
+    var index;
+    assertPath$2(path);
+
+    if (!path.length) {
+      return '.';
+    }
+
+    end = -1;
+    index = path.length; // Prefix `--` is important to not run on `0`.
+
+    while (--index) {
+      if (path.charCodeAt(index) === 47
+      /* `/` */
+      ) {
+          if (unmatchedSlash) {
+            end = index;
+            break;
+          }
+        } else if (!unmatchedSlash) {
+        // We saw the first non-path separator
+        unmatchedSlash = true;
+      }
+    }
+
+    return end < 0 ? path.charCodeAt(0) === 47
+    /* `/` */
+    ? '/' : '.' : end === 1 && path.charCodeAt(0) === 47
+    /* `/` */
+    ? '//' : path.slice(0, end);
+  }
+
+  function extname$1(path) {
+    var startDot = -1;
+    var startPart = 0;
+    var end = -1; // Track the state of characters (if any) we see before our first dot and
+    // after any path separator we find.
+
+    var preDotState = 0;
+    var unmatchedSlash;
+    var code;
+    var index;
+    assertPath$2(path);
+    index = path.length;
+
+    while (index--) {
+      code = path.charCodeAt(index);
+
+      if (code === 47
+      /* `/` */
+      ) {
+          // If we reached a path separator that was not part of a set of path
+          // separators at the end of the string, stop now.
+          if (unmatchedSlash) {
+            startPart = index + 1;
+            break;
+          }
+
+          continue;
+        }
+
+      if (end < 0) {
+        // We saw the first non-path separator, mark this as the end of our
+        // extension.
+        unmatchedSlash = true;
+        end = index + 1;
+      }
+
+      if (code === 46
+      /* `.` */
+      ) {
+          // If this is our first dot, mark it as the start of our extension.
+          if (startDot < 0) {
+            startDot = index;
+          } else if (preDotState !== 1) {
+            preDotState = 1;
+          }
+        } else if (startDot > -1) {
+        // We saw a non-dot and non-path separator before our dot, so we should
+        // have a good chance at having a non-empty extension.
+        preDotState = -1;
+      }
+    }
+
+    if (startDot < 0 || end < 0 || // We saw a non-dot character immediately before the dot.
+    preDotState === 0 || // The (right-most) trimmed path component is exactly `..`.
+    preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
+      return '';
+    }
+
+    return path.slice(startDot, end);
+  }
+
+  function join$1() {
+    var index = -1;
+    var joined;
+
+    while (++index < arguments.length) {
+      assertPath$2(arguments[index]);
+
+      if (arguments[index]) {
+        joined = joined === undefined ? arguments[index] : joined + '/' + arguments[index];
+      }
+    }
+
+    return joined === undefined ? '.' : normalize$1(joined);
+  } // Note: `normalize` is not exposed as `path.normalize`, so some code is
+  // manually removed from it.
+
+
+  function normalize$1(path) {
+    var absolute;
+    var value;
+    assertPath$2(path);
+    absolute = path.charCodeAt(0) === 47;
+    /* `/` */
+    // Normalize the path according to POSIX rules.
+
+    value = normalizeString$1(path, !absolute);
+
+    if (!value.length && !absolute) {
+      value = '.';
+    }
+
+    if (value.length && path.charCodeAt(path.length - 1) === 47
+    /* / */
+    ) {
+        value += '/';
+      }
+
+    return absolute ? '/' + value : value;
+  } // Resolve `.` and `..` elements in a path with directory names.
+
+
+  function normalizeString$1(path, allowAboveRoot) {
+    var result = '';
+    var lastSegmentLength = 0;
+    var lastSlash = -1;
+    var dots = 0;
+    var index = -1;
+    var code;
+    var lastSlashIndex;
+
+    while (++index <= path.length) {
+      if (index < path.length) {
+        code = path.charCodeAt(index);
+      } else if (code === 47
+      /* `/` */
+      ) {
+          break;
+        } else {
+        code = 47;
+        /* `/` */
+      }
+
+      if (code === 47
+      /* `/` */
+      ) {
+          if (lastSlash === index - 1 || dots === 1) ; else if (lastSlash !== index - 1 && dots === 2) {
+            if (result.length < 2 || lastSegmentLength !== 2 || result.charCodeAt(result.length - 1) !== 46
+            /* `.` */
+            || result.charCodeAt(result.length - 2) !== 46
+            /* `.` */
+            ) {
+                if (result.length > 2) {
+                  lastSlashIndex = result.lastIndexOf('/');
+                  /* istanbul ignore else - No clue how to cover it. */
+
+                  if (lastSlashIndex !== result.length - 1) {
+                    if (lastSlashIndex < 0) {
+                      result = '';
+                      lastSegmentLength = 0;
+                    } else {
+                      result = result.slice(0, lastSlashIndex);
+                      lastSegmentLength = result.length - 1 - result.lastIndexOf('/');
+                    }
+
+                    lastSlash = index;
+                    dots = 0;
+                    continue;
+                  }
+                } else if (result.length) {
+                  result = '';
+                  lastSegmentLength = 0;
+                  lastSlash = index;
+                  dots = 0;
+                  continue;
+                }
+              }
+
+            if (allowAboveRoot) {
+              result = result.length ? result + '/..' : '..';
+              lastSegmentLength = 2;
+            }
+          } else {
+            if (result.length) {
+              result += '/' + path.slice(lastSlash + 1, index);
+            } else {
+              result = path.slice(lastSlash + 1, index);
+            }
+
+            lastSegmentLength = index - lastSlash - 1;
+          }
+
+          lastSlash = index;
+          dots = 0;
+        } else if (code === 46
+      /* `.` */
+      && dots > -1) {
+        dots++;
+      } else {
+        dots = -1;
+      }
+    }
+
+    return result;
+  }
+
+  function assertPath$2(path) {
+    if (typeof path !== 'string') {
+      throw new TypeError('Path must be a string. Received ' + JSON.stringify(path));
+    }
+  }
+
+  var minpath_browser$1 = {
+    basename: basename_1$1,
+    dirname: dirname_1$1,
+    extname: extname_1$1,
+    join: join_1$1,
+    sep: sep$1
+  };
+
+  // <https://github.com/defunctzombie/node-process/blob/master/browser.js>.
+  // But I don’t think one tiny line of code can be copyrighted. 😅
+
+  var cwd_1$1 = cwd$1;
+
+  function cwd$1() {
+    return '/';
+  }
+
+  var minproc_browser$1 = {
+    cwd: cwd_1$1
+  };
+
+  var core$1 = VFile$1;
+  var own$4 = {}.hasOwnProperty; // Order of setting (least specific to most), we need this because otherwise
+  // `{stem: 'a', path: '~/b.js'}` would throw, as a path is needed before a
+  // stem can be set.
+
+  var order$1 = ['history', 'path', 'basename', 'stem', 'extname', 'dirname'];
+  VFile$1.prototype.toString = toString$1; // Access full path (`~/index.min.js`).
+
+  Object.defineProperty(VFile$1.prototype, 'path', {
+    get: getPath$1,
+    set: setPath$1
+  }); // Access parent path (`~`).
+
+  Object.defineProperty(VFile$1.prototype, 'dirname', {
+    get: getDirname$1,
+    set: setDirname$1
+  }); // Access basename (`index.min.js`).
+
+  Object.defineProperty(VFile$1.prototype, 'basename', {
+    get: getBasename$1,
+    set: setBasename$1
+  }); // Access extname (`.js`).
+
+  Object.defineProperty(VFile$1.prototype, 'extname', {
+    get: getExtname$1,
+    set: setExtname$1
+  }); // Access stem (`index.min`).
+
+  Object.defineProperty(VFile$1.prototype, 'stem', {
+    get: getStem$1,
+    set: setStem$1
+  }); // Construct a new file.
+
+  function VFile$1(options) {
+    var prop;
+    var index;
+
+    if (!options) {
+      options = {};
+    } else if (typeof options === 'string' || isBuffer$1(options)) {
+      options = {
+        contents: options
+      };
+    } else if ('message' in options && 'messages' in options) {
+      return options;
+    }
+
+    if (!(this instanceof VFile$1)) {
+      return new VFile$1(options);
+    }
+
+    this.data = {};
+    this.messages = [];
+    this.history = [];
+    this.cwd = minproc_browser$1.cwd(); // Set path related properties in the correct order.
+
+    index = -1;
+
+    while (++index < order$1.length) {
+      prop = order$1[index];
+
+      if (own$4.call(options, prop)) {
+        this[prop] = options[prop];
+      }
+    } // Set non-path related properties.
+
+
+    for (prop in options) {
+      if (order$1.indexOf(prop) < 0) {
+        this[prop] = options[prop];
+      }
+    }
+  }
+
+  function getPath$1() {
+    return this.history[this.history.length - 1];
+  }
+
+  function setPath$1(path) {
+    assertNonEmpty$1(path, 'path');
+
+    if (this.path !== path) {
+      this.history.push(path);
+    }
+  }
+
+  function getDirname$1() {
+    return typeof this.path === 'string' ? minpath_browser$1.dirname(this.path) : undefined;
+  }
+
+  function setDirname$1(dirname) {
+    assertPath$3(this.path, 'dirname');
+    this.path = minpath_browser$1.join(dirname || '', this.basename);
+  }
+
+  function getBasename$1() {
+    return typeof this.path === 'string' ? minpath_browser$1.basename(this.path) : undefined;
+  }
+
+  function setBasename$1(basename) {
+    assertNonEmpty$1(basename, 'basename');
+    assertPart$1(basename, 'basename');
+    this.path = minpath_browser$1.join(this.dirname || '', basename);
+  }
+
+  function getExtname$1() {
+    return typeof this.path === 'string' ? minpath_browser$1.extname(this.path) : undefined;
+  }
+
+  function setExtname$1(extname) {
+    assertPart$1(extname, 'extname');
+    assertPath$3(this.path, 'extname');
+
+    if (extname) {
+      if (extname.charCodeAt(0) !== 46
+      /* `.` */
+      ) {
+          throw new Error('`extname` must start with `.`');
+        }
+
+      if (extname.indexOf('.', 1) > -1) {
+        throw new Error('`extname` cannot contain multiple dots');
+      }
+    }
+
+    this.path = minpath_browser$1.join(this.dirname, this.stem + (extname || ''));
+  }
+
+  function getStem$1() {
+    return typeof this.path === 'string' ? minpath_browser$1.basename(this.path, this.extname) : undefined;
+  }
+
+  function setStem$1(stem) {
+    assertNonEmpty$1(stem, 'stem');
+    assertPart$1(stem, 'stem');
+    this.path = minpath_browser$1.join(this.dirname || '', stem + (this.extname || ''));
+  } // Get the value of the file.
+
+
+  function toString$1(encoding) {
+    return (this.contents || '').toString(encoding);
+  } // Assert that `part` is not a path (i.e., does not contain `p.sep`).
+
+
+  function assertPart$1(part, name) {
+    if (part && part.indexOf(minpath_browser$1.sep) > -1) {
+      throw new Error('`' + name + '` cannot be a path: did not expect `' + minpath_browser$1.sep + '`');
+    }
+  } // Assert that `part` is not empty.
+
+
+  function assertNonEmpty$1(part, name) {
+    if (!part) {
+      throw new Error('`' + name + '` cannot be empty');
+    }
+  } // Assert `path` exists.
+
+
+  function assertPath$3(path, name) {
+    if (!path) {
+      throw new Error('Setting `' + name + '` requires `path` to be set too');
+    }
+  }
+
+  var lib$1 = core$1;
+  core$1.prototype.message = message$1;
+  core$1.prototype.info = info$1;
+  core$1.prototype.fail = fail$1; // Create a message with `reason` at `position`.
+  // When an error is passed in as `reason`, copies the stack.
+
+  function message$1(reason, position, origin) {
+    var message = new vfileMessage$1(reason, position, origin);
+
+    if (this.path) {
+      message.name = this.path + ':' + message.name;
+      message.file = this.path;
+    }
+
+    message.fatal = false;
+    this.messages.push(message);
+    return message;
+  } // Fail: creates a vmessage, associates it with the file, and throws it.
+
+
+  function fail$1() {
+    var message = this.message.apply(this, arguments);
+    message.fatal = true;
+    throw message;
+  } // Info: creates a vmessage, associates it with the file, and marks the fatality
+  // as null.
+
+
+  function info$1() {
+    var message = this.message.apply(this, arguments);
+    message.fatal = null;
+    return message;
+  }
+
+  var vfile$1 = lib$1;
+
+  var unified_1$1 = /*#__PURE__*/unified$1().freeze();
+  var slice$5 = [].slice;
+  var own$5 = {}.hasOwnProperty; // Process pipeline.
+
+  var pipeline$1 = /*#__PURE__*/trough_1$1().use(pipelineParse$1).use(pipelineRun$1).use(pipelineStringify$1);
+
+  function pipelineParse$1(p, ctx) {
+    ctx.tree = p.parse(ctx.file);
+  }
+
+  function pipelineRun$1(p, ctx, next) {
+    p.run(ctx.tree, ctx.file, done);
+
+    function done(err, tree, file) {
+      if (err) {
+        next(err);
+      } else {
+        ctx.tree = tree;
+        ctx.file = file;
+        next();
+      }
+    }
+  }
+
+  function pipelineStringify$1(p, ctx) {
+    var result = p.stringify(ctx.tree, ctx.file);
+    var file = ctx.file;
+
+    if (result === undefined || result === null) ; else if (typeof result === 'string' || isBuffer$1(result)) {
+      file.contents = result;
+    } else {
+      file.result = result;
+    }
+  } // Function to create the first processor.
+
+
+  function unified$1() {
+    var attachers = [];
+    var transformers = trough_1$1();
+    var namespace = {};
+    var frozen = false;
+    var freezeIndex = -1; // Data management.
+
+    processor.data = data; // Lock.
+
+    processor.freeze = freeze; // Plugins.
+
+    processor.attachers = attachers;
+    processor.use = use; // API.
+
+    processor.parse = parse;
+    processor.stringify = stringify;
+    processor.run = run;
+    processor.runSync = runSync;
+    processor.process = process;
+    processor.processSync = processSync; // Expose.
+
+    return processor; // Create a new processor based on the processor in the current scope.
+
+    function processor() {
+      var destination = unified$1();
+      var length = attachers.length;
+      var index = -1;
+
+      while (++index < length) {
+        destination.use.apply(null, attachers[index]);
+      }
+
+      destination.data(extend$1(true, {}, namespace));
+      return destination;
+    } // Freeze: used to signal a processor that has finished configuration.
+    //
+    // For example, take unified itself: it’s frozen.
+    // Plugins should not be added to it.
+    // Rather, it should be extended, by invoking it, before modifying it.
+    //
+    // In essence, always invoke this when exporting a processor.
+
+
+    function freeze() {
+      var values;
+      var plugin;
+      var options;
+      var transformer;
+
+      if (frozen) {
+        return processor;
+      }
+
+      while (++freezeIndex < attachers.length) {
+        values = attachers[freezeIndex];
+        plugin = values[0];
+        options = values[1];
+        transformer = null;
+
+        if (options === false) {
+          continue;
+        }
+
+        if (options === true) {
+          values[1] = undefined;
+        }
+
+        transformer = plugin.apply(processor, values.slice(1));
+
+        if (typeof transformer === 'function') {
+          transformers.use(transformer);
+        }
+      }
+
+      frozen = true;
+      freezeIndex = Infinity;
+      return processor;
+    } // Data management.
+    // Getter / setter for processor-specific informtion.
+
+
+    function data(key, value) {
+      if (typeof key === 'string') {
+        // Set `key`.
+        if (arguments.length === 2) {
+          assertUnfrozen$1('data', frozen);
+          namespace[key] = value;
+          return processor;
+        } // Get `key`.
+
+
+        return own$5.call(namespace, key) && namespace[key] || null;
+      } // Set space.
+
+
+      if (key) {
+        assertUnfrozen$1('data', frozen);
+        namespace = key;
+        return processor;
+      } // Get space.
+
+
+      return namespace;
+    } // Plugin management.
+    //
+    // Pass it:
+    // *   an attacher and options,
+    // *   a preset,
+    // *   a list of presets, attachers, and arguments (list of attachers and
+    //     options).
+
+
+    function use(value) {
+      var settings;
+      assertUnfrozen$1('use', frozen);
+
+      if (value === null || value === undefined) ; else if (typeof value === 'function') {
+        addPlugin.apply(null, arguments);
+      } else if (typeof value === 'object') {
+        if ('length' in value) {
+          addList(value);
+        } else {
+          addPreset(value);
+        }
+      } else {
+        throw new Error('Expected usable value, not `' + value + '`');
+      }
+
+      if (settings) {
+        namespace.settings = extend$1(namespace.settings || {}, settings);
+      }
+
+      return processor;
+
+      function addPreset(result) {
+        addList(result.plugins);
+
+        if (result.settings) {
+          settings = extend$1(settings || {}, result.settings);
+        }
+      }
+
+      function add(value) {
+        if (typeof value === 'function') {
+          addPlugin(value);
+        } else if (typeof value === 'object') {
+          if ('length' in value) {
+            addPlugin.apply(null, value);
+          } else {
+            addPreset(value);
+          }
+        } else {
+          throw new Error('Expected usable value, not `' + value + '`');
+        }
+      }
+
+      function addList(plugins) {
+        var length;
+        var index;
+
+        if (plugins === null || plugins === undefined) ; else if (typeof plugins === 'object' && 'length' in plugins) {
+          length = plugins.length;
+          index = -1;
+
+          while (++index < length) {
+            add(plugins[index]);
+          }
+        } else {
+          throw new Error('Expected a list of plugins, not `' + plugins + '`');
+        }
+      }
+
+      function addPlugin(plugin, value) {
+        var entry = find(plugin);
+
+        if (entry) {
+          if (isPlainObj$1(entry[1]) && isPlainObj$1(value)) {
+            value = extend$1(entry[1], value);
+          }
+
+          entry[1] = value;
+        } else {
+          attachers.push(slice$5.call(arguments));
+        }
+      }
+    }
+
+    function find(plugin) {
+      var length = attachers.length;
+      var index = -1;
+      var entry;
+
+      while (++index < length) {
+        entry = attachers[index];
+
+        if (entry[0] === plugin) {
+          return entry;
+        }
+      }
+    } // Parse a file (in string or vfile representation) into a unist node using
+    // the `Parser` on the processor.
+
+
+    function parse(doc) {
+      var file = vfile$1(doc);
+      var Parser;
+      freeze();
+      Parser = processor.Parser;
+      assertParser$1('parse', Parser);
+
+      if (newable$1(Parser, 'parse')) {
+        return new Parser(String(file), file).parse();
+      }
+
+      return Parser(String(file), file); // eslint-disable-line new-cap
+    } // Run transforms on a unist node representation of a file (in string or
+    // vfile representation), async.
+
+
+    function run(node, file, cb) {
+      assertNode$1(node);
+      freeze();
+
+      if (!cb && typeof file === 'function') {
+        cb = file;
+        file = null;
+      }
+
+      if (!cb) {
+        return new Promise(executor);
+      }
+
+      executor(null, cb);
+
+      function executor(resolve, reject) {
+        transformers.run(node, vfile$1(file), done);
+
+        function done(err, tree, file) {
+          tree = tree || node;
+
+          if (err) {
+            reject(err);
+          } else if (resolve) {
+            resolve(tree);
+          } else {
+            cb(null, tree, file);
+          }
+        }
+      }
+    } // Run transforms on a unist node representation of a file (in string or
+    // vfile representation), sync.
+
+
+    function runSync(node, file) {
+      var complete = false;
+      var result;
+      run(node, file, done);
+      assertDone$1('runSync', 'run', complete);
+      return result;
+
+      function done(err, tree) {
+        complete = true;
+        bail_1$1(err);
+        result = tree;
+      }
+    } // Stringify a unist node representation of a file (in string or vfile
+    // representation) into a string using the `Compiler` on the processor.
+
+
+    function stringify(node, doc) {
+      var file = vfile$1(doc);
+      var Compiler;
+      freeze();
+      Compiler = processor.Compiler;
+      assertCompiler$1('stringify', Compiler);
+      assertNode$1(node);
+
+      if (newable$1(Compiler, 'compile')) {
+        return new Compiler(node, file).compile();
+      }
+
+      return Compiler(node, file); // eslint-disable-line new-cap
+    } // Parse a file (in string or vfile representation) into a unist node using
+    // the `Parser` on the processor, then run transforms on that node, and
+    // compile the resulting node using the `Compiler` on the processor, and
+    // store that result on the vfile.
+
+
+    function process(doc, cb) {
+      freeze();
+      assertParser$1('process', processor.Parser);
+      assertCompiler$1('process', processor.Compiler);
+
+      if (!cb) {
+        return new Promise(executor);
+      }
+
+      executor(null, cb);
+
+      function executor(resolve, reject) {
+        var file = vfile$1(doc);
+        pipeline$1.run(processor, {
+          file: file
+        }, done);
+
+        function done(err) {
+          if (err) {
+            reject(err);
+          } else if (resolve) {
+            resolve(file);
+          } else {
+            cb(null, file);
+          }
+        }
+      }
+    } // Process the given document (in string or vfile representation), sync.
+
+
+    function processSync(doc) {
+      var complete = false;
+      var file;
+      freeze();
+      assertParser$1('processSync', processor.Parser);
+      assertCompiler$1('processSync', processor.Compiler);
+      file = vfile$1(doc);
+      process(file, done);
+      assertDone$1('processSync', 'process', complete);
+      return file;
+
+      function done(err) {
+        complete = true;
+        bail_1$1(err);
+      }
+    }
+  } // Check if `value` is a constructor.
+
+
+  function newable$1(value, name) {
+    return typeof value === 'function' && value.prototype && ( // A function with keys in its prototype is probably a constructor.
+    // Classes’ prototype methods are not enumerable, so we check if some value
+    // exists in the prototype.
+    keys$1(value.prototype) || name in value.prototype);
+  } // Check if `value` is an object with keys.
+
+
+  function keys$1(value) {
+    var key;
+
+    for (key in value) {
+      return true;
+    }
+
+    return false;
+  } // Assert a parser is available.
+
+
+  function assertParser$1(name, Parser) {
+    if (typeof Parser !== 'function') {
+      throw new Error('Cannot `' + name + '` without `Parser`');
+    }
+  } // Assert a compiler is available.
+
+
+  function assertCompiler$1(name, Compiler) {
+    if (typeof Compiler !== 'function') {
+      throw new Error('Cannot `' + name + '` without `Compiler`');
+    }
+  } // Assert the processor is not frozen.
+
+
+  function assertUnfrozen$1(name, frozen) {
+    if (frozen) {
+      throw new Error('Cannot invoke `' + name + '` on a frozen processor.\nCreate a new processor first, by invoking it: use `processor()` instead of `processor`.');
+    }
+  } // Assert `node` is a unist node.
+
+
+  function assertNode$1(node) {
+    if (!node || typeof node.type !== 'string') {
+      throw new Error('Expected node, got `' + node + '`');
+    }
+  } // Assert that `complete` is `true`.
+
+
+  function assertDone$1(name, asyncName, complete) {
+    if (!complete) {
+      throw new Error('`' + name + '` finished async. Use `' + asyncName + '` instead');
+    }
+  }
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -4837,7 +6309,7 @@
   };
 
   var toAST = function toAST(src) {
-    var processor = unified_1().use(gramParserPlugin).freeze();
+    var processor = unified_1$1().use(gramParserPlugin).freeze();
     return processor.parse(src);
   };
 
@@ -4918,6 +6390,190 @@
     nodes: nodes,
     tail: tail
   };
+
+  var convert_1$1 = convert$1;
+
+  function convert$1(test) {
+    if (test == null) {
+      return ok$1;
+    }
+
+    if (typeof test === 'string') {
+      return typeFactory$1(test);
+    }
+
+    if (typeof test === 'object') {
+      return 'length' in test ? anyFactory$1(test) : allFactory$1(test);
+    }
+
+    if (typeof test === 'function') {
+      return test;
+    }
+
+    throw new Error('Expected function, string, or object as test');
+  } // Utility assert each property in `test` is represented in `node`, and each
+  // values are strictly equal.
+
+
+  function allFactory$1(test) {
+    return all;
+
+    function all(node) {
+      var key;
+
+      for (key in test) {
+        if (node[key] !== test[key]) return false;
+      }
+
+      return true;
+    }
+  }
+
+  function anyFactory$1(tests) {
+    var checks = [];
+    var index = -1;
+
+    while (++index < tests.length) {
+      checks[index] = convert$1(tests[index]);
+    }
+
+    return any;
+
+    function any() {
+      var index = -1;
+
+      while (++index < checks.length) {
+        if (checks[index].apply(this, arguments)) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+  } // Utility to convert a string into a function which checks a given node’s type
+  // for said string.
+
+
+  function typeFactory$1(test) {
+    return type;
+
+    function type(node) {
+      return Boolean(node && node.type === test);
+    }
+  } // Utility to return true.
+
+
+  function ok$1() {
+    return true;
+  }
+
+  var color_browser$1 = identity$2;
+
+  function identity$2(d) {
+    return d;
+  }
+
+  var unistUtilVisitParents$1 = visitParents$1;
+  var CONTINUE$2 = true;
+  var SKIP$2 = 'skip';
+  var EXIT$2 = false;
+  visitParents$1.CONTINUE = CONTINUE$2;
+  visitParents$1.SKIP = SKIP$2;
+  visitParents$1.EXIT = EXIT$2;
+
+  function visitParents$1(tree, test, visitor, reverse) {
+    var step;
+    var is;
+
+    if (typeof test === 'function' && typeof visitor !== 'function') {
+      reverse = visitor;
+      visitor = test;
+      test = null;
+    }
+
+    is = convert_1$1(test);
+    step = reverse ? -1 : 1;
+    factory(tree, null, [])();
+
+    function factory(node, index, parents) {
+      var value = typeof node === 'object' && node !== null ? node : {};
+      var name;
+
+      if (typeof value.type === 'string') {
+        name = typeof value.tagName === 'string' ? value.tagName : typeof value.name === 'string' ? value.name : undefined;
+        visit.displayName = 'node (' + color_browser$1(value.type + (name ? '<' + name + '>' : '')) + ')';
+      }
+
+      return visit;
+
+      function visit() {
+        var grandparents = parents.concat(node);
+        var result = [];
+        var subresult;
+        var offset;
+
+        if (!test || is(node, index, parents[parents.length - 1] || null)) {
+          result = toResult$1(visitor(node, parents));
+
+          if (result[0] === EXIT$2) {
+            return result;
+          }
+        }
+
+        if (node.children && result[0] !== SKIP$2) {
+          offset = (reverse ? node.children.length : -1) + step;
+
+          while (offset > -1 && offset < node.children.length) {
+            subresult = factory(node.children[offset], offset, grandparents)();
+
+            if (subresult[0] === EXIT$2) {
+              return subresult;
+            }
+
+            offset = typeof subresult[1] === 'number' ? subresult[1] : offset + step;
+          }
+        }
+
+        return result;
+      }
+    }
+  }
+
+  function toResult$1(value) {
+    if (value !== null && typeof value === 'object' && 'length' in value) {
+      return value;
+    }
+
+    if (typeof value === 'number') {
+      return [CONTINUE$2, value];
+    }
+
+    return [value];
+  }
+
+  var unistUtilVisit$1 = visit$1;
+  var CONTINUE$3 = unistUtilVisitParents$1.CONTINUE;
+  var SKIP$3 = unistUtilVisitParents$1.SKIP;
+  var EXIT$3 = unistUtilVisitParents$1.EXIT;
+  visit$1.CONTINUE = CONTINUE$3;
+  visit$1.SKIP = SKIP$3;
+  visit$1.EXIT = EXIT$3;
+
+  function visit$1(tree, test, visitor, reverse) {
+    if (typeof test === 'function' && typeof visitor !== 'function') {
+      reverse = visitor;
+      visitor = test;
+      test = null;
+    }
+
+    unistUtilVisitParents$1(tree, test, overload, reverse);
+
+    function overload(node, parents) {
+      var parent = parents[parents.length - 1];
+      var index = parent ? parent.children.indexOf(node) : null;
+      return visitor(node, index, parent);
+    }
+  }
 
   function _extends$3() {
     _extends$3 = Object.assign || function (target) {
@@ -5302,7 +6958,7 @@
     var s = _extends$3({}, defaultSettings$1, settings);
 
     var recordValueEvaluator = function recordValueEvaluator(tree) {
-      unistUtilVisit(tree, function (element) {
+      unistUtilVisit$1(tree, function (element) {
         if (isGramPath(element) && element.record) {
           element.data = Object.assign(element.data || {}, {
             value: valueOf(element.record, s.literalValueEvaluator)
@@ -5399,14 +7055,14 @@
   };
 
   var arrayToString = function arrayToString(xs) {
-    return "[" + xs.map(stringify$1).join(',') + "]";
+    return "[" + xs.map(stringify$2).join(',') + "]";
   };
 
   var objectToString = function objectToString(o) {
     var fields = Object.entries(o).map(function (_ref2, i) {
       var name = _ref2[0],
           value = _ref2[1];
-      return "" + (i > 0 ? ',' : '') + name + ":" + stringify$1(value);
+      return "" + (i > 0 ? ',' : '') + name + ":" + stringify$2(value);
     });
     return "{" + fields.join('') + "}";
   };
@@ -5455,7 +7111,7 @@
     return pathExpression;
   };
 
-  var stringify$1 = function stringify(ast) {
+  var stringify$2 = function stringify(ast) {
     if (Array.isArray(ast)) {
       if (ast.length > 0) {
         var element = ast[0];
@@ -5498,11 +7154,11 @@
 
   var stringifyCompiler = function stringifyCompiler(element) {
     if (isGramPath(element)) {
-      return stringify$1(element);
+      return stringify$2(element);
     }
 
     if (isGramSeq(element)) {
-      return stringify$1(element);
+      return stringify$2(element);
     } else {
       throw new Error("Don't know how to stringify \"" + element.type + "\"");
     }
@@ -5515,8 +7171,8 @@
   var gramStringify_esm = {
     __proto__: null,
     gramStringifyPlugin: gramStringifyPlugin,
-    stringify: stringify$1,
-    toGram: stringify$1
+    stringify: stringify$2,
+    toGram: stringify$2
   };
 
   module.exports.plugins = [/*#__PURE__*/require("@gram-data/gram-identity").gramIdentityPlugin, /*#__PURE__*/require("@gram-data/gram-value").gramValuePlugin];
@@ -5536,14 +7192,14 @@
     return processor.runSync(processor.parse(src));
   };
 
-  var index$2 = {
+  var index$3 = {
     parse: parseAndApplyPlugins,
-    stringify: stringify$1
+    stringify: stringify$2
   };
 
   exports.ast = gramAst_esm;
   exports.builder = gramBuilder_esm;
-  exports.default = index$2;
+  exports.default = index$3;
   exports.identity = gramIdentity_esm;
   exports.ops = gramOps_esm;
   exports.parser = gramParse_esm;

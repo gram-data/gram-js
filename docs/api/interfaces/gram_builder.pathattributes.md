@@ -28,7 +28,7 @@ layout: api
 
 • `Optional` **id**: undefined \| string
 
-*Defined in [packages/gram-builder/src/index.ts:78](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-builder/src/index.ts#L78)*
+*Defined in [packages/gram-builder/src/index.ts:78](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-builder/src/index.ts#L78)*
 
 ___
 
@@ -36,7 +36,7 @@ ___
 
 • `Optional` **kind**: [PathKind](../modules/gram_ast.md#pathkind)
 
-*Defined in [packages/gram-builder/src/index.ts:81](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-builder/src/index.ts#L81)*
+*Defined in [packages/gram-builder/src/index.ts:81](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-builder/src/index.ts#L81)*
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 • `Optional` **labels**: string[]
 
-*Defined in [packages/gram-builder/src/index.ts:79](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-builder/src/index.ts#L79)*
+*Defined in [packages/gram-builder/src/index.ts:79](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-builder/src/index.ts#L79)*
 
 ___
 
@@ -52,4 +52,4 @@ ___
 
 • `Optional` **record**: [GramRecord](../modules/gram_ast.md#gramrecord)
 
-*Defined in [packages/gram-builder/src/index.ts:80](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-builder/src/index.ts#L80)*
+*Defined in [packages/gram-builder/src/index.ts:80](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-builder/src/index.ts#L80)*

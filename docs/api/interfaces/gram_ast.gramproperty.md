@@ -41,7 +41,7 @@ A GramProperty is a name/value pair.
 
 *Inherited from [GramSeq](gram_ast.gramseq.md).[data](gram_ast.gramseq.md#data)*
 
-*Defined in node_modules/@types/unist/index.d.ts:23*
+*Defined in packages/gram-ast/node_modules/@types/unist/index.d.ts:23*
 
 Information from the ecosystem.
 
@@ -51,7 +51,7 @@ ___
 
 •  **name**: string
 
-*Defined in [packages/gram-ast/src/index.ts:255](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-ast/src/index.ts#L255)*
+*Defined in [packages/gram-ast/src/index.ts:255](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-ast/src/index.ts#L255)*
 
 The property name.
 
@@ -63,7 +63,7 @@ ___
 
 *Inherited from [GramSeq](gram_ast.gramseq.md).[position](gram_ast.gramseq.md#position)*
 
-*Defined in node_modules/@types/unist/index.d.ts:29*
+*Defined in packages/gram-ast/node_modules/@types/unist/index.d.ts:29*
 
 Location of a node in a source document.
 Must not be present if a node is generated.
@@ -74,9 +74,9 @@ ___
 
 •  **type**: \"property\"
 
-*Overrides [TextLiteral](gram_ast.textliteral.md).[type](gram_ast.textliteral.md#type)*
+*Overrides void*
 
-*Defined in [packages/gram-ast/src/index.ts:250](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-ast/src/index.ts#L250)*
+*Defined in [packages/gram-ast/src/index.ts:250](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-ast/src/index.ts#L250)*
 
 Type discriminator for this AST element, always 'property'.
 
@@ -86,6 +86,6 @@ ___
 
 •  **value**: [GramRecordValue](../modules/gram_ast.md#gramrecordvalue)
 
-*Defined in [packages/gram-ast/src/index.ts:260](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-ast/src/index.ts#L260)*
+*Defined in [packages/gram-ast/src/index.ts:260](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-ast/src/index.ts#L260)*
 
 The property value. Either a single literal, an array of literals, or a GramRecord.

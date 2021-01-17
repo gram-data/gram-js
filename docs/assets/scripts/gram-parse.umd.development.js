@@ -8,7 +8,7 @@
 
   function bail(err) {
     if (err) {
-      throw err;
+      throw err
     }
   }
 
@@ -18,8 +18,10 @@
    * @author   Feross Aboukhadijeh <https://feross.org>
    * @license  MIT
    */
-  var isBuffer = function isBuffer(obj) {
-    return obj != null && obj.constructor != null && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj);
+
+  var isBuffer = function isBuffer (obj) {
+    return obj != null && obj.constructor != null &&
+      typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
   };
 
   var hasOwn = Object.prototype.hasOwnProperty;
@@ -28,139 +30,136 @@
   var gOPD = Object.getOwnPropertyDescriptor;
 
   var isArray = function isArray(arr) {
-    if (typeof Array.isArray === 'function') {
-      return Array.isArray(arr);
-    }
+  	if (typeof Array.isArray === 'function') {
+  		return Array.isArray(arr);
+  	}
 
-    return toStr.call(arr) === '[object Array]';
+  	return toStr.call(arr) === '[object Array]';
   };
 
   var isPlainObject = function isPlainObject(obj) {
-    if (!obj || toStr.call(obj) !== '[object Object]') {
-      return false;
-    }
+  	if (!obj || toStr.call(obj) !== '[object Object]') {
+  		return false;
+  	}
 
-    var hasOwnConstructor = hasOwn.call(obj, 'constructor');
-    var hasIsPrototypeOf = obj.constructor && obj.constructor.prototype && hasOwn.call(obj.constructor.prototype, 'isPrototypeOf'); // Not own constructor property must be Object
+  	var hasOwnConstructor = hasOwn.call(obj, 'constructor');
+  	var hasIsPrototypeOf = obj.constructor && obj.constructor.prototype && hasOwn.call(obj.constructor.prototype, 'isPrototypeOf');
+  	// Not own constructor property must be Object
+  	if (obj.constructor && !hasOwnConstructor && !hasIsPrototypeOf) {
+  		return false;
+  	}
 
-    if (obj.constructor && !hasOwnConstructor && !hasIsPrototypeOf) {
-      return false;
-    } // Own properties are enumerated firstly, so to speed up,
-    // if last one is own, then all properties are own.
+  	// Own properties are enumerated firstly, so to speed up,
+  	// if last one is own, then all properties are own.
+  	var key;
+  	for (key in obj) { /**/ }
 
+  	return typeof key === 'undefined' || hasOwn.call(obj, key);
+  };
 
-    var key;
-
-    for (key in obj) {
-      /**/
-    }
-
-    return typeof key === 'undefined' || hasOwn.call(obj, key);
-  }; // If name is '__proto__', and Object.defineProperty is available, define __proto__ as an own property on target
-
-
+  // If name is '__proto__', and Object.defineProperty is available, define __proto__ as an own property on target
   var setProperty = function setProperty(target, options) {
-    if (defineProperty && options.name === '__proto__') {
-      defineProperty(target, options.name, {
-        enumerable: true,
-        configurable: true,
-        value: options.newValue,
-        writable: true
-      });
-    } else {
-      target[options.name] = options.newValue;
-    }
-  }; // Return undefined instead of __proto__ if '__proto__' is not an own property
+  	if (defineProperty && options.name === '__proto__') {
+  		defineProperty(target, options.name, {
+  			enumerable: true,
+  			configurable: true,
+  			value: options.newValue,
+  			writable: true
+  		});
+  	} else {
+  		target[options.name] = options.newValue;
+  	}
+  };
 
-
+  // Return undefined instead of __proto__ if '__proto__' is not an own property
   var getProperty = function getProperty(obj, name) {
-    if (name === '__proto__') {
-      if (!hasOwn.call(obj, name)) {
-        return void 0;
-      } else if (gOPD) {
-        // In early versions of node, obj['__proto__'] is buggy when obj has
-        // __proto__ as an own property. Object.getOwnPropertyDescriptor() works.
-        return gOPD(obj, name).value;
-      }
-    }
+  	if (name === '__proto__') {
+  		if (!hasOwn.call(obj, name)) {
+  			return void 0;
+  		} else if (gOPD) {
+  			// In early versions of node, obj['__proto__'] is buggy when obj has
+  			// __proto__ as an own property. Object.getOwnPropertyDescriptor() works.
+  			return gOPD(obj, name).value;
+  		}
+  	}
 
-    return obj[name];
+  	return obj[name];
   };
 
   var extend = function extend() {
-    var options, name, src, copy, copyIsArray, clone;
-    var target = arguments[0];
-    var i = 1;
-    var length = arguments.length;
-    var deep = false; // Handle a deep copy situation
+  	var options, name, src, copy, copyIsArray, clone;
+  	var target = arguments[0];
+  	var i = 1;
+  	var length = arguments.length;
+  	var deep = false;
 
-    if (typeof target === 'boolean') {
-      deep = target;
-      target = arguments[1] || {}; // skip the boolean and the target
+  	// Handle a deep copy situation
+  	if (typeof target === 'boolean') {
+  		deep = target;
+  		target = arguments[1] || {};
+  		// skip the boolean and the target
+  		i = 2;
+  	}
+  	if (target == null || (typeof target !== 'object' && typeof target !== 'function')) {
+  		target = {};
+  	}
 
-      i = 2;
-    }
+  	for (; i < length; ++i) {
+  		options = arguments[i];
+  		// Only deal with non-null/undefined values
+  		if (options != null) {
+  			// Extend the base object
+  			for (name in options) {
+  				src = getProperty(target, name);
+  				copy = getProperty(options, name);
 
-    if (target == null || typeof target !== 'object' && typeof target !== 'function') {
-      target = {};
-    }
+  				// Prevent never-ending loop
+  				if (target !== copy) {
+  					// Recurse if we're merging plain objects or arrays
+  					if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
+  						if (copyIsArray) {
+  							copyIsArray = false;
+  							clone = src && isArray(src) ? src : [];
+  						} else {
+  							clone = src && isPlainObject(src) ? src : {};
+  						}
 
-    for (; i < length; ++i) {
-      options = arguments[i]; // Only deal with non-null/undefined values
+  						// Never move original objects, clone them
+  						setProperty(target, { name: name, newValue: extend(deep, clone, copy) });
 
-      if (options != null) {
-        // Extend the base object
-        for (name in options) {
-          src = getProperty(target, name);
-          copy = getProperty(options, name); // Prevent never-ending loop
+  					// Don't bring in undefined values
+  					} else if (typeof copy !== 'undefined') {
+  						setProperty(target, { name: name, newValue: copy });
+  					}
+  				}
+  			}
+  		}
+  	}
 
-          if (target !== copy) {
-            // Recurse if we're merging plain objects or arrays
-            if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
-              if (copyIsArray) {
-                copyIsArray = false;
-                clone = src && isArray(src) ? src : [];
-              } else {
-                clone = src && isPlainObject(src) ? src : {};
-              } // Never move original objects, clone them
-
-
-              setProperty(target, {
-                name: name,
-                newValue: extend(deep, clone, copy)
-              }); // Don't bring in undefined values
-            } else if (typeof copy !== 'undefined') {
-              setProperty(target, {
-                name: name,
-                newValue: copy
-              });
-            }
-          }
-        }
-      }
-    } // Return the modified object
-
-
-    return target;
+  	// Return the modified object
+  	return target;
   };
 
-  var isPlainObj = function isPlainObj(value) {
-    if (Object.prototype.toString.call(value) !== '[object Object]') {
-      return false;
-    }
+  var isPlainObj = value => {
+  	if (Object.prototype.toString.call(value) !== '[object Object]') {
+  		return false;
+  	}
 
-    var prototype = Object.getPrototypeOf(value);
-    return prototype === null || prototype === Object.prototype;
+  	const prototype = Object.getPrototypeOf(value);
+  	return prototype === null || prototype === Object.prototype;
   };
 
   var slice = [].slice;
-  var wrap_1 = wrap; // Wrap `fn`.
+
+  var wrap_1 = wrap;
+
+  // Wrap `fn`.
   // Can be sync or async; return a promise, receive a completion handler, return
   // new values and errors.
-
   function wrap(fn, callback) {
     var invoked;
-    return wrapped;
+
+    return wrapped
 
     function wrapped() {
       var params = slice.call(arguments, 0);
@@ -180,10 +179,10 @@
         // We’re not about to restart the pipeline again, so the only thing left
         // to do is to throw the thing instead.
         if (callback && invoked) {
-          throw error;
+          throw error
         }
 
-        return done(error);
+        return done(error)
       }
 
       if (!callback) {
@@ -195,45 +194,53 @@
           then(result);
         }
       }
-    } // Invoke `next`, only once.
+    }
 
-
+    // Invoke `next`, only once.
     function done() {
       if (!invoked) {
         invoked = true;
+
         callback.apply(null, arguments);
       }
-    } // Invoke `done` with one value.
+    }
+
+    // Invoke `done` with one value.
     // Tracks if an error is passed, too.
-
-
     function then(value) {
       done(null, value);
     }
   }
 
   var trough_1 = trough;
-  trough.wrap = wrap_1;
-  var slice$1 = [].slice; // Create new middleware.
 
+  trough.wrap = wrap_1;
+
+  var slice$1 = [].slice;
+
+  // Create new middleware.
   function trough() {
     var fns = [];
     var middleware = {};
+
     middleware.run = run;
     middleware.use = use;
-    return middleware; // Run `fns`.  Last argument must be a completion handler.
 
+    return middleware
+
+    // Run `fns`.  Last argument must be a completion handler.
     function run() {
       var index = -1;
       var input = slice$1.call(arguments, 0, -1);
       var done = arguments[arguments.length - 1];
 
       if (typeof done !== 'function') {
-        throw new Error('Expected function as last argument, not ' + done);
+        throw new Error('Expected function as last argument, not ' + done)
       }
 
-      next.apply(null, [null].concat(input)); // Run the next `fn`, if any.
+      next.apply(null, [null].concat(input));
 
+      // Run the next `fn`, if any.
       function next(err) {
         var fn = fns[++index];
         var params = slice$1.call(arguments, 0);
@@ -243,63 +250,66 @@
 
         if (err) {
           done(err);
-          return;
-        } // Copy non-nully input into values.
+          return
+        }
 
-
+        // Copy non-nully input into values.
         while (++pos < length) {
           if (values[pos] === null || values[pos] === undefined) {
             values[pos] = input[pos];
           }
         }
 
-        input = values; // Next or done.
+        input = values;
 
+        // Next or done.
         if (fn) {
           wrap_1(fn, next).apply(null, input);
         } else {
           done.apply(null, [null].concat(input));
         }
       }
-    } // Add `fn` to the list.
+    }
 
-
+    // Add `fn` to the list.
     function use(fn) {
       if (typeof fn !== 'function') {
-        throw new Error('Expected `fn` to be a function, not ' + fn);
+        throw new Error('Expected `fn` to be a function, not ' + fn)
       }
 
       fns.push(fn);
-      return middleware;
+
+      return middleware
     }
   }
 
   var own = {}.hasOwnProperty;
+
   var unistUtilStringifyPosition = stringify;
 
   function stringify(value) {
     // Nothing.
     if (!value || typeof value !== 'object') {
-      return '';
-    } // Node.
+      return ''
+    }
 
-
+    // Node.
     if (own.call(value, 'position') || own.call(value, 'type')) {
-      return position(value.position);
-    } // Position.
+      return position(value.position)
+    }
 
-
+    // Position.
     if (own.call(value, 'start') || own.call(value, 'end')) {
-      return position(value);
-    } // Point.
+      return position(value)
+    }
 
-
+    // Point.
     if (own.call(value, 'line') || own.call(value, 'column')) {
-      return point(value);
-    } // ?
+      return point(value)
+    }
 
-
-    return '';
+    // ?
+    return ''
   }
 
   function point(point) {
@@ -307,7 +317,7 @@
       point = {};
     }
 
-    return index(point.line) + ':' + index(point.column);
+    return index(point.line) + ':' + index(point.column)
   }
 
   function position(pos) {
@@ -315,21 +325,23 @@
       pos = {};
     }
 
-    return point(pos.start) + '-' + point(pos.end);
+    return point(pos.start) + '-' + point(pos.end)
   }
 
   function index(value) {
-    return value && typeof value === 'number' ? value : 1;
+    return value && typeof value === 'number' ? value : 1
   }
 
-  var vfileMessage = VMessage; // Inherit from `Error#`.
+  var vfileMessage = VMessage;
 
+  // Inherit from `Error#`.
   function VMessagePrototype() {}
-
   VMessagePrototype.prototype = Error.prototype;
-  VMessage.prototype = /*#__PURE__*/new VMessagePrototype(); // Message properties.
+  VMessage.prototype = new VMessagePrototype();
 
+  // Message properties.
   var proto = VMessage.prototype;
+
   proto.file = '';
   proto.name = '';
   proto.reason = '';
@@ -337,12 +349,13 @@
   proto.stack = '';
   proto.fatal = null;
   proto.column = null;
-  proto.line = null; // Construct a new VMessage.
+  proto.line = null;
+
+  // Construct a new VMessage.
   //
   // Note: We cannot invoke `Error` on the created context, as that adds readonly
   // `line` and `column` attributes on Safari 9, thus throwing and failing the
   // data.
-
   function VMessage(reason, position, origin) {
     var parts;
     var range;
@@ -355,17 +368,13 @@
 
     parts = parseOrigin(origin);
     range = unistUtilStringifyPosition(position) || '1:1';
-    location = {
-      start: {
-        line: null,
-        column: null
-      },
-      end: {
-        line: null,
-        column: null
-      }
-    }; // Node.
 
+    location = {
+      start: {line: null, column: null},
+      end: {line: null, column: null}
+    };
+
+    // Node.
     if (position && position.position) {
       position = position.position;
     }
@@ -411,9 +420,10 @@
       }
     }
 
-    return result;
+    return result
   }
 
+  // A derivative work based on:
   // <https://github.com/browserify/path-browserify>.
   // Which is licensed:
   //
@@ -479,7 +489,7 @@
     var extIndex;
 
     if (ext !== undefined && typeof ext !== 'string') {
-      throw new TypeError('"ext" argument must be a string');
+      throw new TypeError('"ext" argument must be a string')
     }
 
     assertPath(path);
@@ -487,16 +497,14 @@
 
     if (ext === undefined || !ext.length || ext.length > path.length) {
       while (index--) {
-        if (path.charCodeAt(index) === 47
-        /* `/` */
-        ) {
-            // If we reached a path separator that was not part of a set of path
-            // separators at the end of the string, stop now.
-            if (seenNonSlash) {
-              start = index + 1;
-              break;
-            }
-          } else if (end < 0) {
+        if (path.charCodeAt(index) === 47 /* `/` */) {
+          // If we reached a path separator that was not part of a set of path
+          // separators at the end of the string, stop now.
+          if (seenNonSlash) {
+            start = index + 1;
+            break
+          }
+        } else if (end < 0) {
           // We saw the first non-path separator, mark this as the end of our
           // path component.
           seenNonSlash = true;
@@ -504,27 +512,25 @@
         }
       }
 
-      return end < 0 ? '' : path.slice(start, end);
+      return end < 0 ? '' : path.slice(start, end)
     }
 
     if (ext === path) {
-      return '';
+      return ''
     }
 
     firstNonSlashEnd = -1;
     extIndex = ext.length - 1;
 
     while (index--) {
-      if (path.charCodeAt(index) === 47
-      /* `/` */
-      ) {
-          // If we reached a path separator that was not part of a set of path
-          // separators at the end of the string, stop now.
-          if (seenNonSlash) {
-            start = index + 1;
-            break;
-          }
-        } else {
+      if (path.charCodeAt(index) === 47 /* `/` */) {
+        // If we reached a path separator that was not part of a set of path
+        // separators at the end of the string, stop now.
+        if (seenNonSlash) {
+          start = index + 1;
+          break
+        }
+      } else {
         if (firstNonSlashEnd < 0) {
           // We saw the first non-path separator, remember this index in case
           // we need it if the extension ends up not matching.
@@ -556,71 +562,73 @@
       end = path.length;
     }
 
-    return path.slice(start, end);
+    return path.slice(start, end)
   }
 
   function dirname(path) {
     var end;
     var unmatchedSlash;
     var index;
+
     assertPath(path);
 
     if (!path.length) {
-      return '.';
+      return '.'
     }
 
     end = -1;
-    index = path.length; // Prefix `--` is important to not run on `0`.
+    index = path.length;
 
+    // Prefix `--` is important to not run on `0`.
     while (--index) {
-      if (path.charCodeAt(index) === 47
-      /* `/` */
-      ) {
-          if (unmatchedSlash) {
-            end = index;
-            break;
-          }
-        } else if (!unmatchedSlash) {
+      if (path.charCodeAt(index) === 47 /* `/` */) {
+        if (unmatchedSlash) {
+          end = index;
+          break
+        }
+      } else if (!unmatchedSlash) {
         // We saw the first non-path separator
         unmatchedSlash = true;
       }
     }
 
-    return end < 0 ? path.charCodeAt(0) === 47
-    /* `/` */
-    ? '/' : '.' : end === 1 && path.charCodeAt(0) === 47
-    /* `/` */
-    ? '//' : path.slice(0, end);
+    return end < 0
+      ? path.charCodeAt(0) === 47 /* `/` */
+        ? '/'
+        : '.'
+      : end === 1 && path.charCodeAt(0) === 47 /* `/` */
+      ? '//'
+      : path.slice(0, end)
   }
 
   function extname(path) {
     var startDot = -1;
     var startPart = 0;
-    var end = -1; // Track the state of characters (if any) we see before our first dot and
+    var end = -1;
+    // Track the state of characters (if any) we see before our first dot and
     // after any path separator we find.
-
     var preDotState = 0;
     var unmatchedSlash;
     var code;
     var index;
+
     assertPath(path);
+
     index = path.length;
 
     while (index--) {
       code = path.charCodeAt(index);
 
-      if (code === 47
-      /* `/` */
-      ) {
-          // If we reached a path separator that was not part of a set of path
-          // separators at the end of the string, stop now.
-          if (unmatchedSlash) {
-            startPart = index + 1;
-            break;
-          }
-
-          continue;
+      if (code === 47 /* `/` */) {
+        // If we reached a path separator that was not part of a set of path
+        // separators at the end of the string, stop now.
+        if (unmatchedSlash) {
+          startPart = index + 1;
+          break
         }
+
+        continue
+      }
 
       if (end < 0) {
         // We saw the first non-path separator, mark this as the end of our
@@ -629,29 +637,32 @@
         end = index + 1;
       }
 
-      if (code === 46
-      /* `.` */
-      ) {
-          // If this is our first dot, mark it as the start of our extension.
-          if (startDot < 0) {
-            startDot = index;
-          } else if (preDotState !== 1) {
-            preDotState = 1;
-          }
-        } else if (startDot > -1) {
+      if (code === 46 /* `.` */) {
+        // If this is our first dot, mark it as the start of our extension.
+        if (startDot < 0) {
+          startDot = index;
+        } else if (preDotState !== 1) {
+          preDotState = 1;
+        }
+      } else if (startDot > -1) {
         // We saw a non-dot and non-path separator before our dot, so we should
         // have a good chance at having a non-empty extension.
         preDotState = -1;
       }
     }
 
-    if (startDot < 0 || end < 0 || // We saw a non-dot character immediately before the dot.
-    preDotState === 0 || // The (right-most) trimmed path component is exactly `..`.
-    preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
-      return '';
+    if (
+      startDot < 0 ||
+      end < 0 ||
+      // We saw a non-dot character immediately before the dot.
+      preDotState === 0 ||
+      // The (right-most) trimmed path component is exactly `..`.
+      (preDotState === 1 && startDot === end - 1 && startDot === startPart + 1)
+    ) {
+      return ''
     }
 
-    return path.slice(startDot, end);
+    return path.slice(startDot, end)
   }
 
   function join() {
@@ -662,39 +673,41 @@
       assertPath(arguments[index]);
 
       if (arguments[index]) {
-        joined = joined === undefined ? arguments[index] : joined + '/' + arguments[index];
+        joined =
+          joined === undefined
+            ? arguments[index]
+            : joined + '/' + arguments[index];
       }
     }
 
-    return joined === undefined ? '.' : normalize(joined);
-  } // Note: `normalize` is not exposed as `path.normalize`, so some code is
+    return joined === undefined ? '.' : normalize(joined)
+  }
+
+  // Note: `normalize` is not exposed as `path.normalize`, so some code is
   // manually removed from it.
-
-
   function normalize(path) {
     var absolute;
     var value;
-    assertPath(path);
-    absolute = path.charCodeAt(0) === 47;
-    /* `/` */
-    // Normalize the path according to POSIX rules.
 
+    assertPath(path);
+
+    absolute = path.charCodeAt(0) === 47; /* `/` */
+
+    // Normalize the path according to POSIX rules.
     value = normalizeString(path, !absolute);
 
     if (!value.length && !absolute) {
       value = '.';
     }
 
-    if (value.length && path.charCodeAt(path.length - 1) === 47
-    /* / */
-    ) {
-        value += '/';
-      }
+    if (value.length && path.charCodeAt(path.length - 1) === 47 /* / */) {
+      value += '/';
+    }
 
-    return absolute ? '/' + value : value;
-  } // Resolve `.` and `..` elements in a path with directory names.
+    return absolute ? '/' + value : value
+  }
 
-
+  // Resolve `.` and `..` elements in a path with directory names.
   function normalizeString(path, allowAboveRoot) {
     var result = '';
     var lastSegmentLength = 0;
@@ -707,171 +720,159 @@
     while (++index <= path.length) {
       if (index < path.length) {
         code = path.charCodeAt(index);
-      } else if (code === 47
-      /* `/` */
-      ) {
-          break;
-        } else {
-        code = 47;
-        /* `/` */
+      } else if (code === 47 /* `/` */) {
+        break
+      } else {
+        code = 47; /* `/` */
       }
 
-      if (code === 47
-      /* `/` */
-      ) {
-          if (lastSlash === index - 1 || dots === 1) ; else if (lastSlash !== index - 1 && dots === 2) {
-            if (result.length < 2 || lastSegmentLength !== 2 || result.charCodeAt(result.length - 1) !== 46
-            /* `.` */
-            || result.charCodeAt(result.length - 2) !== 46
-            /* `.` */
-            ) {
-                if (result.length > 2) {
-                  lastSlashIndex = result.lastIndexOf('/');
-                  /* istanbul ignore else - No clue how to cover it. */
+      if (code === 47 /* `/` */) {
+        if (lastSlash === index - 1 || dots === 1) ; else if (lastSlash !== index - 1 && dots === 2) {
+          if (
+            result.length < 2 ||
+            lastSegmentLength !== 2 ||
+            result.charCodeAt(result.length - 1) !== 46 /* `.` */ ||
+            result.charCodeAt(result.length - 2) !== 46 /* `.` */
+          ) {
+            if (result.length > 2) {
+              lastSlashIndex = result.lastIndexOf('/');
 
-                  if (lastSlashIndex !== result.length - 1) {
-                    if (lastSlashIndex < 0) {
-                      result = '';
-                      lastSegmentLength = 0;
-                    } else {
-                      result = result.slice(0, lastSlashIndex);
-                      lastSegmentLength = result.length - 1 - result.lastIndexOf('/');
-                    }
-
-                    lastSlash = index;
-                    dots = 0;
-                    continue;
-                  }
-                } else if (result.length) {
+              /* istanbul ignore else - No clue how to cover it. */
+              if (lastSlashIndex !== result.length - 1) {
+                if (lastSlashIndex < 0) {
                   result = '';
                   lastSegmentLength = 0;
-                  lastSlash = index;
-                  dots = 0;
-                  continue;
+                } else {
+                  result = result.slice(0, lastSlashIndex);
+                  lastSegmentLength = result.length - 1 - result.lastIndexOf('/');
                 }
+
+                lastSlash = index;
+                dots = 0;
+                continue
               }
-
-            if (allowAboveRoot) {
-              result = result.length ? result + '/..' : '..';
-              lastSegmentLength = 2;
+            } else if (result.length) {
+              result = '';
+              lastSegmentLength = 0;
+              lastSlash = index;
+              dots = 0;
+              continue
             }
-          } else {
-            if (result.length) {
-              result += '/' + path.slice(lastSlash + 1, index);
-            } else {
-              result = path.slice(lastSlash + 1, index);
-            }
-
-            lastSegmentLength = index - lastSlash - 1;
           }
 
-          lastSlash = index;
-          dots = 0;
-        } else if (code === 46
-      /* `.` */
-      && dots > -1) {
+          if (allowAboveRoot) {
+            result = result.length ? result + '/..' : '..';
+            lastSegmentLength = 2;
+          }
+        } else {
+          if (result.length) {
+            result += '/' + path.slice(lastSlash + 1, index);
+          } else {
+            result = path.slice(lastSlash + 1, index);
+          }
+
+          lastSegmentLength = index - lastSlash - 1;
+        }
+
+        lastSlash = index;
+        dots = 0;
+      } else if (code === 46 /* `.` */ && dots > -1) {
         dots++;
       } else {
         dots = -1;
       }
     }
 
-    return result;
+    return result
   }
 
   function assertPath(path) {
     if (typeof path !== 'string') {
-      throw new TypeError('Path must be a string. Received ' + JSON.stringify(path));
+      throw new TypeError(
+        'Path must be a string. Received ' + JSON.stringify(path)
+      )
     }
   }
 
   var minpath_browser = {
-    basename: basename_1,
-    dirname: dirname_1,
-    extname: extname_1,
-    join: join_1,
-    sep: sep
+  	basename: basename_1,
+  	dirname: dirname_1,
+  	extname: extname_1,
+  	join: join_1,
+  	sep: sep
   };
 
+  // Somewhat based on:
   // <https://github.com/defunctzombie/node-process/blob/master/browser.js>.
   // But I don’t think one tiny line of code can be copyrighted. 😅
-
   var cwd_1 = cwd;
 
   function cwd() {
-    return '/';
+    return '/'
   }
 
   var minproc_browser = {
-    cwd: cwd_1
-  };
-
-  /*!
-   * Determine if an object is a Buffer
-   *
-   * @author   Feross Aboukhadijeh <https://feross.org>
-   * @license  MIT
-   */
-  var isBuffer$1 = function isBuffer(obj) {
-    return obj != null && obj.constructor != null && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj);
+  	cwd: cwd_1
   };
 
   var core = VFile;
-  var own$1 = {}.hasOwnProperty; // Order of setting (least specific to most), we need this because otherwise
+
+  var own$1 = {}.hasOwnProperty;
+
+  // Order of setting (least specific to most), we need this because otherwise
   // `{stem: 'a', path: '~/b.js'}` would throw, as a path is needed before a
   // stem can be set.
-
   var order = ['history', 'path', 'basename', 'stem', 'extname', 'dirname'];
-  VFile.prototype.toString = toString; // Access full path (`~/index.min.js`).
 
-  Object.defineProperty(VFile.prototype, 'path', {
-    get: getPath,
-    set: setPath
-  }); // Access parent path (`~`).
+  VFile.prototype.toString = toString;
 
+  // Access full path (`~/index.min.js`).
+  Object.defineProperty(VFile.prototype, 'path', {get: getPath, set: setPath});
+
+  // Access parent path (`~`).
   Object.defineProperty(VFile.prototype, 'dirname', {
     get: getDirname,
     set: setDirname
-  }); // Access basename (`index.min.js`).
+  });
 
+  // Access basename (`index.min.js`).
   Object.defineProperty(VFile.prototype, 'basename', {
     get: getBasename,
     set: setBasename
-  }); // Access extname (`.js`).
+  });
 
+  // Access extname (`.js`).
   Object.defineProperty(VFile.prototype, 'extname', {
     get: getExtname,
     set: setExtname
-  }); // Access stem (`index.min`).
+  });
 
-  Object.defineProperty(VFile.prototype, 'stem', {
-    get: getStem,
-    set: setStem
-  }); // Construct a new file.
+  // Access stem (`index.min`).
+  Object.defineProperty(VFile.prototype, 'stem', {get: getStem, set: setStem});
 
+  // Construct a new file.
   function VFile(options) {
     var prop;
     var index;
 
     if (!options) {
       options = {};
-    } else if (typeof options === 'string' || isBuffer$1(options)) {
-      options = {
-        contents: options
-      };
+    } else if (typeof options === 'string' || isBuffer(options)) {
+      options = {contents: options};
     } else if ('message' in options && 'messages' in options) {
-      return options;
+      return options
     }
 
     if (!(this instanceof VFile)) {
-      return new VFile(options);
+      return new VFile(options)
     }
 
     this.data = {};
     this.messages = [];
     this.history = [];
-    this.cwd = minproc_browser.cwd(); // Set path related properties in the correct order.
+    this.cwd = minproc_browser.cwd();
 
+    // Set path related properties in the correct order.
     index = -1;
 
     while (++index < order.length) {
@@ -880,9 +881,9 @@
       if (own$1.call(options, prop)) {
         this[prop] = options[prop];
       }
-    } // Set non-path related properties.
+    }
 
-
+    // Set non-path related properties.
     for (prop in options) {
       if (order.indexOf(prop) < 0) {
         this[prop] = options[prop];
@@ -891,7 +892,7 @@
   }
 
   function getPath() {
-    return this.history[this.history.length - 1];
+    return this.history[this.history.length - 1]
   }
 
   function setPath(path) {
@@ -903,7 +904,7 @@
   }
 
   function getDirname() {
-    return typeof this.path === 'string' ? minpath_browser.dirname(this.path) : undefined;
+    return typeof this.path === 'string' ? minpath_browser.dirname(this.path) : undefined
   }
 
   function setDirname(dirname) {
@@ -912,7 +913,7 @@
   }
 
   function getBasename() {
-    return typeof this.path === 'string' ? minpath_browser.basename(this.path) : undefined;
+    return typeof this.path === 'string' ? minpath_browser.basename(this.path) : undefined
   }
 
   function setBasename(basename) {
@@ -922,7 +923,7 @@
   }
 
   function getExtname() {
-    return typeof this.path === 'string' ? minpath_browser.extname(this.path) : undefined;
+    return typeof this.path === 'string' ? minpath_browser.extname(this.path) : undefined
   }
 
   function setExtname(extname) {
@@ -930,14 +931,12 @@
     assertPath$1(this.path, 'extname');
 
     if (extname) {
-      if (extname.charCodeAt(0) !== 46
-      /* `.` */
-      ) {
-          throw new Error('`extname` must start with `.`');
-        }
+      if (extname.charCodeAt(0) !== 46 /* `.` */) {
+        throw new Error('`extname` must start with `.`')
+      }
 
       if (extname.indexOf('.', 1) > -1) {
-        throw new Error('`extname` cannot contain multiple dots');
+        throw new Error('`extname` cannot contain multiple dots')
       }
     }
 
@@ -945,47 +944,53 @@
   }
 
   function getStem() {
-    return typeof this.path === 'string' ? minpath_browser.basename(this.path, this.extname) : undefined;
+    return typeof this.path === 'string'
+      ? minpath_browser.basename(this.path, this.extname)
+      : undefined
   }
 
   function setStem(stem) {
     assertNonEmpty(stem, 'stem');
     assertPart(stem, 'stem');
     this.path = minpath_browser.join(this.dirname || '', stem + (this.extname || ''));
-  } // Get the value of the file.
+  }
 
-
+  // Get the value of the file.
   function toString(encoding) {
-    return (this.contents || '').toString(encoding);
-  } // Assert that `part` is not a path (i.e., does not contain `p.sep`).
+    return (this.contents || '').toString(encoding)
+  }
 
-
+  // Assert that `part` is not a path (i.e., does not contain `p.sep`).
   function assertPart(part, name) {
     if (part && part.indexOf(minpath_browser.sep) > -1) {
-      throw new Error('`' + name + '` cannot be a path: did not expect `' + minpath_browser.sep + '`');
+      throw new Error(
+        '`' + name + '` cannot be a path: did not expect `' + minpath_browser.sep + '`'
+      )
     }
-  } // Assert that `part` is not empty.
+  }
 
-
+  // Assert that `part` is not empty.
   function assertNonEmpty(part, name) {
     if (!part) {
-      throw new Error('`' + name + '` cannot be empty');
+      throw new Error('`' + name + '` cannot be empty')
     }
-  } // Assert `path` exists.
+  }
 
-
+  // Assert `path` exists.
   function assertPath$1(path, name) {
     if (!path) {
-      throw new Error('Setting `' + name + '` requires `path` to be set too');
+      throw new Error('Setting `' + name + '` requires `path` to be set too')
     }
   }
 
   var lib = core;
+
   core.prototype.message = message;
   core.prototype.info = info;
-  core.prototype.fail = fail; // Create a message with `reason` at `position`.
-  // When an error is passed in as `reason`, copies the stack.
+  core.prototype.fail = fail;
 
+  // Create a message with `reason` at `position`.
+  // When an error is passed in as `reason`, copies the stack.
   function message(reason, position, origin) {
     var message = new vfileMessage(reason, position, origin);
 
@@ -995,32 +1000,44 @@
     }
 
     message.fatal = false;
+
     this.messages.push(message);
-    return message;
-  } // Fail: creates a vmessage, associates it with the file, and throws it.
 
+    return message
+  }
 
+  // Fail: creates a vmessage, associates it with the file, and throws it.
   function fail() {
     var message = this.message.apply(this, arguments);
+
     message.fatal = true;
-    throw message;
-  } // Info: creates a vmessage, associates it with the file, and marks the fatality
+
+    throw message
+  }
+
+  // Info: creates a vmessage, associates it with the file, and marks the fatality
   // as null.
-
-
   function info() {
     var message = this.message.apply(this, arguments);
+
     message.fatal = null;
-    return message;
+
+    return message
   }
 
   var vfile = lib;
 
-  var unified_1 = /*#__PURE__*/unified().freeze();
-  var slice$2 = [].slice;
-  var own$2 = {}.hasOwnProperty; // Process pipeline.
+  // Expose a frozen processor.
+  var unified_1 = unified().freeze();
 
-  var pipeline = /*#__PURE__*/trough_1().use(pipelineParse).use(pipelineRun).use(pipelineStringify);
+  var slice$2 = [].slice;
+  var own$2 = {}.hasOwnProperty;
+
+  // Process pipeline.
+  var pipeline = trough_1()
+    .use(pipelineParse)
+    .use(pipelineRun)
+    .use(pipelineStringify);
 
   function pipelineParse(p, ctx) {
     ctx.tree = p.parse(ctx.file);
@@ -1049,32 +1066,38 @@
     } else {
       file.result = result;
     }
-  } // Function to create the first processor.
+  }
 
-
+  // Function to create the first processor.
   function unified() {
     var attachers = [];
     var transformers = trough_1();
     var namespace = {};
     var frozen = false;
-    var freezeIndex = -1; // Data management.
+    var freezeIndex = -1;
 
-    processor.data = data; // Lock.
+    // Data management.
+    processor.data = data;
 
-    processor.freeze = freeze; // Plugins.
+    // Lock.
+    processor.freeze = freeze;
 
+    // Plugins.
     processor.attachers = attachers;
-    processor.use = use; // API.
+    processor.use = use;
 
+    // API.
     processor.parse = parse;
     processor.stringify = stringify;
     processor.run = run;
     processor.runSync = runSync;
     processor.process = process;
-    processor.processSync = processSync; // Expose.
+    processor.processSync = processSync;
 
-    return processor; // Create a new processor based on the processor in the current scope.
+    // Expose.
+    return processor
 
+    // Create a new processor based on the processor in the current scope.
     function processor() {
       var destination = unified();
       var length = attachers.length;
@@ -1085,16 +1108,17 @@
       }
 
       destination.data(extend(true, {}, namespace));
-      return destination;
-    } // Freeze: used to signal a processor that has finished configuration.
+
+      return destination
+    }
+
+    // Freeze: used to signal a processor that has finished configuration.
     //
     // For example, take unified itself: it’s frozen.
     // Plugins should not be added to it.
     // Rather, it should be extended, by invoking it, before modifying it.
     //
     // In essence, always invoke this when exporting a processor.
-
-
     function freeze() {
       var values;
       var plugin;
@@ -1102,7 +1126,7 @@
       var transformer;
 
       if (frozen) {
-        return processor;
+        return processor
       }
 
       while (++freezeIndex < attachers.length) {
@@ -1112,7 +1136,7 @@
         transformer = null;
 
         if (options === false) {
-          continue;
+          continue
         }
 
         if (options === true) {
@@ -1128,44 +1152,48 @@
 
       frozen = true;
       freezeIndex = Infinity;
-      return processor;
-    } // Data management.
+
+      return processor
+    }
+
+    // Data management.
     // Getter / setter for processor-specific informtion.
-
-
     function data(key, value) {
       if (typeof key === 'string') {
         // Set `key`.
         if (arguments.length === 2) {
           assertUnfrozen('data', frozen);
+
           namespace[key] = value;
-          return processor;
-        } // Get `key`.
 
+          return processor
+        }
 
-        return own$2.call(namespace, key) && namespace[key] || null;
-      } // Set space.
+        // Get `key`.
+        return (own$2.call(namespace, key) && namespace[key]) || null
+      }
 
-
+      // Set space.
       if (key) {
         assertUnfrozen('data', frozen);
         namespace = key;
-        return processor;
-      } // Get space.
+        return processor
+      }
 
+      // Get space.
+      return namespace
+    }
 
-      return namespace;
-    } // Plugin management.
+    // Plugin management.
     //
     // Pass it:
     // *   an attacher and options,
     // *   a preset,
     // *   a list of presets, attachers, and arguments (list of attachers and
     //     options).
-
-
     function use(value) {
       var settings;
+
       assertUnfrozen('use', frozen);
 
       if (value === null || value === undefined) ; else if (typeof value === 'function') {
@@ -1177,14 +1205,14 @@
           addPreset(value);
         }
       } else {
-        throw new Error('Expected usable value, not `' + value + '`');
+        throw new Error('Expected usable value, not `' + value + '`')
       }
 
       if (settings) {
         namespace.settings = extend(namespace.settings || {}, settings);
       }
 
-      return processor;
+      return processor
 
       function addPreset(result) {
         addList(result.plugins);
@@ -1204,7 +1232,7 @@
             addPreset(value);
           }
         } else {
-          throw new Error('Expected usable value, not `' + value + '`');
+          throw new Error('Expected usable value, not `' + value + '`')
         }
       }
 
@@ -1220,7 +1248,7 @@
             add(plugins[index]);
           }
         } else {
-          throw new Error('Expected a list of plugins, not `' + plugins + '`');
+          throw new Error('Expected a list of plugins, not `' + plugins + '`')
         }
       }
 
@@ -1248,29 +1276,30 @@
         entry = attachers[index];
 
         if (entry[0] === plugin) {
-          return entry;
+          return entry
         }
       }
-    } // Parse a file (in string or vfile representation) into a unist node using
+    }
+
+    // Parse a file (in string or vfile representation) into a unist node using
     // the `Parser` on the processor.
-
-
     function parse(doc) {
       var file = vfile(doc);
       var Parser;
+
       freeze();
       Parser = processor.Parser;
       assertParser('parse', Parser);
 
       if (newable(Parser, 'parse')) {
-        return new Parser(String(file), file).parse();
+        return new Parser(String(file), file).parse()
       }
 
-      return Parser(String(file), file); // eslint-disable-line new-cap
-    } // Run transforms on a unist node representation of a file (in string or
+      return Parser(String(file), file) // eslint-disable-line new-cap
+    }
+
+    // Run transforms on a unist node representation of a file (in string or
     // vfile representation), async.
-
-
     function run(node, file, cb) {
       assertNode(node);
       freeze();
@@ -1281,7 +1310,7 @@
       }
 
       if (!cb) {
-        return new Promise(executor);
+        return new Promise(executor)
       }
 
       executor(null, cb);
@@ -1291,7 +1320,6 @@
 
         function done(err, tree, file) {
           tree = tree || node;
-
           if (err) {
             reject(err);
           } else if (resolve) {
@@ -1301,61 +1329,64 @@
           }
         }
       }
-    } // Run transforms on a unist node representation of a file (in string or
+    }
+
+    // Run transforms on a unist node representation of a file (in string or
     // vfile representation), sync.
-
-
     function runSync(node, file) {
       var complete = false;
       var result;
+
       run(node, file, done);
+
       assertDone('runSync', 'run', complete);
-      return result;
+
+      return result
 
       function done(err, tree) {
         complete = true;
         bail_1(err);
         result = tree;
       }
-    } // Stringify a unist node representation of a file (in string or vfile
+    }
+
+    // Stringify a unist node representation of a file (in string or vfile
     // representation) into a string using the `Compiler` on the processor.
-
-
     function stringify(node, doc) {
       var file = vfile(doc);
       var Compiler;
+
       freeze();
       Compiler = processor.Compiler;
       assertCompiler('stringify', Compiler);
       assertNode(node);
 
       if (newable(Compiler, 'compile')) {
-        return new Compiler(node, file).compile();
+        return new Compiler(node, file).compile()
       }
 
-      return Compiler(node, file); // eslint-disable-line new-cap
-    } // Parse a file (in string or vfile representation) into a unist node using
+      return Compiler(node, file) // eslint-disable-line new-cap
+    }
+
+    // Parse a file (in string or vfile representation) into a unist node using
     // the `Parser` on the processor, then run transforms on that node, and
     // compile the resulting node using the `Compiler` on the processor, and
     // store that result on the vfile.
-
-
     function process(doc, cb) {
       freeze();
       assertParser('process', processor.Parser);
       assertCompiler('process', processor.Compiler);
 
       if (!cb) {
-        return new Promise(executor);
+        return new Promise(executor)
       }
 
       executor(null, cb);
 
       function executor(resolve, reject) {
         var file = vfile(doc);
-        pipeline.run(processor, {
-          file: file
-        }, done);
+
+        pipeline.run(processor, {file: file}, done);
 
         function done(err) {
           if (err) {
@@ -1367,78 +1398,91 @@
           }
         }
       }
-    } // Process the given document (in string or vfile representation), sync.
+    }
 
-
+    // Process the given document (in string or vfile representation), sync.
     function processSync(doc) {
       var complete = false;
       var file;
+
       freeze();
       assertParser('processSync', processor.Parser);
       assertCompiler('processSync', processor.Compiler);
       file = vfile(doc);
+
       process(file, done);
+
       assertDone('processSync', 'process', complete);
-      return file;
+
+      return file
 
       function done(err) {
         complete = true;
         bail_1(err);
       }
     }
-  } // Check if `value` is a constructor.
+  }
 
-
+  // Check if `value` is a constructor.
   function newable(value, name) {
-    return typeof value === 'function' && value.prototype && ( // A function with keys in its prototype is probably a constructor.
-    // Classes’ prototype methods are not enumerable, so we check if some value
-    // exists in the prototype.
-    keys(value.prototype) || name in value.prototype);
-  } // Check if `value` is an object with keys.
+    return (
+      typeof value === 'function' &&
+      value.prototype &&
+      // A function with keys in its prototype is probably a constructor.
+      // Classes’ prototype methods are not enumerable, so we check if some value
+      // exists in the prototype.
+      (keys(value.prototype) || name in value.prototype)
+    )
+  }
 
-
+  // Check if `value` is an object with keys.
   function keys(value) {
     var key;
-
     for (key in value) {
-      return true;
+      return true
     }
 
-    return false;
-  } // Assert a parser is available.
+    return false
+  }
 
-
+  // Assert a parser is available.
   function assertParser(name, Parser) {
     if (typeof Parser !== 'function') {
-      throw new Error('Cannot `' + name + '` without `Parser`');
+      throw new Error('Cannot `' + name + '` without `Parser`')
     }
-  } // Assert a compiler is available.
+  }
 
-
+  // Assert a compiler is available.
   function assertCompiler(name, Compiler) {
     if (typeof Compiler !== 'function') {
-      throw new Error('Cannot `' + name + '` without `Compiler`');
+      throw new Error('Cannot `' + name + '` without `Compiler`')
     }
-  } // Assert the processor is not frozen.
+  }
 
-
+  // Assert the processor is not frozen.
   function assertUnfrozen(name, frozen) {
     if (frozen) {
-      throw new Error('Cannot invoke `' + name + '` on a frozen processor.\nCreate a new processor first, by invoking it: use `processor()` instead of `processor`.');
+      throw new Error(
+        'Cannot invoke `' +
+          name +
+          '` on a frozen processor.\nCreate a new processor first, by invoking it: use `processor()` instead of `processor`.'
+      )
     }
-  } // Assert `node` is a unist node.
+  }
 
-
+  // Assert `node` is a unist node.
   function assertNode(node) {
     if (!node || typeof node.type !== 'string') {
-      throw new Error('Expected node, got `' + node + '`');
+      throw new Error('Expected node, got `' + node + '`')
     }
-  } // Assert that `complete` is `true`.
+  }
 
-
+  // Assert that `complete` is `true`.
   function assertDone(name, asyncName, complete) {
     if (!complete) {
-      throw new Error('`' + name + '` finished async. Use `' + asyncName + '` instead');
+      throw new Error(
+        '`' + name + '` finished async. Use `' + asyncName + '` instead'
+      )
     }
   }
 
@@ -1448,586 +1492,571 @@
   	return module = { exports: {} }, fn(module, module.exports), module.exports;
   }
 
-  var nearley = /*#__PURE__*/createCommonjsModule(function (module) {
-    (function (root, factory) {
+  var nearley = createCommonjsModule(function (module) {
+  (function(root, factory) {
       if ( module.exports) {
-        module.exports = factory();
+          module.exports = factory();
       } else {
-        root.nearley = factory();
+          root.nearley = factory();
       }
-    })(commonjsGlobal, function () {
+  }(commonjsGlobal, function() {
+
       function Rule(name, symbols, postprocess) {
-        this.id = ++Rule.highestId;
-        this.name = name;
-        this.symbols = symbols; // a list of literal | regex class | nonterminal
-
-        this.postprocess = postprocess;
-        return this;
+          this.id = ++Rule.highestId;
+          this.name = name;
+          this.symbols = symbols;        // a list of literal | regex class | nonterminal
+          this.postprocess = postprocess;
+          return this;
       }
-
       Rule.highestId = 0;
 
-      Rule.prototype.toString = function (withCursorAt) {
-        var symbolSequence = typeof withCursorAt === "undefined" ? this.symbols.map(getSymbolShortDisplay).join(' ') : this.symbols.slice(0, withCursorAt).map(getSymbolShortDisplay).join(' ') + " ● " + this.symbols.slice(withCursorAt).map(getSymbolShortDisplay).join(' ');
-        return this.name + " → " + symbolSequence;
-      }; // a State is a rule at a position from a given starting point in the input stream (reference)
+      Rule.prototype.toString = function(withCursorAt) {
+          var symbolSequence = (typeof withCursorAt === "undefined")
+                               ? this.symbols.map(getSymbolShortDisplay).join(' ')
+                               : (   this.symbols.slice(0, withCursorAt).map(getSymbolShortDisplay).join(' ')
+                                   + " ● "
+                                   + this.symbols.slice(withCursorAt).map(getSymbolShortDisplay).join(' ')     );
+          return this.name + " → " + symbolSequence;
+      };
 
 
+      // a State is a rule at a position from a given starting point in the input stream (reference)
       function State(rule, dot, reference, wantedBy) {
-        this.rule = rule;
-        this.dot = dot;
-        this.reference = reference;
-        this.data = [];
-        this.wantedBy = wantedBy;
-        this.isComplete = this.dot === rule.symbols.length;
+          this.rule = rule;
+          this.dot = dot;
+          this.reference = reference;
+          this.data = [];
+          this.wantedBy = wantedBy;
+          this.isComplete = this.dot === rule.symbols.length;
       }
 
-      State.prototype.toString = function () {
-        return "{" + this.rule.toString(this.dot) + "}, from: " + (this.reference || 0);
+      State.prototype.toString = function() {
+          return "{" + this.rule.toString(this.dot) + "}, from: " + (this.reference || 0);
       };
 
-      State.prototype.nextState = function (child) {
-        var state = new State(this.rule, this.dot + 1, this.reference, this.wantedBy);
-        state.left = this;
-        state.right = child;
-
-        if (state.isComplete) {
-          state.data = state.build(); // Having right set here will prevent the right state and its children
-          // form being garbage collected
-
-          state.right = undefined;
-        }
-
-        return state;
+      State.prototype.nextState = function(child) {
+          var state = new State(this.rule, this.dot + 1, this.reference, this.wantedBy);
+          state.left = this;
+          state.right = child;
+          if (state.isComplete) {
+              state.data = state.build();
+              // Having right set here will prevent the right state and its children
+              // form being garbage collected
+              state.right = undefined;
+          }
+          return state;
       };
 
-      State.prototype.build = function () {
-        var children = [];
-        var node = this;
-
-        do {
-          children.push(node.right.data);
-          node = node.left;
-        } while (node.left);
-
-        children.reverse();
-        return children;
+      State.prototype.build = function() {
+          var children = [];
+          var node = this;
+          do {
+              children.push(node.right.data);
+              node = node.left;
+          } while (node.left);
+          children.reverse();
+          return children;
       };
 
-      State.prototype.finish = function () {
-        if (this.rule.postprocess) {
-          this.data = this.rule.postprocess(this.data, this.reference, Parser.fail);
-        }
+      State.prototype.finish = function() {
+          if (this.rule.postprocess) {
+              this.data = this.rule.postprocess(this.data, this.reference, Parser.fail);
+          }
       };
+
 
       function Column(grammar, index) {
-        this.grammar = grammar;
-        this.index = index;
-        this.states = [];
-        this.wants = {}; // states indexed by the non-terminal they expect
-
-        this.scannable = []; // list of states that expect a token
-
-        this.completed = {}; // states that are nullable
+          this.grammar = grammar;
+          this.index = index;
+          this.states = [];
+          this.wants = {}; // states indexed by the non-terminal they expect
+          this.scannable = []; // list of states that expect a token
+          this.completed = {}; // states that are nullable
       }
 
-      Column.prototype.process = function (nextColumn) {
-        var states = this.states;
-        var wants = this.wants;
-        var completed = this.completed;
 
-        for (var w = 0; w < states.length; w++) {
-          // nb. we push() during iteration
-          var state = states[w];
+      Column.prototype.process = function(nextColumn) {
+          var states = this.states;
+          var wants = this.wants;
+          var completed = this.completed;
 
-          if (state.isComplete) {
-            state.finish();
+          for (var w = 0; w < states.length; w++) { // nb. we push() during iteration
+              var state = states[w];
 
-            if (state.data !== Parser.fail) {
-              // complete
-              var wantedBy = state.wantedBy;
+              if (state.isComplete) {
+                  state.finish();
+                  if (state.data !== Parser.fail) {
+                      // complete
+                      var wantedBy = state.wantedBy;
+                      for (var i = wantedBy.length; i--; ) { // this line is hot
+                          var left = wantedBy[i];
+                          this.complete(left, state);
+                      }
 
-              for (var i = wantedBy.length; i--;) {
-                // this line is hot
-                var left = wantedBy[i];
-                this.complete(left, state);
-              } // special-case nullables
+                      // special-case nullables
+                      if (state.reference === this.index) {
+                          // make sure future predictors of this rule get completed.
+                          var exp = state.rule.name;
+                          (this.completed[exp] = this.completed[exp] || []).push(state);
+                      }
+                  }
 
+              } else {
+                  // queue scannable states
+                  var exp = state.rule.symbols[state.dot];
+                  if (typeof exp !== 'string') {
+                      this.scannable.push(state);
+                      continue;
+                  }
 
-              if (state.reference === this.index) {
-                // make sure future predictors of this rule get completed.
-                var exp = state.rule.name;
-                (this.completed[exp] = this.completed[exp] || []).push(state);
+                  // predict
+                  if (wants[exp]) {
+                      wants[exp].push(state);
+
+                      if (completed.hasOwnProperty(exp)) {
+                          var nulls = completed[exp];
+                          for (var i = 0; i < nulls.length; i++) {
+                              var right = nulls[i];
+                              this.complete(state, right);
+                          }
+                      }
+                  } else {
+                      wants[exp] = [state];
+                      this.predict(exp);
+                  }
               }
-            }
-          } else {
-            // queue scannable states
-            var exp = state.rule.symbols[state.dot];
-
-            if (typeof exp !== 'string') {
-              this.scannable.push(state);
-              continue;
-            } // predict
-
-
-            if (wants[exp]) {
-              wants[exp].push(state);
-
-              if (completed.hasOwnProperty(exp)) {
-                var nulls = completed[exp];
-
-                for (var i = 0; i < nulls.length; i++) {
-                  var right = nulls[i];
-                  this.complete(state, right);
-                }
-              }
-            } else {
-              wants[exp] = [state];
-              this.predict(exp);
-            }
           }
-        }
       };
 
-      Column.prototype.predict = function (exp) {
-        var rules = this.grammar.byName[exp] || [];
+      Column.prototype.predict = function(exp) {
+          var rules = this.grammar.byName[exp] || [];
 
-        for (var i = 0; i < rules.length; i++) {
-          var r = rules[i];
-          var wantedBy = this.wants[exp];
-          var s = new State(r, 0, this.index, wantedBy);
-          this.states.push(s);
-        }
+          for (var i = 0; i < rules.length; i++) {
+              var r = rules[i];
+              var wantedBy = this.wants[exp];
+              var s = new State(r, 0, this.index, wantedBy);
+              this.states.push(s);
+          }
       };
 
-      Column.prototype.complete = function (left, right) {
-        var copy = left.nextState(right);
-        this.states.push(copy);
+      Column.prototype.complete = function(left, right) {
+          var copy = left.nextState(right);
+          this.states.push(copy);
       };
+
 
       function Grammar(rules, start) {
-        this.rules = rules;
-        this.start = start || this.rules[0].name;
-        var byName = this.byName = {};
-        this.rules.forEach(function (rule) {
-          if (!byName.hasOwnProperty(rule.name)) {
-            byName[rule.name] = [];
+          this.rules = rules;
+          this.start = start || this.rules[0].name;
+          var byName = this.byName = {};
+          this.rules.forEach(function(rule) {
+              if (!byName.hasOwnProperty(rule.name)) {
+                  byName[rule.name] = [];
+              }
+              byName[rule.name].push(rule);
+          });
+      }
+
+      // So we can allow passing (rules, start) directly to Parser for backwards compatibility
+      Grammar.fromCompiled = function(rules, start) {
+          var lexer = rules.Lexer;
+          if (rules.ParserStart) {
+            start = rules.ParserStart;
+            rules = rules.ParserRules;
           }
-
-          byName[rule.name].push(rule);
-        });
-      } // So we can allow passing (rules, start) directly to Parser for backwards compatibility
-
-
-      Grammar.fromCompiled = function (rules, start) {
-        var lexer = rules.Lexer;
-
-        if (rules.ParserStart) {
-          start = rules.ParserStart;
-          rules = rules.ParserRules;
-        }
-
-        var rules = rules.map(function (r) {
-          return new Rule(r.name, r.symbols, r.postprocess);
-        });
-        var g = new Grammar(rules, start);
-        g.lexer = lexer; // nb. storing lexer on Grammar is iffy, but unavoidable
-
-        return g;
+          var rules = rules.map(function (r) { return (new Rule(r.name, r.symbols, r.postprocess)); });
+          var g = new Grammar(rules, start);
+          g.lexer = lexer; // nb. storing lexer on Grammar is iffy, but unavoidable
+          return g;
       };
+
 
       function StreamLexer() {
         this.reset("");
       }
 
-      StreamLexer.prototype.reset = function (data, state) {
-        this.buffer = data;
-        this.index = 0;
-        this.line = state ? state.line : 1;
-        this.lastLineBreak = state ? -state.col : 0;
+      StreamLexer.prototype.reset = function(data, state) {
+          this.buffer = data;
+          this.index = 0;
+          this.line = state ? state.line : 1;
+          this.lastLineBreak = state ? -state.col : 0;
       };
 
-      StreamLexer.prototype.next = function () {
-        if (this.index < this.buffer.length) {
-          var ch = this.buffer[this.index++];
-
-          if (ch === '\n') {
-            this.line += 1;
-            this.lastLineBreak = this.index;
+      StreamLexer.prototype.next = function() {
+          if (this.index < this.buffer.length) {
+              var ch = this.buffer[this.index++];
+              if (ch === '\n') {
+                this.line += 1;
+                this.lastLineBreak = this.index;
+              }
+              return {value: ch};
           }
-
-          return {
-            value: ch
-          };
-        }
       };
 
-      StreamLexer.prototype.save = function () {
+      StreamLexer.prototype.save = function() {
         return {
           line: this.line,
-          col: this.index - this.lastLineBreak
-        };
+          col: this.index - this.lastLineBreak,
+        }
       };
 
-      StreamLexer.prototype.formatError = function (token, message) {
-        // nb. this gets called after consuming the offending token,
-        // so the culprit is index-1
-        var buffer = this.buffer;
+      StreamLexer.prototype.formatError = function(token, message) {
+          // nb. this gets called after consuming the offending token,
+          // so the culprit is index-1
+          var buffer = this.buffer;
+          if (typeof buffer === 'string') {
+              var lines = buffer
+                  .split("\n")
+                  .slice(
+                      Math.max(0, this.line - 5), 
+                      this.line
+                  );
 
-        if (typeof buffer === 'string') {
-          var lines = buffer.split("\n").slice(Math.max(0, this.line - 5), this.line);
-          var nextLineBreak = buffer.indexOf('\n', this.index);
-          if (nextLineBreak === -1) nextLineBreak = buffer.length;
-          var col = this.index - this.lastLineBreak;
-          var lastLineDigits = String(this.line).length;
-          message += " at line " + this.line + " col " + col + ":\n\n";
-          message += lines.map(function (line, i) {
-            return pad(this.line - lines.length + i + 1, lastLineDigits) + " " + line;
-          }, this).join("\n");
-          message += "\n" + pad("", lastLineDigits + col) + "^\n";
-          return message;
-        } else {
-          return message + " at index " + (this.index - 1);
-        }
+              var nextLineBreak = buffer.indexOf('\n', this.index);
+              if (nextLineBreak === -1) nextLineBreak = buffer.length;
+              var col = this.index - this.lastLineBreak;
+              var lastLineDigits = String(this.line).length;
+              message += " at line " + this.line + " col " + col + ":\n\n";
+              message += lines
+                  .map(function(line, i) {
+                      return pad(this.line - lines.length + i + 1, lastLineDigits) + " " + line;
+                  }, this)
+                  .join("\n");
+              message += "\n" + pad("", lastLineDigits + col) + "^\n";
+              return message;
+          } else {
+              return message + " at index " + (this.index - 1);
+          }
 
-        function pad(n, length) {
-          var s = String(n);
-          return Array(length - s.length + 1).join(" ") + s;
-        }
+          function pad(n, length) {
+              var s = String(n);
+              return Array(length - s.length + 1).join(" ") + s;
+          }
       };
 
       function Parser(rules, start, options) {
-        if (rules instanceof Grammar) {
-          var grammar = rules;
-          var options = start;
-        } else {
-          var grammar = Grammar.fromCompiled(rules, start);
-        }
+          if (rules instanceof Grammar) {
+              var grammar = rules;
+              var options = start;
+          } else {
+              var grammar = Grammar.fromCompiled(rules, start);
+          }
+          this.grammar = grammar;
 
-        this.grammar = grammar; // Read options
+          // Read options
+          this.options = {
+              keepHistory: false,
+              lexer: grammar.lexer || new StreamLexer,
+          };
+          for (var key in (options || {})) {
+              this.options[key] = options[key];
+          }
 
-        this.options = {
-          keepHistory: false,
-          lexer: grammar.lexer || new StreamLexer()
-        };
+          // Setup lexer
+          this.lexer = this.options.lexer;
+          this.lexerState = undefined;
 
-        for (var key in options || {}) {
-          this.options[key] = options[key];
-        } // Setup lexer
+          // Setup a table
+          var column = new Column(grammar, 0);
+          var table = this.table = [column];
 
+          // I could be expecting anything.
+          column.wants[grammar.start] = [];
+          column.predict(grammar.start);
+          // TODO what if start rule is nullable?
+          column.process();
+          this.current = 0; // token index
+      }
 
-        this.lexer = this.options.lexer;
-        this.lexerState = undefined; // Setup a table
-
-        var column = new Column(grammar, 0);
-        var table = this.table = [column]; // I could be expecting anything.
-
-        column.wants[grammar.start] = [];
-        column.predict(grammar.start); // TODO what if start rule is nullable?
-
-        column.process();
-        this.current = 0; // token index
-      } // create a reserved token for indicating a parse fail
-
-
+      // create a reserved token for indicating a parse fail
       Parser.fail = {};
 
-      Parser.prototype.feed = function (chunk) {
-        var lexer = this.lexer;
-        lexer.reset(chunk, this.lexerState);
-        var token;
+      Parser.prototype.feed = function(chunk) {
+          var lexer = this.lexer;
+          lexer.reset(chunk, this.lexerState);
 
-        while (true) {
-          try {
-            token = lexer.next();
+          var token;
+          while (true) {
+              try {
+                  token = lexer.next();
+                  if (!token) {
+                      break;
+                  }
+              } catch (e) {
+                  // Create the next column so that the error reporter
+                  // can display the correctly predicted states.
+                  var nextColumn = new Column(this.grammar, this.current + 1);
+                  this.table.push(nextColumn);
+                  var err = new Error(this.reportLexerError(e));
+                  err.offset = this.current;
+                  err.token = e.token;
+                  throw err;
+              }
+              // We add new states to table[current+1]
+              var column = this.table[this.current];
 
-            if (!token) {
-              break;
-            }
-          } catch (e) {
-            // Create the next column so that the error reporter
-            // can display the correctly predicted states.
-            var nextColumn = new Column(this.grammar, this.current + 1);
-            this.table.push(nextColumn);
-            var err = new Error(this.reportLexerError(e));
-            err.offset = this.current;
-            err.token = e.token;
-            throw err;
-          } // We add new states to table[current+1]
+              // GC unused states
+              if (!this.options.keepHistory) {
+                  delete this.table[this.current - 1];
+              }
 
+              var n = this.current + 1;
+              var nextColumn = new Column(this.grammar, n);
+              this.table.push(nextColumn);
 
-          var column = this.table[this.current]; // GC unused states
+              // Advance all tokens that expect the symbol
+              var literal = token.text !== undefined ? token.text : token.value;
+              var value = lexer.constructor === StreamLexer ? token.value : token;
+              var scannable = column.scannable;
+              for (var w = scannable.length; w--; ) {
+                  var state = scannable[w];
+                  var expect = state.rule.symbols[state.dot];
+                  // Try to consume the token
+                  // either regex or literal
+                  if (expect.test ? expect.test(value) :
+                      expect.type ? expect.type === token.type
+                                  : expect.literal === literal) {
+                      // Add it
+                      var next = state.nextState({data: value, token: token, isToken: true, reference: n - 1});
+                      nextColumn.states.push(next);
+                  }
+              }
 
-          if (!this.options.keepHistory) {
-            delete this.table[this.current - 1];
+              // Next, for each of the rules, we either
+              // (a) complete it, and try to see if the reference row expected that
+              //     rule
+              // (b) predict the next nonterminal it expects by adding that
+              //     nonterminal's start state
+              // To prevent duplication, we also keep track of rules we have already
+              // added
+
+              nextColumn.process();
+
+              // If needed, throw an error:
+              if (nextColumn.states.length === 0) {
+                  // No states at all! This is not good.
+                  var err = new Error(this.reportError(token));
+                  err.offset = this.current;
+                  err.token = token;
+                  throw err;
+              }
+
+              // maybe save lexer state
+              if (this.options.keepHistory) {
+                column.lexerState = lexer.save();
+              }
+
+              this.current++;
+          }
+          if (column) {
+            this.lexerState = lexer.save();
           }
 
-          var n = this.current + 1;
-          var nextColumn = new Column(this.grammar, n);
-          this.table.push(nextColumn); // Advance all tokens that expect the symbol
+          // Incrementally keep track of results
+          this.results = this.finish();
 
-          var literal = token.text !== undefined ? token.text : token.value;
-          var value = lexer.constructor === StreamLexer ? token.value : token;
-          var scannable = column.scannable;
-
-          for (var w = scannable.length; w--;) {
-            var state = scannable[w];
-            var expect = state.rule.symbols[state.dot]; // Try to consume the token
-            // either regex or literal
-
-            if (expect.test ? expect.test(value) : expect.type ? expect.type === token.type : expect.literal === literal) {
-              // Add it
-              var next = state.nextState({
-                data: value,
-                token: token,
-                isToken: true,
-                reference: n - 1
-              });
-              nextColumn.states.push(next);
-            }
-          } // Next, for each of the rules, we either
-          // (a) complete it, and try to see if the reference row expected that
-          //     rule
-          // (b) predict the next nonterminal it expects by adding that
-          //     nonterminal's start state
-          // To prevent duplication, we also keep track of rules we have already
-          // added
-
-
-          nextColumn.process(); // If needed, throw an error:
-
-          if (nextColumn.states.length === 0) {
-            // No states at all! This is not good.
-            var err = new Error(this.reportError(token));
-            err.offset = this.current;
-            err.token = token;
-            throw err;
-          } // maybe save lexer state
-
-
-          if (this.options.keepHistory) {
-            column.lexerState = lexer.save();
-          }
-
-          this.current++;
-        }
-
-        if (column) {
-          this.lexerState = lexer.save();
-        } // Incrementally keep track of results
-
-
-        this.results = this.finish(); // Allow chaining, for whatever it's worth
-
-        return this;
+          // Allow chaining, for whatever it's worth
+          return this;
       };
 
-      Parser.prototype.reportLexerError = function (lexerError) {
-        var tokenDisplay, lexerMessage; // Planning to add a token property to moo's thrown error
-        // even on erroring tokens to be used in error display below
-
-        var token = lexerError.token;
-
-        if (token) {
-          tokenDisplay = "input " + JSON.stringify(token.text[0]) + " (lexer error)";
-          lexerMessage = this.lexer.formatError(token, "Syntax error");
-        } else {
-          tokenDisplay = "input (lexer error)";
-          lexerMessage = lexerError.message;
-        }
-
-        return this.reportErrorCommon(lexerMessage, tokenDisplay);
-      };
-
-      Parser.prototype.reportError = function (token) {
-        var tokenDisplay = (token.type ? token.type + " token: " : "") + JSON.stringify(token.value !== undefined ? token.value : token);
-        var lexerMessage = this.lexer.formatError(token, "Syntax error");
-        return this.reportErrorCommon(lexerMessage, tokenDisplay);
-      };
-
-      Parser.prototype.reportErrorCommon = function (lexerMessage, tokenDisplay) {
-        var lines = [];
-        lines.push(lexerMessage);
-        var lastColumnIndex = this.table.length - 2;
-        var lastColumn = this.table[lastColumnIndex];
-        var expectantStates = lastColumn.states.filter(function (state) {
-          var nextSymbol = state.rule.symbols[state.dot];
-          return nextSymbol && typeof nextSymbol !== "string";
-        });
-
-        if (expectantStates.length === 0) {
-          lines.push('Unexpected ' + tokenDisplay + '. I did not expect any more input. Here is the state of my parse table:\n');
-          this.displayStateStack(lastColumn.states, lines);
-        } else {
-          lines.push('Unexpected ' + tokenDisplay + '. Instead, I was expecting to see one of the following:\n'); // Display a "state stack" for each expectant state
-          // - which shows you how this state came to be, step by step.
-          // If there is more than one derivation, we only display the first one.
-
-          var stateStacks = expectantStates.map(function (state) {
-            return this.buildFirstStateStack(state, []) || [state];
-          }, this); // Display each state that is expecting a terminal symbol next.
-
-          stateStacks.forEach(function (stateStack) {
-            var state = stateStack[0];
-            var nextSymbol = state.rule.symbols[state.dot];
-            var symbolDisplay = this.getSymbolDisplay(nextSymbol);
-            lines.push('A ' + symbolDisplay + ' based on:');
-            this.displayStateStack(stateStack, lines);
-          }, this);
-        }
-
-        lines.push("");
-        return lines.join("\n");
-      };
-
-      Parser.prototype.displayStateStack = function (stateStack, lines) {
-        var lastDisplay;
-        var sameDisplayCount = 0;
-
-        for (var j = 0; j < stateStack.length; j++) {
-          var state = stateStack[j];
-          var display = state.rule.toString(state.dot);
-
-          if (display === lastDisplay) {
-            sameDisplayCount++;
+      Parser.prototype.reportLexerError = function(lexerError) {
+          var tokenDisplay, lexerMessage;
+          // Planning to add a token property to moo's thrown error
+          // even on erroring tokens to be used in error display below
+          var token = lexerError.token;
+          if (token) {
+              tokenDisplay = "input " + JSON.stringify(token.text[0]) + " (lexer error)";
+              lexerMessage = this.lexer.formatError(token, "Syntax error");
           } else {
-            if (sameDisplayCount > 0) {
-              lines.push('    ^ ' + sameDisplayCount + ' more lines identical to this');
-            }
-
-            sameDisplayCount = 0;
-            lines.push('    ' + display);
+              tokenDisplay = "input (lexer error)";
+              lexerMessage = lexerError.message;
           }
-
-          lastDisplay = display;
-        }
+          return this.reportErrorCommon(lexerMessage, tokenDisplay);
       };
 
-      Parser.prototype.getSymbolDisplay = function (symbol) {
-        return getSymbolLongDisplay(symbol);
+      Parser.prototype.reportError = function(token) {
+          var tokenDisplay = (token.type ? token.type + " token: " : "") + JSON.stringify(token.value !== undefined ? token.value : token);
+          var lexerMessage = this.lexer.formatError(token, "Syntax error");
+          return this.reportErrorCommon(lexerMessage, tokenDisplay);
       };
+
+      Parser.prototype.reportErrorCommon = function(lexerMessage, tokenDisplay) {
+          var lines = [];
+          lines.push(lexerMessage);
+          var lastColumnIndex = this.table.length - 2;
+          var lastColumn = this.table[lastColumnIndex];
+          var expectantStates = lastColumn.states
+              .filter(function(state) {
+                  var nextSymbol = state.rule.symbols[state.dot];
+                  return nextSymbol && typeof nextSymbol !== "string";
+              });
+
+          if (expectantStates.length === 0) {
+              lines.push('Unexpected ' + tokenDisplay + '. I did not expect any more input. Here is the state of my parse table:\n');
+              this.displayStateStack(lastColumn.states, lines);
+          } else {
+              lines.push('Unexpected ' + tokenDisplay + '. Instead, I was expecting to see one of the following:\n');
+              // Display a "state stack" for each expectant state
+              // - which shows you how this state came to be, step by step.
+              // If there is more than one derivation, we only display the first one.
+              var stateStacks = expectantStates
+                  .map(function(state) {
+                      return this.buildFirstStateStack(state, []) || [state];
+                  }, this);
+              // Display each state that is expecting a terminal symbol next.
+              stateStacks.forEach(function(stateStack) {
+                  var state = stateStack[0];
+                  var nextSymbol = state.rule.symbols[state.dot];
+                  var symbolDisplay = this.getSymbolDisplay(nextSymbol);
+                  lines.push('A ' + symbolDisplay + ' based on:');
+                  this.displayStateStack(stateStack, lines);
+              }, this);
+          }
+          lines.push("");
+          return lines.join("\n");
+      };
+      
+      Parser.prototype.displayStateStack = function(stateStack, lines) {
+          var lastDisplay;
+          var sameDisplayCount = 0;
+          for (var j = 0; j < stateStack.length; j++) {
+              var state = stateStack[j];
+              var display = state.rule.toString(state.dot);
+              if (display === lastDisplay) {
+                  sameDisplayCount++;
+              } else {
+                  if (sameDisplayCount > 0) {
+                      lines.push('    ^ ' + sameDisplayCount + ' more lines identical to this');
+                  }
+                  sameDisplayCount = 0;
+                  lines.push('    ' + display);
+              }
+              lastDisplay = display;
+          }
+      };
+
+      Parser.prototype.getSymbolDisplay = function(symbol) {
+          return getSymbolLongDisplay(symbol);
+      };
+
       /*
       Builds a the first state stack. You can think of a state stack as the call stack
       of the recursive-descent parser which the Nearley parse algorithm simulates.
       A state stack is represented as an array of state objects. Within a
       state stack, the first item of the array will be the starting
       state, with each successive item in the array going further back into history.
-       This function needs to be given a starting state and an empty array representing
+
+      This function needs to be given a starting state and an empty array representing
       the visited states, and it returns an single state stack.
-       */
 
-
-      Parser.prototype.buildFirstStateStack = function (state, visited) {
-        if (visited.indexOf(state) !== -1) {
-          // Found cycle, return null
-          // to eliminate this path from the results, because
-          // we don't know how to display it meaningfully
-          return null;
-        }
-
-        if (state.wantedBy.length === 0) {
-          return [state];
-        }
-
-        var prevState = state.wantedBy[0];
-        var childVisited = [state].concat(visited);
-        var childResult = this.buildFirstStateStack(prevState, childVisited);
-
-        if (childResult === null) {
-          return null;
-        }
-
-        return [state].concat(childResult);
-      };
-
-      Parser.prototype.save = function () {
-        var column = this.table[this.current];
-        column.lexerState = this.lexerState;
-        return column;
-      };
-
-      Parser.prototype.restore = function (column) {
-        var index = column.index;
-        this.current = index;
-        this.table[index] = column;
-        this.table.splice(index + 1);
-        this.lexerState = column.lexerState; // Incrementally keep track of results
-
-        this.results = this.finish();
-      }; // nb. deprecated: use save/restore instead!
-
-
-      Parser.prototype.rewind = function (index) {
-        if (!this.options.keepHistory) {
-          throw new Error('set option `keepHistory` to enable rewinding');
-        } // nb. recall column (table) indicies fall between token indicies.
-        //        col 0   --   token 0   --   col 1
-
-
-        this.restore(this.table[index]);
-      };
-
-      Parser.prototype.finish = function () {
-        // Return the possible parsings
-        var considerations = [];
-        var start = this.grammar.start;
-        var column = this.table[this.table.length - 1];
-        column.states.forEach(function (t) {
-          if (t.rule.name === start && t.dot === t.rule.symbols.length && t.reference === 0 && t.data !== Parser.fail) {
-            considerations.push(t);
+      */
+      Parser.prototype.buildFirstStateStack = function(state, visited) {
+          if (visited.indexOf(state) !== -1) {
+              // Found cycle, return null
+              // to eliminate this path from the results, because
+              // we don't know how to display it meaningfully
+              return null;
           }
-        });
-        return considerations.map(function (c) {
-          return c.data;
-        });
+          if (state.wantedBy.length === 0) {
+              return [state];
+          }
+          var prevState = state.wantedBy[0];
+          var childVisited = [state].concat(visited);
+          var childResult = this.buildFirstStateStack(prevState, childVisited);
+          if (childResult === null) {
+              return null;
+          }
+          return [state].concat(childResult);
+      };
+
+      Parser.prototype.save = function() {
+          var column = this.table[this.current];
+          column.lexerState = this.lexerState;
+          return column;
+      };
+
+      Parser.prototype.restore = function(column) {
+          var index = column.index;
+          this.current = index;
+          this.table[index] = column;
+          this.table.splice(index + 1);
+          this.lexerState = column.lexerState;
+
+          // Incrementally keep track of results
+          this.results = this.finish();
+      };
+
+      // nb. deprecated: use save/restore instead!
+      Parser.prototype.rewind = function(index) {
+          if (!this.options.keepHistory) {
+              throw new Error('set option `keepHistory` to enable rewinding')
+          }
+          // nb. recall column (table) indicies fall between token indicies.
+          //        col 0   --   token 0   --   col 1
+          this.restore(this.table[index]);
+      };
+
+      Parser.prototype.finish = function() {
+          // Return the possible parsings
+          var considerations = [];
+          var start = this.grammar.start;
+          var column = this.table[this.table.length - 1];
+          column.states.forEach(function (t) {
+              if (t.rule.name === start
+                      && t.dot === t.rule.symbols.length
+                      && t.reference === 0
+                      && t.data !== Parser.fail) {
+                  considerations.push(t);
+              }
+          });
+          return considerations.map(function(c) {return c.data; });
       };
 
       function getSymbolLongDisplay(symbol) {
-        var type = typeof symbol;
-
-        if (type === "string") {
-          return symbol;
-        } else if (type === "object") {
-          if (symbol.literal) {
-            return JSON.stringify(symbol.literal);
-          } else if (symbol instanceof RegExp) {
-            return 'character matching ' + symbol;
-          } else if (symbol.type) {
-            return symbol.type + ' token';
-          } else if (symbol.test) {
-            return 'token matching ' + String(symbol.test);
-          } else {
-            throw new Error('Unknown symbol type: ' + symbol);
+          var type = typeof symbol;
+          if (type === "string") {
+              return symbol;
+          } else if (type === "object") {
+              if (symbol.literal) {
+                  return JSON.stringify(symbol.literal);
+              } else if (symbol instanceof RegExp) {
+                  return 'character matching ' + symbol;
+              } else if (symbol.type) {
+                  return symbol.type + ' token';
+              } else if (symbol.test) {
+                  return 'token matching ' + String(symbol.test);
+              } else {
+                  throw new Error('Unknown symbol type: ' + symbol);
+              }
           }
-        }
       }
 
       function getSymbolShortDisplay(symbol) {
-        var type = typeof symbol;
-
-        if (type === "string") {
-          return symbol;
-        } else if (type === "object") {
-          if (symbol.literal) {
-            return JSON.stringify(symbol.literal);
-          } else if (symbol instanceof RegExp) {
-            return symbol.toString();
-          } else if (symbol.type) {
-            return '%' + symbol.type;
-          } else if (symbol.test) {
-            return '<' + String(symbol.test) + '>';
-          } else {
-            throw new Error('Unknown symbol type: ' + symbol);
+          var type = typeof symbol;
+          if (type === "string") {
+              return symbol;
+          } else if (type === "object") {
+              if (symbol.literal) {
+                  return JSON.stringify(symbol.literal);
+              } else if (symbol instanceof RegExp) {
+                  return symbol.toString();
+              } else if (symbol.type) {
+                  return '%' + symbol.type;
+              } else if (symbol.test) {
+                  return '<' + String(symbol.test) + '>';
+              } else {
+                  throw new Error('Unknown symbol type: ' + symbol);
+              }
           }
-        }
       }
 
       return {
-        Parser: Parser,
-        Grammar: Grammar,
-        Rule: Rule
+          Parser: Parser,
+          Grammar: Grammar,
+          Rule: Rule,
       };
-    });
+
+  }));
   });
 
   function _extends() {
@@ -2048,674 +2077,604 @@
     return _extends.apply(this, arguments);
   }
 
-  var moo = /*#__PURE__*/createCommonjsModule(function (module) {
-    (function (root, factory) {
-      if ( module.exports) {
-        module.exports = factory();
+  var moo = createCommonjsModule(function (module) {
+  (function(root, factory) {
+    if ( module.exports) {
+      module.exports = factory();
+    } else {
+      root.moo = factory();
+    }
+  }(commonjsGlobal, function() {
+
+    var hasOwnProperty = Object.prototype.hasOwnProperty;
+    var toString = Object.prototype.toString;
+    var hasSticky = typeof new RegExp().sticky === 'boolean';
+
+    /***************************************************************************/
+
+    function isRegExp(o) { return o && toString.call(o) === '[object RegExp]' }
+    function isObject(o) { return o && typeof o === 'object' && !isRegExp(o) && !Array.isArray(o) }
+
+    function reEscape(s) {
+      return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
+    }
+    function reGroups(s) {
+      var re = new RegExp('|' + s);
+      return re.exec('').length - 1
+    }
+    function reCapture(s) {
+      return '(' + s + ')'
+    }
+    function reUnion(regexps) {
+      if (!regexps.length) return '(?!)'
+      var source =  regexps.map(function(s) {
+        return "(?:" + s + ")"
+      }).join('|');
+      return "(?:" + source + ")"
+    }
+
+    function regexpOrLiteral(obj) {
+      if (typeof obj === 'string') {
+        return '(?:' + reEscape(obj) + ')'
+
+      } else if (isRegExp(obj)) {
+        // TODO: consider /u support
+        if (obj.ignoreCase) throw new Error('RegExp /i flag not allowed')
+        if (obj.global) throw new Error('RegExp /g flag is implied')
+        if (obj.sticky) throw new Error('RegExp /y flag is implied')
+        if (obj.multiline) throw new Error('RegExp /m flag is implied')
+        return obj.source
+
       } else {
-        root.moo = factory();
+        throw new Error('Not a pattern: ' + obj)
       }
-    })(commonjsGlobal, function () {
-
-      var hasOwnProperty = Object.prototype.hasOwnProperty;
-      var toString = Object.prototype.toString;
-      var hasSticky = typeof new RegExp().sticky === 'boolean';
-      /***************************************************************************/
-
-      function isRegExp(o) {
-        return o && toString.call(o) === '[object RegExp]';
-      }
-
-      function isObject(o) {
-        return o && typeof o === 'object' && !isRegExp(o) && !Array.isArray(o);
-      }
-
-      function reEscape(s) {
-        return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-      }
-
-      function reGroups(s) {
-        var re = new RegExp('|' + s);
-        return re.exec('').length - 1;
-      }
-
-      function reCapture(s) {
-        return '(' + s + ')';
-      }
-
-      function reUnion(regexps) {
-        if (!regexps.length) return '(?!)';
-        var source = regexps.map(function (s) {
-          return "(?:" + s + ")";
-        }).join('|');
-        return "(?:" + source + ")";
-      }
-
-      function regexpOrLiteral(obj) {
-        if (typeof obj === 'string') {
-          return '(?:' + reEscape(obj) + ')';
-        } else if (isRegExp(obj)) {
-          // TODO: consider /u support
-          if (obj.ignoreCase) throw new Error('RegExp /i flag not allowed');
-          if (obj.global) throw new Error('RegExp /g flag is implied');
-          if (obj.sticky) throw new Error('RegExp /y flag is implied');
-          if (obj.multiline) throw new Error('RegExp /m flag is implied');
-          return obj.source;
-        } else {
-          throw new Error('Not a pattern: ' + obj);
-        }
-      }
-
-      function objectToRules(object) {
-        var keys = Object.getOwnPropertyNames(object);
-        var result = [];
-
-        for (var i = 0; i < keys.length; i++) {
-          var key = keys[i];
-          var thing = object[key];
-          var rules = [].concat(thing);
-
-          if (key === 'include') {
-            for (var j = 0; j < rules.length; j++) {
-              result.push({
-                include: rules[j]
-              });
-            }
-
-            continue;
-          }
-
-          var match = [];
-          rules.forEach(function (rule) {
-            if (isObject(rule)) {
-              if (match.length) result.push(ruleOptions(key, match));
-              result.push(ruleOptions(key, rule));
-              match = [];
-            } else {
-              match.push(rule);
-            }
-          });
-          if (match.length) result.push(ruleOptions(key, match));
-        }
-
-        return result;
-      }
-
-      function arrayToRules(array) {
-        var result = [];
-
-        for (var i = 0; i < array.length; i++) {
-          var obj = array[i];
-
-          if (obj.include) {
-            var include = [].concat(obj.include);
-
-            for (var j = 0; j < include.length; j++) {
-              result.push({
-                include: include[j]
-              });
-            }
-
-            continue;
-          }
-
-          if (!obj.type) {
-            throw new Error('Rule has no type: ' + JSON.stringify(obj));
-          }
-
-          result.push(ruleOptions(obj.type, obj));
-        }
-
-        return result;
-      }
-
-      function ruleOptions(type, obj) {
-        if (!isObject(obj)) {
-          obj = {
-            match: obj
-          };
-        }
-
-        if (obj.include) {
-          throw new Error('Matching rules cannot also include states');
-        } // nb. error and fallback imply lineBreaks
-
-
-        var options = {
-          defaultType: type,
-          lineBreaks: !!obj.error || !!obj.fallback,
-          pop: false,
-          next: null,
-          push: null,
-          error: false,
-          fallback: false,
-          value: null,
-          type: null,
-          shouldThrow: false
-        }; // Avoid Object.assign(), so we support IE9+
-
-        for (var key in obj) {
-          if (hasOwnProperty.call(obj, key)) {
-            options[key] = obj[key];
-          }
-        } // type transform cannot be a string
-
-
-        if (typeof options.type === 'string' && type !== options.type) {
-          throw new Error("Type transform cannot be a string (type '" + options.type + "' for token '" + type + "')");
-        } // convert to array
-
-
-        var match = options.match;
-        options.match = Array.isArray(match) ? match : match ? [match] : [];
-        options.match.sort(function (a, b) {
-          return isRegExp(a) && isRegExp(b) ? 0 : isRegExp(b) ? -1 : isRegExp(a) ? +1 : b.length - a.length;
-        });
-        return options;
-      }
-
-      function toRules(spec) {
-        return Array.isArray(spec) ? arrayToRules(spec) : objectToRules(spec);
-      }
-
-      var defaultErrorRule = ruleOptions('error', {
-        lineBreaks: true,
-        shouldThrow: true
-      });
-
-      function compileRules(rules, hasStates) {
-        var errorRule = null;
-        var fast = Object.create(null);
-        var fastAllowed = true;
-        var unicodeFlag = null;
-        var groups = [];
-        var parts = []; // If there is a fallback rule, then disable fast matching
-
-        for (var i = 0; i < rules.length; i++) {
-          if (rules[i].fallback) {
-            fastAllowed = false;
-          }
-        }
-
-        for (var i = 0; i < rules.length; i++) {
-          var options = rules[i];
-
-          if (options.include) {
-            // all valid inclusions are removed by states() preprocessor
-            throw new Error('Inheritance is not allowed in stateless lexers');
-          }
-
-          if (options.error || options.fallback) {
-            // errorRule can only be set once
-            if (errorRule) {
-              if (!options.fallback === !errorRule.fallback) {
-                throw new Error("Multiple " + (options.fallback ? "fallback" : "error") + " rules not allowed (for token '" + options.defaultType + "')");
-              } else {
-                throw new Error("fallback and error are mutually exclusive (for token '" + options.defaultType + "')");
-              }
-            }
-
-            errorRule = options;
-          }
-
-          var match = options.match.slice();
-
-          if (fastAllowed) {
-            while (match.length && typeof match[0] === 'string' && match[0].length === 1) {
-              var word = match.shift();
-              fast[word.charCodeAt(0)] = options;
-            }
-          } // Warn about inappropriate state-switching options
-
-
-          if (options.pop || options.push || options.next) {
-            if (!hasStates) {
-              throw new Error("State-switching options are not allowed in stateless lexers (for token '" + options.defaultType + "')");
-            }
-
-            if (options.fallback) {
-              throw new Error("State-switching options are not allowed on fallback tokens (for token '" + options.defaultType + "')");
-            }
-          } // Only rules with a .match are included in the RegExp
-
-
-          if (match.length === 0) {
-            continue;
-          }
-
-          fastAllowed = false;
-          groups.push(options); // Check unicode flag is used everywhere or nowhere
-
-          for (var j = 0; j < match.length; j++) {
-            var obj = match[j];
-
-            if (!isRegExp(obj)) {
-              continue;
-            }
-
-            if (unicodeFlag === null) {
-              unicodeFlag = obj.unicode;
-            } else if (unicodeFlag !== obj.unicode && options.fallback === false) {
-              throw new Error('If one rule is /u then all must be');
-            }
-          } // convert to RegExp
-
-
-          var pat = reUnion(match.map(regexpOrLiteral)); // validate
-
-          var regexp = new RegExp(pat);
-
-          if (regexp.test("")) {
-            throw new Error("RegExp matches empty string: " + regexp);
-          }
-
-          var groupCount = reGroups(pat);
-
-          if (groupCount > 0) {
-            throw new Error("RegExp has capture groups: " + regexp + "\nUse (?: … ) instead");
-          } // try and detect rules matching newlines
-
-
-          if (!options.lineBreaks && regexp.test('\n')) {
-            throw new Error('Rule should declare lineBreaks: ' + regexp);
-          } // store regex
-
-
-          parts.push(reCapture(pat));
-        } // If there's no fallback rule, use the sticky flag so we only look for
-        // matches at the current index.
-        //
-        // If we don't support the sticky flag, then fake it using an irrefutable
-        // match (i.e. an empty pattern).
-
-
-        var fallbackRule = errorRule && errorRule.fallback;
-        var flags = hasSticky && !fallbackRule ? 'ym' : 'gm';
-        var suffix = hasSticky || fallbackRule ? '' : '|';
-        if (unicodeFlag === true) flags += "u";
-        var combined = new RegExp(reUnion(parts) + suffix, flags);
-        return {
-          regexp: combined,
-          groups: groups,
-          fast: fast,
-          error: errorRule || defaultErrorRule
-        };
-      }
-
-      function compile(rules) {
-        var result = compileRules(toRules(rules));
-        return new Lexer({
-          start: result
-        }, 'start');
-      }
-
-      function checkStateGroup(g, name, map) {
-        var state = g && (g.push || g.next);
-
-        if (state && !map[state]) {
-          throw new Error("Missing state '" + state + "' (in token '" + g.defaultType + "' of state '" + name + "')");
-        }
-
-        if (g && g.pop && +g.pop !== 1) {
-          throw new Error("pop must be 1 (in token '" + g.defaultType + "' of state '" + name + "')");
-        }
-      }
-
-      function compileStates(states, start) {
-        var all = states.$all ? toRules(states.$all) : [];
-        delete states.$all;
-        var keys = Object.getOwnPropertyNames(states);
-        if (!start) start = keys[0];
-        var ruleMap = Object.create(null);
-
-        for (var i = 0; i < keys.length; i++) {
-          var key = keys[i];
-          ruleMap[key] = toRules(states[key]).concat(all);
-        }
-
-        for (var i = 0; i < keys.length; i++) {
-          var key = keys[i];
-          var rules = ruleMap[key];
-          var included = Object.create(null);
-
+    }
+
+    function objectToRules(object) {
+      var keys = Object.getOwnPropertyNames(object);
+      var result = [];
+      for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        var thing = object[key];
+        var rules = [].concat(thing);
+        if (key === 'include') {
           for (var j = 0; j < rules.length; j++) {
-            var rule = rules[j];
-            if (!rule.include) continue;
-            var splice = [j, 1];
-
-            if (rule.include !== key && !included[rule.include]) {
-              included[rule.include] = true;
-              var newRules = ruleMap[rule.include];
-
-              if (!newRules) {
-                throw new Error("Cannot include nonexistent state '" + rule.include + "' (in state '" + key + "')");
-              }
-
-              for (var k = 0; k < newRules.length; k++) {
-                var newRule = newRules[k];
-                if (rules.indexOf(newRule) !== -1) continue;
-                splice.push(newRule);
-              }
-            }
-
-            rules.splice.apply(rules, splice);
-            j--;
+            result.push({include: rules[j]});
           }
+          continue
         }
-
-        var map = Object.create(null);
-
-        for (var i = 0; i < keys.length; i++) {
-          var key = keys[i];
-          map[key] = compileRules(ruleMap[key], true);
-        }
-
-        for (var i = 0; i < keys.length; i++) {
-          var name = keys[i];
-          var state = map[name];
-          var groups = state.groups;
-
-          for (var j = 0; j < groups.length; j++) {
-            checkStateGroup(groups[j], name, map);
+        var match = [];
+        rules.forEach(function(rule) {
+          if (isObject(rule)) {
+            if (match.length) result.push(ruleOptions(key, match));
+            result.push(ruleOptions(key, rule));
+            match = [];
+          } else {
+            match.push(rule);
           }
+        });
+        if (match.length) result.push(ruleOptions(key, match));
+      }
+      return result
+    }
 
-          var fastKeys = Object.getOwnPropertyNames(state.fast);
-
-          for (var j = 0; j < fastKeys.length; j++) {
-            checkStateGroup(state.fast[fastKeys[j]], name, map);
+    function arrayToRules(array) {
+      var result = [];
+      for (var i = 0; i < array.length; i++) {
+        var obj = array[i];
+        if (obj.include) {
+          var include = [].concat(obj.include);
+          for (var j = 0; j < include.length; j++) {
+            result.push({include: include[j]});
           }
+          continue
         }
+        if (!obj.type) {
+          throw new Error('Rule has no type: ' + JSON.stringify(obj))
+        }
+        result.push(ruleOptions(obj.type, obj));
+      }
+      return result
+    }
 
-        return new Lexer(map, start);
+    function ruleOptions(type, obj) {
+      if (!isObject(obj)) {
+        obj = { match: obj };
+      }
+      if (obj.include) {
+        throw new Error('Matching rules cannot also include states')
       }
 
-      function keywordTransform(map) {
-        var reverseMap = Object.create(null);
-        var byLength = Object.create(null);
-        var types = Object.getOwnPropertyNames(map);
+      // nb. error and fallback imply lineBreaks
+      var options = {
+        defaultType: type,
+        lineBreaks: !!obj.error || !!obj.fallback,
+        pop: false,
+        next: null,
+        push: null,
+        error: false,
+        fallback: false,
+        value: null,
+        type: null,
+        shouldThrow: false,
+      };
 
-        for (var i = 0; i < types.length; i++) {
-          var tokenType = types[i];
-          var item = map[tokenType];
-          var keywordList = Array.isArray(item) ? item : [item];
-          keywordList.forEach(function (keyword) {
-            (byLength[keyword.length] = byLength[keyword.length] || []).push(keyword);
+      // Avoid Object.assign(), so we support IE9+
+      for (var key in obj) {
+        if (hasOwnProperty.call(obj, key)) {
+          options[key] = obj[key];
+        }
+      }
 
-            if (typeof keyword !== 'string') {
-              throw new Error("keyword must be string (in keyword '" + tokenType + "')");
+      // type transform cannot be a string
+      if (typeof options.type === 'string' && type !== options.type) {
+        throw new Error("Type transform cannot be a string (type '" + options.type + "' for token '" + type + "')")
+      }
+
+      // convert to array
+      var match = options.match;
+      options.match = Array.isArray(match) ? match : match ? [match] : [];
+      options.match.sort(function(a, b) {
+        return isRegExp(a) && isRegExp(b) ? 0
+             : isRegExp(b) ? -1 : isRegExp(a) ? +1 : b.length - a.length
+      });
+      return options
+    }
+
+    function toRules(spec) {
+      return Array.isArray(spec) ? arrayToRules(spec) : objectToRules(spec)
+    }
+
+    var defaultErrorRule = ruleOptions('error', {lineBreaks: true, shouldThrow: true});
+    function compileRules(rules, hasStates) {
+      var errorRule = null;
+      var fast = Object.create(null);
+      var fastAllowed = true;
+      var unicodeFlag = null;
+      var groups = [];
+      var parts = [];
+
+      // If there is a fallback rule, then disable fast matching
+      for (var i = 0; i < rules.length; i++) {
+        if (rules[i].fallback) {
+          fastAllowed = false;
+        }
+      }
+
+      for (var i = 0; i < rules.length; i++) {
+        var options = rules[i];
+
+        if (options.include) {
+          // all valid inclusions are removed by states() preprocessor
+          throw new Error('Inheritance is not allowed in stateless lexers')
+        }
+
+        if (options.error || options.fallback) {
+          // errorRule can only be set once
+          if (errorRule) {
+            if (!options.fallback === !errorRule.fallback) {
+              throw new Error("Multiple " + (options.fallback ? "fallback" : "error") + " rules not allowed (for token '" + options.defaultType + "')")
+            } else {
+              throw new Error("fallback and error are mutually exclusive (for token '" + options.defaultType + "')")
             }
-
-            reverseMap[keyword] = tokenType;
-          });
-        } // fast string lookup
-        // https://jsperf.com/string-lookups
-
-
-        function str(x) {
-          return JSON.stringify(x);
+          }
+          errorRule = options;
         }
 
-        var source = '';
-        source += 'switch (value.length) {\n';
-
-        for (var length in byLength) {
-          var keywords = byLength[length];
-          source += 'case ' + length + ':\n';
-          source += 'switch (value) {\n';
-          keywords.forEach(function (keyword) {
-            var tokenType = reverseMap[keyword];
-            source += 'case ' + str(keyword) + ': return ' + str(tokenType) + '\n';
-          });
-          source += '}\n';
+        var match = options.match.slice();
+        if (fastAllowed) {
+          while (match.length && typeof match[0] === 'string' && match[0].length === 1) {
+            var word = match.shift();
+            fast[word.charCodeAt(0)] = options;
+          }
         }
 
+        // Warn about inappropriate state-switching options
+        if (options.pop || options.push || options.next) {
+          if (!hasStates) {
+            throw new Error("State-switching options are not allowed in stateless lexers (for token '" + options.defaultType + "')")
+          }
+          if (options.fallback) {
+            throw new Error("State-switching options are not allowed on fallback tokens (for token '" + options.defaultType + "')")
+          }
+        }
+
+        // Only rules with a .match are included in the RegExp
+        if (match.length === 0) {
+          continue
+        }
+        fastAllowed = false;
+
+        groups.push(options);
+
+        // Check unicode flag is used everywhere or nowhere
+        for (var j = 0; j < match.length; j++) {
+          var obj = match[j];
+          if (!isRegExp(obj)) {
+            continue
+          }
+
+          if (unicodeFlag === null) {
+            unicodeFlag = obj.unicode;
+          } else if (unicodeFlag !== obj.unicode && options.fallback === false) {
+            throw new Error('If one rule is /u then all must be')
+          }
+        }
+
+        // convert to RegExp
+        var pat = reUnion(match.map(regexpOrLiteral));
+
+        // validate
+        var regexp = new RegExp(pat);
+        if (regexp.test("")) {
+          throw new Error("RegExp matches empty string: " + regexp)
+        }
+        var groupCount = reGroups(pat);
+        if (groupCount > 0) {
+          throw new Error("RegExp has capture groups: " + regexp + "\nUse (?: … ) instead")
+        }
+
+        // try and detect rules matching newlines
+        if (!options.lineBreaks && regexp.test('\n')) {
+          throw new Error('Rule should declare lineBreaks: ' + regexp)
+        }
+
+        // store regex
+        parts.push(reCapture(pat));
+      }
+
+
+      // If there's no fallback rule, use the sticky flag so we only look for
+      // matches at the current index.
+      //
+      // If we don't support the sticky flag, then fake it using an irrefutable
+      // match (i.e. an empty pattern).
+      var fallbackRule = errorRule && errorRule.fallback;
+      var flags = hasSticky && !fallbackRule ? 'ym' : 'gm';
+      var suffix = hasSticky || fallbackRule ? '' : '|';
+
+      if (unicodeFlag === true) flags += "u";
+      var combined = new RegExp(reUnion(parts) + suffix, flags);
+      return {regexp: combined, groups: groups, fast: fast, error: errorRule || defaultErrorRule}
+    }
+
+    function compile(rules) {
+      var result = compileRules(toRules(rules));
+      return new Lexer({start: result}, 'start')
+    }
+
+    function checkStateGroup(g, name, map) {
+      var state = g && (g.push || g.next);
+      if (state && !map[state]) {
+        throw new Error("Missing state '" + state + "' (in token '" + g.defaultType + "' of state '" + name + "')")
+      }
+      if (g && g.pop && +g.pop !== 1) {
+        throw new Error("pop must be 1 (in token '" + g.defaultType + "' of state '" + name + "')")
+      }
+    }
+    function compileStates(states, start) {
+      var all = states.$all ? toRules(states.$all) : [];
+      delete states.$all;
+
+      var keys = Object.getOwnPropertyNames(states);
+      if (!start) start = keys[0];
+
+      var ruleMap = Object.create(null);
+      for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        ruleMap[key] = toRules(states[key]).concat(all);
+      }
+      for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        var rules = ruleMap[key];
+        var included = Object.create(null);
+        for (var j = 0; j < rules.length; j++) {
+          var rule = rules[j];
+          if (!rule.include) continue
+          var splice = [j, 1];
+          if (rule.include !== key && !included[rule.include]) {
+            included[rule.include] = true;
+            var newRules = ruleMap[rule.include];
+            if (!newRules) {
+              throw new Error("Cannot include nonexistent state '" + rule.include + "' (in state '" + key + "')")
+            }
+            for (var k = 0; k < newRules.length; k++) {
+              var newRule = newRules[k];
+              if (rules.indexOf(newRule) !== -1) continue
+              splice.push(newRule);
+            }
+          }
+          rules.splice.apply(rules, splice);
+          j--;
+        }
+      }
+
+      var map = Object.create(null);
+      for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        map[key] = compileRules(ruleMap[key], true);
+      }
+
+      for (var i = 0; i < keys.length; i++) {
+        var name = keys[i];
+        var state = map[name];
+        var groups = state.groups;
+        for (var j = 0; j < groups.length; j++) {
+          checkStateGroup(groups[j], name, map);
+        }
+        var fastKeys = Object.getOwnPropertyNames(state.fast);
+        for (var j = 0; j < fastKeys.length; j++) {
+          checkStateGroup(state.fast[fastKeys[j]], name, map);
+        }
+      }
+
+      return new Lexer(map, start)
+    }
+
+    function keywordTransform(map) {
+      var reverseMap = Object.create(null);
+      var byLength = Object.create(null);
+      var types = Object.getOwnPropertyNames(map);
+      for (var i = 0; i < types.length; i++) {
+        var tokenType = types[i];
+        var item = map[tokenType];
+        var keywordList = Array.isArray(item) ? item : [item];
+        keywordList.forEach(function(keyword) {
+          (byLength[keyword.length] = byLength[keyword.length] || []).push(keyword);
+          if (typeof keyword !== 'string') {
+            throw new Error("keyword must be string (in keyword '" + tokenType + "')")
+          }
+          reverseMap[keyword] = tokenType;
+        });
+      }
+
+      // fast string lookup
+      // https://jsperf.com/string-lookups
+      function str(x) { return JSON.stringify(x) }
+      var source = '';
+      source += 'switch (value.length) {\n';
+      for (var length in byLength) {
+        var keywords = byLength[length];
+        source += 'case ' + length + ':\n';
+        source += 'switch (value) {\n';
+        keywords.forEach(function(keyword) {
+          var tokenType = reverseMap[keyword];
+          source += 'case ' + str(keyword) + ': return ' + str(tokenType) + '\n';
+        });
         source += '}\n';
-        return Function('value', source); // type
       }
-      /***************************************************************************/
+      source += '}\n';
+      return Function('value', source) // type
+    }
 
+    /***************************************************************************/
 
-      var Lexer = function Lexer(states, state) {
-        this.startState = state;
-        this.states = states;
-        this.buffer = '';
-        this.stack = [];
-        this.reset();
+    var Lexer = function(states, state) {
+      this.startState = state;
+      this.states = states;
+      this.buffer = '';
+      this.stack = [];
+      this.reset();
+    };
+
+    Lexer.prototype.reset = function(data, info) {
+      this.buffer = data || '';
+      this.index = 0;
+      this.line = info ? info.line : 1;
+      this.col = info ? info.col : 1;
+      this.queuedToken = info ? info.queuedToken : null;
+      this.queuedThrow = info ? info.queuedThrow : null;
+      this.setState(info ? info.state : this.startState);
+      this.stack = info && info.stack ? info.stack.slice() : [];
+      return this
+    };
+
+    Lexer.prototype.save = function() {
+      return {
+        line: this.line,
+        col: this.col,
+        state: this.state,
+        stack: this.stack.slice(),
+        queuedToken: this.queuedToken,
+        queuedThrow: this.queuedThrow,
+      }
+    };
+
+    Lexer.prototype.setState = function(state) {
+      if (!state || this.state === state) return
+      this.state = state;
+      var info = this.states[state];
+      this.groups = info.groups;
+      this.error = info.error;
+      this.re = info.regexp;
+      this.fast = info.fast;
+    };
+
+    Lexer.prototype.popState = function() {
+      this.setState(this.stack.pop());
+    };
+
+    Lexer.prototype.pushState = function(state) {
+      this.stack.push(this.state);
+      this.setState(state);
+    };
+
+    var eat = hasSticky ? function(re, buffer) { // assume re is /y
+      return re.exec(buffer)
+    } : function(re, buffer) { // assume re is /g
+      var match = re.exec(buffer);
+      // will always match, since we used the |(?:) trick
+      if (match[0].length === 0) {
+        return null
+      }
+      return match
+    };
+
+    Lexer.prototype._getGroup = function(match) {
+      var groupCount = this.groups.length;
+      for (var i = 0; i < groupCount; i++) {
+        if (match[i + 1] !== undefined) {
+          return this.groups[i]
+        }
+      }
+      throw new Error('Cannot find token type for matched text')
+    };
+
+    function tokenToString() {
+      return this.value
+    }
+
+    Lexer.prototype.next = function() {
+      var index = this.index;
+
+      // If a fallback token matched, we don't need to re-run the RegExp
+      if (this.queuedGroup) {
+        var token = this._token(this.queuedGroup, this.queuedText, index);
+        this.queuedGroup = null;
+        this.queuedText = "";
+        return token
+      }
+
+      var buffer = this.buffer;
+      if (index === buffer.length) {
+        return // EOF
+      }
+
+      // Fast matching for single characters
+      var group = this.fast[buffer.charCodeAt(index)];
+      if (group) {
+        return this._token(group, buffer.charAt(index), index)
+      }
+
+      // Execute RegExp
+      var re = this.re;
+      re.lastIndex = index;
+      var match = eat(re, buffer);
+
+      // Error tokens match the remaining buffer
+      var error = this.error;
+      if (match == null) {
+        return this._token(error, buffer.slice(index, buffer.length), index)
+      }
+
+      var group = this._getGroup(match);
+      var text = match[0];
+
+      if (error.fallback && match.index !== index) {
+        this.queuedGroup = group;
+        this.queuedText = text;
+
+        // Fallback tokens contain the unmatched portion of the buffer
+        return this._token(error, buffer.slice(index, match.index), index)
+      }
+
+      return this._token(group, text, index)
+    };
+
+    Lexer.prototype._token = function(group, text, offset) {
+      // count line breaks
+      var lineBreaks = 0;
+      if (group.lineBreaks) {
+        var matchNL = /\n/g;
+        var nl = 1;
+        if (text === '\n') {
+          lineBreaks = 1;
+        } else {
+          while (matchNL.exec(text)) { lineBreaks++; nl = matchNL.lastIndex; }
+        }
+      }
+
+      var token = {
+        type: (typeof group.type === 'function' && group.type(text)) || group.defaultType,
+        value: typeof group.value === 'function' ? group.value(text) : text,
+        text: text,
+        toString: tokenToString,
+        offset: offset,
+        lineBreaks: lineBreaks,
+        line: this.line,
+        col: this.col,
+      };
+      // nb. adding more props to token object will make V8 sad!
+
+      var size = text.length;
+      this.index += size;
+      this.line += lineBreaks;
+      if (lineBreaks !== 0) {
+        this.col = size - nl + 1;
+      } else {
+        this.col += size;
+      }
+
+      // throw, if no rule with {error: true}
+      if (group.shouldThrow) {
+        throw new Error(this.formatError(token, "invalid syntax"))
+      }
+
+      if (group.pop) this.popState();
+      else if (group.push) this.pushState(group.push);
+      else if (group.next) this.setState(group.next);
+
+      return token
+    };
+
+    if (typeof Symbol !== 'undefined' && Symbol.iterator) {
+      var LexerIterator = function(lexer) {
+        this.lexer = lexer;
       };
 
-      Lexer.prototype.reset = function (data, info) {
-        this.buffer = data || '';
-        this.index = 0;
-        this.line = info ? info.line : 1;
-        this.col = info ? info.col : 1;
-        this.queuedToken = info ? info.queuedToken : null;
-        this.queuedThrow = info ? info.queuedThrow : null;
-        this.setState(info ? info.state : this.startState);
-        this.stack = info && info.stack ? info.stack.slice() : [];
-        return this;
+      LexerIterator.prototype.next = function() {
+        var token = this.lexer.next();
+        return {value: token, done: !token}
       };
 
-      Lexer.prototype.save = function () {
-        return {
+      LexerIterator.prototype[Symbol.iterator] = function() {
+        return this
+      };
+
+      Lexer.prototype[Symbol.iterator] = function() {
+        return new LexerIterator(this)
+      };
+    }
+
+    Lexer.prototype.formatError = function(token, message) {
+      if (token == null) {
+        // An undefined token indicates EOF
+        var text = this.buffer.slice(this.index);
+        var token = {
+          text: text,
+          offset: this.index,
+          lineBreaks: text.indexOf('\n') === -1 ? 0 : 1,
           line: this.line,
           col: this.col,
-          state: this.state,
-          stack: this.stack.slice(),
-          queuedToken: this.queuedToken,
-          queuedThrow: this.queuedThrow
-        };
-      };
-
-      Lexer.prototype.setState = function (state) {
-        if (!state || this.state === state) return;
-        this.state = state;
-        var info = this.states[state];
-        this.groups = info.groups;
-        this.error = info.error;
-        this.re = info.regexp;
-        this.fast = info.fast;
-      };
-
-      Lexer.prototype.popState = function () {
-        this.setState(this.stack.pop());
-      };
-
-      Lexer.prototype.pushState = function (state) {
-        this.stack.push(this.state);
-        this.setState(state);
-      };
-
-      var eat = hasSticky ? function (re, buffer) {
-        // assume re is /y
-        return re.exec(buffer);
-      } : function (re, buffer) {
-        // assume re is /g
-        var match = re.exec(buffer); // will always match, since we used the |(?:) trick
-
-        if (match[0].length === 0) {
-          return null;
-        }
-
-        return match;
-      };
-
-      Lexer.prototype._getGroup = function (match) {
-        var groupCount = this.groups.length;
-
-        for (var i = 0; i < groupCount; i++) {
-          if (match[i + 1] !== undefined) {
-            return this.groups[i];
-          }
-        }
-
-        throw new Error('Cannot find token type for matched text');
-      };
-
-      function tokenToString() {
-        return this.value;
-      }
-
-      Lexer.prototype.next = function () {
-        var index = this.index; // If a fallback token matched, we don't need to re-run the RegExp
-
-        if (this.queuedGroup) {
-          var token = this._token(this.queuedGroup, this.queuedText, index);
-
-          this.queuedGroup = null;
-          this.queuedText = "";
-          return token;
-        }
-
-        var buffer = this.buffer;
-
-        if (index === buffer.length) {
-          return; // EOF
-        } // Fast matching for single characters
-
-
-        var group = this.fast[buffer.charCodeAt(index)];
-
-        if (group) {
-          return this._token(group, buffer.charAt(index), index);
-        } // Execute RegExp
-
-
-        var re = this.re;
-        re.lastIndex = index;
-        var match = eat(re, buffer); // Error tokens match the remaining buffer
-
-        var error = this.error;
-
-        if (match == null) {
-          return this._token(error, buffer.slice(index, buffer.length), index);
-        }
-
-        var group = this._getGroup(match);
-
-        var text = match[0];
-
-        if (error.fallback && match.index !== index) {
-          this.queuedGroup = group;
-          this.queuedText = text; // Fallback tokens contain the unmatched portion of the buffer
-
-          return this._token(error, buffer.slice(index, match.index), index);
-        }
-
-        return this._token(group, text, index);
-      };
-
-      Lexer.prototype._token = function (group, text, offset) {
-        // count line breaks
-        var lineBreaks = 0;
-
-        if (group.lineBreaks) {
-          var matchNL = /\n/g;
-          var nl = 1;
-
-          if (text === '\n') {
-            lineBreaks = 1;
-          } else {
-            while (matchNL.exec(text)) {
-              lineBreaks++;
-              nl = matchNL.lastIndex;
-            }
-          }
-        }
-
-        var token = {
-          type: typeof group.type === 'function' && group.type(text) || group.defaultType,
-          value: typeof group.value === 'function' ? group.value(text) : text,
-          text: text,
-          toString: tokenToString,
-          offset: offset,
-          lineBreaks: lineBreaks,
-          line: this.line,
-          col: this.col
-        }; // nb. adding more props to token object will make V8 sad!
-
-        var size = text.length;
-        this.index += size;
-        this.line += lineBreaks;
-
-        if (lineBreaks !== 0) {
-          this.col = size - nl + 1;
-        } else {
-          this.col += size;
-        } // throw, if no rule with {error: true}
-
-
-        if (group.shouldThrow) {
-          throw new Error(this.formatError(token, "invalid syntax"));
-        }
-
-        if (group.pop) this.popState();else if (group.push) this.pushState(group.push);else if (group.next) this.setState(group.next);
-        return token;
-      };
-
-      if (typeof Symbol !== 'undefined' && Symbol.iterator) {
-        var LexerIterator = function LexerIterator(lexer) {
-          this.lexer = lexer;
-        };
-
-        LexerIterator.prototype.next = function () {
-          var token = this.lexer.next();
-          return {
-            value: token,
-            done: !token
-          };
-        };
-
-        LexerIterator.prototype[Symbol.iterator] = function () {
-          return this;
-        };
-
-        Lexer.prototype[Symbol.iterator] = function () {
-          return new LexerIterator(this);
         };
       }
+      var start = Math.max(0, token.offset - token.col + 1);
+      var eol = token.lineBreaks ? token.text.indexOf('\n') : token.text.length;
+      var firstLine = this.buffer.substring(start, token.offset + eol);
+      message += " at line " + token.line + " col " + token.col + ":\n\n";
+      message += "  " + firstLine + "\n";
+      message += "  " + Array(token.col).join(" ") + "^";
+      return message
+    };
 
-      Lexer.prototype.formatError = function (token, message) {
-        if (token == null) {
-          // An undefined token indicates EOF
-          var text = this.buffer.slice(this.index);
-          var token = {
-            text: text,
-            offset: this.index,
-            lineBreaks: text.indexOf('\n') === -1 ? 0 : 1,
-            line: this.line,
-            col: this.col
-          };
-        }
+    Lexer.prototype.clone = function() {
+      return new Lexer(this.states, this.state)
+    };
 
-        var start = Math.max(0, token.offset - token.col + 1);
-        var eol = token.lineBreaks ? token.text.indexOf('\n') : token.text.length;
-        var firstLine = this.buffer.substring(start, token.offset + eol);
-        message += " at line " + token.line + " col " + token.col + ":\n\n";
-        message += "  " + firstLine + "\n";
-        message += "  " + Array(token.col).join(" ") + "^";
-        return message;
-      };
+    Lexer.prototype.has = function(tokenType) {
+      return true
+    };
 
-      Lexer.prototype.clone = function () {
-        return new Lexer(this.states, this.state);
-      };
 
-      Lexer.prototype.has = function (tokenType) {
-        return true;
-      };
+    return {
+      compile: compile,
+      states: compileStates,
+      error: Object.freeze({error: true}),
+      fallback: Object.freeze({fallback: true}),
+      keywords: keywordTransform,
+    }
 
-      return {
-        compile: compile,
-        states: compileStates,
-        error: Object.freeze({
-          error: true
-        }),
-        fallback: Object.freeze({
-          fallback: true
-        }),
-        keywords: keywordTransform
-      };
-    });
+  }));
   });
 
   var _boolean = /true|false|TRUE|FALSE\b(?!@)/;

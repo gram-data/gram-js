@@ -74,63 +74,75 @@
 
   {
     // All bundlers will remove this block in the production bundle.
-    if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative' && typeof crypto === 'undefined') {
-      throw new Error('React Native does not have a built-in secure random generator. ' + 'If you don’t need unpredictable IDs use `nanoid/non-secure`. ' + 'For secure IDs, import `react-native-get-random-values` ' + 'before Nano ID. If you use Expo, install `expo-random` ' + 'and use `nanoid/async`.');
+    if (
+      typeof navigator !== 'undefined' &&
+      navigator.product === 'ReactNative' &&
+      typeof crypto === 'undefined'
+    ) {
+      throw new Error(
+        'React Native does not have a built-in secure random generator. ' +
+          'If you don’t need unpredictable IDs use `nanoid/non-secure`. ' +
+          'For secure IDs, import `react-native-get-random-values` ' +
+          'before Nano ID. If you use Expo, install `expo-random` ' +
+          'and use `nanoid/async`.'
+      )
     }
-
     if (typeof msCrypto !== 'undefined' && typeof crypto === 'undefined') {
-      throw new Error('Import file with `if (!window.crypto) window.crypto = window.msCrypto`' + ' before importing Nano ID to fix IE 11 support');
+      throw new Error(
+        'Import file with `if (!window.crypto) window.crypto = window.msCrypto`' +
+          ' before importing Nano ID to fix IE 11 support'
+      )
     }
-
     if (typeof crypto === 'undefined') {
-      throw new Error('Your browser does not have secure random generator. ' + 'If you don’t need unpredictable IDs, you can use nanoid/non-secure.');
+      throw new Error(
+        'Your browser does not have secure random generator. ' +
+          'If you don’t need unpredictable IDs, you can use nanoid/non-secure.'
+      )
     }
   }
 
-  var random = function random(bytes) {
-    return crypto.getRandomValues(new Uint8Array(bytes));
-  };
+  let random = bytes => crypto.getRandomValues(new Uint8Array(bytes));
 
-  var customRandom = function customRandom(alphabet, size, getRandom) {
+  let customRandom = (alphabet, size, getRandom) => {
     // First, a bitmask is necessary to generate the ID. The bitmask makes bytes
     // values closer to the alphabet size. The bitmask calculates the closest
     // `2^31 - 1` number, which exceeds the alphabet size.
     // For example, the bitmask for the alphabet size 30 is 31 (00011111).
     // `Math.clz32` is not used, because it is not available in browsers.
-    var mask = (2 << Math.log(alphabet.length - 1) / Math.LN2) - 1; // Though, the bitmask solution is not perfect since the bytes exceeding
+    let mask = (2 << (Math.log(alphabet.length - 1) / Math.LN2)) - 1;
+    // Though, the bitmask solution is not perfect since the bytes exceeding
     // the alphabet size are refused. Therefore, to reliably generate the ID,
     // the random bytes redundancy has to be satisfied.
+
     // Note: every hardware random generator call is performance expensive,
     // because the system call for entropy collection takes a lot of time.
     // So, to avoid additional system calls, extra bytes are requested in advance.
+
     // Next, a step determines how many random bytes to generate.
     // The number of random bytes gets decided upon the ID size, mask,
     // alphabet size, and magic number 1.6 (using 1.6 peaks at performance
     // according to benchmarks).
+
     // `-~f => Math.ceil(f)` if f is a float
     // `-~i => i + 1` if i is an integer
+    let step = -~((1.6 * mask * size) / alphabet.length);
 
-    var step = -~(1.6 * mask * size / alphabet.length);
-    return function () {
-      var id = '';
-
+    return () => {
+      let id = '';
       while (true) {
-        var bytes = getRandom(step); // A compact alternative for `for (var i = 0; i < step; i++)`.
-
-        var j = step;
-
+        let bytes = getRandom(step);
+        // A compact alternative for `for (var i = 0; i < step; i++)`.
+        let j = step;
         while (j--) {
           // Adding `|| ''` refuses a random byte that exceeds the alphabet size.
           id += alphabet[bytes[j] & mask] || '';
-          if (id.length === size) return id;
+          if (id.length === size) return id
         }
       }
-    };
+    }
   };
 
-  var customAlphabet = function customAlphabet(alphabet, size) {
-    return customRandom(alphabet, size, random);
-  };
+  let customAlphabet = (alphabet, size) => customRandom(alphabet, size, random);
 
   /**
    * Factory for creating an IDGenerator based on
@@ -159,37 +171,37 @@
 
   function convert(test) {
     if (test == null) {
-      return ok;
+      return ok
     }
 
     if (typeof test === 'string') {
-      return typeFactory(test);
+      return typeFactory(test)
     }
 
     if (typeof test === 'object') {
-      return 'length' in test ? anyFactory(test) : allFactory(test);
+      return 'length' in test ? anyFactory(test) : allFactory(test)
     }
 
     if (typeof test === 'function') {
-      return test;
+      return test
     }
 
-    throw new Error('Expected function, string, or object as test');
-  } // Utility assert each property in `test` is represented in `node`, and each
+    throw new Error('Expected function, string, or object as test')
+  }
+
+  // Utility assert each property in `test` is represented in `node`, and each
   // values are strictly equal.
-
-
   function allFactory(test) {
-    return all;
+    return all
 
     function all(node) {
       var key;
 
       for (key in test) {
-        if (node[key] !== test[key]) return false;
+        if (node[key] !== test[key]) return false
       }
 
-      return true;
+      return true
     }
   }
 
@@ -201,46 +213,50 @@
       checks[index] = convert(tests[index]);
     }
 
-    return any;
+    return any
 
     function any() {
       var index = -1;
 
       while (++index < checks.length) {
         if (checks[index].apply(this, arguments)) {
-          return true;
+          return true
         }
       }
 
-      return false;
+      return false
     }
-  } // Utility to convert a string into a function which checks a given node’s type
+  }
+
+  // Utility to convert a string into a function which checks a given node’s type
   // for said string.
-
-
   function typeFactory(test) {
-    return type;
+    return type
 
     function type(node) {
-      return Boolean(node && node.type === test);
+      return Boolean(node && node.type === test)
     }
-  } // Utility to return true.
+  }
 
-
+  // Utility to return true.
   function ok() {
-    return true;
+    return true
   }
 
   var color_browser = identity;
-
   function identity(d) {
-    return d;
+    return d
   }
 
   var unistUtilVisitParents = visitParents;
+
+
+
+
   var CONTINUE = true;
   var SKIP = 'skip';
   var EXIT = false;
+
   visitParents.CONTINUE = CONTINUE;
   visitParents.SKIP = SKIP;
   visitParents.EXIT = EXIT;
@@ -257,6 +273,7 @@
 
     is = convert_1(test);
     step = reverse ? -1 : 1;
+
     factory(tree, null, [])();
 
     function factory(node, index, parents) {
@@ -264,11 +281,18 @@
       var name;
 
       if (typeof value.type === 'string') {
-        name = typeof value.tagName === 'string' ? value.tagName : typeof value.name === 'string' ? value.name : undefined;
-        visit.displayName = 'node (' + color_browser(value.type + (name ? '<' + name + '>' : '')) + ')';
+        name =
+          typeof value.tagName === 'string'
+            ? value.tagName
+            : typeof value.name === 'string'
+            ? value.name
+            : undefined;
+
+        visit.displayName =
+          'node (' + color_browser(value.type + (name ? '<' + name + '>' : '')) + ')';
       }
 
-      return visit;
+      return visit
 
       function visit() {
         var grandparents = parents.concat(node);
@@ -280,7 +304,7 @@
           result = toResult(visitor(node, parents));
 
           if (result[0] === EXIT) {
-            return result;
+            return result
           }
         }
 
@@ -291,34 +315,39 @@
             subresult = factory(node.children[offset], offset, grandparents)();
 
             if (subresult[0] === EXIT) {
-              return subresult;
+              return subresult
             }
 
-            offset = typeof subresult[1] === 'number' ? subresult[1] : offset + step;
+            offset =
+              typeof subresult[1] === 'number' ? subresult[1] : offset + step;
           }
         }
 
-        return result;
+        return result
       }
     }
   }
 
   function toResult(value) {
     if (value !== null && typeof value === 'object' && 'length' in value) {
-      return value;
+      return value
     }
 
     if (typeof value === 'number') {
-      return [CONTINUE, value];
+      return [CONTINUE, value]
     }
 
-    return [value];
+    return [value]
   }
 
   var unistUtilVisit = visit;
+
+
+
   var CONTINUE$1 = unistUtilVisitParents.CONTINUE;
   var SKIP$1 = unistUtilVisitParents.SKIP;
   var EXIT$1 = unistUtilVisitParents.EXIT;
+
   visit.CONTINUE = CONTINUE$1;
   visit.SKIP = SKIP$1;
   visit.EXIT = EXIT$1;
@@ -335,7 +364,7 @@
     function overload(node, parents) {
       var parent = parents[parents.length - 1];
       var index = parent ? parent.children.indexOf(node) : null;
-      return visitor(node, index, parent);
+      return visitor(node, index, parent)
     }
   }
 

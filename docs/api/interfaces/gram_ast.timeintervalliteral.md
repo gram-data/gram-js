@@ -53,7 +53,7 @@ This can also represent a repeating interval.
 
 *Inherited from [GramSeq](gram_ast.gramseq.md).[data](gram_ast.gramseq.md#data)*
 
-*Defined in node_modules/@types/unist/index.d.ts:23*
+*Defined in packages/gram-ast/node_modules/@types/unist/index.d.ts:23*
 
 Information from the ecosystem.
 
@@ -65,7 +65,7 @@ ___
 
 *Inherited from [GramSeq](gram_ast.gramseq.md).[position](gram_ast.gramseq.md#position)*
 
-*Defined in node_modules/@types/unist/index.d.ts:29*
+*Defined in packages/gram-ast/node_modules/@types/unist/index.d.ts:29*
 
 Location of a node in a source document.
 Must not be present if a node is generated.
@@ -78,7 +78,7 @@ ___
 
 *Overrides [TaggedTextLiteral](gram_ast.taggedtextliteral.md).[tag](gram_ast.taggedtextliteral.md#tag)*
 
-*Defined in [packages/gram-ast/src/index.ts:561](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-ast/src/index.ts#L561)*
+*Defined in [packages/gram-ast/src/index.ts:561](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-ast/src/index.ts#L561)*
 
 ___
 
@@ -88,9 +88,9 @@ ___
 
 *Inherited from [TaggedTextLiteral](gram_ast.taggedtextliteral.md).[type](gram_ast.taggedtextliteral.md#type)*
 
-*Overrides [TextLiteral](gram_ast.textliteral.md).[type](gram_ast.textliteral.md#type)*
+*Overrides void*
 
-*Defined in [packages/gram-ast/src/index.ts:451](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-ast/src/index.ts#L451)*
+*Defined in [packages/gram-ast/src/index.ts:451](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-ast/src/index.ts#L451)*
 
 ___
 
@@ -98,8 +98,8 @@ ___
 
 •  **value**: string
 
-*Inherited from [TextLiteral](gram_ast.textliteral.md).[value](gram_ast.textliteral.md#value)*
+*Inherited from [StringLiteral](gram_ast.stringliteral.md).[value](gram_ast.stringliteral.md#value)*
 
 *Overrides void*
 
-*Defined in [packages/gram-ast/src/index.ts:277](https://github.com/gram-data/gram-js/blob/4926192/packages/gram-ast/src/index.ts#L277)*
+*Defined in [packages/gram-ast/src/index.ts:277](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-ast/src/index.ts#L277)*

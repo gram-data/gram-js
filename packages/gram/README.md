@@ -6,18 +6,18 @@ Gram is a textual format for data graphs.
 
 
 ```js
-const {default:gram} = require('gram');
+const {default:gram} = require('@gram-data/gram');
 
-const n = gram.builder.node();
-console.log(gram.stringify.toGram(n));
-
-const src = "(a)-->(b)<--(c)";
-const p = gram.parser.toAST(src);
-console.log(gram.stringify.toGram(p));
+const src = "(a)-->(b)";
+const p = gram.parse(src);
+console.log(gram.stringify(p));
 
 ```
 
 ```ts
-import * as gram from '@gram-data/gram'
+import gram from '@gram-data/gram'
 
+const src = "(a)-->(b)";
+const p = gram.parse(src);
+console.log(gram.stringify(p));
 ```
