@@ -1,17 +1,27 @@
 
+{% assign prereleases = "" | split: "" %}
+{% for release in site.github.releases %}
+   {% if release.prerelease %}
+      {% assign prereleases = prereleases | push: release %}
+   {% endif %}
+{% endfor %}
+{% assign github_prerelease = prereleases | first %}
+
 <nav id="header" class="fixed w-full z-10 top-0 bg-white border-b border-gray-400">
 
   <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-4">
      <div class="pl-4 flex items-center">
-        <a class="text-gray-900 text-base no-underline hover:no-underline font-neo4j font-thin text-xl pb-2"  href="{{ "/" | relative_url }}"> 
+        <a class="text-gray-900 text-xl no-underline hover:no-underline font-neo4j font-thin pb-2"  href="{{ "/" | relative_url }}"> 
          {{ site.title }}
         </a>
         &nbsp;
-        <a class="text-gray-600 p-1 text-base no-underline hover:no-underline font-neo4j font-thin text-xl pb-2"  href="{{ site.github.latest_release.html_url }}"> 
+        <a title="latest release" class="text-gray-600 p-1 text-xl no-underline hover:no-underline font-neo4j font-thin pb-2"  href="{{ site.github.latest_release.html_url }}"> 
          {{ site.github.latest_release.tag_name }}
         </a>
+        <a title="prerelease" class="text-gray-400 p-1 text-sm no-underline hover:no-underline font-neo4j font-thin pb-2"  href="{{ github_prerelease.html_url }}"> 
+         ({{ github_prerelease.tag_name }})
+        </a>
      </div>
-     
      <div>
       <div class="block lg:hidden pr-4">
             <button id="nav-toggle" class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-900 hover:border-purple-500 appearance-none focus:outline-none">

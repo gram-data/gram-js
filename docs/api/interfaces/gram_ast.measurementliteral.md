@@ -66,7 +66,7 @@ ___
 
 *Overrides void*
 
-*Defined in [packages/gram-ast/src/index.ts:410](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-ast/src/index.ts#L410)*
+*Defined in [packages/gram-ast/src/index.ts:410](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L410)*
 
 ___
 
@@ -74,7 +74,7 @@ ___
 
 •  **unit**: string
 
-*Defined in [packages/gram-ast/src/index.ts:415](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-ast/src/index.ts#L415)*
+*Defined in [packages/gram-ast/src/index.ts:415](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L415)*
 
 The unit suffix of the decimal value.
 
@@ -88,4 +88,4 @@ ___
 
 *Overrides void*
 
-*Defined in [packages/gram-ast/src/index.ts:277](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-ast/src/index.ts#L277)*
+*Defined in [packages/gram-ast/src/index.ts:277](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L277)*

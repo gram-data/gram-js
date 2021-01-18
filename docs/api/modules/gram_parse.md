@@ -64,7 +64,7 @@ console.log(inspect(parsed));
 
 • `Const` **INCOMPLETE\_PARSE**: \"Incomplete parse.\" = "Incomplete parse."
 
-*Defined in [packages/gram-parse/src/gram-errors.ts:1](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-parse/src/gram-errors.ts#L1)*
+*Defined in [packages/gram-parse/src/gram-errors.ts:1](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-parse/src/gram-errors.ts#L1)*
 
 ___
 
@@ -72,7 +72,7 @@ ___
 
 • `Const` **SYNTAX\_ERROR**: \"Syntax error at\" = "Syntax error at"
 
-*Defined in [packages/gram-parse/src/gram-errors.ts:2](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-parse/src/gram-errors.ts#L2)*
+*Defined in [packages/gram-parse/src/gram-errors.ts:2](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-parse/src/gram-errors.ts#L2)*
 
 ## Functions
 
@@ -80,7 +80,7 @@ ___
 
 ▸ `Const`**parse**(`text`: string, `file`: VFile): any
 
-*Defined in [packages/gram-parse/src/gram-parser-plugin.ts:27](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-parse/src/gram-parser-plugin.ts#L27)*
+*Defined in [packages/gram-parse/src/gram-parser-plugin.ts:27](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-parse/src/gram-parser-plugin.ts#L27)*
 
 #### Parameters:
 
@@ -97,7 +97,7 @@ ___
 
 ▸ `Const`**toAST**(`src`: string): [GramSeq](../interfaces/gram_ast.gramseq.md)
 
-*Defined in [packages/gram-parse/src/index.ts:7](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-parse/src/index.ts#L7)*
+*Defined in [packages/gram-parse/src/index.ts:7](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-parse/src/index.ts#L7)*
 
 #### Parameters:
 

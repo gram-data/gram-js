@@ -14,7 +14,7 @@
 			},
 			"originalName": "/Users/akollegger/Developer/gram-data/gram-js/packages/gram/src/index.ts",
 			"comment": {
-				"text": "# `gram`\n\nGram is a textual format for data graphs. \n\n## How to gram\n\n\n```js\nconst {default:gram} = require('gram');\n\nconst n = gram.builder.node();\nconsole.log(gram.stringify.toGram(n));\n\nconst src = \"(a)-->(b)<--(c)\";\nconst p = gram.parser.toAST(src);\nconsole.log(gram.stringify.toGram(p));\n\n```\n\n```ts\nimport * as gram from '@gram-data/gram'\n\n```"
+				"text": "# `gram`\n\nGram is a textual format for data graphs. \n\n## How to gram\n\n\n```js\nconst {default:gram} = require('@gram-data/gram');\n\nconst src = \"(a)-->(b)\";\nconst p = gram.parse(src);\nconsole.log(gram.stringify(p));\n\n```\n\n```ts\nimport gram from '@gram-data/gram'\n\nconst src = \"(a)-->(b)\";\nconst p = gram.parse(src);\nconsole.log(gram.stringify(p));\n```"
 			},
 			"children": [
 				{

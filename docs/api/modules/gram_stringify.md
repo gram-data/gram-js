@@ -60,7 +60,7 @@ console.log(stringify(ast));
 
 ▸ `Const`**stringify**(`ast`: any \| any[]): string
 
-*Defined in [packages/gram-stringify/src/gram-stringify.ts:163](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram-stringify/src/gram-stringify.ts#L163)*
+*Defined in [packages/gram-stringify/src/gram-stringify.ts:163](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-stringify/src/gram-stringify.ts#L163)*
 
 #### Parameters:
 

@@ -16,20 +16,20 @@ Gram is a textual format for data graphs.
 ## How to gram
 
 ```js
-const {default:gram} = require('gram');
+const {default:gram} = require('@gram-data/gram');
 
-const n = gram.builder.node();
-console.log(gram.stringify.toGram(n));
-
-const src = "(a)-->(b)<--(c)";
-const p = gram.parser.toAST(src);
-console.log(gram.stringify.toGram(p));
+const src = "(a)-->(b)";
+const p = gram.parse(src);
+console.log(gram.stringify(p));
 
 ```
 
 ```ts
-import * as gram from '@gram-data/gram'
+import gram from '@gram-data/gram'
 
+const src = "(a)-->(b)";
+const p = gram.parse(src);
+console.log(gram.stringify(p));
 ```
 
 ## Index
@@ -54,7 +54,7 @@ Renames and re-exports: [stringify](gram_stringify.md#stringify)
 
 ▸ `Const`**parse**(`src`: VFileCompatible): [GramSeq](../interfaces/gram_ast.gramseq.md)
 
-*Defined in [packages/gram/src/index.ts:22](https://github.com/gram-data/gram-js/blob/fd9a123/packages/gram/src/index.ts#L22)*
+*Defined in [packages/gram/src/index.ts:22](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram/src/index.ts#L22)*
 
 Parse text into an ast.
 
