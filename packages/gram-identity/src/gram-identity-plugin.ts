@@ -9,7 +9,7 @@ import { nanoidGenerator } from './nanoid-generator';
 
 import visit from 'unist-util-visit';
 
-interface IdentityPluginSettings {
+export interface IdentityPluginSettings {
   generator: 'counter' | 'nanoid';
   alphabet?: string;
   prefix?: string;

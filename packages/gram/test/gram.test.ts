@@ -1,4 +1,4 @@
-import gram, {ast, builder, ops} from '..';
+import gram, { ast, builder, ops } from '..';
 
 describe('gram builder', () => {
   it('can make a node', () => {

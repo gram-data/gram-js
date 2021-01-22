@@ -6,7 +6,7 @@ import { valueOf, valueOfLiteral, LiteralValueEvaluator } from './gram-value';
 
 import visit from 'unist-util-visit';
 
-interface ValuePluginSettings {
+export interface ValuePluginSettings {
   literalValueEvaluator?: LiteralValueEvaluator;
 }
 
@@ -14,7 +14,7 @@ const defaultSettings = {
   literalValueEvaluator: valueOfLiteral,
 };
 
-const gramValuePlugin: Plugin<ValuePluginSettings[]> = (
+export const gramValuePlugin: Plugin<ValuePluginSettings[]> = (
   settings: ValuePluginSettings
 ) => {
   const s = { ...defaultSettings, ...settings };

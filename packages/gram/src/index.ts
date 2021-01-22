@@ -12,7 +12,9 @@ import * as gramPresetBasic from '@gram-data/gram-preset-basic';
 export { toGram } from '@gram-data/gram-stringify';
 
 const processor = (): unified.Processor => {
-  return unified().use(gramParserPlugin).use(gramPresetBasic);
+  return unified()
+    .use(gramParserPlugin)
+    .use(gramPresetBasic);
 };
 
 /**

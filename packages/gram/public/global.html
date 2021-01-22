@@ -13,9 +13,10 @@
     <pre id="ast">parsed AST should appear here</pre>
 
     <script>
+      console.log("Use global gram", gram);
       window.onload = function () {
         var src = document.getElementById('src').textContent;
-        gram.default.parse(src)
+        var ast = gram.parse(src)
         document.getElementById("ast").textContent = JSON.stringify(ast,null,2);
       }
     </script>
