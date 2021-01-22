@@ -53,4 +53,4 @@ on the processor:
 
 • `Const` **plugins**: (Attacher<[IdentityPluginSettings](../interfaces/gram_identity.identitypluginsettings.md)[], Settings\> \| Attacher<[ValuePluginSettings](../interfaces/gram_value.valuepluginsettings.md)[], Settings\>)[] = [gramIdentityPlugin, gramValuePlugin]
 
-*Defined in [packages/gram-preset-basic/src/index.ts:9](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-preset-basic/src/index.ts#L9)*
+*Defined in [packages/gram-preset-basic/src/index.ts:9](https://github.com/gram-data/gram-js/blob/594b46d/packages/gram-preset-basic/src/index.ts#L9)*

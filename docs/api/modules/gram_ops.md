@@ -74,7 +74,7 @@ const es:GramPath[] = edges(path);
 
 ▸ `Const`**count**(`p`: [GramPath](../interfaces/gram_ast.grampath.md)): number
 
-*Defined in [packages/gram-ops/src/index.ts:11](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ops/src/index.ts#L11)*
+*Defined in [packages/gram-ops/src/index.ts:11](https://github.com/gram-data/gram-js/blob/594b46d/packages/gram-ops/src/index.ts#L11)*
 
 #### Parameters:
 
@@ -90,7 +90,7 @@ ___
 
 ▸ `Const`**edges**(`p`: [GramPath](../interfaces/gram_ast.grampath.md)): [GramEdge](../interfaces/gram_ast.gramedge.md)[]
 
-*Defined in [packages/gram-ops/src/index.ts:70](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ops/src/index.ts#L70)*
+*Defined in [packages/gram-ops/src/index.ts:70](https://github.com/gram-data/gram-js/blob/594b46d/packages/gram-ops/src/index.ts#L70)*
 
 #### Parameters:
 
@@ -106,7 +106,7 @@ ___
 
 ▸ `Const`**head**(`p`: [GramPath](../interfaces/gram_ast.grampath.md)): [GramNode](../interfaces/gram_ast.gramnode.md)
 
-*Defined in [packages/gram-ops/src/index.ts:18](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ops/src/index.ts#L18)*
+*Defined in [packages/gram-ops/src/index.ts:18](https://github.com/gram-data/gram-js/blob/594b46d/packages/gram-ops/src/index.ts#L18)*
 
 #### Parameters:
 
@@ -122,7 +122,7 @@ ___
 
 ▸ `Const`**identity**(`p`: [GramPath](../interfaces/gram_ast.grampath.md)): undefined \| string
 
-*Defined in [packages/gram-ops/src/index.ts:35](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ops/src/index.ts#L35)*
+*Defined in [packages/gram-ops/src/index.ts:35](https://github.com/gram-data/gram-js/blob/594b46d/packages/gram-ops/src/index.ts#L35)*
 
 #### Parameters:
 
@@ -138,7 +138,7 @@ ___
 
 ▸ `Const`**merge**(`_`: [GramPath](../interfaces/gram_ast.grampath.md), `next`: [GramPath](../interfaces/gram_ast.grampath.md)): [GramPath](../interfaces/gram_ast.grampath.md)
 
-*Defined in [packages/gram-ops/src/index.ts:30](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ops/src/index.ts#L30)*
+*Defined in [packages/gram-ops/src/index.ts:30](https://github.com/gram-data/gram-js/blob/594b46d/packages/gram-ops/src/index.ts#L30)*
 
 #### Parameters:
 
@@ -155,7 +155,7 @@ ___
 
 ▸ `Const`**nodes**(`p`: [GramPath](../interfaces/gram_ast.grampath.md) \| [GramPath](../interfaces/gram_ast.grampath.md)[] \| [GramSeq](../interfaces/gram_ast.gramseq.md)): [GramNode](../interfaces/gram_ast.gramnode.md)[]
 
-*Defined in [packages/gram-ops/src/index.ts:44](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ops/src/index.ts#L44)*
+*Defined in [packages/gram-ops/src/index.ts:44](https://github.com/gram-data/gram-js/blob/594b46d/packages/gram-ops/src/index.ts#L44)*
 
 Node set projected from within a path.
 
@@ -173,7 +173,7 @@ ___
 
 ▸ `Const`**tail**(`p`: [GramPath](../interfaces/gram_ast.grampath.md)): [GramNode](../interfaces/gram_ast.gramnode.md)
 
-*Defined in [packages/gram-ops/src/index.ts:24](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ops/src/index.ts#L24)*
+*Defined in [packages/gram-ops/src/index.ts:24](https://github.com/gram-data/gram-js/blob/594b46d/packages/gram-ops/src/index.ts#L24)*
 
 #### Parameters:
 

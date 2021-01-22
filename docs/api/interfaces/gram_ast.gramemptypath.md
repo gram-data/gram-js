@@ -48,7 +48,7 @@ but a unique singleton identity of [EMPTY_PATH_ID](../modules/gram_ast.md#empty_
 
 *Overrides [GramPath](gram_ast.grampath.md).[children](gram_ast.grampath.md#children)*
 
-*Defined in [packages/gram-ast/src/index.ts:114](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L114)*
+*Defined in [packages/gram-ast/src/index.ts:114](https://github.com/gram-data/gram-js/blob/594b46d/packages/gram-ast/src/index.ts#L114)*
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 *Overrides [GramPath](gram_ast.grampath.md).[id](gram_ast.grampath.md#id)*
 
-*Defined in [packages/gram-ast/src/index.ts:108](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L108)*
+*Defined in [packages/gram-ast/src/index.ts:108](https://github.com/gram-data/gram-js/blob/594b46d/packages/gram-ast/src/index.ts#L108)*
 
 ___
 
@@ -80,7 +80,7 @@ ___
 
 *Inherited from [GramPath](gram_ast.grampath.md).[kind](gram_ast.grampath.md#kind)*
 
-*Defined in [packages/gram-ast/src/index.ts:62](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L62)*
+*Defined in [packages/gram-ast/src/index.ts:62](https://github.com/gram-data/gram-js/blob/594b46d/packages/gram-ast/src/index.ts#L62)*
 
 The kind of path composition.
 
@@ -92,7 +92,7 @@ ___
 
 *Overrides [GramPath](gram_ast.grampath.md).[labels](gram_ast.grampath.md#labels)*
 
-*Defined in [packages/gram-ast/src/index.ts:110](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L110)*
+*Defined in [packages/gram-ast/src/index.ts:110](https://github.com/gram-data/gram-js/blob/594b46d/packages/gram-ast/src/index.ts#L110)*
 
 ___
 
@@ -115,7 +115,7 @@ ___
 
 *Overrides [GramPath](gram_ast.grampath.md).[record](gram_ast.grampath.md#record)*
 
-*Defined in [packages/gram-ast/src/index.ts:112](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L112)*
+*Defined in [packages/gram-ast/src/index.ts:112](https://github.com/gram-data/gram-js/blob/594b46d/packages/gram-ast/src/index.ts#L112)*
 
 ___
 
@@ -127,6 +127,6 @@ ___
 
 *Overrides void*
 
-*Defined in [packages/gram-ast/src/index.ts:50](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L50)*
+*Defined in [packages/gram-ast/src/index.ts:50](https://github.com/gram-data/gram-js/blob/594b46d/packages/gram-ast/src/index.ts#L50)*
 
 Type discriminator for this AST element, always 'path'.

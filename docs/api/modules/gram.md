@@ -51,7 +51,7 @@ Vanilla javascript in browser:
 
 ▸ `Const`**parse**(`src`: VFileCompatible): [GramSeq](../interfaces/gram_ast.gramseq.md)
 
-*Defined in [packages/gram/src/index.ts:24](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram/src/index.ts#L24)*
+*Defined in [packages/gram/src/index.ts:24](https://github.com/gram-data/gram-js/blob/594b46d/packages/gram/src/index.ts#L24)*
 
 Parse text into an ast.
 

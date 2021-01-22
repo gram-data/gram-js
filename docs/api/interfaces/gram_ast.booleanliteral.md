@@ -65,7 +65,7 @@ ___
 
 *Overrides void*
 
-*Defined in [packages/gram-ast/src/index.ts:308](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L308)*
+*Defined in [packages/gram-ast/src/index.ts:308](https://github.com/gram-data/gram-js/blob/594b46d/packages/gram-ast/src/index.ts#L308)*
 
 Represents this variant of a Literal.
 
@@ -77,4 +77,4 @@ ___
 
 *Overrides [StringLiteral](gram_ast.stringliteral.md).[value](gram_ast.stringliteral.md#value)*
 
-*Defined in [packages/gram-ast/src/index.ts:310](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L310)*
+*Defined in [packages/gram-ast/src/index.ts:310](https://github.com/gram-data/gram-js/blob/594b46d/packages/gram-ast/src/index.ts#L310)*
