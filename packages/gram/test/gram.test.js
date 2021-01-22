@@ -1,11 +1,5 @@
-const { default: gram, builder, ast, ops } = require('..');
-
-describe('gram builder', () => {
-  it('can make a node', () => {
-    const n = builder.node();
-    expect(ast.isGramNode(n)).toBeTruthy();
-  });
-});
+var gram = require('..').default;
+var ast = require('@gram-data/gram-ast');
 
 describe('gram parse', () => {
   it('can parse a node "()"', () => {
@@ -18,21 +12,11 @@ describe('gram parse', () => {
   });
 });
 
-describe('gram ops', () => {
-  it('can extract nodes from a path seq', () => {
-    const src = `() () ()-->()`;
-    const seq = gram.parse(src);
-    const nodes = ops.nodes(seq);
-
-    expect(nodes.length).toBe(4);
-  });
-});
-
-describe('gram stringify', () => {
+describe('gram toGram', () => {
   it('can serialize a parsed node "(1)"', () => {
     const src = `(1)`;
     const seq = gram.parse(src);
-    const serialized = gram.stringify(seq);
+    const serialized = gram.toGram(seq);
 
     expect(serialized).toBe(src);
   });

@@ -46,7 +46,7 @@ empty paths, which is equivalent to having no children.
 
 *Overrides [GramPath](gram_ast.grampath.md).[children](gram_ast.grampath.md#children)*
 
-*Defined in [packages/gram-ast/src/index.ts:134](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L134)*
+*Defined in [packages/gram-ast/src/index.ts:134](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L134)*
 
 Optimized to no children, though understood
 to have two empty paths as children.
@@ -71,7 +71,7 @@ ___
 
 *Inherited from [GramPath](gram_ast.grampath.md).[id](gram_ast.grampath.md#id)*
 
-*Defined in [packages/gram-ast/src/index.ts:57](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L57)*
+*Defined in [packages/gram-ast/src/index.ts:57](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L57)*
 
 An identifier for the path.
 
@@ -85,7 +85,7 @@ ___
 
 *Inherited from [GramPath](gram_ast.grampath.md).[kind](gram_ast.grampath.md#kind)*
 
-*Defined in [packages/gram-ast/src/index.ts:62](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L62)*
+*Defined in [packages/gram-ast/src/index.ts:62](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L62)*
 
 The kind of path composition.
 
@@ -97,7 +97,7 @@ ___
 
 *Inherited from [GramPath](gram_ast.grampath.md).[labels](gram_ast.grampath.md#labels)*
 
-*Defined in [packages/gram-ast/src/index.ts:69](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L69)*
+*Defined in [packages/gram-ast/src/index.ts:69](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L69)*
 
 Labels are used to qualify a path.
 
@@ -124,7 +124,7 @@ ___
 
 *Inherited from [GramPath](gram_ast.grampath.md).[record](gram_ast.grampath.md#record)*
 
-*Defined in [packages/gram-ast/src/index.ts:74](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L74)*
+*Defined in [packages/gram-ast/src/index.ts:74](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L74)*
 
 The data content of the path.
 
@@ -138,6 +138,6 @@ ___
 
 *Overrides void*
 
-*Defined in [packages/gram-ast/src/index.ts:50](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L50)*
+*Defined in [packages/gram-ast/src/index.ts:50](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L50)*
 
 Type discriminator for this AST element, always 'path'.

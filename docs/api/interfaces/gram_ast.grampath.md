@@ -50,7 +50,7 @@ GramPath is either empty, or the composition of two paths.
 
 *Overrides void*
 
-*Defined in [packages/gram-ast/src/index.ts:86](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L86)*
+*Defined in [packages/gram-ast/src/index.ts:86](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L86)*
 
 The children are the path members which the path composed.
 
@@ -79,7 +79,7 @@ ___
 
 • `Optional` **id**: undefined \| string
 
-*Defined in [packages/gram-ast/src/index.ts:57](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L57)*
+*Defined in [packages/gram-ast/src/index.ts:57](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L57)*
 
 An identifier for the path.
 
@@ -91,7 +91,7 @@ ___
 
 • `Optional` **kind**: [PathKind](../modules/gram_ast.md#pathkind)
 
-*Defined in [packages/gram-ast/src/index.ts:62](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L62)*
+*Defined in [packages/gram-ast/src/index.ts:62](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L62)*
 
 The kind of path composition.
 
@@ -101,7 +101,7 @@ ___
 
 • `Optional` **labels**: string[]
 
-*Defined in [packages/gram-ast/src/index.ts:69](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L69)*
+*Defined in [packages/gram-ast/src/index.ts:69](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L69)*
 
 Labels are used to qualify a path.
 
@@ -126,7 +126,7 @@ ___
 
 • `Optional` **record**: [GramRecord](../modules/gram_ast.md#gramrecord)
 
-*Defined in [packages/gram-ast/src/index.ts:74](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L74)*
+*Defined in [packages/gram-ast/src/index.ts:74](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L74)*
 
 The data content of the path.
 
@@ -138,6 +138,6 @@ ___
 
 *Overrides void*
 
-*Defined in [packages/gram-ast/src/index.ts:50](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L50)*
+*Defined in [packages/gram-ast/src/index.ts:50](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L50)*
 
 Type discriminator for this AST element, always 'path'.

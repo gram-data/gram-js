@@ -609,7 +609,6 @@
   var defaultSettings = {
     literalValueEvaluator: valueOfLiteral
   };
-
   var gramValuePlugin = function gramValuePlugin(settings) {
     var s = _extends({}, defaultSettings, settings);
 

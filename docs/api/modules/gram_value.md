@@ -40,6 +40,8 @@ const ast = edge([left, right], 'right');
 ### References
 
 * [LiteralValueEvaluator](gram_value.md#literalvalueevaluator)
+* [ValuePluginSettings](gram_value.md#valuepluginsettings)
+* [gramValuePlugin](gram_value.md#gramvalueplugin)
 * [iso8601Duration](gram_value.md#iso8601duration)
 * [iso8601LocalTime](gram_value.md#iso8601localtime)
 * [iso8601OrdinalDate](gram_value.md#iso8601ordinaldate)
@@ -63,6 +65,10 @@ const ast = edge([left, right], 'right');
 * [valueOfString](gram_value.md#valueofstring)
 * [valueOfTaggedLiteral](gram_value.md#valueoftaggedliteral)
 * [valueOfTime](gram_value.md#valueoftime)
+
+### Interfaces
+
+* [ValuePluginSettings](../interfaces/gram_value.valuepluginsettings.md)
 
 ### Type aliases
 
@@ -83,6 +89,7 @@ const ast = edge([left, right], 'right');
 
 ### Functions
 
+* [gramValuePlugin](gram_value.md#gramvalueplugin)
 * [valueOf](gram_value.md#valueof)
 * [valueOfBoolean](gram_value.md#valueofboolean)
 * [valueOfDate](gram_value.md#valueofdate)
@@ -102,6 +109,18 @@ const ast = edge([left, right], 'right');
 ### LiteralValueEvaluator
 
 Re-exports: [LiteralValueEvaluator](gram_value.md#literalvalueevaluator)
+
+___
+
+### ValuePluginSettings
+
+Re-exports: [ValuePluginSettings](../interfaces/gram_value.valuepluginsettings.md)
+
+___
+
+### gramValuePlugin
+
+Re-exports: [gramValuePlugin](gram_value.md#gramvalueplugin)
 
 ___
 
@@ -247,7 +266,7 @@ Re-exports: [valueOfTime](gram_value.md#valueoftime)
 
 Ƭ  **LiteralValueEvaluator**: (ast: [GramLiteral](gram_ast.md#gramliteral)) => any
 
-*Defined in [packages/gram-value/src/gram-value.ts:52](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L52)*
+*Defined in [packages/gram-value/src/gram-value.ts:52](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L52)*
 
 Type of function used to evaluate text literal values.
 
@@ -257,7 +276,7 @@ Type of function used to evaluate text literal values.
 
 • `Const` **iso8601Duration**: RegExp = /^P((\d+)Y)?((\d+)M)?((\d+)D)?(T((\d+)H)?((\d+)M)?((\d+)S)?)?$/
 
-*Defined in [packages/gram-value/src/gram-value.ts:36](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L36)*
+*Defined in [packages/gram-value/src/gram-value.ts:36](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L36)*
 
 ___
 
@@ -265,7 +284,7 @@ ___
 
 • `Const` **iso8601LocalTime**: RegExp = /^(2[0-3]\|[01][0-9]):?([0-5][0-9])(:?([0-5][0-9](\.[0-9]{3})?))?$/
 
-*Defined in [packages/gram-value/src/gram-value.ts:33](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L33)*
+*Defined in [packages/gram-value/src/gram-value.ts:33](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L33)*
 
 ___
 
@@ -273,7 +292,7 @@ ___
 
 • `Const` **iso8601OrdinalDate**: RegExp = /^([0-9]{4})-?(36[0-6]\|3[0-5][0-9]\|[12][0-9]{2}\|0[1-9][0-9]\|00[1-9])$/
 
-*Defined in [packages/gram-value/src/gram-value.ts:30](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L30)*
+*Defined in [packages/gram-value/src/gram-value.ts:30](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L30)*
 
 ___
 
@@ -281,7 +300,7 @@ ___
 
 • `Const` **iso8601Repeat**: RegExp = /^R(\d*)$/
 
-*Defined in [packages/gram-value/src/gram-value.ts:37](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L37)*
+*Defined in [packages/gram-value/src/gram-value.ts:37](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L37)*
 
 ___
 
@@ -289,7 +308,7 @@ ___
 
 • `Const` **iso8601Time**: RegExp = /^(2[0-3]\|[01][0-9]):?([0-5][0-9]):?([0-5][0-9](\.[0-9]{3})?)?(Z\|([+-])((?:2[0-3]\|[01][0-9]))(?::?([0-5][0-9]))?)?$/
 
-*Defined in [packages/gram-value/src/gram-value.ts:35](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L35)*
+*Defined in [packages/gram-value/src/gram-value.ts:35](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L35)*
 
 ___
 
@@ -297,7 +316,7 @@ ___
 
 • `Const` **iso8601WeekDate**: RegExp = /^([0-9]{4})-?W(5[0-3]\|[1-4][0-9]\|0[1-9])-?([1-7])$/
 
-*Defined in [packages/gram-value/src/gram-value.ts:32](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L32)*
+*Defined in [packages/gram-value/src/gram-value.ts:32](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L32)*
 
 ___
 
@@ -305,7 +324,7 @@ ___
 
 • `Const` **iso8601WeekOfYear**: RegExp = /^([0-9]{4})-?W(5[0-3]\|[1-4][0-9]\|0[1-9])$/
 
-*Defined in [packages/gram-value/src/gram-value.ts:31](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L31)*
+*Defined in [packages/gram-value/src/gram-value.ts:31](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L31)*
 
 ___
 
@@ -313,7 +332,7 @@ ___
 
 • `Const` **iso8601Year**: RegExp = /^([+-]\d{4,}\b\|\d{4})$/
 
-*Defined in [packages/gram-value/src/gram-value.ts:27](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L27)*
+*Defined in [packages/gram-value/src/gram-value.ts:27](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L27)*
 
 ___
 
@@ -321,7 +340,7 @@ ___
 
 • `Const` **iso8601YearMonth**: RegExp = /^([0-9]{4})-(1[0-2]\|0[1-9])$/
 
-*Defined in [packages/gram-value/src/gram-value.ts:28](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L28)*
+*Defined in [packages/gram-value/src/gram-value.ts:28](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L28)*
 
 ___
 
@@ -329,15 +348,31 @@ ___
 
 • `Const` **iso8601YearMonthDay**: RegExp = /^([0-9]{4})(-?)(1[0-2]\|0[1-9])\2(3[01]\|0[1-9]\|[12][0-9])$/
 
-*Defined in [packages/gram-value/src/gram-value.ts:29](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L29)*
+*Defined in [packages/gram-value/src/gram-value.ts:29](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L29)*
 
 ## Functions
+
+### gramValuePlugin
+
+▸ `Const`**gramValuePlugin**(`settings`: [ValuePluginSettings](../interfaces/gram_value.valuepluginsettings.md)): Transformer
+
+*Defined in [packages/gram-value/src/gram-value-plugin.ts:17](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value-plugin.ts#L17)*
+
+#### Parameters:
+
+Name | Type |
+------ | ------ |
+`settings` | [ValuePluginSettings](../interfaces/gram_value.valuepluginsettings.md) |
+
+**Returns:** Transformer
+
+___
 
 ### valueOf
 
 ▸ `Const`**valueOf**(`recordValue`: [GramRecordValue](gram_ast.md#gramrecordvalue) \| [GramRecord](gram_ast.md#gramrecord), `literalValueEvaluator?`: valueOfLiteral): any
 
-*Defined in [packages/gram-value/src/gram-value.ts:60](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L60)*
+*Defined in [packages/gram-value/src/gram-value.ts:60](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L60)*
 
 Evaluates data structures and text literal values, returning
 native objects and primitive values.
@@ -359,7 +394,7 @@ ___
 
 ▸ `Const`**valueOfBoolean**(`ast`: [BooleanLiteral](../interfaces/gram_ast.booleanliteral.md)): boolean
 
-*Defined in [packages/gram-value/src/gram-value.ts:127](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L127)*
+*Defined in [packages/gram-value/src/gram-value.ts:127](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L127)*
 
 #### Parameters:
 
@@ -375,7 +410,7 @@ ___
 
 ▸ `Const`**valueOfDate**(`ast`: [DateLiteral](../interfaces/gram_ast.dateliteral.md)): Date
 
-*Defined in [packages/gram-value/src/gram-value.ts:144](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L144)*
+*Defined in [packages/gram-value/src/gram-value.ts:144](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L144)*
 
 #### Parameters:
 
@@ -391,7 +426,7 @@ ___
 
 ▸ `Const`**valueOfDecimal**(`ast`: [DecimalLiteral](../interfaces/gram_ast.decimalliteral.md)): number
 
-*Defined in [packages/gram-value/src/gram-value.ts:263](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L263)*
+*Defined in [packages/gram-value/src/gram-value.ts:263](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L263)*
 
 #### Parameters:
 
@@ -407,7 +442,7 @@ ___
 
 ▸ `Const`**valueOfDuration**(`ast`: [DurationLiteral](../interfaces/gram_ast.durationliteral.md)): Date
 
-*Defined in [packages/gram-value/src/gram-value.ts:223](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L223)*
+*Defined in [packages/gram-value/src/gram-value.ts:223](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L223)*
 
 Evaluates the duration as a total of milliseconds, unreliably estimating milliseconds
 per year or month. Reliable duration values can only be calculated with precision
@@ -427,7 +462,7 @@ ___
 
 ▸ `Const`**valueOfHexadecimal**(`ast`: [HexadecimalLiteral](../interfaces/gram_ast.hexadecimalliteral.md)): number
 
-*Defined in [packages/gram-value/src/gram-value.ts:269](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L269)*
+*Defined in [packages/gram-value/src/gram-value.ts:269](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L269)*
 
 #### Parameters:
 
@@ -443,7 +478,7 @@ ___
 
 ▸ `Const`**valueOfInteger**(`ast`: [IntegerLiteral](../interfaces/gram_ast.integerliteral.md)): number
 
-*Defined in [packages/gram-value/src/gram-value.ts:251](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L251)*
+*Defined in [packages/gram-value/src/gram-value.ts:251](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L251)*
 
 #### Parameters:
 
@@ -459,7 +494,7 @@ ___
 
 ▸ `Const`**valueOfLiteral**(`ast`: [GramLiteral](gram_ast.md#gramliteral)): any
 
-*Defined in [packages/gram-value/src/gram-value.ts:87](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L87)*
+*Defined in [packages/gram-value/src/gram-value.ts:87](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L87)*
 
 #### Parameters:
 
@@ -475,7 +510,7 @@ ___
 
 ▸ `Const`**valueOfMeasurement**(`ast`: [MeasurementLiteral](../interfaces/gram_ast.measurementliteral.md)): number
 
-*Defined in [packages/gram-value/src/gram-value.ts:257](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L257)*
+*Defined in [packages/gram-value/src/gram-value.ts:257](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L257)*
 
 #### Parameters:
 
@@ -491,7 +526,7 @@ ___
 
 ▸ `Const`**valueOfOctal**(`ast`: [OctalLiteral](../interfaces/gram_ast.octalliteral.md)): number
 
-*Defined in [packages/gram-value/src/gram-value.ts:275](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L275)*
+*Defined in [packages/gram-value/src/gram-value.ts:275](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L275)*
 
 #### Parameters:
 
@@ -507,7 +542,7 @@ ___
 
 ▸ `Const`**valueOfString**(`ast`: [StringLiteral](../interfaces/gram_ast.stringliteral.md)): string
 
-*Defined in [packages/gram-value/src/gram-value.ts:130](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L130)*
+*Defined in [packages/gram-value/src/gram-value.ts:130](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L130)*
 
 #### Parameters:
 
@@ -523,7 +558,7 @@ ___
 
 ▸ `Const`**valueOfTaggedLiteral**(`ast`: [TaggedTextLiteral](../interfaces/gram_ast.taggedtextliteral.md)): string
 
-*Defined in [packages/gram-value/src/gram-value.ts:137](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L137)*
+*Defined in [packages/gram-value/src/gram-value.ts:137](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L137)*
 
 #### Parameters:
 
@@ -539,7 +574,7 @@ ___
 
 ▸ `Const`**valueOfTime**(`ast`: [TimeLiteral](../interfaces/gram_ast.timeliteral.md)): Date
 
-*Defined in [packages/gram-value/src/gram-value.ts:183](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-value/src/gram-value.ts#L183)*
+*Defined in [packages/gram-value/src/gram-value.ts:183](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-value/src/gram-value.ts#L183)*
 
 Value of time as number of milliseconds since midnight.
 

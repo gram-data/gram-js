@@ -5,7 +5,7 @@
 	"flags": {},
 	"children": [
 		{
-			"id": 568,
+			"id": 586,
 			"name": "gram",
 			"kind": 1,
 			"kindString": "Package",
@@ -14,21 +14,11 @@
 			},
 			"originalName": "/Users/akollegger/Developer/gram-data/gram-js/packages/gram/src/index.ts",
 			"comment": {
-				"text": "# `gram`\n\nGram is a textual format for data graphs. \n\n## How to gram\n\n\n```js\nconst {default:gram} = require('@gram-data/gram');\n\nconst src = \"(a)-->(b)\";\nconst p = gram.parse(src);\nconsole.log(gram.stringify(p));\n\n```\n\n```ts\nimport gram from '@gram-data/gram'\n\nconst src = \"(a)-->(b)\";\nconst p = gram.parse(src);\nconsole.log(gram.stringify(p));\n```"
+				"text": "# `gram`\n\nGram is a textual format for data graphs. \n\n## How to gram\n\nNode.js:\n\n```js\nconst gram = require('@gram-data/gram');\n\nconst src = \"(a)-->(b)\";\nconst p = gram.parse(src);\nconsole.log(gram.toGram(p));\n\n```\n\nTypeScript:\n```ts\nimport gram from '@gram-data/gram'\n\nconst src = \"(a)-->(b)\";\nconst p = gram.parse(src);\nconsole.log(gram.toGram(p));\n```\n\nVanilla javascript in browser:\n\n- see [examples](https://github.com/gram-data/gram-js/tree/main/packages/gram/public)"
 			},
 			"children": [
 				{
-					"id": 569,
-					"name": "toGram",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 482
-				},
-				{
-					"id": 570,
+					"id": 587,
 					"name": "parse",
 					"kind": 64,
 					"kindString": "Function",
@@ -41,7 +31,7 @@
 					},
 					"signatures": [
 						{
-							"id": 571,
+							"id": 588,
 							"name": "parse",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -53,7 +43,7 @@
 							},
 							"parameters": [
 								{
-									"id": 572,
+									"id": 589,
 									"name": "src",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -79,7 +69,7 @@
 					"sources": [
 						{
 							"fileName": "packages/gram/src/index.ts",
-							"line": 22,
+							"line": 24,
 							"character": 18
 						}
 					]
@@ -87,17 +77,10 @@
 			],
 			"groups": [
 				{
-					"title": "References",
-					"kind": 16777216,
-					"children": [
-						569
-					]
-				},
-				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						570
+						587
 					]
 				}
 			],
@@ -9870,6 +9853,174 @@
 			},
 			"children": [
 				{
+					"id": 451,
+					"name": "IdentityPluginSettings",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 439
+				},
+				{
+					"id": 447,
+					"name": "alphabets",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 410
+				},
+				{
+					"id": 448,
+					"name": "counterIDGenerator",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 406
+				},
+				{
+					"id": 450,
+					"name": "gramIdentityPlugin",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 443
+				},
+				{
+					"id": 449,
+					"name": "nanoidGenerator",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 433
+				},
+				{
+					"id": 439,
+					"name": "IdentityPluginSettings",
+					"kind": 256,
+					"kindString": "Interface",
+					"flags": {
+						"isExported": true
+					},
+					"children": [
+						{
+							"id": 441,
+							"name": "alphabet",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "packages/gram-identity/src/gram-identity-plugin.ts",
+									"line": 14,
+									"character": 10
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "intrinsic",
+										"name": "undefined"
+									},
+									{
+										"type": "intrinsic",
+										"name": "string"
+									}
+								]
+							}
+						},
+						{
+							"id": 440,
+							"name": "generator",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "packages/gram-identity/src/gram-identity-plugin.ts",
+									"line": 13,
+									"character": 11
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "stringLiteral",
+										"value": "counter"
+									},
+									{
+										"type": "stringLiteral",
+										"value": "nanoid"
+									}
+								]
+							}
+						},
+						{
+							"id": 442,
+							"name": "prefix",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "packages/gram-identity/src/gram-identity-plugin.ts",
+									"line": 15,
+									"character": 8
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "intrinsic",
+										"name": "undefined"
+									},
+									{
+										"type": "intrinsic",
+										"name": "string"
+									}
+								]
+							}
+						}
+					],
+					"groups": [
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								441,
+								440,
+								442
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "packages/gram-identity/src/gram-identity-plugin.ts",
+							"line": 12,
+							"character": 39
+						}
+					]
+				},
+				{
 					"id": 400,
 					"name": "IDGenerator",
 					"kind": 4194304,
@@ -10030,7 +10181,7 @@
 					]
 				},
 				{
-					"id": 439,
+					"id": 443,
 					"name": "gramIdentityPlugin",
 					"kind": 64,
 					"kindString": "Function",
@@ -10040,7 +10191,7 @@
 					},
 					"signatures": [
 						{
-							"id": 440,
+							"id": 444,
 							"name": "gramIdentityPlugin",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -10049,7 +10200,7 @@
 							},
 							"parameters": [
 								{
-									"id": 441,
+									"id": 445,
 									"name": "settings",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -10058,6 +10209,7 @@
 									},
 									"type": {
 										"type": "reference",
+										"id": 439,
 										"name": "IdentityPluginSettings"
 									}
 								}
@@ -10664,6 +10816,24 @@
 			],
 			"groups": [
 				{
+					"title": "References",
+					"kind": 16777216,
+					"children": [
+						451,
+						447,
+						448,
+						450,
+						449
+					]
+				},
+				{
+					"title": "Interfaces",
+					"kind": 256,
+					"children": [
+						439
+					]
+				},
+				{
 					"title": "Type aliases",
 					"kind": 4194304,
 					"children": [
@@ -10675,7 +10845,7 @@
 					"kind": 64,
 					"children": [
 						406,
-						439,
+						443,
 						433
 					]
 				},
@@ -10696,7 +10866,7 @@
 			]
 		},
 		{
-			"id": 443,
+			"id": 452,
 			"name": "gram-ops",
 			"kind": 1,
 			"kindString": "Package",
@@ -10709,7 +10879,7 @@
 			},
 			"children": [
 				{
-					"id": 444,
+					"id": 453,
 					"name": "count",
 					"kind": 64,
 					"kindString": "Function",
@@ -10719,7 +10889,7 @@
 					},
 					"signatures": [
 						{
-							"id": 445,
+							"id": 454,
 							"name": "count",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -10728,7 +10898,7 @@
 							},
 							"parameters": [
 								{
-									"id": 446,
+									"id": 455,
 									"name": "p",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -10757,7 +10927,7 @@
 					]
 				},
 				{
-					"id": 463,
+					"id": 472,
 					"name": "edges",
 					"kind": 64,
 					"kindString": "Function",
@@ -10767,7 +10937,7 @@
 					},
 					"signatures": [
 						{
-							"id": 464,
+							"id": 473,
 							"name": "edges",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -10776,7 +10946,7 @@
 							},
 							"parameters": [
 								{
-									"id": 465,
+									"id": 474,
 									"name": "p",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -10809,7 +10979,7 @@
 					]
 				},
 				{
-					"id": 447,
+					"id": 456,
 					"name": "head",
 					"kind": 64,
 					"kindString": "Function",
@@ -10819,7 +10989,7 @@
 					},
 					"signatures": [
 						{
-							"id": 448,
+							"id": 457,
 							"name": "head",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -10828,7 +10998,7 @@
 							},
 							"parameters": [
 								{
-									"id": 449,
+									"id": 458,
 									"name": "p",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -10858,7 +11028,7 @@
 					]
 				},
 				{
-					"id": 457,
+					"id": 466,
 					"name": "identity",
 					"kind": 64,
 					"kindString": "Function",
@@ -10868,7 +11038,7 @@
 					},
 					"signatures": [
 						{
-							"id": 458,
+							"id": 467,
 							"name": "identity",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -10877,7 +11047,7 @@
 							},
 							"parameters": [
 								{
-									"id": 459,
+									"id": 468,
 									"name": "p",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -10915,7 +11085,7 @@
 					]
 				},
 				{
-					"id": 453,
+					"id": 462,
 					"name": "merge",
 					"kind": 64,
 					"kindString": "Function",
@@ -10925,7 +11095,7 @@
 					},
 					"signatures": [
 						{
-							"id": 454,
+							"id": 463,
 							"name": "merge",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -10934,7 +11104,7 @@
 							},
 							"parameters": [
 								{
-									"id": 455,
+									"id": 464,
 									"name": "_",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -10948,7 +11118,7 @@
 									}
 								},
 								{
-									"id": 456,
+									"id": 465,
 									"name": "next",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -10978,7 +11148,7 @@
 					]
 				},
 				{
-					"id": 460,
+					"id": 469,
 					"name": "nodes",
 					"kind": 64,
 					"kindString": "Function",
@@ -10991,7 +11161,7 @@
 					},
 					"signatures": [
 						{
-							"id": 461,
+							"id": 470,
 							"name": "nodes",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -11003,7 +11173,7 @@
 							},
 							"parameters": [
 								{
-									"id": 462,
+									"id": 471,
 									"name": "p",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -11057,7 +11227,7 @@
 					]
 				},
 				{
-					"id": 450,
+					"id": 459,
 					"name": "tail",
 					"kind": 64,
 					"kindString": "Function",
@@ -11067,7 +11237,7 @@
 					},
 					"signatures": [
 						{
-							"id": 451,
+							"id": 460,
 							"name": "tail",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -11076,7 +11246,7 @@
 							},
 							"parameters": [
 								{
-									"id": 452,
+									"id": 461,
 									"name": "p",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -11111,13 +11281,13 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						444,
-						463,
-						447,
-						457,
 						453,
-						460,
-						450
+						472,
+						456,
+						466,
+						462,
+						469,
+						459
 					]
 				}
 			],
@@ -11130,7 +11300,7 @@
 			]
 		},
 		{
-			"id": 466,
+			"id": 475,
 			"name": "gram-parse",
 			"kind": 1,
 			"kindString": "Package",
@@ -11143,7 +11313,7 @@
 			},
 			"children": [
 				{
-					"id": 471,
+					"id": 480,
 					"name": "GramParserSettings",
 					"kind": 256,
 					"kindString": "Interface",
@@ -11152,7 +11322,7 @@
 					},
 					"children": [
 						{
-							"id": 472,
+							"id": 481,
 							"name": "strict",
 							"kind": 1024,
 							"kindString": "Property",
@@ -11177,7 +11347,7 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								472
+								481
 							]
 						}
 					],
@@ -11190,7 +11360,7 @@
 					]
 				},
 				{
-					"id": 467,
+					"id": 476,
 					"name": "INCOMPLETE_PARSE",
 					"kind": 32,
 					"kindString": "Variable",
@@ -11212,7 +11382,7 @@
 					"defaultValue": "\"Incomplete parse.\""
 				},
 				{
-					"id": 468,
+					"id": 477,
 					"name": "SYNTAX_ERROR",
 					"kind": 32,
 					"kindString": "Variable",
@@ -11234,7 +11404,7 @@
 					"defaultValue": "\"Syntax error at\""
 				},
 				{
-					"id": 473,
+					"id": 482,
 					"name": "parse",
 					"kind": 64,
 					"kindString": "Function",
@@ -11244,7 +11414,7 @@
 					},
 					"signatures": [
 						{
-							"id": 474,
+							"id": 483,
 							"name": "parse",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -11253,7 +11423,7 @@
 							},
 							"parameters": [
 								{
-									"id": 475,
+									"id": 484,
 									"name": "text",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -11266,7 +11436,7 @@
 									}
 								},
 								{
-									"id": 476,
+									"id": 485,
 									"name": "file",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -11294,7 +11464,7 @@
 					]
 				},
 				{
-					"id": 478,
+					"id": 487,
 					"name": "toAST",
 					"kind": 64,
 					"kindString": "Function",
@@ -11304,7 +11474,7 @@
 					},
 					"signatures": [
 						{
-							"id": 479,
+							"id": 488,
 							"name": "toAST",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -11313,7 +11483,7 @@
 							},
 							"parameters": [
 								{
-									"id": 480,
+									"id": 489,
 									"name": "src",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -11347,23 +11517,23 @@
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						471
+						480
 					]
 				},
 				{
 					"title": "Variables",
 					"kind": 32,
 					"children": [
-						467,
-						468
+						476,
+						477
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						473,
-						478
+						482,
+						487
 					]
 				}
 			],
@@ -11376,7 +11546,102 @@
 			]
 		},
 		{
-			"id": 481,
+			"id": 584,
+			"name": "gram-preset-basic",
+			"kind": 1,
+			"kindString": "Package",
+			"flags": {
+				"isExported": true,
+				"isExternal": true
+			},
+			"originalName": "/Users/akollegger/Developer/gram-data/gram-js/packages/gram-preset-basic/src/index.ts",
+			"comment": {
+				"text": "# `gram-preset-basic`\n\n> TODO: description\n\n## How to gram-preset-basic\n\nPrepare a [unified](https://github.com/unifiedjs/unified) text processing engine:\n\n``` javascript\nconst unified = require('unified');\nconst gramParserPlugin = require('@gram-data/gram-parse').gramParserPlugin;\nconst gramPresetBasic = require('@gram-data/gram-preset-basic');\n\nconst gramProcessor = unified()\n  .use(gramParserPlugin)\n  .use(gramPresetBasic);\n\n```\n\nJust parse:\n\n``` javascript\n  const parsed = gramProcessor.parse(src);\n```\n\n\nParse _and_ apply plugins by calling [runSync()](https://github.com/unifiedjs/unified#processorrunsyncnode-file) \non the processor:\n\n``` javascript\n  const parsed = gramProcessor.runSync(gramProcessor.parse(src));\n```\n"
+			},
+			"children": [
+				{
+					"id": 585,
+					"name": "plugins",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isExported": true,
+						"isExternal": true,
+						"isConst": true
+					},
+					"sources": [
+						{
+							"fileName": "packages/gram-preset-basic/src/index.ts",
+							"line": 9,
+							"character": 20
+						}
+					],
+					"type": {
+						"type": "array",
+						"elementType": {
+							"type": "union",
+							"types": [
+								{
+									"type": "reference",
+									"typeArguments": [
+										{
+											"type": "array",
+											"elementType": {
+												"type": "reference",
+												"id": 439,
+												"name": "IdentityPluginSettings"
+											}
+										},
+										{
+											"type": "reference",
+											"name": "Settings"
+										}
+									],
+									"name": "Attacher"
+								},
+								{
+									"type": "reference",
+									"typeArguments": [
+										{
+											"type": "array",
+											"elementType": {
+												"type": "reference",
+												"id": 552,
+												"name": "ValuePluginSettings"
+											}
+										},
+										{
+											"type": "reference",
+											"name": "Settings"
+										}
+									],
+									"name": "Attacher"
+								}
+							]
+						}
+					},
+					"defaultValue": "[gramIdentityPlugin, gramValuePlugin]"
+				}
+			],
+			"groups": [
+				{
+					"title": "Variables",
+					"kind": 32,
+					"children": [
+						585
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "packages/gram-preset-basic/src/index.ts",
+					"line": 1,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 490,
 			"name": "gram-stringify",
 			"kind": 1,
 			"kindString": "Package",
@@ -11389,7 +11654,7 @@
 			},
 			"children": [
 				{
-					"id": 482,
+					"id": 491,
 					"name": "stringify",
 					"kind": 64,
 					"kindString": "Function",
@@ -11399,7 +11664,7 @@
 					},
 					"signatures": [
 						{
-							"id": 483,
+							"id": 492,
 							"name": "stringify",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -11408,7 +11673,7 @@
 							},
 							"parameters": [
 								{
-									"id": 484,
+									"id": 493,
 									"name": "ast",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -11453,7 +11718,7 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						482
+						491
 					]
 				}
 			],
@@ -11466,7 +11731,7 @@
 			]
 		},
 		{
-			"id": 487,
+			"id": 496,
 			"name": "gram-value",
 			"kind": 1,
 			"kindString": "Package",
@@ -11479,188 +11744,68 @@
 			},
 			"children": [
 				{
-					"id": 554,
+					"id": 570,
 					"name": "LiteralValueEvaluator",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {
 						"isExported": true
 					},
-					"target": 498
+					"target": 507
 				},
 				{
-					"id": 552,
+					"id": 559,
+					"name": "ValuePluginSettings",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 552
+				},
+				{
+					"id": 558,
+					"name": "gramValuePlugin",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 554
+				},
+				{
+					"id": 568,
 					"name": "iso8601Duration",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {
 						"isExported": true
 					},
-					"target": 496
+					"target": 505
 				},
 				{
-					"id": 550,
+					"id": 566,
 					"name": "iso8601LocalTime",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {
 						"isExported": true
 					},
-					"target": 494
+					"target": 503
 				},
 				{
-					"id": 547,
+					"id": 563,
 					"name": "iso8601OrdinalDate",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {
 						"isExported": true
 					},
-					"target": 491
+					"target": 500
 				},
 				{
-					"id": 553,
+					"id": 569,
 					"name": "iso8601Repeat",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 497
-				},
-				{
-					"id": 551,
-					"name": "iso8601Time",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 495
-				},
-				{
-					"id": 549,
-					"name": "iso8601WeekDate",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 493
-				},
-				{
-					"id": 548,
-					"name": "iso8601WeekOfYear",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 492
-				},
-				{
-					"id": 544,
-					"name": "iso8601Year",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 488
-				},
-				{
-					"id": 545,
-					"name": "iso8601YearMonth",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 489
-				},
-				{
-					"id": 546,
-					"name": "iso8601YearMonthDay",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 490
-				},
-				{
-					"id": 555,
-					"name": "valueOf",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 502
-				},
-				{
-					"id": 557,
-					"name": "valueOfBoolean",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 509
-				},
-				{
-					"id": 560,
-					"name": "valueOfDate",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 518
-				},
-				{
-					"id": 565,
-					"name": "valueOfDecimal",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 533
-				},
-				{
-					"id": 562,
-					"name": "valueOfDuration",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 524
-				},
-				{
-					"id": 566,
-					"name": "valueOfHexadecimal",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 536
-				},
-				{
-					"id": 563,
-					"name": "valueOfInteger",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 527
-				},
-				{
-					"id": 556,
-					"name": "valueOfLiteral",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {
@@ -11669,38 +11814,138 @@
 					"target": 506
 				},
 				{
-					"id": 564,
-					"name": "valueOfMeasurement",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 530
-				},
-				{
 					"id": 567,
-					"name": "valueOfOctal",
+					"name": "iso8601Time",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {
 						"isExported": true
 					},
-					"target": 539
+					"target": 504
 				},
 				{
-					"id": 558,
-					"name": "valueOfString",
+					"id": 565,
+					"name": "iso8601WeekDate",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {
 						"isExported": true
 					},
-					"target": 512
+					"target": 502
 				},
 				{
-					"id": 559,
-					"name": "valueOfTaggedLiteral",
+					"id": 564,
+					"name": "iso8601WeekOfYear",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 501
+				},
+				{
+					"id": 560,
+					"name": "iso8601Year",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 497
+				},
+				{
+					"id": 561,
+					"name": "iso8601YearMonth",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 498
+				},
+				{
+					"id": 562,
+					"name": "iso8601YearMonthDay",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 499
+				},
+				{
+					"id": 571,
+					"name": "valueOf",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 511
+				},
+				{
+					"id": 573,
+					"name": "valueOfBoolean",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 518
+				},
+				{
+					"id": 576,
+					"name": "valueOfDate",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 527
+				},
+				{
+					"id": 581,
+					"name": "valueOfDecimal",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 542
+				},
+				{
+					"id": 578,
+					"name": "valueOfDuration",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 533
+				},
+				{
+					"id": 582,
+					"name": "valueOfHexadecimal",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 545
+				},
+				{
+					"id": 579,
+					"name": "valueOfInteger",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 536
+				},
+				{
+					"id": 572,
+					"name": "valueOfLiteral",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {
@@ -11709,8 +11954,28 @@
 					"target": 515
 				},
 				{
-					"id": 561,
-					"name": "valueOfTime",
+					"id": 580,
+					"name": "valueOfMeasurement",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 539
+				},
+				{
+					"id": 583,
+					"name": "valueOfOctal",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 548
+				},
+				{
+					"id": 574,
+					"name": "valueOfString",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {
@@ -11719,7 +11984,76 @@
 					"target": 521
 				},
 				{
-					"id": 498,
+					"id": 575,
+					"name": "valueOfTaggedLiteral",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 524
+				},
+				{
+					"id": 577,
+					"name": "valueOfTime",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 530
+				},
+				{
+					"id": 552,
+					"name": "ValuePluginSettings",
+					"kind": 256,
+					"kindString": "Interface",
+					"flags": {
+						"isExported": true
+					},
+					"children": [
+						{
+							"id": 553,
+							"name": "literalValueEvaluator",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "packages/gram-value/src/gram-value-plugin.ts",
+									"line": 10,
+									"character": 23
+								}
+							],
+							"type": {
+								"type": "reference",
+								"id": 570,
+								"name": "LiteralValueEvaluator"
+							}
+						}
+					],
+					"groups": [
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								553
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "packages/gram-value/src/gram-value-plugin.ts",
+							"line": 9,
+							"character": 36
+						}
+					]
+				},
+				{
+					"id": 507,
 					"name": "LiteralValueEvaluator",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -11739,7 +12073,7 @@
 					"type": {
 						"type": "reflection",
 						"declaration": {
-							"id": 499,
+							"id": 508,
 							"name": "__type",
 							"kind": 65536,
 							"kindString": "Type literal",
@@ -11748,7 +12082,7 @@
 							},
 							"signatures": [
 								{
-									"id": 500,
+									"id": 509,
 									"name": "__call",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -11757,7 +12091,7 @@
 									},
 									"parameters": [
 										{
-											"id": 501,
+											"id": 510,
 											"name": "ast",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -11788,7 +12122,7 @@
 					}
 				},
 				{
-					"id": 496,
+					"id": 505,
 					"name": "iso8601Duration",
 					"kind": 32,
 					"kindString": "Variable",
@@ -11810,7 +12144,7 @@
 					"defaultValue": "/^P((\\d+)Y)?((\\d+)M)?((\\d+)D)?(T((\\d+)H)?((\\d+)M)?((\\d+)S)?)?$/"
 				},
 				{
-					"id": 494,
+					"id": 503,
 					"name": "iso8601LocalTime",
 					"kind": 32,
 					"kindString": "Variable",
@@ -11832,7 +12166,7 @@
 					"defaultValue": "/^(2[0-3]|[01][0-9]):?([0-5][0-9])(:?([0-5][0-9](\\.[0-9]{3})?))?$/"
 				},
 				{
-					"id": 491,
+					"id": 500,
 					"name": "iso8601OrdinalDate",
 					"kind": 32,
 					"kindString": "Variable",
@@ -11854,7 +12188,7 @@
 					"defaultValue": "/^([0-9]{4})-?(36[0-6]|3[0-5][0-9]|[12][0-9]{2}|0[1-9][0-9]|00[1-9])$/"
 				},
 				{
-					"id": 497,
+					"id": 506,
 					"name": "iso8601Repeat",
 					"kind": 32,
 					"kindString": "Variable",
@@ -11876,7 +12210,7 @@
 					"defaultValue": "/^R(\\d*)$/"
 				},
 				{
-					"id": 495,
+					"id": 504,
 					"name": "iso8601Time",
 					"kind": 32,
 					"kindString": "Variable",
@@ -11898,7 +12232,7 @@
 					"defaultValue": "/^(2[0-3]|[01][0-9]):?([0-5][0-9]):?([0-5][0-9](\\.[0-9]{3})?)?(Z|([+-])((?:2[0-3]|[01][0-9]))(?::?([0-5][0-9]))?)?$/"
 				},
 				{
-					"id": 493,
+					"id": 502,
 					"name": "iso8601WeekDate",
 					"kind": 32,
 					"kindString": "Variable",
@@ -11920,7 +12254,7 @@
 					"defaultValue": "/^([0-9]{4})-?W(5[0-3]|[1-4][0-9]|0[1-9])-?([1-7])$/"
 				},
 				{
-					"id": 492,
+					"id": 501,
 					"name": "iso8601WeekOfYear",
 					"kind": 32,
 					"kindString": "Variable",
@@ -11942,7 +12276,7 @@
 					"defaultValue": "/^([0-9]{4})-?W(5[0-3]|[1-4][0-9]|0[1-9])$/"
 				},
 				{
-					"id": 488,
+					"id": 497,
 					"name": "iso8601Year",
 					"kind": 32,
 					"kindString": "Variable",
@@ -11964,7 +12298,7 @@
 					"defaultValue": "/^([+-]\\d{4,}\\b|\\d{4})$/"
 				},
 				{
-					"id": 489,
+					"id": 498,
 					"name": "iso8601YearMonth",
 					"kind": 32,
 					"kindString": "Variable",
@@ -11986,7 +12320,7 @@
 					"defaultValue": "/^([0-9]{4})-(1[0-2]|0[1-9])$/"
 				},
 				{
-					"id": 490,
+					"id": 499,
 					"name": "iso8601YearMonthDay",
 					"kind": 32,
 					"kindString": "Variable",
@@ -12008,7 +12342,55 @@
 					"defaultValue": "/^([0-9]{4})(-?)(1[0-2]|0[1-9])\\2(3[01]|0[1-9]|[12][0-9])$/"
 				},
 				{
-					"id": 502,
+					"id": 554,
+					"name": "gramValuePlugin",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {
+						"isExported": true,
+						"isConst": true
+					},
+					"signatures": [
+						{
+							"id": 555,
+							"name": "gramValuePlugin",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {
+								"isExported": true
+							},
+							"parameters": [
+								{
+									"id": 556,
+									"name": "settings",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {
+										"isExported": true
+									},
+									"type": {
+										"type": "reference",
+										"id": 552,
+										"name": "ValuePluginSettings"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Transformer"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "packages/gram-value/src/gram-value-plugin.ts",
+							"line": 17,
+							"character": 28
+						}
+					]
+				},
+				{
+					"id": 511,
 					"name": "valueOf",
 					"kind": 64,
 					"kindString": "Function",
@@ -12027,7 +12409,7 @@
 					},
 					"signatures": [
 						{
-							"id": 503,
+							"id": 512,
 							"name": "valueOf",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -12045,7 +12427,7 @@
 							},
 							"parameters": [
 								{
-									"id": 504,
+									"id": 513,
 									"name": "recordValue",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -12069,7 +12451,7 @@
 									}
 								},
 								{
-									"id": 505,
+									"id": 514,
 									"name": "literalValueEvaluator",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -12098,7 +12480,7 @@
 					]
 				},
 				{
-					"id": 509,
+					"id": 518,
 					"name": "valueOfBoolean",
 					"kind": 64,
 					"kindString": "Function",
@@ -12108,7 +12490,7 @@
 					},
 					"signatures": [
 						{
-							"id": 510,
+							"id": 519,
 							"name": "valueOfBoolean",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -12117,7 +12499,7 @@
 							},
 							"parameters": [
 								{
-									"id": 511,
+									"id": 520,
 									"name": "ast",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -12146,7 +12528,7 @@
 					]
 				},
 				{
-					"id": 518,
+					"id": 527,
 					"name": "valueOfDate",
 					"kind": 64,
 					"kindString": "Function",
@@ -12156,7 +12538,7 @@
 					},
 					"signatures": [
 						{
-							"id": 519,
+							"id": 528,
 							"name": "valueOfDate",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -12165,7 +12547,7 @@
 							},
 							"parameters": [
 								{
-									"id": 520,
+									"id": 529,
 									"name": "ast",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -12194,7 +12576,7 @@
 					]
 				},
 				{
-					"id": 533,
+					"id": 542,
 					"name": "valueOfDecimal",
 					"kind": 64,
 					"kindString": "Function",
@@ -12204,7 +12586,7 @@
 					},
 					"signatures": [
 						{
-							"id": 534,
+							"id": 543,
 							"name": "valueOfDecimal",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -12213,7 +12595,7 @@
 							},
 							"parameters": [
 								{
-									"id": 535,
+									"id": 544,
 									"name": "ast",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -12242,7 +12624,7 @@
 					]
 				},
 				{
-					"id": 524,
+					"id": 533,
 					"name": "valueOfDuration",
 					"kind": 64,
 					"kindString": "Function",
@@ -12255,7 +12637,7 @@
 					},
 					"signatures": [
 						{
-							"id": 525,
+							"id": 534,
 							"name": "valueOfDuration",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -12267,7 +12649,7 @@
 							},
 							"parameters": [
 								{
-									"id": 526,
+									"id": 535,
 									"name": "ast",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -12299,7 +12681,7 @@
 					]
 				},
 				{
-					"id": 536,
+					"id": 545,
 					"name": "valueOfHexadecimal",
 					"kind": 64,
 					"kindString": "Function",
@@ -12309,7 +12691,7 @@
 					},
 					"signatures": [
 						{
-							"id": 537,
+							"id": 546,
 							"name": "valueOfHexadecimal",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -12318,7 +12700,7 @@
 							},
 							"parameters": [
 								{
-									"id": 538,
+									"id": 547,
 									"name": "ast",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -12347,7 +12729,7 @@
 					]
 				},
 				{
-					"id": 527,
+					"id": 536,
 					"name": "valueOfInteger",
 					"kind": 64,
 					"kindString": "Function",
@@ -12357,7 +12739,7 @@
 					},
 					"signatures": [
 						{
-							"id": 528,
+							"id": 537,
 							"name": "valueOfInteger",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -12366,7 +12748,7 @@
 							},
 							"parameters": [
 								{
-									"id": 529,
+									"id": 538,
 									"name": "ast",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -12395,7 +12777,7 @@
 					]
 				},
 				{
-					"id": 506,
+					"id": 515,
 					"name": "valueOfLiteral",
 					"kind": 64,
 					"kindString": "Function",
@@ -12405,7 +12787,7 @@
 					},
 					"signatures": [
 						{
-							"id": 507,
+							"id": 516,
 							"name": "valueOfLiteral",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -12414,7 +12796,7 @@
 							},
 							"parameters": [
 								{
-									"id": 508,
+									"id": 517,
 									"name": "ast",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -12443,7 +12825,7 @@
 					]
 				},
 				{
-					"id": 530,
+					"id": 539,
 					"name": "valueOfMeasurement",
 					"kind": 64,
 					"kindString": "Function",
@@ -12453,7 +12835,7 @@
 					},
 					"signatures": [
 						{
-							"id": 531,
+							"id": 540,
 							"name": "valueOfMeasurement",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -12462,7 +12844,7 @@
 							},
 							"parameters": [
 								{
-									"id": 532,
+									"id": 541,
 									"name": "ast",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -12491,7 +12873,7 @@
 					]
 				},
 				{
-					"id": 539,
+					"id": 548,
 					"name": "valueOfOctal",
 					"kind": 64,
 					"kindString": "Function",
@@ -12501,7 +12883,7 @@
 					},
 					"signatures": [
 						{
-							"id": 540,
+							"id": 549,
 							"name": "valueOfOctal",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -12510,7 +12892,7 @@
 							},
 							"parameters": [
 								{
-									"id": 541,
+									"id": 550,
 									"name": "ast",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -12539,7 +12921,7 @@
 					]
 				},
 				{
-					"id": 512,
+					"id": 521,
 					"name": "valueOfString",
 					"kind": 64,
 					"kindString": "Function",
@@ -12549,7 +12931,7 @@
 					},
 					"signatures": [
 						{
-							"id": 513,
+							"id": 522,
 							"name": "valueOfString",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -12558,7 +12940,7 @@
 							},
 							"parameters": [
 								{
-									"id": 514,
+									"id": 523,
 									"name": "ast",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -12587,7 +12969,7 @@
 					]
 				},
 				{
-					"id": 515,
+					"id": 524,
 					"name": "valueOfTaggedLiteral",
 					"kind": 64,
 					"kindString": "Function",
@@ -12597,7 +12979,7 @@
 					},
 					"signatures": [
 						{
-							"id": 516,
+							"id": 525,
 							"name": "valueOfTaggedLiteral",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -12606,7 +12988,7 @@
 							},
 							"parameters": [
 								{
-									"id": 517,
+									"id": 526,
 									"name": "ast",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -12635,7 +13017,7 @@
 					]
 				},
 				{
-					"id": 521,
+					"id": 530,
 					"name": "valueOfTime",
 					"kind": 64,
 					"kindString": "Function",
@@ -12648,7 +13030,7 @@
 					},
 					"signatures": [
 						{
-							"id": 522,
+							"id": 531,
 							"name": "valueOfTime",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -12660,7 +13042,7 @@
 							},
 							"parameters": [
 								{
-									"id": 523,
+									"id": 532,
 									"name": "ast",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -12697,72 +13079,82 @@
 					"title": "References",
 					"kind": 16777216,
 					"children": [
-						554,
-						552,
-						550,
-						547,
-						553,
-						551,
-						549,
-						548,
-						544,
-						545,
-						546,
-						555,
-						557,
-						560,
-						565,
-						562,
+						570,
+						559,
+						558,
+						568,
 						566,
 						563,
-						556,
-						564,
+						569,
 						567,
-						558,
-						559,
-						561
+						565,
+						564,
+						560,
+						561,
+						562,
+						571,
+						573,
+						576,
+						581,
+						578,
+						582,
+						579,
+						572,
+						580,
+						583,
+						574,
+						575,
+						577
+					]
+				},
+				{
+					"title": "Interfaces",
+					"kind": 256,
+					"children": [
+						552
 					]
 				},
 				{
 					"title": "Type aliases",
 					"kind": 4194304,
 					"children": [
-						498
+						507
 					]
 				},
 				{
 					"title": "Variables",
 					"kind": 32,
 					"children": [
-						496,
-						494,
-						491,
+						505,
+						503,
+						500,
+						506,
+						504,
+						502,
+						501,
 						497,
-						495,
-						493,
-						492,
-						488,
-						489,
-						490
+						498,
+						499
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						502,
-						509,
+						554,
+						511,
 						518,
-						533,
-						524,
-						536,
 						527,
-						506,
-						530,
-						539,
-						512,
+						542,
+						533,
+						545,
+						536,
 						515,
-						521
+						539,
+						548,
+						521,
+						524,
+						530
 					]
 				}
 			],
@@ -12780,14 +13172,15 @@
 			"title": "Modules",
 			"kind": 1,
 			"children": [
-				568,
+				586,
 				1,
 				272,
 				399,
-				443,
-				466,
-				481,
-				487
+				452,
+				475,
+				584,
+				490,
+				496
 			]
 		}
 	]

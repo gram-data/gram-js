@@ -1486,1274 +1486,6 @@
     }
   }
 
-  var _boolean = /true|false|TRUE|FALSE\b(?!@)/;
-  var hexadecimal$1 = /-?0x(?:[0-9a-fA-F]+)\b(?!@)/;
-  var octal$1 = /-?0(?:[0-7]+)\b(?!@)/;
-  var measurement$1 = /-?(?:[0-9]|[1-9][0-9]+)(?:\.[0-9]+)?[a-zA-Z]+\b(?!@)/;
-  var decimal$1 = /-?(?:[0-9]|[1-9][0-9]+)\.[0-9]+(?:[eE][-+]?[0-9]+)?\b(?!@)/;
-  var integer$1 = /-?(?:[0-9]|[1-9][0-9]+)(?:[eE][-+]?[0-9]+)?\b(?!@)/;
-  var taggedString$1 = /[a-zA-Z][0-9a-zA-Z_@]*`(?:\\[`bfnrt/\\]|\\u[a-fA-F0-9]{4}|[^`\\])*`/;
-  var doubleQuotedString$1 = /"(?:\\["bfnrt/\\]|\\u[a-fA-F0-9]{4}|[^"\\])*"/;
-  var singleQuotedString$1 = /'(?:\\['bfnrt/\\]|\\u[a-fA-F0-9]{4}|[^'\\])*'/;
-  var tickedString$1 = /`(?:\\[`bfnrt/\\]|\\u[a-fA-F0-9]{4}|[^`\\])*`/;
-  var symbol$1 = /[a-zA-Z_][0-9a-zA-Z_]*\b(?!@)/;
-  var identifier$1 = /[0-9a-zA-Z_@]+\b@*/;
-  var checkIdentifierRegex = /*#__PURE__*/new RegExp('^' + identifier$1.source + '$');
-  /**
-   * Checks whether the given string is a valid identifier.
-   *
-   */
-
-  var isValidIdentifier = function isValidIdentifier(s) {
-    return s && checkIdentifierRegex.test(s);
-  };
-
-  var gramTokens = {
-    __proto__: null,
-    "boolean": _boolean,
-    hexadecimal: hexadecimal$1,
-    octal: octal$1,
-    measurement: measurement$1,
-    decimal: decimal$1,
-    integer: integer$1,
-    taggedString: taggedString$1,
-    doubleQuotedString: doubleQuotedString$1,
-    singleQuotedString: singleQuotedString$1,
-    tickedString: tickedString$1,
-    symbol: symbol$1,
-    identifier: identifier$1,
-    isValidIdentifier: isValidIdentifier
-  };
-  /**
-   * # Gram AST Types
-   *
-   * References:
-   *
-   * - [unist](https://github.com/syntax-tree/unist) - Universal Synax Tree
-   * - [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
-   * @packageDocumentation
-   */
-
-  /**
-   * Type guard for GramSeq.
-   *
-   * @param o any object
-   */
-
-  var isGramSeq = function isGramSeq(o) {
-    return !!o.type && o.type === 'seq';
-  };
-  /**
-   * Type guard for a Path.
-   *
-   * @param o any object
-   */
-
-
-  var isGramPath = function isGramPath(o) {
-    return !!o.type && o.type === 'path';
-  };
-  /**
-   * Constant identity for empty paths: `ø`.
-   */
-
-
-  var EMPTY_PATH_ID = 'ø';
-  /**
-   * Type guard for GramEmptyPath.
-   *
-   * @param o any object
-   */
-
-  var isGramEmptyPath = function isGramEmptyPath(o) {
-    return isGramPath(o) && o.id === EMPTY_PATH_ID;
-  };
-  /**
-   * Type guard for GramNode.
-   *
-   * @param o any object
-   */
-
-
-  var isGramNode = function isGramNode(o) {
-    return isGramPath(o) && o.children && o.children.length === 0 && o.id !== EMPTY_PATH_ID;
-  };
-  /**
-   * Type guard for GramEdge.
-   *
-   * @param o any object
-   */
-
-
-  var isGramEdge = function isGramEdge(o) {
-    return isGramPath(o) && o.kind !== undefined && o.kind !== 'pair' && o.children !== undefined && o.children.every(function (child) {
-      return isGramNode(child);
-    });
-  };
-  /**
-   * A type guard to narrow a GramRecordValue to a GramRecord.
-   *
-   * Warning: this is not a runtime guarantee
-   *
-   * @param v any GramRecordValue
-   */
-
-
-  var isGramRecord = function isGramRecord(v) {
-    return typeof v == 'object' && v instanceof Map;
-  };
-
-  var isGramLiteralArray = function isGramLiteralArray(v) {
-    return Array.isArray(v) && isGramLiteral(v[0]);
-  };
-  /**
-   * Type guard for GramProperty.
-   *
-   * @param o any object
-   */
-
-
-  var isGramProperty = function isGramProperty(o) {
-    return !!o.type && o.type === 'property';
-  };
-  /**
-   * Type guard for GramLiteral.
-   *
-   * @param o any object
-   */
-
-
-  var isGramLiteral = function isGramLiteral(o) {
-    return !!o.type && !!o.value && o.type !== 'property';
-  };
-  /**
-   * Type guard for BooleanLiteral.
-   *
-   * @param o any object
-   */
-
-
-  var isBooleanLiteral = function isBooleanLiteral(o) {
-    return !!o.type && !!o.value && o.type === 'boolean';
-  };
-  /**
-   * Type guard for StringLiteral.
-   *
-   * @param o any object
-   */
-
-
-  var isStringLiteral = function isStringLiteral(o) {
-    return !!o.type && !!o.value && o.type === 'string';
-  };
-  /**
-   * Type guard for IntegerLiteral.
-   *
-   * @param o any object
-   */
-
-
-  var isIntegerLiteral = function isIntegerLiteral(o) {
-    return !!o.type && !!o.value && o.type === 'integer';
-  };
-  /**
-   * Type guard for DecimalLiteral.
-   *
-   * @param o any object
-   */
-
-
-  var isDecimalLiteral = function isDecimalLiteral(o) {
-    return !!o.type && !!o.value && o.type === 'decimal';
-  };
-  /**
-   * Type guard for HexadecimalLiteral.
-   *
-   * @param o any object
-   */
-
-
-  var isHexadecimalLiteral = function isHexadecimalLiteral(o) {
-    return !!o.type && !!o.value && o.type === 'hexadecimal';
-  };
-  /**
-   * Type guard for OctalLiteral.
-   *
-   * @param o any object
-   */
-
-
-  var isOctalLiteral = function isOctalLiteral(o) {
-    return !!o.type && !!o.value && o.type === 'octal';
-  };
-  /**
-   * Type guard for MeasurementLiteral.
-   *
-   * @param o any object
-   */
-
-
-  var isMeasurementLiteral = function isMeasurementLiteral(o) {
-    return !!o.type && !!o.value && !!o.unit && o.type === 'measurement';
-  };
-  /**
-   * Type guard for TaggedTextLiteral.
-   *
-   * @param o any object
-   */
-
-
-  var isTaggedLiteral = function isTaggedLiteral(o) {
-    return !!o.type && !!o.value && !!o.tag && o.type === 'tagged';
-  };
-  /**
-   * Type guard for DateLiteral.
-   *
-   * Note: this does not validate the text representation.
-   *
-   * @param o any object
-   */
-
-
-  var isDateLiteral = function isDateLiteral(o) {
-    return !!o.type && !!o.value && !!o.tag && o.type === 'tagged' && o.tag === 'date';
-  };
-  /**
-   * Type guard for TimeLiteral.
-   *
-   * Note: this does not validate the text representation.
-   *
-   * @param o any object
-   */
-
-
-  var isTimeLiteral = function isTimeLiteral(o) {
-    return !!o.type && !!o.value && !!o.tag && o.type === 'tagged' && o.tag === 'time';
-  };
-  /**
-   * Type guard for DateTimeLiteral.
-   *
-   * Note: this does not validate the text representation.
-   *
-   * @param o any object
-   */
-
-
-  var isDateTimeLiteral = function isDateTimeLiteral(o) {
-    return !!o.type && !!o.value && !!o.tag && o.type === 'tagged' && o.tag === 'datetime';
-  };
-  /**
-   * Type guard for DurationLiteral.
-   *
-   * Note: this does not validate the text representation.
-   *
-   * @param o any object
-   */
-
-
-  var isDuration = function isDuration(o) {
-    return !!o.type && !!o.value && !!o.tag && o.type === 'tagged' && o.tag === 'duration';
-  };
-  /**
-   * Type guard for TimeIntervalLiteral.
-   *
-   * Note: this does not validate the text representation.
-   *
-   * @param o any object
-   */
-
-
-  var isTimeInterval = function isTimeInterval(o) {
-    return !!o.type && !!o.value && !!o.tag && o.type === 'tagged' && o.tag === 'interval';
-  };
-  /**
-   * Type guard for WellKnownTextLiteral.
-   *
-   * @param o any object
-   */
-
-
-  var isWellKnownTextLiteral = function isWellKnownTextLiteral(o) {
-    return !!o.type && !!o.value && !!o.tag && o.type === 'tagged' && o.tag === 'wkt';
-  };
-  /**
-   * Type guard for UriLiteral.
-   *
-   * @param o any object
-   */
-
-
-  var isUriLiteral = function isUriLiteral(o) {
-    return !!o.type && !!o.value && !!o.tag && o.type === 'tagged' && o.tag === 'uri';
-  };
-
-  var gramAst_esm = {
-    __proto__: null,
-    EMPTY_PATH_ID: EMPTY_PATH_ID,
-    isBooleanLiteral: isBooleanLiteral,
-    isDateLiteral: isDateLiteral,
-    isDateTimeLiteral: isDateTimeLiteral,
-    isDecimalLiteral: isDecimalLiteral,
-    isDuration: isDuration,
-    isGramEdge: isGramEdge,
-    isGramEmptyPath: isGramEmptyPath,
-    isGramLiteral: isGramLiteral,
-    isGramLiteralArray: isGramLiteralArray,
-    isGramNode: isGramNode,
-    isGramPath: isGramPath,
-    isGramProperty: isGramProperty,
-    isGramRecord: isGramRecord,
-    isGramSeq: isGramSeq,
-    isHexadecimalLiteral: isHexadecimalLiteral,
-    isIntegerLiteral: isIntegerLiteral,
-    isMeasurementLiteral: isMeasurementLiteral,
-    isOctalLiteral: isOctalLiteral,
-    isStringLiteral: isStringLiteral,
-    isTaggedLiteral: isTaggedLiteral,
-    isTimeInterval: isTimeInterval,
-    isTimeLiteral: isTimeLiteral,
-    isUriLiteral: isUriLiteral,
-    isWellKnownTextLiteral: isWellKnownTextLiteral,
-    tokens: gramTokens
-  };
-
-  function _extends() {
-    _extends = Object.assign || function (target) {
-      for (var i = 1; i < arguments.length; i++) {
-        var source = arguments[i];
-
-        for (var key in source) {
-          if (Object.prototype.hasOwnProperty.call(source, key)) {
-            target[key] = source[key];
-          }
-        }
-      }
-
-      return target;
-    };
-
-    return _extends.apply(this, arguments);
-  }
-
-  function normalizeChildren(children) {
-    if (Array.isArray(children)) {
-      return children;
-    } else if (children instanceof Function) {
-      var res = children();
-      return normalizeChildren(res);
-    } else if (typeof children === 'undefined') {
-      return [];
-    } else {
-      return [children];
-    }
-  }
-
-  var dateToYMD = function dateToYMD(d) {
-    return d.toISOString().slice(0, 10);
-  };
-
-  var dateToDayOfMonth = function dateToDayOfMonth(d) {
-    return '--' + d.toISOString().slice(5, 10);
-  };
-  /**
-   * Build a path sequence that represents a graph.
-   *
-   * @param paths sequence of paths through history
-   * @param id optional reference identifier. The "name" of this graph instance.
-   * @param labels optional labels
-   * @param record optional graph-level data
-   */
-
-
-  var seq = function seq(paths, id, labels, record) {
-    return _extends({
-      type: 'seq',
-      id: id
-    }, labels && {
-      labels: labels
-    }, record && {
-      record: record
-    }, {
-      children: normalizeChildren(paths)
-    });
-  };
-  /**
-   * Reduce a list of paths into a single path composed using the given kind.
-   *
-   * @param kind the kind to apply to all sub-paths
-   * @param pathlist sub-paths to be paired
-   * @param baseID the baseID from which path expressions will derive new IDs
-   */
-
-
-  var listToPath = function listToPath(kind, pathlist) {
-    if (kind === void 0) {
-      kind = 'pair';
-    }
-
-    if (pathlist.length > 1) {
-      return pathlist.slice(0, pathlist.length - 1).reduceRight(function (acc, curr) {
-        return cons([curr, acc], {
-          kind: kind
-        });
-      }, pathlist[pathlist.length - 1]);
-    } else {
-      return pathlist[0];
-    }
-  };
-  /**
-   * Build a path.
-   *
-   * @param members sub-paths to compose
-   * @param attributes attributes
-   */
-
-
-  var cons = function cons(members, attributes) {
-    if (attributes === void 0) {
-      attributes = {};
-    }
-
-    var element = _extends({
-      type: 'path'
-    }, attributes.id && {
-      id: attributes.id
-    }, attributes.labels && {
-      labels: attributes.labels
-    }, attributes.record && {
-      record: attributes.record
-    });
-
-    if (members === undefined) {
-      if (element.id && element.id !== EMPTY_PATH_ID) {
-        element.children = [];
-        return element;
-      }
-
-      element.children = undefined;
-      return EMPTY_PATH;
-    } else if (members.length === 0) {
-      if (element.id === EMPTY_PATH_ID) {
-        return EMPTY_PATH;
-      }
-
-      element.children = [];
-      return element;
-    } else if (members.length === 1) {
-      var lhs = members[0];
-
-      if (isGramEmptyPath(lhs)) {
-        element.children = [];
-        return element;
-      } else {
-        element.children = [lhs];
-        return element;
-      }
-    } else if (members.length === 2) {
-      if (attributes.kind && attributes.kind !== 'pair' && isGramNode(members[0]) && isGramNode(members[1])) {
-        element.kind = attributes.kind;
-        element.children = [members[0], members[1]];
-        return element;
-      } else if (isGramEmptyPath(members[0]) && isGramEmptyPath(members[1])) {
-        element.kind = attributes.kind;
-        element.children = [];
-        return element;
-      }
-
-      element.children = [members[0], members[1]];
-    }
-
-    element.kind = attributes.kind || 'pair';
-    return element;
-  };
-  /**
-   * Singleton instance of GramEmptyPath
-   */
-
-
-  var EMPTY_PATH = {
-    type: 'path',
-    id: EMPTY_PATH_ID,
-    labels: undefined,
-    record: undefined,
-    children: []
-  };
-  /**
-   * Convenience function for retrieving the singleton GramEmptyPath.
-   */
-
-  var empty = function empty() {
-    return EMPTY_PATH;
-  };
-  /**
-   * Build a GramNode.
-   *
-   * @param id identifier
-   * @param labels
-   * @param record
-   * @param annotation
-   */
-
-
-  var node = function node(id, labels, record) {
-    return _extends({
-      type: 'path'
-    }, id && {
-      id: id
-    }, labels && {
-      labels: labels
-    }, record && {
-      record: record
-    }, {
-      children: []
-    });
-  };
-  /**
-   * Build an Edge.
-   *
-   * @param children
-   * @param kind
-   * @param id
-   * @param labels
-   * @param record
-   */
-
-
-  var edge = function edge(children, kind, id, labels, record) {
-    return _extends({
-      type: 'path',
-      id: id
-    }, labels && {
-      labels: labels
-    }, record && {
-      record: record
-    }, {
-      kind: kind,
-      children: children
-    });
-  };
-  /**
-   * Build a pair
-   *
-   * @param children
-   * @param id
-   * @param labels
-   * @param record
-   */
-
-
-  var path = function path(kind, members, id, labels, record) {
-    return _extends({
-      type: 'path',
-      kind: kind,
-      id: id
-    }, labels && {
-      labels: labels
-    }, record && {
-      record: record
-    }, {
-      children: members
-    });
-  };
-  /**
-   * Build a pair
-   *
-   * @param children
-   * @param id
-   * @param labels
-   * @param record
-   */
-
-
-  var pair = function pair(members, id, labels, record) {
-    return path('pair', members, id, labels, record);
-  };
-  /**
-   * Create a new, empty GramRecord.
-   *
-   */
-
-
-  var emptyRecord = function emptyRecord() {
-    return new Map();
-  };
-  /**
-   * Reduces an array of GramProperties into a GramRecord.
-   *
-   * @param properties
-   */
-
-
-  var propertiesToRecord = function propertiesToRecord(properties) {
-    return properties.reduce(function (acc, p) {
-      acc.set(p.name, p.value);
-      return acc;
-    }, emptyRecord());
-  };
-  /**
-   * Transforms a plain js object into a GramRecord.
-   *
-   * @param o
-   */
-
-
-  var objectToRecord = function objectToRecord(o) {
-    return Object.entries(o).reduce(function (acc, _ref) {
-      var k = _ref[0],
-          v = _ref[1];
-      acc.set(k, propertyValue(v));
-      return acc;
-    }, emptyRecord());
-  };
-  /**
-   * Extracts the value from a GramLiteral, if available.
-   *
-   * @param l
-   */
-
-
-  var getValue = function getValue(l) {
-    return isGramLiteral(l) ? l.value : undefined;
-  };
-  /**
-   * Produces a Lens into a literal value with a GramRecord.
-   *
-   * @param path
-   */
-
-
-  var getLiteral = function getLiteral(name) {
-    return function (v) {
-      var l = v.get(name);
-      return getValue(l);
-    };
-  };
-  /**
-   * Produces a Lens into a record value with a GramRecord.
-   *
-   * @param path
-   */
-
-
-  var getRecord = function getRecord(name) {
-    return function (r) {
-      var v = r.get(name);
-      return isGramRecord(v) ? v : undefined;
-    };
-  };
-  /**
-   * Produces a Lens down into nested GramRecords.
-   *
-   * ### Examples:
-   *
-   * Descend using either an array of names, or dot notation.
-   *
-   * ```
-   * const o = g.objectToRecord({a:{b:{c:g.string("value")}}})
-   *
-   * const getAbc1 = g.getDown(['a','b','c']);
-   * const getAbc2 = g.getDown("a.b.c");
-   *
-   * expect(getAbc1(o)).toStrictEqual(getAbc2(o));
-   * ```
-   *
-   * Descend, then apply a function to extract the text value.
-   *
-   * ```
-   * const o = objectToRecord({a:{b:{c:string("value")}}})
-   * const getAbc = getDown("a.b.c", getValue);
-   *
-   * expect(getAbc(o)).toBe("value");
-   * ```
-   *
-   * @param hierarchy array or dot-notation path to descend
-   */
-
-
-  var getDown = function getDown(hierarchy, f) {
-    var pathDown = Array.isArray(hierarchy) ? hierarchy : hierarchy.split('.');
-    return function (r) {
-      var bottom = pathDown.reduce(function (acc, name) {
-        return isGramRecord(acc) ? acc.get(name) : undefined;
-      }, r);
-      return bottom && (f ? f(bottom) : bottom);
-    };
-  };
-  /**
-   * Builds a GramProperty from a name
-   * @param name
-   * @param value
-   */
-
-
-  var property = function property(name, value) {
-    var Node = {
-      type: 'property',
-      name: name,
-      value: isGramLiteral(value) ? value : propertyValue(value)
-    };
-    return Node;
-  };
-
-  var propertyValue = function propertyValue(value) {
-    if (Array.isArray(value)) {
-      return value.map(function (v) {
-        return propertyValue(v);
-      });
-    } else if (typeof value === 'object') {
-      if (value instanceof Date) {
-        return date(value);
-      } else if (isGramLiteral(value)) {
-        return value;
-      }
-
-      return objectToRecord(value);
-    } else {
-      switch (typeof value) {
-        case 'string':
-          return string(value);
-
-        case 'bigint':
-          return decimal$2(value.toString());
-
-        case 'boolean':
-          return _boolean$1(value);
-
-        case 'number':
-          return decimal$2(value.toString());
-
-        case 'symbol':
-          return string(value.toString());
-
-        default:
-          throw new Error("Unsupported value: " + value);
-      }
-    }
-  };
-
-  var _boolean$1 = function _boolean(value) {
-    return {
-      type: 'boolean',
-      value: value ? 'true' : 'false'
-    };
-  };
-
-  var string = function string(value) {
-    return {
-      type: 'string',
-      value: value
-    };
-  };
-
-  var tagged = function tagged(tag, value) {
-    return {
-      type: 'tagged',
-      value: value,
-      tag: tag
-    };
-  };
-
-  var integer$2 = function integer(value) {
-    return {
-      type: 'integer',
-      value: String(value)
-    };
-  };
-
-  var decimal$2 = function decimal(value) {
-    return {
-      type: 'decimal',
-      value: String(value)
-    };
-  };
-
-  var hexadecimal$2 = function hexadecimal(value) {
-    return {
-      type: 'hexadecimal',
-      value: typeof value === 'number' ? value.toString(16) : value
-    };
-  };
-
-  var octal$2 = function octal(value) {
-    return {
-      type: 'octal',
-      value: typeof value === 'number' ? value.toString(8) : value
-    };
-  };
-
-  var measurement$2 = function measurement(unit, value) {
-    return {
-      type: 'measurement',
-      value: String(value),
-      unit: unit
-    };
-  };
-
-  var year = function year(value) {
-    return tagged('date', value instanceof Date ? value.getFullYear().toString() : value);
-  };
-
-  var date = function date(value) {
-    return tagged('date', value instanceof Date ? dateToYMD(value) : value);
-  };
-
-  var dayOfMonth = function dayOfMonth(value) {
-    return tagged('date', value instanceof Date ? dateToDayOfMonth(value) : value);
-  };
-
-  var time = function time(value) {
-    return tagged('time', value instanceof Date ? value.toTimeString() : value);
-  };
-
-  var duration = function duration(value) {
-    return tagged('duration', value instanceof Date ? "P" + (value.getUTCFullYear() - 1970) + "Y" + value.getUTCMonth() + "M" + value.getUTCDate() + "DT" + value.getUTCHours() + "H" + value.getUTCMinutes() + "M" + value.getUTCMilliseconds() / 1000 + "S" : value);
-  };
-
-  var flatten = function flatten(xs, depth) {
-    if (depth === void 0) {
-      depth = 1;
-    }
-
-    return xs.flat(depth).filter(function (x) {
-      return x !== null;
-    });
-  };
-
-  var index$1 = {
-    seq: seq,
-    empty: empty,
-    cons: cons,
-    pair: pair,
-    listToPath: listToPath,
-    node: node,
-    edge: edge,
-    property: property,
-    "boolean": _boolean$1,
-    string: string,
-    tagged: tagged,
-    integer: integer$2,
-    decimal: decimal$2,
-    hexadecimal: hexadecimal$2,
-    octal: octal$2,
-    measurement: measurement$2,
-    date: date,
-    time: time,
-    duration: duration,
-    flatten: flatten,
-    objectToRecord: objectToRecord,
-    propertiesToRecord: propertiesToRecord,
-    propertyValue: propertyValue,
-    fromLiteral: getLiteral
-  };
-
-  var gramBuilder_esm = {
-    __proto__: null,
-    'default': index$1,
-    boolean: _boolean$1,
-    cons: cons,
-    date: date,
-    dayOfMonth: dayOfMonth,
-    decimal: decimal$2,
-    duration: duration,
-    edge: edge,
-    empty: empty,
-    emptyRecord: emptyRecord,
-    flatten: flatten,
-    getDown: getDown,
-    getLiteral: getLiteral,
-    getRecord: getRecord,
-    getValue: getValue,
-    hexadecimal: hexadecimal$2,
-    integer: integer$2,
-    listToPath: listToPath,
-    measurement: measurement$2,
-    node: node,
-    objectToRecord: objectToRecord,
-    octal: octal$2,
-    pair: pair,
-    path: path,
-    propertiesToRecord: propertiesToRecord,
-    property: property,
-    propertyValue: propertyValue,
-    seq: seq,
-    string: string,
-    tagged: tagged,
-    time: time,
-    year: year
-  };
-
-  // This file replaces `index.js` in bundlers like webpack or Rollup,
-
-  {
-    // All bundlers will remove this block in the production bundle.
-    if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative' && typeof crypto === 'undefined') {
-      throw new Error('React Native does not have a built-in secure random generator. ' + 'If you don’t need unpredictable IDs use `nanoid/non-secure`. ' + 'For secure IDs, import `react-native-get-random-values` ' + 'before Nano ID. If you use Expo, install `expo-random` ' + 'and use `nanoid/async`.');
-    }
-
-    if (typeof msCrypto !== 'undefined' && typeof crypto === 'undefined') {
-      throw new Error('Import file with `if (!window.crypto) window.crypto = window.msCrypto`' + ' before importing Nano ID to fix IE 11 support');
-    }
-
-    if (typeof crypto === 'undefined') {
-      throw new Error('Your browser does not have secure random generator. ' + 'If you don’t need unpredictable IDs, you can use nanoid/non-secure.');
-    }
-  }
-
-  var random = function random(bytes) {
-    return crypto.getRandomValues(new Uint8Array(bytes));
-  };
-
-  var customRandom = function customRandom(alphabet, size, getRandom) {
-    // First, a bitmask is necessary to generate the ID. The bitmask makes bytes
-    // values closer to the alphabet size. The bitmask calculates the closest
-    // `2^31 - 1` number, which exceeds the alphabet size.
-    // For example, the bitmask for the alphabet size 30 is 31 (00011111).
-    // `Math.clz32` is not used, because it is not available in browsers.
-    var mask = (2 << Math.log(alphabet.length - 1) / Math.LN2) - 1; // Though, the bitmask solution is not perfect since the bytes exceeding
-    // the alphabet size are refused. Therefore, to reliably generate the ID,
-    // the random bytes redundancy has to be satisfied.
-    // Note: every hardware random generator call is performance expensive,
-    // because the system call for entropy collection takes a lot of time.
-    // So, to avoid additional system calls, extra bytes are requested in advance.
-    // Next, a step determines how many random bytes to generate.
-    // The number of random bytes gets decided upon the ID size, mask,
-    // alphabet size, and magic number 1.6 (using 1.6 peaks at performance
-    // according to benchmarks).
-    // `-~f => Math.ceil(f)` if f is a float
-    // `-~i => i + 1` if i is an integer
-
-    var step = -~(1.6 * mask * size / alphabet.length);
-    return function () {
-      var id = '';
-
-      while (true) {
-        var bytes = getRandom(step); // A compact alternative for `for (var i = 0; i < step; i++)`.
-
-        var j = step;
-
-        while (j--) {
-          // Adding `|| ''` refuses a random byte that exceeds the alphabet size.
-          id += alphabet[bytes[j] & mask] || '';
-          if (id.length === size) return id;
-        }
-      }
-    };
-  };
-
-  var customAlphabet = function customAlphabet(alphabet, size) {
-    return customRandom(alphabet, size, random);
-  };
-
-  var convert_1 = convert;
-
-  function convert(test) {
-    if (test == null) {
-      return ok;
-    }
-
-    if (typeof test === 'string') {
-      return typeFactory(test);
-    }
-
-    if (typeof test === 'object') {
-      return 'length' in test ? anyFactory(test) : allFactory(test);
-    }
-
-    if (typeof test === 'function') {
-      return test;
-    }
-
-    throw new Error('Expected function, string, or object as test');
-  } // Utility assert each property in `test` is represented in `node`, and each
-  // values are strictly equal.
-
-
-  function allFactory(test) {
-    return all;
-
-    function all(node) {
-      var key;
-
-      for (key in test) {
-        if (node[key] !== test[key]) return false;
-      }
-
-      return true;
-    }
-  }
-
-  function anyFactory(tests) {
-    var checks = [];
-    var index = -1;
-
-    while (++index < tests.length) {
-      checks[index] = convert(tests[index]);
-    }
-
-    return any;
-
-    function any() {
-      var index = -1;
-
-      while (++index < checks.length) {
-        if (checks[index].apply(this, arguments)) {
-          return true;
-        }
-      }
-
-      return false;
-    }
-  } // Utility to convert a string into a function which checks a given node’s type
-  // for said string.
-
-
-  function typeFactory(test) {
-    return type;
-
-    function type(node) {
-      return Boolean(node && node.type === test);
-    }
-  } // Utility to return true.
-
-
-  function ok() {
-    return true;
-  }
-
-  var color_browser = identity;
-
-  function identity(d) {
-    return d;
-  }
-
-  var unistUtilVisitParents = visitParents;
-  var CONTINUE = true;
-  var SKIP = 'skip';
-  var EXIT = false;
-  visitParents.CONTINUE = CONTINUE;
-  visitParents.SKIP = SKIP;
-  visitParents.EXIT = EXIT;
-
-  function visitParents(tree, test, visitor, reverse) {
-    var step;
-    var is;
-
-    if (typeof test === 'function' && typeof visitor !== 'function') {
-      reverse = visitor;
-      visitor = test;
-      test = null;
-    }
-
-    is = convert_1(test);
-    step = reverse ? -1 : 1;
-    factory(tree, null, [])();
-
-    function factory(node, index, parents) {
-      var value = typeof node === 'object' && node !== null ? node : {};
-      var name;
-
-      if (typeof value.type === 'string') {
-        name = typeof value.tagName === 'string' ? value.tagName : typeof value.name === 'string' ? value.name : undefined;
-        visit.displayName = 'node (' + color_browser(value.type + (name ? '<' + name + '>' : '')) + ')';
-      }
-
-      return visit;
-
-      function visit() {
-        var grandparents = parents.concat(node);
-        var result = [];
-        var subresult;
-        var offset;
-
-        if (!test || is(node, index, parents[parents.length - 1] || null)) {
-          result = toResult(visitor(node, parents));
-
-          if (result[0] === EXIT) {
-            return result;
-          }
-        }
-
-        if (node.children && result[0] !== SKIP) {
-          offset = (reverse ? node.children.length : -1) + step;
-
-          while (offset > -1 && offset < node.children.length) {
-            subresult = factory(node.children[offset], offset, grandparents)();
-
-            if (subresult[0] === EXIT) {
-              return subresult;
-            }
-
-            offset = typeof subresult[1] === 'number' ? subresult[1] : offset + step;
-          }
-        }
-
-        return result;
-      }
-    }
-  }
-
-  function toResult(value) {
-    if (value !== null && typeof value === 'object' && 'length' in value) {
-      return value;
-    }
-
-    if (typeof value === 'number') {
-      return [CONTINUE, value];
-    }
-
-    return [value];
-  }
-
-  var unistUtilVisit = visit;
-  var CONTINUE$1 = unistUtilVisitParents.CONTINUE;
-  var SKIP$1 = unistUtilVisitParents.SKIP;
-  var EXIT$1 = unistUtilVisitParents.EXIT;
-  visit.CONTINUE = CONTINUE$1;
-  visit.SKIP = SKIP$1;
-  visit.EXIT = EXIT$1;
-
-  function visit(tree, test, visitor, reverse) {
-    if (typeof test === 'function' && typeof visitor !== 'function') {
-      reverse = visitor;
-      visitor = test;
-      test = null;
-    }
-
-    unistUtilVisitParents(tree, test, overload, reverse);
-
-    function overload(node, parents) {
-      var parent = parents[parents.length - 1];
-      var index = parent ? parent.children.indexOf(node) : null;
-      return visitor(node, index, parent);
-    }
-  }
-
-  function _extends$1() {
-    _extends$1 = Object.assign || function (target) {
-      for (var i = 1; i < arguments.length; i++) {
-        var source = arguments[i];
-
-        for (var key in source) {
-          if (Object.prototype.hasOwnProperty.call(source, key)) {
-            target[key] = source[key];
-          }
-        }
-      }
-
-      return target;
-    };
-
-    return _extends$1.apply(this, arguments);
-  }
-
-  var alphabets = {
-    base2: '01',
-    dieBase6: '⚀⚁⚂⚃⚄⚅',
-    base8: '01234567',
-    base10: '0123456789',
-    astrologyBase12: '♈︎♉︎♊︎♋︎♌︎♍︎♎︎♏︎♐︎♑︎♒︎♓︎',
-    base11: '0123456789a',
-    chessBase12: '♚♛♜♝♞♟♔♕♖♗♘♙',
-    base16: '0123456789abcdef',
-    dominoBase28: '🁣🁤🁫🁥🁬🁳🁦🁭🁴🁻🁧🁮🁵🁼🂃🁨🁯🁶🁽🂊🂋🁩🁰🁷🁾🂅🂌🂓',
-    base32: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567',
-    zBase32: 'ybndrfg8ejkmcpqxot1uwisza345h769',
-    crock32: '0123456789ABCDEFGHJKMNPQRSTVWXYZ',
-    base32Hex: '0123456789ABCDEFGHIJKLMNOPQRSTUV',
-    base36: '0123456789abcdefghijklmnopqrstuvwxyz',
-    mahjongBase43: '🀑🀒🀓🀔🀕🀖🀗🀘🀙🀚🀛🀜🀝🀞🀟🀠🀡🀇🀈🀉🀊🀋🀌🀍🀎🀏🀀🀁🀂🀃🀄︎🀅🀆🀐🀢🀣🀤🀥🀦🀧🀨🀩🀪',
-    cards56: '🂡🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂬🂭🂮🂱🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂼🂽🂾🃁🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃌🃍🃎🃑🃒🃓🃔🃕🃖🃗🃘🃙🃝🃞',
-    base58: '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ',
-    flickrBase58: '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ',
-    base62: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
-    base64: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_@',
-    cookieBase90: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!#$%&'()*+-./:<=>?@[]^_`{|}~"
-  };
-  /**
-   * Creates an IDGenerator based on incrementing numbers.
-   *
-   */
-
-  var counterIDGenerator = function counterIDGenerator(prefix) {
-    var nextid = 0;
-    return {
-      generate: function generate() {
-        return "" + (prefix || '') + nextid++;
-      }
-    };
-  };
-  /**
-   * Factory for creating an IDGenerator based on
-   * [nanoid](https://github.com/ai/nanoid)
-   *
-   */
-
-
-  var nanoidGenerator = function nanoidGenerator(alphabet, size, prefix) {
-    if (alphabet === void 0) {
-      alphabet = alphabets.base64;
-    }
-
-    if (size === void 0) {
-      size = 21;
-    }
-
-    var generator = customAlphabet(alphabet, size);
-    return {
-      generate: function generate() {
-        return prefix ? prefix + generator() : generator();
-      }
-    };
-  };
-
-  var defaultSettings = {
-    generator: 'counter',
-    alphabet: alphabets.base58,
-    prefix: undefined
-  };
-
-  var gramIdentityPlugin = function gramIdentityPlugin(settings) {
-    var s = _extends$1({}, defaultSettings, settings);
-
-    var identification = function identification(tree) {
-      var generator;
-
-      switch (s.generator) {
-        case 'nanoid':
-          generator = nanoidGenerator(s.alphabet, 21, s.prefix);
-          break;
-
-        case 'counter':
-        default:
-          generator = counterIDGenerator(s.prefix);
-      }
-
-      unistUtilVisit(tree, function (element) {
-        if (isGramPath(element)) {
-          element.id = element.id || generator.generate();
-        }
-      });
-    };
-
-    return identification;
-  };
-
-  var gramIdentity_esm = {
-    __proto__: null,
-    alphabets: alphabets,
-    counterIDGenerator: counterIDGenerator,
-    gramIdentityPlugin: gramIdentityPlugin,
-    nanoidGenerator: nanoidGenerator
-  };
-
-  var bail_1$1 = bail$1;
-
-  function bail$1(err) {
-    if (err) {
-      throw err;
-    }
-  }
-
   /*!
    * Determine if an object is a Buffer
    *
@@ -2763,258 +1495,6 @@
   var isBuffer$1 = function isBuffer(obj) {
     return obj != null && obj.constructor != null && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj);
   };
-
-  var hasOwn$1 = Object.prototype.hasOwnProperty;
-  var toStr$1 = Object.prototype.toString;
-  var defineProperty$1 = Object.defineProperty;
-  var gOPD$1 = Object.getOwnPropertyDescriptor;
-
-  var isArray$1 = function isArray(arr) {
-    if (typeof Array.isArray === 'function') {
-      return Array.isArray(arr);
-    }
-
-    return toStr$1.call(arr) === '[object Array]';
-  };
-
-  var isPlainObject$1 = function isPlainObject(obj) {
-    if (!obj || toStr$1.call(obj) !== '[object Object]') {
-      return false;
-    }
-
-    var hasOwnConstructor = hasOwn$1.call(obj, 'constructor');
-    var hasIsPrototypeOf = obj.constructor && obj.constructor.prototype && hasOwn$1.call(obj.constructor.prototype, 'isPrototypeOf'); // Not own constructor property must be Object
-
-    if (obj.constructor && !hasOwnConstructor && !hasIsPrototypeOf) {
-      return false;
-    } // Own properties are enumerated firstly, so to speed up,
-    // if last one is own, then all properties are own.
-
-
-    var key;
-
-    for (key in obj) {
-      /**/
-    }
-
-    return typeof key === 'undefined' || hasOwn$1.call(obj, key);
-  }; // If name is '__proto__', and Object.defineProperty is available, define __proto__ as an own property on target
-
-
-  var setProperty$1 = function setProperty(target, options) {
-    if (defineProperty$1 && options.name === '__proto__') {
-      defineProperty$1(target, options.name, {
-        enumerable: true,
-        configurable: true,
-        value: options.newValue,
-        writable: true
-      });
-    } else {
-      target[options.name] = options.newValue;
-    }
-  }; // Return undefined instead of __proto__ if '__proto__' is not an own property
-
-
-  var getProperty$1 = function getProperty(obj, name) {
-    if (name === '__proto__') {
-      if (!hasOwn$1.call(obj, name)) {
-        return void 0;
-      } else if (gOPD$1) {
-        // In early versions of node, obj['__proto__'] is buggy when obj has
-        // __proto__ as an own property. Object.getOwnPropertyDescriptor() works.
-        return gOPD$1(obj, name).value;
-      }
-    }
-
-    return obj[name];
-  };
-
-  var extend$1 = function extend() {
-    var options, name, src, copy, copyIsArray, clone;
-    var target = arguments[0];
-    var i = 1;
-    var length = arguments.length;
-    var deep = false; // Handle a deep copy situation
-
-    if (typeof target === 'boolean') {
-      deep = target;
-      target = arguments[1] || {}; // skip the boolean and the target
-
-      i = 2;
-    }
-
-    if (target == null || typeof target !== 'object' && typeof target !== 'function') {
-      target = {};
-    }
-
-    for (; i < length; ++i) {
-      options = arguments[i]; // Only deal with non-null/undefined values
-
-      if (options != null) {
-        // Extend the base object
-        for (name in options) {
-          src = getProperty$1(target, name);
-          copy = getProperty$1(options, name); // Prevent never-ending loop
-
-          if (target !== copy) {
-            // Recurse if we're merging plain objects or arrays
-            if (deep && copy && (isPlainObject$1(copy) || (copyIsArray = isArray$1(copy)))) {
-              if (copyIsArray) {
-                copyIsArray = false;
-                clone = src && isArray$1(src) ? src : [];
-              } else {
-                clone = src && isPlainObject$1(src) ? src : {};
-              } // Never move original objects, clone them
-
-
-              setProperty$1(target, {
-                name: name,
-                newValue: extend(deep, clone, copy)
-              }); // Don't bring in undefined values
-            } else if (typeof copy !== 'undefined') {
-              setProperty$1(target, {
-                name: name,
-                newValue: copy
-              });
-            }
-          }
-        }
-      }
-    } // Return the modified object
-
-
-    return target;
-  };
-
-  var isPlainObj$1 = function isPlainObj(value) {
-    if (Object.prototype.toString.call(value) !== '[object Object]') {
-      return false;
-    }
-
-    var prototype = Object.getPrototypeOf(value);
-    return prototype === null || prototype === Object.prototype;
-  };
-
-  var slice$3 = [].slice;
-  var wrap_1$1 = wrap$1; // Wrap `fn`.
-  // Can be sync or async; return a promise, receive a completion handler, return
-  // new values and errors.
-
-  function wrap$1(fn, callback) {
-    var invoked;
-    return wrapped;
-
-    function wrapped() {
-      var params = slice$3.call(arguments, 0);
-      var callback = fn.length > params.length;
-      var result;
-
-      if (callback) {
-        params.push(done);
-      }
-
-      try {
-        result = fn.apply(null, params);
-      } catch (error) {
-        // Well, this is quite the pickle.
-        // `fn` received a callback and invoked it (thus continuing the pipeline),
-        // but later also threw an error.
-        // We’re not about to restart the pipeline again, so the only thing left
-        // to do is to throw the thing instead.
-        if (callback && invoked) {
-          throw error;
-        }
-
-        return done(error);
-      }
-
-      if (!callback) {
-        if (result && typeof result.then === 'function') {
-          result.then(then, done);
-        } else if (result instanceof Error) {
-          done(result);
-        } else {
-          then(result);
-        }
-      }
-    } // Invoke `next`, only once.
-
-
-    function done() {
-      if (!invoked) {
-        invoked = true;
-        callback.apply(null, arguments);
-      }
-    } // Invoke `done` with one value.
-    // Tracks if an error is passed, too.
-
-
-    function then(value) {
-      done(null, value);
-    }
-  }
-
-  var trough_1$1 = trough$1;
-  trough$1.wrap = wrap_1$1;
-  var slice$4 = [].slice; // Create new middleware.
-
-  function trough$1() {
-    var fns = [];
-    var middleware = {};
-    middleware.run = run;
-    middleware.use = use;
-    return middleware; // Run `fns`.  Last argument must be a completion handler.
-
-    function run() {
-      var index = -1;
-      var input = slice$4.call(arguments, 0, -1);
-      var done = arguments[arguments.length - 1];
-
-      if (typeof done !== 'function') {
-        throw new Error('Expected function as last argument, not ' + done);
-      }
-
-      next.apply(null, [null].concat(input)); // Run the next `fn`, if any.
-
-      function next(err) {
-        var fn = fns[++index];
-        var params = slice$4.call(arguments, 0);
-        var values = params.slice(1);
-        var length = input.length;
-        var pos = -1;
-
-        if (err) {
-          done(err);
-          return;
-        } // Copy non-nully input into values.
-
-
-        while (++pos < length) {
-          if (values[pos] === null || values[pos] === undefined) {
-            values[pos] = input[pos];
-          }
-        }
-
-        input = values; // Next or done.
-
-        if (fn) {
-          wrap_1$1(fn, next).apply(null, input);
-        } else {
-          done.apply(null, [null].concat(input));
-        }
-      }
-    } // Add `fn` to the list.
-
-
-    function use(fn) {
-      if (typeof fn !== 'function') {
-        throw new Error('Expected `fn` to be a function, not ' + fn);
-      }
-
-      fns.push(fn);
-      return middleware;
-    }
-  }
 
   var own$3 = {}.hasOwnProperty;
   var unistUtilStringifyPosition$1 = stringify$1;
@@ -3049,7 +1529,7 @@
       point = {};
     }
 
-    return index$2(point.line) + ':' + index$2(point.column);
+    return index$1(point.line) + ':' + index$1(point.column);
   }
 
   function position$1(pos) {
@@ -3060,7 +1540,7 @@
     return point$1(pos.start) + '-' + point$1(pos.end);
   }
 
-  function index$2(value) {
+  function index$1(value) {
     return value && typeof value === 'number' ? value : 1;
   }
 
@@ -3712,7 +2192,6 @@
     }
   }
 
-  var lib$1 = core$1;
   core$1.prototype.message = message$1;
   core$1.prototype.info = info$1;
   core$1.prototype.fail = fail$1; // Create a message with `reason` at `position`.
@@ -3744,434 +2223,6 @@
     var message = this.message.apply(this, arguments);
     message.fatal = null;
     return message;
-  }
-
-  var vfile$1 = lib$1;
-
-  var unified_1$1 = /*#__PURE__*/unified$1().freeze();
-  var slice$5 = [].slice;
-  var own$5 = {}.hasOwnProperty; // Process pipeline.
-
-  var pipeline$1 = /*#__PURE__*/trough_1$1().use(pipelineParse$1).use(pipelineRun$1).use(pipelineStringify$1);
-
-  function pipelineParse$1(p, ctx) {
-    ctx.tree = p.parse(ctx.file);
-  }
-
-  function pipelineRun$1(p, ctx, next) {
-    p.run(ctx.tree, ctx.file, done);
-
-    function done(err, tree, file) {
-      if (err) {
-        next(err);
-      } else {
-        ctx.tree = tree;
-        ctx.file = file;
-        next();
-      }
-    }
-  }
-
-  function pipelineStringify$1(p, ctx) {
-    var result = p.stringify(ctx.tree, ctx.file);
-    var file = ctx.file;
-
-    if (result === undefined || result === null) ; else if (typeof result === 'string' || isBuffer$1(result)) {
-      file.contents = result;
-    } else {
-      file.result = result;
-    }
-  } // Function to create the first processor.
-
-
-  function unified$1() {
-    var attachers = [];
-    var transformers = trough_1$1();
-    var namespace = {};
-    var frozen = false;
-    var freezeIndex = -1; // Data management.
-
-    processor.data = data; // Lock.
-
-    processor.freeze = freeze; // Plugins.
-
-    processor.attachers = attachers;
-    processor.use = use; // API.
-
-    processor.parse = parse;
-    processor.stringify = stringify;
-    processor.run = run;
-    processor.runSync = runSync;
-    processor.process = process;
-    processor.processSync = processSync; // Expose.
-
-    return processor; // Create a new processor based on the processor in the current scope.
-
-    function processor() {
-      var destination = unified$1();
-      var length = attachers.length;
-      var index = -1;
-
-      while (++index < length) {
-        destination.use.apply(null, attachers[index]);
-      }
-
-      destination.data(extend$1(true, {}, namespace));
-      return destination;
-    } // Freeze: used to signal a processor that has finished configuration.
-    //
-    // For example, take unified itself: it’s frozen.
-    // Plugins should not be added to it.
-    // Rather, it should be extended, by invoking it, before modifying it.
-    //
-    // In essence, always invoke this when exporting a processor.
-
-
-    function freeze() {
-      var values;
-      var plugin;
-      var options;
-      var transformer;
-
-      if (frozen) {
-        return processor;
-      }
-
-      while (++freezeIndex < attachers.length) {
-        values = attachers[freezeIndex];
-        plugin = values[0];
-        options = values[1];
-        transformer = null;
-
-        if (options === false) {
-          continue;
-        }
-
-        if (options === true) {
-          values[1] = undefined;
-        }
-
-        transformer = plugin.apply(processor, values.slice(1));
-
-        if (typeof transformer === 'function') {
-          transformers.use(transformer);
-        }
-      }
-
-      frozen = true;
-      freezeIndex = Infinity;
-      return processor;
-    } // Data management.
-    // Getter / setter for processor-specific informtion.
-
-
-    function data(key, value) {
-      if (typeof key === 'string') {
-        // Set `key`.
-        if (arguments.length === 2) {
-          assertUnfrozen$1('data', frozen);
-          namespace[key] = value;
-          return processor;
-        } // Get `key`.
-
-
-        return own$5.call(namespace, key) && namespace[key] || null;
-      } // Set space.
-
-
-      if (key) {
-        assertUnfrozen$1('data', frozen);
-        namespace = key;
-        return processor;
-      } // Get space.
-
-
-      return namespace;
-    } // Plugin management.
-    //
-    // Pass it:
-    // *   an attacher and options,
-    // *   a preset,
-    // *   a list of presets, attachers, and arguments (list of attachers and
-    //     options).
-
-
-    function use(value) {
-      var settings;
-      assertUnfrozen$1('use', frozen);
-
-      if (value === null || value === undefined) ; else if (typeof value === 'function') {
-        addPlugin.apply(null, arguments);
-      } else if (typeof value === 'object') {
-        if ('length' in value) {
-          addList(value);
-        } else {
-          addPreset(value);
-        }
-      } else {
-        throw new Error('Expected usable value, not `' + value + '`');
-      }
-
-      if (settings) {
-        namespace.settings = extend$1(namespace.settings || {}, settings);
-      }
-
-      return processor;
-
-      function addPreset(result) {
-        addList(result.plugins);
-
-        if (result.settings) {
-          settings = extend$1(settings || {}, result.settings);
-        }
-      }
-
-      function add(value) {
-        if (typeof value === 'function') {
-          addPlugin(value);
-        } else if (typeof value === 'object') {
-          if ('length' in value) {
-            addPlugin.apply(null, value);
-          } else {
-            addPreset(value);
-          }
-        } else {
-          throw new Error('Expected usable value, not `' + value + '`');
-        }
-      }
-
-      function addList(plugins) {
-        var length;
-        var index;
-
-        if (plugins === null || plugins === undefined) ; else if (typeof plugins === 'object' && 'length' in plugins) {
-          length = plugins.length;
-          index = -1;
-
-          while (++index < length) {
-            add(plugins[index]);
-          }
-        } else {
-          throw new Error('Expected a list of plugins, not `' + plugins + '`');
-        }
-      }
-
-      function addPlugin(plugin, value) {
-        var entry = find(plugin);
-
-        if (entry) {
-          if (isPlainObj$1(entry[1]) && isPlainObj$1(value)) {
-            value = extend$1(entry[1], value);
-          }
-
-          entry[1] = value;
-        } else {
-          attachers.push(slice$5.call(arguments));
-        }
-      }
-    }
-
-    function find(plugin) {
-      var length = attachers.length;
-      var index = -1;
-      var entry;
-
-      while (++index < length) {
-        entry = attachers[index];
-
-        if (entry[0] === plugin) {
-          return entry;
-        }
-      }
-    } // Parse a file (in string or vfile representation) into a unist node using
-    // the `Parser` on the processor.
-
-
-    function parse(doc) {
-      var file = vfile$1(doc);
-      var Parser;
-      freeze();
-      Parser = processor.Parser;
-      assertParser$1('parse', Parser);
-
-      if (newable$1(Parser, 'parse')) {
-        return new Parser(String(file), file).parse();
-      }
-
-      return Parser(String(file), file); // eslint-disable-line new-cap
-    } // Run transforms on a unist node representation of a file (in string or
-    // vfile representation), async.
-
-
-    function run(node, file, cb) {
-      assertNode$1(node);
-      freeze();
-
-      if (!cb && typeof file === 'function') {
-        cb = file;
-        file = null;
-      }
-
-      if (!cb) {
-        return new Promise(executor);
-      }
-
-      executor(null, cb);
-
-      function executor(resolve, reject) {
-        transformers.run(node, vfile$1(file), done);
-
-        function done(err, tree, file) {
-          tree = tree || node;
-
-          if (err) {
-            reject(err);
-          } else if (resolve) {
-            resolve(tree);
-          } else {
-            cb(null, tree, file);
-          }
-        }
-      }
-    } // Run transforms on a unist node representation of a file (in string or
-    // vfile representation), sync.
-
-
-    function runSync(node, file) {
-      var complete = false;
-      var result;
-      run(node, file, done);
-      assertDone$1('runSync', 'run', complete);
-      return result;
-
-      function done(err, tree) {
-        complete = true;
-        bail_1$1(err);
-        result = tree;
-      }
-    } // Stringify a unist node representation of a file (in string or vfile
-    // representation) into a string using the `Compiler` on the processor.
-
-
-    function stringify(node, doc) {
-      var file = vfile$1(doc);
-      var Compiler;
-      freeze();
-      Compiler = processor.Compiler;
-      assertCompiler$1('stringify', Compiler);
-      assertNode$1(node);
-
-      if (newable$1(Compiler, 'compile')) {
-        return new Compiler(node, file).compile();
-      }
-
-      return Compiler(node, file); // eslint-disable-line new-cap
-    } // Parse a file (in string or vfile representation) into a unist node using
-    // the `Parser` on the processor, then run transforms on that node, and
-    // compile the resulting node using the `Compiler` on the processor, and
-    // store that result on the vfile.
-
-
-    function process(doc, cb) {
-      freeze();
-      assertParser$1('process', processor.Parser);
-      assertCompiler$1('process', processor.Compiler);
-
-      if (!cb) {
-        return new Promise(executor);
-      }
-
-      executor(null, cb);
-
-      function executor(resolve, reject) {
-        var file = vfile$1(doc);
-        pipeline$1.run(processor, {
-          file: file
-        }, done);
-
-        function done(err) {
-          if (err) {
-            reject(err);
-          } else if (resolve) {
-            resolve(file);
-          } else {
-            cb(null, file);
-          }
-        }
-      }
-    } // Process the given document (in string or vfile representation), sync.
-
-
-    function processSync(doc) {
-      var complete = false;
-      var file;
-      freeze();
-      assertParser$1('processSync', processor.Parser);
-      assertCompiler$1('processSync', processor.Compiler);
-      file = vfile$1(doc);
-      process(file, done);
-      assertDone$1('processSync', 'process', complete);
-      return file;
-
-      function done(err) {
-        complete = true;
-        bail_1$1(err);
-      }
-    }
-  } // Check if `value` is a constructor.
-
-
-  function newable$1(value, name) {
-    return typeof value === 'function' && value.prototype && ( // A function with keys in its prototype is probably a constructor.
-    // Classes’ prototype methods are not enumerable, so we check if some value
-    // exists in the prototype.
-    keys$1(value.prototype) || name in value.prototype);
-  } // Check if `value` is an object with keys.
-
-
-  function keys$1(value) {
-    var key;
-
-    for (key in value) {
-      return true;
-    }
-
-    return false;
-  } // Assert a parser is available.
-
-
-  function assertParser$1(name, Parser) {
-    if (typeof Parser !== 'function') {
-      throw new Error('Cannot `' + name + '` without `Parser`');
-    }
-  } // Assert a compiler is available.
-
-
-  function assertCompiler$1(name, Compiler) {
-    if (typeof Compiler !== 'function') {
-      throw new Error('Cannot `' + name + '` without `Compiler`');
-    }
-  } // Assert the processor is not frozen.
-
-
-  function assertUnfrozen$1(name, frozen) {
-    if (frozen) {
-      throw new Error('Cannot invoke `' + name + '` on a frozen processor.\nCreate a new processor first, by invoking it: use `processor()` instead of `processor`.');
-    }
-  } // Assert `node` is a unist node.
-
-
-  function assertNode$1(node) {
-    if (!node || typeof node.type !== 'string') {
-      throw new Error('Expected node, got `' + node + '`');
-    }
-  } // Assert that `complete` is `true`.
-
-
-  function assertDone$1(name, asyncName, complete) {
-    if (!complete) {
-      throw new Error('`' + name + '` finished async. Use `' + asyncName + '` instead');
-    }
   }
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -5432,8 +3483,120 @@
     });
   });
 
-  function _extends$2() {
-    _extends$2 = Object.assign || function (target) {
+  var _boolean = /true|false|TRUE|FALSE\b(?!@)/;
+  var hexadecimal$1 = /-?0x(?:[0-9a-fA-F]+)\b(?!@)/;
+  var octal$1 = /-?0(?:[0-7]+)\b(?!@)/;
+  var measurement$1 = /-?(?:[0-9]|[1-9][0-9]+)(?:\.[0-9]+)?[a-zA-Z]+\b(?!@)/;
+  var decimal$1 = /-?(?:[0-9]|[1-9][0-9]+)\.[0-9]+(?:[eE][-+]?[0-9]+)?\b(?!@)/;
+  var integer$1 = /-?(?:[0-9]|[1-9][0-9]+)(?:[eE][-+]?[0-9]+)?\b(?!@)/;
+  var taggedString$1 = /[a-zA-Z][0-9a-zA-Z_@]*`(?:\\[`bfnrt/\\]|\\u[a-fA-F0-9]{4}|[^`\\])*`/;
+  var doubleQuotedString$1 = /"(?:\\["bfnrt/\\]|\\u[a-fA-F0-9]{4}|[^"\\])*"/;
+  var singleQuotedString$1 = /'(?:\\['bfnrt/\\]|\\u[a-fA-F0-9]{4}|[^'\\])*'/;
+  var tickedString$1 = /`(?:\\[`bfnrt/\\]|\\u[a-fA-F0-9]{4}|[^`\\])*`/;
+  var symbol$1 = /[a-zA-Z_][0-9a-zA-Z_]*\b(?!@)/;
+  var identifier$1 = /[0-9a-zA-Z_@]+\b@*/;
+  var checkIdentifierRegex = /*#__PURE__*/new RegExp('^' + identifier$1.source + '$');
+  /**
+   * Checks whether the given string is a valid identifier.
+   *
+   */
+
+  var isValidIdentifier = function isValidIdentifier(s) {
+    return s && checkIdentifierRegex.test(s);
+  };
+
+  var gramTokens = {
+    __proto__: null,
+    "boolean": _boolean,
+    hexadecimal: hexadecimal$1,
+    octal: octal$1,
+    measurement: measurement$1,
+    decimal: decimal$1,
+    integer: integer$1,
+    taggedString: taggedString$1,
+    doubleQuotedString: doubleQuotedString$1,
+    singleQuotedString: singleQuotedString$1,
+    tickedString: tickedString$1,
+    symbol: symbol$1,
+    identifier: identifier$1,
+    isValidIdentifier: isValidIdentifier
+  };
+  /**
+   * Type guard for a Path.
+   *
+   * @param o any object
+   */
+
+
+  var isGramPath = function isGramPath(o) {
+    return !!o.type && o.type === 'path';
+  };
+  /**
+   * Constant identity for empty paths: `ø`.
+   */
+
+
+  var EMPTY_PATH_ID = 'ø';
+  /**
+   * Type guard for GramEmptyPath.
+   *
+   * @param o any object
+   */
+
+  var isGramEmptyPath = function isGramEmptyPath(o) {
+    return isGramPath(o) && o.id === EMPTY_PATH_ID;
+  };
+  /**
+   * Type guard for GramNode.
+   *
+   * @param o any object
+   */
+
+
+  var isGramNode = function isGramNode(o) {
+    return isGramPath(o) && o.children && o.children.length === 0 && o.id !== EMPTY_PATH_ID;
+  };
+  /**
+   * Type guard for GramEdge.
+   *
+   * @param o any object
+   */
+
+
+  var isGramEdge = function isGramEdge(o) {
+    return isGramPath(o) && o.kind !== undefined && o.kind !== 'pair' && o.children !== undefined && o.children.every(function (child) {
+      return isGramNode(child);
+    });
+  };
+  /**
+   * A type guard to narrow a GramRecordValue to a GramRecord.
+   *
+   * Warning: this is not a runtime guarantee
+   *
+   * @param v any GramRecordValue
+   */
+
+
+  var isGramRecord = function isGramRecord(v) {
+    return typeof v == 'object' && v instanceof Map;
+  };
+
+  var isGramLiteralArray = function isGramLiteralArray(v) {
+    return Array.isArray(v) && isGramLiteral(v[0]);
+  };
+  /**
+   * Type guard for GramLiteral.
+   *
+   * @param o any object
+   */
+
+
+  var isGramLiteral = function isGramLiteral(o) {
+    return !!o.type && !!o.value && o.type !== 'property';
+  };
+
+  function _extends() {
+    _extends = Object.assign || function (target) {
       for (var i = 1; i < arguments.length; i++) {
         var source = arguments[i];
 
@@ -5447,7 +3610,367 @@
       return target;
     };
 
-    return _extends$2.apply(this, arguments);
+    return _extends.apply(this, arguments);
+  }
+
+  function normalizeChildren(children) {
+    if (Array.isArray(children)) {
+      return children;
+    } else if (children instanceof Function) {
+      var res = children();
+      return normalizeChildren(res);
+    } else if (typeof children === 'undefined') {
+      return [];
+    } else {
+      return [children];
+    }
+  }
+
+  var dateToYMD = function dateToYMD(d) {
+    return d.toISOString().slice(0, 10);
+  };
+  /**
+   * Build a path sequence that represents a graph.
+   *
+   * @param paths sequence of paths through history
+   * @param id optional reference identifier. The "name" of this graph instance.
+   * @param labels optional labels
+   * @param record optional graph-level data
+   */
+
+
+  var seq = function seq(paths, id, labels, record) {
+    return _extends({
+      type: 'seq',
+      id: id
+    }, labels && {
+      labels: labels
+    }, record && {
+      record: record
+    }, {
+      children: normalizeChildren(paths)
+    });
+  };
+  /**
+   * Build a path.
+   *
+   * @param members sub-paths to compose
+   * @param attributes attributes
+   */
+
+
+  var cons = function cons(members, attributes) {
+    if (attributes === void 0) {
+      attributes = {};
+    }
+
+    var element = _extends({
+      type: 'path'
+    }, attributes.id && {
+      id: attributes.id
+    }, attributes.labels && {
+      labels: attributes.labels
+    }, attributes.record && {
+      record: attributes.record
+    });
+
+    if (members === undefined) {
+      if (element.id && element.id !== EMPTY_PATH_ID) {
+        element.children = [];
+        return element;
+      }
+
+      element.children = undefined;
+      return EMPTY_PATH;
+    } else if (members.length === 0) {
+      if (element.id === EMPTY_PATH_ID) {
+        return EMPTY_PATH;
+      }
+
+      element.children = [];
+      return element;
+    } else if (members.length === 1) {
+      var lhs = members[0];
+
+      if (isGramEmptyPath(lhs)) {
+        element.children = [];
+        return element;
+      } else {
+        element.children = [lhs];
+        return element;
+      }
+    } else if (members.length === 2) {
+      if (attributes.kind && attributes.kind !== 'pair' && isGramNode(members[0]) && isGramNode(members[1])) {
+        element.kind = attributes.kind;
+        element.children = [members[0], members[1]];
+        return element;
+      } else if (isGramEmptyPath(members[0]) && isGramEmptyPath(members[1])) {
+        element.kind = attributes.kind;
+        element.children = [];
+        return element;
+      }
+
+      element.children = [members[0], members[1]];
+    }
+
+    element.kind = attributes.kind || 'pair';
+    return element;
+  };
+  /**
+   * Singleton instance of GramEmptyPath
+   */
+
+
+  var EMPTY_PATH = {
+    type: 'path',
+    id: EMPTY_PATH_ID,
+    labels: undefined,
+    record: undefined,
+    children: []
+  };
+  /**
+   * Convenience function for retrieving the singleton GramEmptyPath.
+   */
+
+  var empty = function empty() {
+    return EMPTY_PATH;
+  };
+  /**
+   * Build a GramNode.
+   *
+   * @param id identifier
+   * @param labels
+   * @param record
+   * @param annotation
+   */
+
+
+  var node = function node(id, labels, record) {
+    return _extends({
+      type: 'path'
+    }, id && {
+      id: id
+    }, labels && {
+      labels: labels
+    }, record && {
+      record: record
+    }, {
+      children: []
+    });
+  };
+  /**
+   * Build a pair
+   *
+   * @param children
+   * @param id
+   * @param labels
+   * @param record
+   */
+
+
+  var path = function path(kind, members, id, labels, record) {
+    return _extends({
+      type: 'path',
+      kind: kind,
+      id: id
+    }, labels && {
+      labels: labels
+    }, record && {
+      record: record
+    }, {
+      children: members
+    });
+  };
+  /**
+   * Build a pair
+   *
+   * @param children
+   * @param id
+   * @param labels
+   * @param record
+   */
+
+
+  var pair = function pair(members, id, labels, record) {
+    return path('pair', members, id, labels, record);
+  };
+  /**
+   * Create a new, empty GramRecord.
+   *
+   */
+
+
+  var emptyRecord = function emptyRecord() {
+    return new Map();
+  };
+  /**
+   * Reduces an array of GramProperties into a GramRecord.
+   *
+   * @param properties
+   */
+
+
+  var propertiesToRecord = function propertiesToRecord(properties) {
+    return properties.reduce(function (acc, p) {
+      acc.set(p.name, p.value);
+      return acc;
+    }, emptyRecord());
+  };
+  /**
+   * Transforms a plain js object into a GramRecord.
+   *
+   * @param o
+   */
+
+
+  var objectToRecord = function objectToRecord(o) {
+    return Object.entries(o).reduce(function (acc, _ref) {
+      var k = _ref[0],
+          v = _ref[1];
+      acc.set(k, propertyValue(v));
+      return acc;
+    }, emptyRecord());
+  };
+  /**
+   * Builds a GramProperty from a name
+   * @param name
+   * @param value
+   */
+
+
+  var property = function property(name, value) {
+    var Node = {
+      type: 'property',
+      name: name,
+      value: isGramLiteral(value) ? value : propertyValue(value)
+    };
+    return Node;
+  };
+
+  var propertyValue = function propertyValue(value) {
+    if (Array.isArray(value)) {
+      return value.map(function (v) {
+        return propertyValue(v);
+      });
+    } else if (typeof value === 'object') {
+      if (value instanceof Date) {
+        return date(value);
+      } else if (isGramLiteral(value)) {
+        return value;
+      }
+
+      return objectToRecord(value);
+    } else {
+      switch (typeof value) {
+        case 'string':
+          return string(value);
+
+        case 'bigint':
+          return decimal$2(value.toString());
+
+        case 'boolean':
+          return _boolean$1(value);
+
+        case 'number':
+          return decimal$2(value.toString());
+
+        case 'symbol':
+          return string(value.toString());
+
+        default:
+          throw new Error("Unsupported value: " + value);
+      }
+    }
+  };
+
+  var _boolean$1 = function _boolean(value) {
+    return {
+      type: 'boolean',
+      value: value ? 'true' : 'false'
+    };
+  };
+
+  var string = function string(value) {
+    return {
+      type: 'string',
+      value: value
+    };
+  };
+
+  var tagged = function tagged(tag, value) {
+    return {
+      type: 'tagged',
+      value: value,
+      tag: tag
+    };
+  };
+
+  var integer$2 = function integer(value) {
+    return {
+      type: 'integer',
+      value: String(value)
+    };
+  };
+
+  var decimal$2 = function decimal(value) {
+    return {
+      type: 'decimal',
+      value: String(value)
+    };
+  };
+
+  var hexadecimal$2 = function hexadecimal(value) {
+    return {
+      type: 'hexadecimal',
+      value: typeof value === 'number' ? value.toString(16) : value
+    };
+  };
+
+  var octal$2 = function octal(value) {
+    return {
+      type: 'octal',
+      value: typeof value === 'number' ? value.toString(8) : value
+    };
+  };
+
+  var measurement$2 = function measurement(unit, value) {
+    return {
+      type: 'measurement',
+      value: String(value),
+      unit: unit
+    };
+  };
+
+  var date = function date(value) {
+    return tagged('date', value instanceof Date ? dateToYMD(value) : value);
+  };
+
+  var flatten = function flatten(xs, depth) {
+    if (depth === void 0) {
+      depth = 1;
+    }
+
+    return xs.flat(depth).filter(function (x) {
+      return x !== null;
+    });
+  };
+
+  function _extends$1() {
+    _extends$1 = Object.assign || function (target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
+
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+
+      return target;
+    };
+
+    return _extends$1.apply(this, arguments);
   }
 
   function id(d) {
@@ -5655,7 +4178,7 @@
       }, '_'],
       postprocess: function postprocess(_ref7) {
         var attrs = _ref7[2];
-        return _extends$2({
+        return _extends$1({
           kind: 'right'
         }, attrs);
       }
@@ -5678,7 +4201,7 @@
       }, '_'],
       postprocess: function postprocess(_ref8) {
         var attrs = _ref8[2];
-        return _extends$2({
+        return _extends$1({
           kind: 'either'
         }, attrs);
       }
@@ -5701,7 +4224,7 @@
       }, '_'],
       postprocess: function postprocess(_ref9) {
         var attrs = _ref9[2];
-        return _extends$2({
+        return _extends$1({
           kind: 'left'
         }, attrs);
       }
@@ -6255,12 +4778,6 @@
     ParserStart: 'GramSeq'
   };
   var INCOMPLETE_PARSE = 'Incomplete parse.';
-  var SYNTAX_ERROR = 'Syntax error at';
-  var gramErrors = {
-    __proto__: null,
-    INCOMPLETE_PARSE: INCOMPLETE_PARSE,
-    SYNTAX_ERROR: SYNTAX_ERROR
-  };
 
   var lexerLocation = function lexerLocation(state) {
     return {
@@ -6308,87 +4825,360 @@
     this.Parser = parse;
   };
 
-  var toAST = function toAST(src) {
-    var processor = unified_1$1().use(gramParserPlugin).freeze();
-    return processor.parse(src);
+  // This file replaces `index.js` in bundlers like webpack or Rollup,
+
+  {
+    // All bundlers will remove this block in the production bundle.
+    if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative' && typeof crypto === 'undefined') {
+      throw new Error('React Native does not have a built-in secure random generator. ' + 'If you don’t need unpredictable IDs use `nanoid/non-secure`. ' + 'For secure IDs, import `react-native-get-random-values` ' + 'before Nano ID. If you use Expo, install `expo-random` ' + 'and use `nanoid/async`.');
+    }
+
+    if (typeof msCrypto !== 'undefined' && typeof crypto === 'undefined') {
+      throw new Error('Import file with `if (!window.crypto) window.crypto = window.msCrypto`' + ' before importing Nano ID to fix IE 11 support');
+    }
+
+    if (typeof crypto === 'undefined') {
+      throw new Error('Your browser does not have secure random generator. ' + 'If you don’t need unpredictable IDs, you can use nanoid/non-secure.');
+    }
+  }
+
+  var random = function random(bytes) {
+    return crypto.getRandomValues(new Uint8Array(bytes));
   };
 
-  var gramParse_esm = {
-    __proto__: null,
-    errors: gramErrors,
-    gramParserPlugin: gramParserPlugin,
-    toAST: toAST
+  var customRandom = function customRandom(alphabet, size, getRandom) {
+    // First, a bitmask is necessary to generate the ID. The bitmask makes bytes
+    // values closer to the alphabet size. The bitmask calculates the closest
+    // `2^31 - 1` number, which exceeds the alphabet size.
+    // For example, the bitmask for the alphabet size 30 is 31 (00011111).
+    // `Math.clz32` is not used, because it is not available in browsers.
+    var mask = (2 << Math.log(alphabet.length - 1) / Math.LN2) - 1; // Though, the bitmask solution is not perfect since the bytes exceeding
+    // the alphabet size are refused. Therefore, to reliably generate the ID,
+    // the random bytes redundancy has to be satisfied.
+    // Note: every hardware random generator call is performance expensive,
+    // because the system call for entropy collection takes a lot of time.
+    // So, to avoid additional system calls, extra bytes are requested in advance.
+    // Next, a step determines how many random bytes to generate.
+    // The number of random bytes gets decided upon the ID size, mask,
+    // alphabet size, and magic number 1.6 (using 1.6 peaks at performance
+    // according to benchmarks).
+    // `-~f => Math.ceil(f)` if f is a float
+    // `-~i => i + 1` if i is an integer
+
+    var step = -~(1.6 * mask * size / alphabet.length);
+    return function () {
+      var id = '';
+
+      while (true) {
+        var bytes = getRandom(step); // A compact alternative for `for (var i = 0; i < step; i++)`.
+
+        var j = step;
+
+        while (j--) {
+          // Adding `|| ''` refuses a random byte that exceeds the alphabet size.
+          id += alphabet[bytes[j] & mask] || '';
+          if (id.length === size) return id;
+        }
+      }
+    };
   };
 
-  var count = function count(p) {
-    return p.children.reduce(function (acc, child) {
-      return acc + count(child);
-    }, 1);
+  var customAlphabet = function customAlphabet(alphabet, size) {
+    return customRandom(alphabet, size, random);
   };
 
-  var head = function head(p) {
-    return p.children === undefined || p.children.length === 0 ? p : head(p.children[0]);
-  };
+  var convert_1 = convert;
 
-  var tail = function tail(p) {
-    return p.children === undefined || p.children.length === 0 ? p : tail(p.children[p.children.length - 1]);
-  };
+  function convert(test) {
+    if (test == null) {
+      return ok;
+    }
 
-  var merge = function merge(_, next) {
-    // return path
-    return next;
-  };
+    if (typeof test === 'string') {
+      return typeFactory(test);
+    }
 
-  var identity$1 = function identity(p) {
-    return p.id;
+    if (typeof test === 'object') {
+      return 'length' in test ? anyFactory(test) : allFactory(test);
+    }
+
+    if (typeof test === 'function') {
+      return test;
+    }
+
+    throw new Error('Expected function, string, or object as test');
+  } // Utility assert each property in `test` is represented in `node`, and each
+  // values are strictly equal.
+
+
+  function allFactory(test) {
+    return all;
+
+    function all(node) {
+      var key;
+
+      for (key in test) {
+        if (node[key] !== test[key]) return false;
+      }
+
+      return true;
+    }
+  }
+
+  function anyFactory(tests) {
+    var checks = [];
+    var index = -1;
+
+    while (++index < tests.length) {
+      checks[index] = convert(tests[index]);
+    }
+
+    return any;
+
+    function any() {
+      var index = -1;
+
+      while (++index < checks.length) {
+        if (checks[index].apply(this, arguments)) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+  } // Utility to convert a string into a function which checks a given node’s type
+  // for said string.
+
+
+  function typeFactory(test) {
+    return type;
+
+    function type(node) {
+      return Boolean(node && node.type === test);
+    }
+  } // Utility to return true.
+
+
+  function ok() {
+    return true;
+  }
+
+  var color_browser = identity;
+
+  function identity(d) {
+    return d;
+  }
+
+  var unistUtilVisitParents = visitParents;
+  var CONTINUE = true;
+  var SKIP = 'skip';
+  var EXIT = false;
+  visitParents.CONTINUE = CONTINUE;
+  visitParents.SKIP = SKIP;
+  visitParents.EXIT = EXIT;
+
+  function visitParents(tree, test, visitor, reverse) {
+    var step;
+    var is;
+
+    if (typeof test === 'function' && typeof visitor !== 'function') {
+      reverse = visitor;
+      visitor = test;
+      test = null;
+    }
+
+    is = convert_1(test);
+    step = reverse ? -1 : 1;
+    factory(tree, null, [])();
+
+    function factory(node, index, parents) {
+      var value = typeof node === 'object' && node !== null ? node : {};
+      var name;
+
+      if (typeof value.type === 'string') {
+        name = typeof value.tagName === 'string' ? value.tagName : typeof value.name === 'string' ? value.name : undefined;
+        visit.displayName = 'node (' + color_browser(value.type + (name ? '<' + name + '>' : '')) + ')';
+      }
+
+      return visit;
+
+      function visit() {
+        var grandparents = parents.concat(node);
+        var result = [];
+        var subresult;
+        var offset;
+
+        if (!test || is(node, index, parents[parents.length - 1] || null)) {
+          result = toResult(visitor(node, parents));
+
+          if (result[0] === EXIT) {
+            return result;
+          }
+        }
+
+        if (node.children && result[0] !== SKIP) {
+          offset = (reverse ? node.children.length : -1) + step;
+
+          while (offset > -1 && offset < node.children.length) {
+            subresult = factory(node.children[offset], offset, grandparents)();
+
+            if (subresult[0] === EXIT) {
+              return subresult;
+            }
+
+            offset = typeof subresult[1] === 'number' ? subresult[1] : offset + step;
+          }
+        }
+
+        return result;
+      }
+    }
+  }
+
+  function toResult(value) {
+    if (value !== null && typeof value === 'object' && 'length' in value) {
+      return value;
+    }
+
+    if (typeof value === 'number') {
+      return [CONTINUE, value];
+    }
+
+    return [value];
+  }
+
+  var unistUtilVisit = visit;
+  var CONTINUE$1 = unistUtilVisitParents.CONTINUE;
+  var SKIP$1 = unistUtilVisitParents.SKIP;
+  var EXIT$1 = unistUtilVisitParents.EXIT;
+  visit.CONTINUE = CONTINUE$1;
+  visit.SKIP = SKIP$1;
+  visit.EXIT = EXIT$1;
+
+  function visit(tree, test, visitor, reverse) {
+    if (typeof test === 'function' && typeof visitor !== 'function') {
+      reverse = visitor;
+      visitor = test;
+      test = null;
+    }
+
+    unistUtilVisitParents(tree, test, overload, reverse);
+
+    function overload(node, parents) {
+      var parent = parents[parents.length - 1];
+      var index = parent ? parent.children.indexOf(node) : null;
+      return visitor(node, index, parent);
+    }
+  }
+
+  var alphabets = {
+    base2: '01',
+    dieBase6: '⚀⚁⚂⚃⚄⚅',
+    base8: '01234567',
+    base10: '0123456789',
+    astrologyBase12: '♈︎♉︎♊︎♋︎♌︎♍︎♎︎♏︎♐︎♑︎♒︎♓︎',
+    base11: '0123456789a',
+    chessBase12: '♚♛♜♝♞♟♔♕♖♗♘♙',
+    base16: '0123456789abcdef',
+    dominoBase28: '🁣🁤🁫🁥🁬🁳🁦🁭🁴🁻🁧🁮🁵🁼🂃🁨🁯🁶🁽🂊🂋🁩🁰🁷🁾🂅🂌🂓',
+    base32: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567',
+    zBase32: 'ybndrfg8ejkmcpqxot1uwisza345h769',
+    crock32: '0123456789ABCDEFGHJKMNPQRSTVWXYZ',
+    base32Hex: '0123456789ABCDEFGHIJKLMNOPQRSTUV',
+    base36: '0123456789abcdefghijklmnopqrstuvwxyz',
+    mahjongBase43: '🀑🀒🀓🀔🀕🀖🀗🀘🀙🀚🀛🀜🀝🀞🀟🀠🀡🀇🀈🀉🀊🀋🀌🀍🀎🀏🀀🀁🀂🀃🀄︎🀅🀆🀐🀢🀣🀤🀥🀦🀧🀨🀩🀪',
+    cards56: '🂡🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂬🂭🂮🂱🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂼🂽🂾🃁🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃌🃍🃎🃑🃒🃓🃔🃕🃖🃗🃘🃙🃝🃞',
+    base58: '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ',
+    flickrBase58: '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ',
+    base62: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    base64: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_@',
+    cookieBase90: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!#$%&'()*+-./:<=>?@[]^_`{|}~"
   };
   /**
-   * Node set projected from within a path.
+   * Creates an IDGenerator based on incrementing numbers.
    *
-   * @param p paths from which to project nodes
+   */
+
+  var counterIDGenerator = function counterIDGenerator(prefix) {
+    var nextid = 0;
+    return {
+      generate: function generate() {
+        return "" + (prefix || '') + nextid++;
+      }
+    };
+  };
+  /**
+   * Factory for creating an IDGenerator based on
+   * [nanoid](https://github.com/ai/nanoid)
+   *
    */
 
 
-  var nodes = function nodes(p) {
-    if (isGramNode(p)) return [p];
-    if (isGramSeq(p)) return nodes(p.children);
-
-    if (Array.isArray(p)) {
-      var unidentifiedNodes = [];
-      var nodemap = p.map(nodes).flat().reduce(function (acc, child) {
-        if (child.id) {
-          if (acc.has(child.id)) {
-            acc.set(child.id, Object.assign(acc.get(child.id), child));
-          } else {
-            acc.set(child.id, child);
-          }
-        } else {
-          unidentifiedNodes.push(child);
-        }
-
-        return acc;
-      }, new Map());
-      return Array.from(nodemap.values()).concat(unidentifiedNodes);
-    } else {
-      return nodes(p.children);
+  var nanoidGenerator = function nanoidGenerator(alphabet, size, prefix) {
+    if (alphabet === void 0) {
+      alphabet = alphabets.base64;
     }
+
+    if (size === void 0) {
+      size = 21;
+    }
+
+    var generator = customAlphabet(alphabet, size);
+    return {
+      generate: function generate() {
+        return prefix ? prefix + generator() : generator();
+      }
+    };
   };
 
-  var edges = function edges(p) {
-    return p === undefined ? [] : p.children === undefined || p.children.length === 0 ? [] : p.children.length === 2 ? [].concat(edges(p.children[0]), p.kind !== undefined && p.kind !== 'pair' ? [edge([tail(p.children[0]), head(p.children[1])], p.kind, p.id, p.labels, p.record)] : [], edges(p.children[1])) : p.children.reduce(function (acc, child) {
-      return [].concat(acc, edges(child));
-    }, []);
+  function _extends$2() {
+    _extends$2 = Object.assign || function (target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
+
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+
+      return target;
+    };
+
+    return _extends$2.apply(this, arguments);
+  }
+
+  var defaultSettings = {
+    generator: 'counter',
+    alphabet: alphabets.base58,
+    prefix: undefined
   };
 
-  var gramOps_esm = {
-    __proto__: null,
-    count: count,
-    edges: edges,
-    head: head,
-    identity: identity$1,
-    merge: merge,
-    nodes: nodes,
-    tail: tail
+  var gramIdentityPlugin = function gramIdentityPlugin(settings) {
+    var s = _extends$2({}, defaultSettings, settings);
+
+    var identification = function identification(tree) {
+      var generator;
+
+      switch (s.generator) {
+        case 'nanoid':
+          generator = nanoidGenerator(s.alphabet, 21, s.prefix);
+          break;
+
+        case 'counter':
+        default:
+          generator = counterIDGenerator(s.prefix);
+      }
+
+      unistUtilVisit(tree, function (element) {
+        if (isGramPath(element)) {
+          element.id = element.id || generator.generate();
+        }
+      });
+    };
+
+    return identification;
   };
 
   var convert_1$1 = convert$1;
@@ -6467,9 +5257,9 @@
     return true;
   }
 
-  var color_browser$1 = identity$2;
+  var color_browser$1 = identity$1;
 
-  function identity$2(d) {
+  function identity$1(d) {
     return d;
   }
 
@@ -6686,14 +5476,8 @@
   var iso8601Year = /^([+-]\d{4,}\b|\d{4})$/;
   var iso8601YearMonth = /^([0-9]{4})-(1[0-2]|0[1-9])$/;
   var iso8601YearMonthDay = /^([0-9]{4})(-?)(1[0-2]|0[1-9])\2(3[01]|0[1-9]|[12][0-9])$/;
-  var iso8601OrdinalDate = /^([0-9]{4})-?(36[0-6]|3[0-5][0-9]|[12][0-9]{2}|0[1-9][0-9]|00[1-9])$/;
-  var iso8601WeekOfYear = /^([0-9]{4})-?W(5[0-3]|[1-4][0-9]|0[1-9])$/;
-  var iso8601WeekDate = /^([0-9]{4})-?W(5[0-3]|[1-4][0-9]|0[1-9])-?([1-7])$/;
-  var iso8601LocalTime = /^(2[0-3]|[01][0-9]):?([0-5][0-9])(:?([0-5][0-9](\.[0-9]{3})?))?$/; // export const iso8601Time = /^(2[0-3]|[01][0-9]):?([0-5][0-9]):?([0-5][0-9](\.[0-9]{3})?)?(Z|[+-](?:2[0-3]|[01][0-9])(?::?(?:[0-5][0-9]))?)?$/;
 
   var iso8601Time = /^(2[0-3]|[01][0-9]):?([0-5][0-9]):?([0-5][0-9](\.[0-9]{3})?)?(Z|([+-])((?:2[0-3]|[01][0-9]))(?::?([0-5][0-9]))?)?$/;
-  var iso8601Duration = /^P((\d+)Y)?((\d+)M)?((\d+)D)?(T((\d+)H)?((\d+)M)?((\d+)S)?)?$/;
-  var iso8601Repeat = /^R(\d*)$/;
 
   var InvalidAstError = /*#__PURE__*/function (_Error) {
     _inheritsLoose(InvalidAstError, _Error);
@@ -6818,14 +5602,6 @@
     throw new InvalidAstError(ast);
   };
 
-  var valueOfTaggedLiteral = function valueOfTaggedLiteral(ast) {
-    if (ast.value) {
-      return ast.value;
-    }
-
-    throw new InvalidAstError(ast);
-  };
-
   var valueOfDate = function valueOfDate(ast) {
     if (ast.value) {
       var extracted = iso8601YearMonthDay.exec(ast.value);
@@ -6855,9 +5631,6 @@
   var MILLIS_IN_A_SECOND = 1000;
   var MILLIS_IN_A_MINUTE = MILLIS_IN_A_SECOND * 60;
   var MILLIS_IN_AN_HOUR = MILLIS_IN_A_MINUTE * 60;
-  var MILLIS_IN_A_DAY = MILLIS_IN_AN_HOUR * 24;
-  var MILLIS_IN_A_MONTH = MILLIS_IN_A_DAY * 30;
-  var MILLIS_IN_A_YEAR = MILLIS_IN_A_DAY * 365;
   /**
    * Value of time as number of milliseconds since midnight.
    *
@@ -6889,44 +5662,8 @@
 
     throw new InvalidAstError(ast);
   };
-  /**
-   * Evaluates the duration as a total of milliseconds, unreliably estimating milliseconds
-   * per year or month. Reliable duration values can only be calculated with precision
-   * of days, hours, minutes or seconds.
-   *
-   * @param ast
-   */
-
-
-  var valueOfDuration = function valueOfDuration(ast) {
-    if (ast.value) {
-      var extracted = iso8601Duration.exec(ast.value);
-
-      if (extracted) {
-        var years = extracted[2] ? Number.parseInt(extracted[2]) : 0;
-        var months = extracted[4] ? Number.parseInt(extracted[4]) : 0;
-        var days = extracted[6] ? Number.parseInt(extracted[6]) : 0;
-        var hours = extracted[9] ? Number.parseInt(extracted[9]) : 0;
-        var minutes = extracted[11] ? Number.parseInt(extracted[11]) : 0;
-        var seconds = extracted[13] ? Number.parseInt(extracted[13]) : 0; // console.log('duration', extracted, years, months, days, hours, minutes, seconds);
-
-        var millis = years * MILLIS_IN_A_YEAR + months * MILLIS_IN_A_MONTH + days * MILLIS_IN_A_DAY + hours * MILLIS_IN_AN_HOUR + minutes * MILLIS_IN_A_MINUTE + seconds * MILLIS_IN_A_SECOND;
-        return new Date(millis);
-      }
-
-      throw SyntaxError("Unable to parse duration from " + ast.value);
-    }
-
-    throw new InvalidAstError(ast);
-  };
 
   var valueOfInteger = function valueOfInteger(ast) {
-    if (ast.value) {
-      return Number.parseInt(ast.value);
-    } else throw new InvalidAstError(ast);
-  };
-
-  var valueOfMeasurement = function valueOfMeasurement(ast) {
     if (ast.value) {
       return Number.parseInt(ast.value);
     } else throw new InvalidAstError(ast);
@@ -6970,32 +5707,11 @@
     return recordValueEvaluator;
   };
 
-  var gramValue_esm = {
+  var plugins = [gramIdentityPlugin, gramValuePlugin];
+
+  var gramPresetBasic = {
     __proto__: null,
-    gramValuePlugin: gramValuePlugin,
-    iso8601Duration: iso8601Duration,
-    iso8601LocalTime: iso8601LocalTime,
-    iso8601OrdinalDate: iso8601OrdinalDate,
-    iso8601Repeat: iso8601Repeat,
-    iso8601Time: iso8601Time,
-    iso8601WeekDate: iso8601WeekDate,
-    iso8601WeekOfYear: iso8601WeekOfYear,
-    iso8601Year: iso8601Year,
-    iso8601YearMonth: iso8601YearMonth,
-    iso8601YearMonthDay: iso8601YearMonthDay,
-    valueOf: valueOf,
-    valueOfBoolean: valueOfBoolean,
-    valueOfDate: valueOfDate,
-    valueOfDecimal: valueOfDecimal,
-    valueOfDuration: valueOfDuration,
-    valueOfHexadecimal: valueOfHexadecimal,
-    valueOfInteger: valueOfInteger,
-    valueOfLiteral: valueOfLiteral,
-    valueOfMeasurement: valueOfMeasurement,
-    valueOfOctal: valueOfOctal,
-    valueOfString: valueOfString,
-    valueOfTaggedLiteral: valueOfTaggedLiteral,
-    valueOfTime: valueOfTime
+    plugins: plugins
   };
 
   var isEmpty = function isEmpty(r) {
@@ -7151,61 +5867,32 @@
     throw new Error("Can't stringify <" + ast + ">");
   }; // import {VFile} from 'vfile'
 
-
-  var stringifyCompiler = function stringifyCompiler(element) {
-    if (isGramPath(element)) {
-      return stringify$2(element);
-    }
-
-    if (isGramSeq(element)) {
-      return stringify$2(element);
-    } else {
-      throw new Error("Don't know how to stringify \"" + element.type + "\"");
-    }
-  };
-
-  var gramStringifyPlugin = function gramStringifyPlugin() {
-    this.Compiler = stringifyCompiler;
-  };
-
-  var gramStringify_esm = {
-    __proto__: null,
-    gramStringifyPlugin: gramStringifyPlugin,
-    stringify: stringify$2,
-    toGram: stringify$2
-  };
-
-  module.exports.plugins = [/*#__PURE__*/require("@gram-data/gram-identity").gramIdentityPlugin, /*#__PURE__*/require("@gram-data/gram-value").gramValuePlugin];
-
-  var gramPresetBasic = {
-    __proto__: null
-  };
-
   /**
    * gram package.
    *
    * @packageDocumentation
    */
-  var processor = /*#__PURE__*/unified_1().use(gramParserPlugin).use(gramPresetBasic);
 
-  var parseAndApplyPlugins = function parseAndApplyPlugins(src) {
-    return processor.runSync(processor.parse(src));
+  var processor = function processor() {
+    return unified_1().use(gramParserPlugin).use(gramPresetBasic);
+  };
+  /**
+   * Parse text into an ast.
+   * @param src gram formatted text
+   */
+
+
+  var parse$1 = function parse(src) {
+    return processor().runSync(processor().parse(src));
+  };
+  var index$2 = {
+    parse: parse$1,
+    toGram: stringify$2
   };
 
-  var index$3 = {
-    parse: parseAndApplyPlugins,
-    stringify: stringify$2
-  };
-
-  exports.ast = gramAst_esm;
-  exports.builder = gramBuilder_esm;
-  exports.default = index$3;
-  exports.identity = gramIdentity_esm;
-  exports.ops = gramOps_esm;
-  exports.parser = gramParse_esm;
-  exports.processor = processor;
-  exports.stringify = gramStringify_esm;
-  exports.value = gramValue_esm;
+  exports.default = index$2;
+  exports.parse = parse$1;
+  exports.toGram = stringify$2;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 

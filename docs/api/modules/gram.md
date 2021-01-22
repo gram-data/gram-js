@@ -15,38 +15,35 @@ Gram is a textual format for data graphs.
 
 ## How to gram
 
+Node.js:
+
 ```js
-const {default:gram} = require('@gram-data/gram');
+const gram = require('@gram-data/gram');
 
 const src = "(a)-->(b)";
 const p = gram.parse(src);
-console.log(gram.stringify(p));
+console.log(gram.toGram(p));
 
 ```
 
+TypeScript:
 ```ts
 import gram from '@gram-data/gram'
 
 const src = "(a)-->(b)";
 const p = gram.parse(src);
-console.log(gram.stringify(p));
+console.log(gram.toGram(p));
 ```
 
+Vanilla javascript in browser:
+
+- see [examples](https://github.com/gram-data/gram-js/tree/main/packages/gram/public)
+
 ## Index
-
-### References
-
-* [toGram](gram.md#togram)
 
 ### Functions
 
 * [parse](gram.md#parse)
-
-## References
-
-### toGram
-
-Renames and re-exports: [stringify](gram_stringify.md#stringify)
 
 ## Functions
 
@@ -54,7 +51,7 @@ Renames and re-exports: [stringify](gram_stringify.md#stringify)
 
 ▸ `Const`**parse**(`src`: VFileCompatible): [GramSeq](../interfaces/gram_ast.gramseq.md)
 
-*Defined in [packages/gram/src/index.ts:22](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram/src/index.ts#L22)*
+*Defined in [packages/gram/src/index.ts:24](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram/src/index.ts#L24)*
 
 Parse text into an ast.
 

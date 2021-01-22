@@ -41,6 +41,18 @@ const ast = edge([left, right], 'right');
 
 ## Index
 
+### References
+
+* [IdentityPluginSettings](gram_identity.md#identitypluginsettings)
+* [alphabets](gram_identity.md#alphabets)
+* [counterIDGenerator](gram_identity.md#counteridgenerator)
+* [gramIdentityPlugin](gram_identity.md#gramidentityplugin)
+* [nanoidGenerator](gram_identity.md#nanoidgenerator)
+
+### Interfaces
+
+* [IdentityPluginSettings](../interfaces/gram_identity.identitypluginsettings.md)
+
 ### Type aliases
 
 * [IDGenerator](gram_identity.md#idgenerator)
@@ -55,13 +67,43 @@ const ast = edge([left, right], 'right');
 
 * [alphabets](gram_identity.md#alphabets)
 
+## References
+
+### IdentityPluginSettings
+
+Re-exports: [IdentityPluginSettings](../interfaces/gram_identity.identitypluginsettings.md)
+
+___
+
+### alphabets
+
+Re-exports: [alphabets](gram_identity.md#alphabets)
+
+___
+
+### counterIDGenerator
+
+Re-exports: [counterIDGenerator](gram_identity.md#counteridgenerator)
+
+___
+
+### gramIdentityPlugin
+
+Re-exports: [gramIdentityPlugin](gram_identity.md#gramidentityplugin)
+
+___
+
+### nanoidGenerator
+
+Re-exports: [nanoidGenerator](gram_identity.md#nanoidgenerator)
+
 ## Type aliases
 
 ### IDGenerator
 
 Ƭ  **IDGenerator**: { generate: () => string  }
 
-*Defined in [packages/gram-identity/src/generator-type.ts:2](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-identity/src/generator-type.ts#L2)*
+*Defined in [packages/gram-identity/src/generator-type.ts:2](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-identity/src/generator-type.ts#L2)*
 
 #### Type declaration:
 
@@ -75,7 +117,7 @@ Name | Type |
 
 ▸ `Const`**counterIDGenerator**(`prefix?`: undefined \| string): [IDGenerator](gram_identity.md#idgenerator)
 
-*Defined in [packages/gram-identity/src/counter-generator.ts:7](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-identity/src/counter-generator.ts#L7)*
+*Defined in [packages/gram-identity/src/counter-generator.ts:7](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-identity/src/counter-generator.ts#L7)*
 
 Creates an IDGenerator based on incrementing numbers.
 
@@ -91,15 +133,15 @@ ___
 
 ### gramIdentityPlugin
 
-▸ `Const`**gramIdentityPlugin**(`settings`: IdentityPluginSettings): Transformer
+▸ `Const`**gramIdentityPlugin**(`settings`: [IdentityPluginSettings](../interfaces/gram_identity.identitypluginsettings.md)): Transformer
 
-*Defined in [packages/gram-identity/src/gram-identity-plugin.ts:24](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-identity/src/gram-identity-plugin.ts#L24)*
+*Defined in [packages/gram-identity/src/gram-identity-plugin.ts:24](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-identity/src/gram-identity-plugin.ts#L24)*
 
 #### Parameters:
 
 Name | Type |
 ------ | ------ |
-`settings` | IdentityPluginSettings |
+`settings` | [IdentityPluginSettings](../interfaces/gram_identity.identitypluginsettings.md) |
 
 **Returns:** Transformer
 
@@ -109,7 +151,7 @@ ___
 
 ▸ `Const`**nanoidGenerator**(`alphabet?`: string, `size?`: number, `prefix?`: undefined \| string): [IDGenerator](gram_identity.md#idgenerator)
 
-*Defined in [packages/gram-identity/src/nanoid-generator.ts:10](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-identity/src/nanoid-generator.ts#L10)*
+*Defined in [packages/gram-identity/src/nanoid-generator.ts:10](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-identity/src/nanoid-generator.ts#L10)*
 
 Factory for creating an IDGenerator based on
 [nanoid](https://github.com/ai/nanoid)
@@ -130,7 +172,7 @@ Name | Type | Default value |
 
 ▪ `Const` **alphabets**: object
 
-*Defined in [packages/gram-identity/src/identity-alphabets.ts:1](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-identity/src/identity-alphabets.ts#L1)*
+*Defined in [packages/gram-identity/src/identity-alphabets.ts:1](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-identity/src/identity-alphabets.ts#L1)*
 
 #### Properties:
 

@@ -51,7 +51,7 @@ ___
 
 •  **name**: string
 
-*Defined in [packages/gram-ast/src/index.ts:255](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L255)*
+*Defined in [packages/gram-ast/src/index.ts:255](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L255)*
 
 The property name.
 
@@ -76,7 +76,7 @@ ___
 
 *Overrides void*
 
-*Defined in [packages/gram-ast/src/index.ts:250](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L250)*
+*Defined in [packages/gram-ast/src/index.ts:250](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L250)*
 
 Type discriminator for this AST element, always 'property'.
 
@@ -86,6 +86,6 @@ ___
 
 •  **value**: [GramRecordValue](../modules/gram_ast.md#gramrecordvalue)
 
-*Defined in [packages/gram-ast/src/index.ts:260](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L260)*
+*Defined in [packages/gram-ast/src/index.ts:260](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L260)*
 
 The property value. Either a single literal, an array of literals, or a GramRecord.

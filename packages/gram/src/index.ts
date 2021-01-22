@@ -9,7 +9,7 @@ import { VFileCompatible } from 'vfile';
 import { GramSeq } from '@gram-data/gram-ast';
 import { gramParserPlugin } from '@gram-data/gram-parse';
 import * as gramPresetBasic from '@gram-data/gram-preset-basic';
-export { toGram } from '@gram-data/gram-stringify';
+import { toGram } from '@gram-data/gram-stringify';
 
 const processor = (): unified.Processor => {
   return unified()
@@ -24,7 +24,9 @@ const processor = (): unified.Processor => {
 export const parse = (src: VFileCompatible): GramSeq =>
   processor().runSync(processor().parse(src)) as GramSeq;
 
+export { toGram };
+
 export default {
   parse,
-  // toGram,
+  toGram,
 };

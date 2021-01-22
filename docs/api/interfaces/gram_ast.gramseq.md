@@ -40,7 +40,7 @@ A GramSeq is a sequence of paths.
 
 *Overrides void*
 
-*Defined in [packages/gram-ast/src/index.ts:30](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L30)*
+*Defined in [packages/gram-ast/src/index.ts:30](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L30)*
 
 ___
 
@@ -75,6 +75,6 @@ ___
 
 *Overrides void*
 
-*Defined in [packages/gram-ast/src/index.ts:28](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L28)*
+*Defined in [packages/gram-ast/src/index.ts:28](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L28)*
 
 Type discriminator for this AST element, aways 'seq'.

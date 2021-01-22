@@ -71,7 +71,7 @@ ___
 
 *Overrides void*
 
-*Defined in [packages/gram-ast/src/index.ts:395](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L395)*
+*Defined in [packages/gram-ast/src/index.ts:395](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L395)*
 
 ___
 
@@ -83,4 +83,4 @@ ___
 
 *Overrides void*
 
-*Defined in [packages/gram-ast/src/index.ts:277](https://github.com/gram-data/gram-js/blob/d80fb0e/packages/gram-ast/src/index.ts#L277)*
+*Defined in [packages/gram-ast/src/index.ts:277](https://github.com/gram-data/gram-js/blob/fc61725/packages/gram-ast/src/index.ts#L277)*

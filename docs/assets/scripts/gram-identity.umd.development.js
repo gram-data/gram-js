@@ -4,35 +4,6 @@
   (global = global || self, factory((global.gram = global.gram || {}, global.gram.identity = {})));
 }(this, (function (exports) { 'use strict';
 
-  function _extends() {
-    _extends = Object.assign || function (target) {
-      for (var i = 1; i < arguments.length; i++) {
-        var source = arguments[i];
-
-        for (var key in source) {
-          if (Object.prototype.hasOwnProperty.call(source, key)) {
-            target[key] = source[key];
-          }
-        }
-      }
-
-      return target;
-    };
-
-    return _extends.apply(this, arguments);
-  }
-
-  /**
-   * Type guard for a Path.
-   *
-   * @param o any object
-   */
-
-
-  var isGramPath = function isGramPath(o) {
-    return !!o.type && o.type === 'path';
-  };
-
   var alphabets = {
     base2: '01',
     dieBase6: '⚀⚁⚂⚃⚄⚅',
@@ -165,6 +136,35 @@
         return prefix ? prefix + generator() : generator();
       }
     };
+  };
+
+  function _extends() {
+    _extends = Object.assign || function (target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
+
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+
+      return target;
+    };
+
+    return _extends.apply(this, arguments);
+  }
+
+  /**
+   * Type guard for a Path.
+   *
+   * @param o any object
+   */
+
+
+  var isGramPath = function isGramPath(o) {
+    return !!o.type && o.type === 'path';
   };
 
   var convert_1 = convert;
