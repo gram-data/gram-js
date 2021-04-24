@@ -1,6 +1,6 @@
 import { GramPath } from '@gram-data/gram-ast';
 import * as g from '@gram-data/gram-builder';
-import { stringify } from '../src/';
+import { stringify } from '../../src/stringify';
 
 // const inspect = require('unist-util-inspect');
 

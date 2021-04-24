@@ -69,7 +69,6 @@
     "@gram-data/gram-identity": "^0.4.0-alpha.9",
     "@gram-data/gram-ops": "^0.4.0-alpha.9",
     "@gram-data/gram-preset-basic": "^0.4.0-alpha.9",
-    "@gram-data/gram-stringify": "^0.4.0-alpha.9",
     "@gram-data/gram-value": "^0.4.0-alpha.9",
     "moo": "^0.5.1",
     "unified": "^9.2.0",

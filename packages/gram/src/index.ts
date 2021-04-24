@@ -9,7 +9,7 @@ import { VFileCompatible } from 'vfile';
 import { GramSeq } from '@gram-data/gram-ast';
 import { gramParserPlugin } from './parse';
 import * as gramPresetBasic from '@gram-data/gram-preset-basic';
-import { toGram } from '@gram-data/gram-stringify';
+import { toGram } from './stringify';
 
 const processor = (): unified.Processor => {
   return unified()
