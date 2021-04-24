@@ -72,7 +72,8 @@
     "tslib": "^2.0.3",
     "typedoc": "^0.19.2",
     "typescript": "^4.1.3",
-    "unist-util-inspect": "^6.0.1"
+    "unist-util-inspect": "^6.0.1",
+    "eslint-config-react-app": "^6.0.0"
   },
   "dependencies": {
     "@gram-data/gram-ast": "^0.4.0-alpha.9",
