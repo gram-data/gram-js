@@ -29,10 +29,8 @@
   },
   "scripts": {
     "start": "tsdx watch",
-    "build": "run-s build:near lint:fix build:dist",
-    "build:near": "nearleyc src/gram.ne -o src/gram-grammar.ts",
-    "build:dist": "tsdx build --format umd,esm,cjs --tsconfig tsconfig.build.json",
-    "test": "tsdx test",
+    "build": "echo Package has been moved into 'gram'",
+    "test": "echo Package has been moved into 'gram'",
     "test:watch": "tsdx test --watch",
     "lint": "tsdx lint src",
     "lint:fix": "tsdx lint src --fix",

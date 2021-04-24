@@ -1,4 +1,4 @@
-import { toAST } from '../src';
+import { toAST } from '../../src/parse';
 import {
   isGramEdge,
   isGramNode,

@@ -1,4 +1,4 @@
-import { toAST } from '../src';
+import { toAST } from '../../src/parse';
 import { isGramNode, isGramEdge } from '@gram-data/gram-ast';
 import { Node } from 'unist';
 

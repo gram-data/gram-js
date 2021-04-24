@@ -17,7 +17,9 @@
   },
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build --format umd,esm,cjs --tsconfig tsconfig.build.json",
+    "build": "run-s build:near lint:fix build:dist",
+    "build:near": "nearleyc src/parse/gram.ne -o src/parse/gram-grammar.ts",
+    "build:dist": "tsdx build --format umd,esm,cjs --tsconfig tsconfig.build.json",
     "test": "tsdx test",
     "lint": "tsdx lint src test",
     "lint:fix": "tsdx lint src --fix",
@@ -52,6 +54,7 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.9.1",
     "husky": "^4.3.6",
+    "nearley": "^2.20.1",
     "parcel-bundler": "^1.12.4",
     "shx": "^0.3.3",
     "sirv-cli": "^1.0.10",
@@ -65,10 +68,10 @@
     "@gram-data/gram-builder": "^0.4.0-alpha.9",
     "@gram-data/gram-identity": "^0.4.0-alpha.9",
     "@gram-data/gram-ops": "^0.4.0-alpha.9",
-    "@gram-data/gram-parse": "^0.4.0-alpha.9",
     "@gram-data/gram-preset-basic": "^0.4.0-alpha.9",
     "@gram-data/gram-stringify": "^0.4.0-alpha.9",
     "@gram-data/gram-value": "^0.4.0-alpha.9",
+    "moo": "^0.5.1",
     "unified": "^9.2.0",
     "vfile": "^4.2.1"
   },

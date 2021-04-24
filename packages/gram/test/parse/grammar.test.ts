@@ -1,6 +1,6 @@
 import nearley, { Parser } from 'nearley';
 
-import grammar from '../src/gram-grammar';
+import grammar from '../../src/parse/gram-grammar';
 
 import { Node } from 'unist';
 

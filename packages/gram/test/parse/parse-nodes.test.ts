@@ -1,4 +1,4 @@
-import { toAST } from '../src';
+import { toAST } from '../../src/parse';
 import { GramLiteral, isGramNode, isGramSeq } from '@gram-data/gram-ast';
 import { Node } from 'unist';
 import { getLiteral } from '@gram-data/gram-builder/src';

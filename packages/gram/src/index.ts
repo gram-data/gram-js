@@ -7,7 +7,7 @@
 import unified from 'unified';
 import { VFileCompatible } from 'vfile';
 import { GramSeq } from '@gram-data/gram-ast';
-import { gramParserPlugin } from '@gram-data/gram-parse';
+import { gramParserPlugin } from './parse';
 import * as gramPresetBasic from '@gram-data/gram-preset-basic';
 import { toGram } from '@gram-data/gram-stringify';
 
