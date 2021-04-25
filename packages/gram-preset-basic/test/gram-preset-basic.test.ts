@@ -2,11 +2,13 @@ import unified from "unified";
 
 import { Node as UnistNode } from "unist";
 
-import { gramParserPlugin } from "@gram-data/gram-parse";
+import {Parser} from "@gram-data/gram";
 
 import * as gramPresetBasic from "..";
 
 const visit = require("unist-util-visit");
+
+const gramParserPlugin = Parser.gramParserPlugin;
 
 const mockCompiler = () => {
   return "mock compiler for testing";

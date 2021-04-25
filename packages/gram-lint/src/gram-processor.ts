@@ -1,9 +1,8 @@
 import unified from 'unified';
 
-import { gramParserPlugin } from '@gram-data/gram-parse';
-import { gramStringifyPlugin } from '@gram-data/gram-stringify';
+import { Parser, Stringify } from '@gram-data/gram';
 
 export default unified()
-  .use(gramParserPlugin)
-  .use(gramStringifyPlugin);
+  .use(Parser.gramParserPlugin)
+  .use(Stringify.gramStringifyPlugin);
 // .freeze();

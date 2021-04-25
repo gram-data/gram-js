@@ -1,22 +1,24 @@
 'use strict';
-const unified = require('unified')
-const gramParserPlugin = require('@gram-data/gram-parse').gramParserPlugin;
+var unified = require('unified')
 
-const gramPresetBasic = require('..');
+var gram = require('@gram-data/gram');
+var gramParserPlugin = gram.Parser.gramParserPlugin;
 
-const visit = require('unist-util-visit');
+var gramPresetBasic = require('..');
 
-const inspect = require('unist-util-inspect');
+var visit = require('unist-util-visit');
 
-const mockCompiler = () => {
+var inspect = require('unist-util-inspect');
+
+var mockCompiler = () => {
   return 'mock compiler for testing';
 };
 
-const testCompilerPlugin = function() {
+var testCompilerPlugin = function() {
   this.Compiler = mockCompiler;
 };
 
-const expectAllPathlikeElementsToHaveId = () => {
+var expectAllPathlikeElementsToHaveId = () => {
     return (tree) => {
       // console.log(inspect(tree));
       visit(tree, 'path', (element) => {
@@ -27,7 +29,7 @@ const expectAllPathlikeElementsToHaveId = () => {
     };
   };
 
-const gramProcessor = unified()
+var gramProcessor = unified()
   .use(gramParserPlugin)
   .use(gramPresetBasic)
   .use(testCompilerPlugin)
@@ -35,23 +37,23 @@ const gramProcessor = unified()
 
 describe('gram-preset-basic', () => {
     it('adds identity to a plain node "()" ', () => {
-        const src = `()`;
-        const processed = gramProcessor.process(src);
+        var src = `()`;
+        var processed = gramProcessor.process(src);
         expect(processed).toBeDefined();
     });
     it('adds identity to all plain nodes "() () ()" ', () => {
-        const src = `() () ()`;
-        const processed = gramProcessor.process(src);
+        var src = `() () ()`;
+        var processed = gramProcessor.process(src);
         expect(processed).toBeDefined();
     });
     it('adds identity to connected nodes and edges"()-->()<--()" ', () => {
-        const src = `()-->()<--()`;
-        const processed = gramProcessor.process(src);
+        var src = `()-->()<--()`;
+        var processed = gramProcessor.process(src);
         expect(processed).toBeDefined();
     });
     it('adds identity to path compositions "[ {composed:true} (a),(b)]" ', () => {
-        const src = `[ {composed:true} (a),(b)]`;
-        const processed = gramProcessor.process(src);
+        var src = `[ {composed:true} (a),(b)]`;
+        var processed = gramProcessor.process(src);
         expect(processed).toBeDefined();
     });
 });

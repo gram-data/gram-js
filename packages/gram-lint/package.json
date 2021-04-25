@@ -16,7 +16,7 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "bin": {
-    "gram-lint": "./bin/cli.js"
+    "gram": "./bin/cli.js"
   },
   "files": [
     "dist",

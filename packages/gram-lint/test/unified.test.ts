@@ -1,16 +1,16 @@
-import * as gramTypes from '@gram-data/gram-ast';
-import { errors as gramErrors } from '@gram-data/gram-parse';
+
+import { Parser, Ast } from '@gram-data/gram';
 
 import lint from '../src';
 
 describe('using gram as the Parser for unified()', () => {
   it('accepts an empty node "()" ', () => {
     const src = `()`;
-    const result = lint.parse(src) as gramTypes.GramSeq;
+    const result = lint.parse(src) as Ast.GramSeq;
 
-    expect(gramTypes.isGramSeq(result)).toBeTruthy();
+    expect(Ast.isGramSeq(result)).toBeTruthy();
     const firstPath = result.children[0];
-    expect(gramTypes.isGramNode(firstPath)).toBeTruthy();
+    expect(Ast.isGramNode(firstPath)).toBeTruthy();
   });
 
   it('rejects a missing close parenthesis in "(" ', () => {
@@ -20,7 +20,7 @@ describe('using gram as the Parser for unified()', () => {
         fail(`Unexpected process value: ${value}`);
       },
       reason => {
-        expect(reason.message).toBe(gramErrors.INCOMPLETE_PARSE);
+        expect(reason.message).toBe(Parser.errors.INCOMPLETE_PARSE);
       }
     );
   });
@@ -32,7 +32,7 @@ describe('using gram as the Parser for unified()', () => {
         console.log(value);
       },
       reason => {
-        expect(reason.message).toMatch(gramErrors.SYNTAX_ERROR);
+        expect(reason.message).toMatch(Parser.errors.SYNTAX_ERROR);
         expect(reason.location.start.line).toBe(1);
         expect(reason.location.start.column).toBe(2);
       }

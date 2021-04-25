@@ -5,9 +5,11 @@ import {
   Node as UnistNode,
 } from 'unist';
 
-import { gramParserPlugin } from '@gram-data/gram-parse';
+import { Parser } from '@gram-data/gram';
 
 import * as gramPresetBasic from '..';
+
+const gramParserPlugin = Parser.gramParserPlugin;
 
 const visit = require('unist-util-visit');
 

@@ -1,10 +1,6 @@
-import {
-  gramIdentityPlugin,
-  IdentityPluginSettings,
-} from "@gram-data/gram/Identity";
-import { gramValuePlugin, ValuePluginSettings } from "@gram-data/gram/Vdentity";
+
+import { Identity, Value } from "@gram-data/gram";
 import { Plugin, Settings } from "unified";
 
-export { IdentityPluginSettings, ValuePluginSettings };
 
-export const plugins:Plugin<any, Settings>[] = [gramIdentityPlugin, gramValuePlugin];
+export const plugins:Plugin<any, Settings>[] = [Identity.gramIdentityPlugin, Value.gramValuePlugin];
