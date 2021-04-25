@@ -1,5 +1,5 @@
-import { nodes, count, head, tail, edges } from '../src';
-import * as g from '@gram-data/gram-builder';
+import { nodes, count, head, tail, edges } from '../../src/ops';
+import * as g from '../../src/builder';
 
 import { Node } from 'unist';
 const inspect = require('unist-util-inspect');

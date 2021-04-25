@@ -1,8 +1,8 @@
 import {
   gramIdentityPlugin,
   IdentityPluginSettings,
-} from "@gram-data/gram-identity";
-import { gramValuePlugin, ValuePluginSettings } from "@gram-data/gram-value";
+} from "@gram-data/gram/Identity";
+import { gramValuePlugin, ValuePluginSettings } from "@gram-data/gram/Vdentity";
 import { Plugin, Settings } from "unified";
 
 export { IdentityPluginSettings, ValuePluginSettings };

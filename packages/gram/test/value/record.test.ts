@@ -1,5 +1,5 @@
-import * as builder from '@gram-data/gram-builder';
-import { valueOf } from '../src';
+import * as builder from 'packages/gram/src/builder';
+import { valueOf } from '../../src/value';
 
 describe('valueOf() evaluates AST text literals', () => {
   it('converts {k:"hello"}', () => {

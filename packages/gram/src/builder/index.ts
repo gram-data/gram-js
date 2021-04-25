@@ -32,7 +32,7 @@ import {
   TaggedTextLiteral,
   isGramLiteral,
   isGramRecord,
-} from '@gram-data/gram-ast';
+} from '../ast';
 
 export type Children<T> = T | T[] | (() => T | T[]);
 

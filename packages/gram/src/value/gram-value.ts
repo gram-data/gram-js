@@ -16,7 +16,7 @@ import {
   isGramRecord,
   GramRecord,
   TaggedTextLiteral,
-} from '@gram-data/gram-ast';
+} from '../ast';
 
 import {
   Parent as UnistParent,

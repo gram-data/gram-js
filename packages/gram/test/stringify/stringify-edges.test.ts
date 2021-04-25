@@ -1,4 +1,4 @@
-import * as g from '@gram-data/gram-builder';
+import * as g from '../../src/builder';
 import { stringify } from '../../src/stringify';
 
 // @ts-ignore

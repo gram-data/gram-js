@@ -5,8 +5,8 @@ import {
   GramSeq,
   isGramNode,
   isGramSeq,
-} from '@gram-data/gram-ast';
-import { edge } from '@gram-data/gram-builder';
+} from '../ast';
+import { edge } from '../builder';
 
 export const count = (p: GramPath): number => {
   return (p.children as GramPath[]).reduce(

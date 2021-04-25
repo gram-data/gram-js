@@ -20,8 +20,8 @@ import {
   valueOfOctal,
   valueOfTime,
   valueOfDuration,
-} from '../src';
-import * as builder from '@gram-data/gram-builder';
+} from '../../src/value';
+import * as builder from 'packages/gram/src/builder';
 import { StringLiteral } from '@gram-data/gram-ast';
 
 describe('boolean value', () => {

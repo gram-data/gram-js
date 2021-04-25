@@ -21,7 +21,7 @@ import {
   isDateLiteral,
   WellKnownTextLiteral,
   isWellKnownTextLiteral,
-} from '@gram-data/gram-ast';
+} from '../ast';
 
 // import { Node as UnistNode } from 'unist';
 // const inspect = require('unist-util-inspect');
