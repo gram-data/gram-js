@@ -13,7 +13,7 @@ import {
   GramLiteral,
   isGramPath,
   isGramRecord,
-} from '@gram-data/gram-ast';
+} from '../ast';
 
 const isEmpty = (r: GramRecord) => r.size === 0;
 

@@ -1,7 +1,7 @@
 import { Plugin, Transformer } from 'unified';
 import { Node as UnistNode } from 'unist';
 
-import { isGramPath } from '@gram-data/gram-ast';
+import { isGramPath } from '../ast';
 import { valueOf, valueOfLiteral, LiteralValueEvaluator } from './gram-value';
 
 import visit from 'unist-util-visit';

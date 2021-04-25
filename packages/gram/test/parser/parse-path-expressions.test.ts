@@ -1,5 +1,5 @@
-import { toAST } from '../../src/parse';
-import { isGramNode, isGramEdge } from '@gram-data/gram-ast';
+import { toAST } from '../../src/parser';
+import { isGramNode, isGramEdge } from '../../src/ast';
 import { Node } from 'unist';
 
 let DEBUG = true;

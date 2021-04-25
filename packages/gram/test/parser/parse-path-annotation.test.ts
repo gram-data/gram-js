@@ -1,12 +1,12 @@
 import nearley, { Parser } from 'nearley';
-import { toAST } from '../../src/parse';
+import { toAST } from '../../src/parser';
 import {
   isGramNode,
   isGramPath,
-} from '@gram-data/gram-ast';
+} from '../../src/ast';
 import { Node } from 'unist';
 
-import grammar from '../../src/parse/gram-grammar';
+import grammar from '../../src/parser/gram-grammar';
 
 
 const inspect = require('unist-util-inspect');

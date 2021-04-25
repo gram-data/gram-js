@@ -489,7 +489,7 @@ export const duration = (value: string | Date): DurationLiteral =>
 export const flatten = (xs: any[], depth = 1) =>
   xs.flat(depth).filter(x => x !== null);
 
-export default {
+const builder = {
   seq,
   empty,
   cons,
@@ -515,3 +515,5 @@ export default {
   propertyValue,
   fromLiteral: getLiteral,
 };
+
+export default builder;

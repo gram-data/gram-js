@@ -22,4 +22,3 @@ export const alphabets = {
   cookieBase90:
     "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!#$%&'()*+-./:<=>?@[]^_`{|}~",
 };
-

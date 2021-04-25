@@ -2,8 +2,8 @@
 
 @{% 
 import moo from 'moo';
-import * as g from '@gram-data/gram-builder';
-import {tokens} from '@gram-data/gram-ast';
+import * as g from '../builder';
+import {tokens} from '../ast';
 
 let lexer = moo.compile({
     whitespace: {match: /\s+/, lineBreaks: true},

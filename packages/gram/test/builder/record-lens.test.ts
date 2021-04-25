@@ -1,5 +1,6 @@
-import { isGramLiteral, isGramRecord, isIntegerLiteral } from '@gram-data/gram-ast';
-import * as g from '../src';
+import * as g from '../../src/builder';
+import { isGramLiteral, isGramRecord, isIntegerLiteral } from '../../src/ast';
+
 
 describe('gram record lens getLiteral()', () => {
   it('with boolean values', () => {

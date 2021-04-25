@@ -1,6 +1,6 @@
 import unified from 'unified';
 import gramParserPlugin from './gram-parser-plugin';
-import * as gramTypes from '@gram-data/gram-ast';
+import * as gramTypes from '../ast';
 
 import * as errors from './gram-errors';
 

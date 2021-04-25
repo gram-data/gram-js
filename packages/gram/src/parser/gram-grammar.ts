@@ -3,8 +3,8 @@
 // Bypasses TS6133. Allow declared but unused functions.
 // @ts-ignore
 import moo from 'moo';
-import * as g from 'packages/gram/src/builder';
-import { tokens } from '@gram-data/gram-ast';
+import * as g from '../builder';
+import { tokens } from '../ast';
 
 function id(d: any[]): any {
   return d[0];

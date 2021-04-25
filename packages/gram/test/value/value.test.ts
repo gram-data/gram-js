@@ -21,8 +21,8 @@ import {
   valueOfTime,
   valueOfDuration,
 } from '../../src/value';
-import * as builder from 'packages/gram/src/builder';
-import { StringLiteral } from '@gram-data/gram-ast';
+import * as builder from '../../src/builder';
+import { StringLiteral } from '../../src/ast';
 
 describe('boolean value', () => {
   it('converts {type:"boolean", value:"true"} to a primitive boolean true', () => {

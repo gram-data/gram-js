@@ -1,5 +1,5 @@
 
-import { alphabets, counterIDGenerator, nanoidGenerator } from "../src";
+import { alphabets, counterIDGenerator, nanoidGenerator } from "../../src/identity";
 
 const {
   performance

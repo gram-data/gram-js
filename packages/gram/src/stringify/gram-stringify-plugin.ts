@@ -2,7 +2,7 @@ import { CompilerFunction, Plugin } from 'unified';
 import { Node as UnistNode } from 'unist';
 // import {VFile} from 'vfile'
 
-import { isGramPath, isGramSeq } from '@gram-data/gram-ast';
+import { isGramPath, isGramSeq } from '../ast';
 
 import stringify from './gram-stringify';
 

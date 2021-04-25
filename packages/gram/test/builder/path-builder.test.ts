@@ -1,4 +1,4 @@
-import * as g from '../src';
+import * as g from '../../src/builder';
 import {
   isGramEmptyPath,
   EMPTY_PATH_ID,
@@ -11,7 +11,7 @@ import {
   isBooleanLiteral,
   isStringLiteral,
   isIntegerLiteral,
-} from '@gram-data/gram-ast';
+} from '../../src/ast';
 
 import chalk from 'chalk';
 import { Node as UnistNode } from 'unist';

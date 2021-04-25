@@ -1,4 +1,4 @@
-import * as g from '../src';
+import * as g from '../../src/builder';
 import {
   BooleanLiteral,
   StringLiteral,
@@ -21,7 +21,7 @@ import {
   isDateLiteral,
   WellKnownTextLiteral,
   isWellKnownTextLiteral,
-} from '../ast';
+} from '../../src/ast';
 
 // import { Node as UnistNode } from 'unist';
 // const inspect = require('unist-util-inspect');

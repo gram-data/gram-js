@@ -1,10 +1,10 @@
-import { toAST } from '../../src/parse';
+import { toAST } from '../../src/parser';
 import {
   isGramEdge,
   isGramNode,
   isGramPath,
   isGramSeq,
-} from '@gram-data/gram-ast';
+} from '../../src/ast';
 import { Node } from 'unist';
 
 let DEBUG = true;

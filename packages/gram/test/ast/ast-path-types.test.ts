@@ -13,7 +13,7 @@ import {
   isOctalLiteral,
   isDateLiteral,
   isWellKnownTextLiteral,
-} from '../src/';
+} from '../../src/ast';
 
 describe('gram empty path', () => {
   it('is entirely empty', () => {

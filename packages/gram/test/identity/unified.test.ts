@@ -1,11 +1,11 @@
 import unified, { CompilerFunction, Plugin } from 'unified';
 import { Node as UnistNode } from 'unist';
 
-import { tokens, isGramPath } from '@gram-data/gram-ast';
+import { tokens, isGramPath } from '../../src/ast';
 
-import { gramParserPlugin } from '@gram-data/gram-parse';
+import { gramParserPlugin } from '../../src/parser';
 
-import { gramIdentityPlugin } from '../src';
+import { gramIdentityPlugin } from '../../src/identity';
 
 const visit = require('unist-util-visit');
 

@@ -1,7 +1,7 @@
-import { toAST } from '../../src/parse';
-import { GramLiteral, isGramNode, isGramSeq } from '@gram-data/gram-ast';
+import { toAST } from '../../src/parser';
+import { GramLiteral, isGramNode, isGramSeq } from '../../src/ast';
 import { Node } from 'unist';
-import { getLiteral } from '@gram-data/gram-builder/src';
+import { getLiteral } from '../../src/builder';
 
 let DEBUG = true;
 

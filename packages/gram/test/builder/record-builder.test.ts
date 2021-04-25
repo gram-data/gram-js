@@ -1,4 +1,4 @@
-import * as g from '../src';
+import * as g from '../../src/builder';
 import {
   GramLiteral,
   isIntegerLiteral,
@@ -24,7 +24,7 @@ import {
   StringLiteral,
   TaggedLiteral,
   WellKnownTextLiteral,
-} from '@gram-data/gram-ast';
+} from '../../src/ast';
 
 describe('gram builder for records', () => {
   it('with boolean values', () => {

@@ -2,9 +2,9 @@ import unified, { CompilerFunction, Plugin } from 'unified';
 // import { Node as UnistNode } from 'unist';
 // import { VFile } from 'vfile';
 
-import * as gramTypes from '@gram-data/gram-ast';
-import { errors as gramErrors } from '../../src/parse';
-import { gramParserPlugin } from '../../src/parse';
+import * as gramTypes from '../../src/ast';
+import { errors as gramErrors } from '../../src/parser';
+import { gramParserPlugin } from '../../src/parser';
 
 const mockCompiler: CompilerFunction = () => {
   // const mockCompiler: CompilerFunction = (element: UnistNode, file: VFile) => {

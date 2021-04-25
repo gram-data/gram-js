@@ -1,14 +1,13 @@
-import gram from '..';
-import * as ast from '@gram-data/gram-ast';
+import gram, {Ast} from '..';
 
 describe('gram parse', () => {
   it('can parse a node "()"', () => {
     const src = `()`;
-    const seq = gram.parse(src) as ast.GramSeq;
+    const seq = gram.parse(src) as Ast.GramSeq;
     const n = seq.children[0];
 
-    expect(ast.isGramSeq(seq)).toBeTruthy();
-    expect(ast.isGramNode(n)).toBeTruthy();
+    expect(Ast.isGramSeq(seq)).toBeTruthy();
+    expect(Ast.isGramNode(n)).toBeTruthy();
   });
 });
 

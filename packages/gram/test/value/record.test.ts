@@ -1,4 +1,4 @@
-import * as builder from 'packages/gram/src/builder';
+import * as builder from '../../src/builder';
 import { valueOf } from '../../src/value';
 
 describe('valueOf() evaluates AST text literals', () => {

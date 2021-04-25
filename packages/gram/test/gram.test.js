@@ -1,5 +1,6 @@
-var gram = require('..').default;
-var ast = require('@gram-data/gram-ast');
+var g = require('..');
+var gram = g.default;
+var ast = g.Ast;
 
 describe('gram parse', () => {
   it('can parse a node "()"', () => {

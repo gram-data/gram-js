@@ -1,7 +1,7 @@
 import { Plugin, Transformer } from 'unified';
 import { Node as UnistNode } from 'unist';
 
-import { isGramPath } from '@gram-data/gram-ast';
+import { isGramPath } from '../ast';
 import { alphabets } from './identity-alphabets';
 import { IDGenerator } from './generator-type';
 import { counterIDGenerator } from './counter-generator';

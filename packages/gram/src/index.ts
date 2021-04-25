@@ -3,30 +3,24 @@
  *
  * @packageDocumentation
  */
+import * as Ast from './ast';
 
-import unified from 'unified';
-import { VFileCompatible } from 'vfile';
-import { GramSeq } from './ast';
-import { gramParserPlugin } from './parse';
-// import * as gramPresetBasic from '@gram-data/gram-preset-basic';
-import { toGram } from './stringify';
+import {parse, toGram} from './processor';
 
-const processor = (): unified.Processor => {
-  return unified()
-    .use(gramParserPlugin)
-    // .use(gramPresetBasic);
-};
+export * as Builder from './builder';
+export * as Identity from './identity';
+export * as Ops from './ops';
+export * as Parser from './parser';
+export * as Stringify from './stringify';
+export * as Value from './value';
 
-/**
- * Parse text into an ast.
- * @param src gram formatted text
- */
-export const parse = (src: VFileCompatible): GramSeq =>
-  processor().runSync(processor().parse(src)) as GramSeq;
+export {
+  Ast
+}
 
-export { toGram };
-
-export default {
+const gram = {
   parse,
-  toGram,
-};
+  toGram
+}
+
+export default gram;

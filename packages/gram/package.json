@@ -18,22 +18,17 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "run-s build:near lint:fix build:dist",
-    "build:near": "nearleyc src/parse/gram.ne -o src/parse/gram-grammar.ts",
+    "build:near": "nearleyc src/parser/gram.ne -o src/parser/gram-grammar.ts",
     "build:dist": "tsdx build --format umd,esm,cjs --tsconfig tsconfig.build.json",
     "test": "tsdx test",
-    "lint": "tsdx lint src test",
-    "lint:fix": "tsdx lint src --fix",
+    "lint": "tsdx lint src",
+    "lint:fix": "tsdx lint src/parser --fix",
     "prepare": "npm run build",
     "size": "size-limit",
     "analyze": "size-limit --why",
     "build:demo": "shx cp dist/gram.umd.development.* ./public",
     "demo:parcel": "parcel ./public/index.html --open",
     "demo:sirv": "sirv ./public/"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
   },
   "prettier": {
     "printWidth": 80,
@@ -52,20 +47,21 @@
     }
   ],
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^4.9.1",
-    "husky": "^4.3.6",
+    "@size-limit/preset-small-lib": "^4.10.2",
+    "eslint-config-react-app": "^6.0.0",
+    "husky": "^6.0.0",
     "nearley": "^2.20.1",
     "parcel-bundler": "^1.12.4",
     "shx": "^0.3.3",
-    "sirv-cli": "^1.0.10",
-    "size-limit": "^4.9.1",
+    "sirv-cli": "^1.0.11",
+    "size-limit": "^4.10.2",
     "tsdx": "^0.14.1",
-    "tslib": "^2.0.3",
-    "typescript": "^4.1.3"
+    "tslib": "^2.2.0",
+    "typescript": "^4.2.4"
   },
   "dependencies": {
     "moo": "^0.5.1",
-    "unified": "^9.2.0",
+    "unified": "^9.2.1",
     "vfile": "^4.2.1"
   },
   "publishConfig": {

@@ -1,4 +1,4 @@
-import { tokens } from '../src/';
+import { tokens } from '../../src/ast';
 
 describe('unusual but valid identifiers', () => {
   it.each`
